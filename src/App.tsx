@@ -1,58 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import React, { createContext, useContext } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { Router } from './components/router/Router'
+import { ToastProvider } from './hooks/useToast'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
-function App() {
+export const ColorContext = createContext({
+  bgColor: 'bg-gray-800',
+  baseText: 'text-white',
+})
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      refetchOnWindowFocus: false,
+    },
+  },
+})
+
+const App: React.VFC = () => {
+  const color = useContext(ColorContext)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+    <div
+      className={`flex items-center flex-col min-h-screen text-gray-600 text-sm font-mono ${color.bgColor}`}
+    >
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <ToastProvider>
+            <Router />
+          </ToastProvider>
+        </BrowserRouter>
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      </QueryClientProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
