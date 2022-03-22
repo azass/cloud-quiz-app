@@ -25,9 +25,9 @@ export const useQueryQuestion = (questId: string) => {
         const mark = option.text?.slice(0, 1) || ''
         option.mark = mark
       }
-      option.correct = data.correct_answer?.includes(option.mark || '_')
+      option.correct = question.correct_answer?.includes(option.mark || '_')
     })
-    console.log('getQuestion')
+    console.log('useQueryQuestion.getQuestion')
     console.log(question)
     return question
   }

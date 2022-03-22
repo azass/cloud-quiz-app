@@ -24,6 +24,7 @@ export const EditElemOption: VFC<Props> = memo(
     hiddenCheckbox,
     editting,
   }) => {
+    console.log('<EditElemOption>')
     const [textareaToggle, setTextareaToggle] = useState('text' in editElem)
     const [imageToggle, setImageToggle] = useState('image_path' in editElem)
     console.log(`${editElem.correct}`)
