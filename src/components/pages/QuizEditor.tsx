@@ -1,25 +1,28 @@
 import { useContext, VFC } from 'react'
-import { useNavigate, useParams, Link } from 'react-router-dom'
-import { PencilAltIcon } from '@heroicons/react/solid'
-import { QuizListFrame } from '../organisms/QuizListFrame'
+import { useNavigate, useParams } from 'react-router-dom'
 import { QuizEditFrame } from '../organisms/QuizEditFrame'
 import { TagSelectFrame } from '../organisms/TagSelectFrame'
 import { TermEditFrame } from '../organisms/TermEditFrame'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
   selectExam,
   selectEditedContent,
   selectTab,
   tabs,
+  setTab,
 } from '../../slices/editSlice'
-import { QuizSelect } from '../organisms/QuizSelect'
+import { ExamSelect } from '../organisms/ExamSelect'
 import { ColorContext } from '../../App'
 import { QTabs } from '../atoms/QTabs'
 import { useEditElem } from '../../hooks/useEditElem'
 import { useSearch } from '../../hooks/useSearch'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
+import { QuizSelectFrame } from '../organisms/QuizSelectFrame'
+import log from 'loglevel'
 
 export const QuizEditor: VFC = () => {
+  log.setLevel("info")
+  const dispatch = useAppDispatch()
   const params = useParams()
   const editedContent = useAppSelector(selectEditedContent)
   const nowTab = useAppSelector(selectTab)
@@ -38,10 +41,11 @@ export const QuizEditor: VFC = () => {
     if (cognitoUser) {
       cognitoUser.signOut()
       localStorage.clear()
-      console.log('signed out')
+      dispatch(setTab(tabs[0]))
+      log.debug('signed out')
     } else {
       localStorage.clear()
-      console.log('no user signing in')
+      log.debug('no user signing in')
     }
     navigate('/login')
   }
@@ -76,7 +80,7 @@ export const QuizEditor: VFC = () => {
           </div>
           {nowTab === tabs[0] && (
             <div className="pt-4 pl-8">
-              <QuizSelect />
+              <ExamSelect />
             </div>
           )}
           {nowTab === tabs[1] && (
@@ -85,25 +89,7 @@ export const QuizEditor: VFC = () => {
               {(() => {
                 if (editedContent === 'QuizList') {
                   return (
-                    <>
-                      <div className="inline-flex pl-6 pb-6 space-x-4">
-                        <Link to={`/editor/${params.exam_id}/new`}>
-                          <PencilAltIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" />
-                        </Link>
-                        <div className="flex justify-start">
-                          <span className={color.baseText}>
-                            <i>New!!</i>
-                          </span>
-                          <div className="pl-6 text-white">
-                            <i>{params.exam_id}-</i>
-                          </div>
-                          <input type="text" className="w-10 ml-1 px-1"></input>
-                        </div>
-                      </div>
-                      <div>
-                        <QuizListFrame />
-                      </div>
-                    </>
+                    <QuizSelectFrame />
                   )
                 } else if (editedContent === 'TagSelect') {
                   return (

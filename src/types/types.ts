@@ -7,12 +7,14 @@ export interface Question {
   correct_answer?: string[]
   options?: EditElem[]
   explanation?: EditElem[]
-  keywords?: any
+  keywords?: string
   tags?: string[]
+  original_url?: string
 }
 export interface EditElem {
   type?: string
   text?: string
+  text_en?: string
   image_path?: string
   image_height?: string
   link?: string
@@ -50,6 +52,7 @@ export interface Term {
   word: string
   level: number
   sort: number
+  provider: string
   selected?: boolean
   changed?: string
   draggableId?: string
@@ -96,15 +99,15 @@ export const voidTag: Tag = {
   provider: ''
 }
 
-export const voidQuestion: Question = {
-  quest_id: '',
-  quest_no: 0,
-  exam_id: '',
-  exam_no: 0,
-  question_items: [],
-  options: [],
-  explanation: [],
-  correct_answer: [],
-  keywords: [],
-  tags: [],
-}
+// export const voidQuestion: Question = {
+//   quest_id: '',
+//   quest_no: 0,
+//   exam_id: '',
+//   exam_no: 0,
+//   question_items: [],
+//   options: [],
+//   explanation: [],
+//   correct_answer: [],
+//   keywords: [],
+//   tags: [],
+// }

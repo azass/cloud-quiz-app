@@ -47,4 +47,14 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 ## Cognito
 
 [Amazon Cognitoの認証情報を取得してみる～API Gateway＋Lambda編～](https://www.tdi.co.jp/miso/amazon-cognito-api-gateway)
+[cognitoでログイン/セッション管理](https://tarepan.hatenablog.com/entry/cognito_UserPools_session_management)
+[サインイン後に ID プールを使用して AWS サービスへアクセスする](https://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/amazon-cognito-integrating-user-pools-with-identity-pools.html)
 
+## タブ選択
+````
+const dispatch = useAppDispatch()
+...
+dispatch(setTab(tabs[1]))
+````
+## 横一列
+flex justify-start

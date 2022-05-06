@@ -1,5 +1,5 @@
 import { VFC, memo, useContext } from 'react'
-import { EditBlock } from './EditBlock'
+import { EditBlockContent } from './EditBlockContent'
 import { Term } from '../../types/types'
 import { SaveButton } from '../atoms/SaveButton'
 import { EditElemAdds } from '../atoms/EditElemAdds'
@@ -55,17 +55,18 @@ export const EditTermDescription: VFC<Props> = memo(({ term, editable }) => {
         word: term.word,
         level: term.level,
         sort: term.sort,
+        provider: term.provider,
         description: term.description,
       }))
     )
   }
   return (
     <div className={`px-6 pb-6  ${color.bgColor}`}>
-      {editElemsState.length === 0 && editable ? (
+      {editElemsState.length === 0 && editable ? 
         <EditElemAdds index={0} name={name} onClickAdd={add} />
-      ) : (
+       : (
         editElemsState.map((editElem, index) => (
-          <EditBlock
+          <EditBlockContent
             editElem={editElem}
             name={name}
             index={index}

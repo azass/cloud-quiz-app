@@ -5,6 +5,7 @@ import { SelectableTag } from '../atoms/SelectableTag'
 import { ColorContext } from '../../App'
 import { useParams } from 'react-router-dom'
 import { TagSelectHeader } from '../molecules/TagSelectHeader'
+import log from 'loglevel'
 
 interface Props {
   selectTags: string[]
@@ -13,7 +14,8 @@ interface Props {
 }
 export const TagSelectFrame: VFC<Props> = memo(
   ({ selectTags, onClickTag, setSelectSearchTags }) => {
-    console.log('<TagSelectFrame>')
+    log.setLevel("info")
+    log.debug('<TagSelectFrame>')
     const params = useParams()
     const color = useContext(ColorContext)
     const tags = useAppSelector(selectExamTags)

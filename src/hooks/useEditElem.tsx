@@ -7,13 +7,20 @@ import {
 } from '../slices/editSlice'
 import { EditElem, EditElemType, Question, Tag } from '../types/types'
 import axios from 'axios'
+import log from 'loglevel'
 
 export const useEditElem = (editElems: EditElem[]) => {
+  log.setLevel("info")
+  log.debug("useEditElem start!")
+
+  const isCheckOn = editElems.some(x => x.correct)
+  log.debug(isCheckOn)
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)
   const [editElemsState, setEditElemsState] = useState<EditElem[]>(editElems)
-  const [hiddenCheckbox, setHiddenCheckbox] = useState(false)
+  const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
 
   const add = (index: number, type: string) => {
+    log.debug(index)
     const newEditElems = [...editElemsState]
     const newEditElem: EditElem = {
       type: type,
@@ -30,7 +37,7 @@ export const useEditElem = (editElems: EditElem[]) => {
       newEditElem.text = ''
     }
     newEditElems.splice(index + 1, 0, newEditElem)
-    console.log('add!!!')
+    log.debug('add!!!')
     setEditElemsState(newEditElems)
     setSaveButtonToggle(false)
   }
@@ -38,7 +45,7 @@ export const useEditElem = (editElems: EditElem[]) => {
   const del = (index: number) => {
     const newEditElems = [...editElemsState]
     newEditElems.splice(index, 1)
-    console.log('del!!!')
+    log.debug('del!!!')
     setEditElemsState(newEditElems)
     setSaveButtonToggle(true)
   }
@@ -56,21 +63,21 @@ export const useEditElem = (editElems: EditElem[]) => {
       newEditElem[attr] = text
       newEditElems.splice(index, 1, newEditElem)
     }
-    console.log('changeText!!!')
+    log.debug('changeText!!!')
     setEditElemsState(newEditElems)
-    validate()
+    validate(newEditElems)
   }
 
   const changeCheck = (index: number) => {
     const newEditElems = [...editElemsState]
     newEditElems[index].correct = !newEditElems[index].correct
-    console.log('changeCheck!!!')
+    log.debug('changeCheck!!!')
     setEditElemsState(newEditElems)
     setSaveButtonToggle(true)
   }
 
-  const validate = () => {
-    editElemsState.map((editElem) => {
+  const validate = (newEditElems:EditElem[]) => {
+    newEditElems.map((editElem) => {
       if (
         editElem.type === EditElemType.TEXTAREA ||
         editElem.type === EditElemType.OPTION
@@ -109,11 +116,11 @@ export const useEditElem = (editElems: EditElem[]) => {
       .put(`${process.env.REACT_APP_REST_URL}/${api}`, requestData, config)
       .then((response) => {
         let result = response.data
-        console.log(result)
+        log.debug(result)
         setSaveButtonToggle(false)
         if (post) post(requestData)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => log.debug(error))
   }
 
   const editedContext = useAppSelector(selectEditContext)
@@ -121,7 +128,7 @@ export const useEditElem = (editElems: EditElem[]) => {
   const dispatch = useAppDispatch()
 
   const keywords =
-    editedContext.keywordsJson === ''
+    !editedContext.keywordsJson || editedContext.keywordsJson === ''
       ? {}
       : JSON.parse(editedContext.keywordsJson)
 
@@ -135,8 +142,8 @@ export const useEditElem = (editElems: EditElem[]) => {
       }
       delete keywords[tag.tag_name]
     }
-    console.log('keys')
-    console.log(Object.keys(keywords))
+    log.debug('keys')
+    log.debug(Object.keys(keywords))
     const requestData: Question = {
       quest_id: editedContext.quest_id,
       tags: tags
@@ -144,7 +151,7 @@ export const useEditElem = (editElems: EditElem[]) => {
         .map((tag) => tag.tag_no.toString()),
       keywords: JSON.stringify(keywords),
     }
-    console.log(requestData)
+    log.debug(requestData)
     axios
       .put<Question>(
         `${process.env.REACT_APP_REST_URL}/question`,
@@ -161,7 +168,7 @@ export const useEditElem = (editElems: EditElem[]) => {
           )
         }
       })
-      .catch((error) => console.log(error))
+      .catch((error) => log.debug(error))
   }
 
   return {
@@ -169,8 +176,8 @@ export const useEditElem = (editElems: EditElem[]) => {
     setEditElemsState,
     saveButtonToggle,
     setSaveButtonToggle,
-    hiddenCheckbox,
-    setHiddenCheckbox,
+    showCheckbox,
+    setShowCheckbox,
     add,
     del,
     changeText,

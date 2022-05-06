@@ -1,11 +1,12 @@
 import { VFC } from 'react'
+import log from 'loglevel'
 
 interface Props {
   onClick: any
 }
 
 export const SaveButton: VFC<Props> = ({ onClick }) => {
-  console.log('savebuyyon')
+  log.debug('save button')
   return (
     <button
       type="submit"

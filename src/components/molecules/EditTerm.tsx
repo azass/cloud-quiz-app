@@ -10,6 +10,8 @@ import {
 import TextareaAutosize from 'react-textarea-autosize'
 import { useEditElem } from '../../hooks/useEditElem'
 import { EditTermDescription } from './EditTermDesciption'
+import log from 'loglevel'
+
 interface Props {
   term: Term
   index: number
@@ -18,6 +20,7 @@ interface Props {
 }
 export const EditTerm: VFC<Props> = memo(
   ({ term, index, terms, draggable }) => {
+    log.setLevel("info")
     const updateTem = useAppSelector(selectUpdateTerm)
     const [editable, setEditable] = useState(false)
     const [termId, setTermId] = useState(term.term_id)
@@ -49,7 +52,7 @@ export const EditTerm: VFC<Props> = memo(
     const onClickDescribe = () => {
       if (!describe) {
         if (editElemsState.length === 0) {
-          console.log('getDescribe')
+          log.debug('getDescribe')
         }
       }
       setDescribe(!describe)

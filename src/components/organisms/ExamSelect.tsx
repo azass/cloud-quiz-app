@@ -10,8 +10,10 @@ import {
   setTab,
   tabs,
 } from '../../slices/editSlice'
+import log from 'loglevel'
 
-export const QuizSelect: VFC = memo(() => {
+export const ExamSelect: VFC = memo(() => {
+  log.setLevel("info")
   const [nowProviderName, setNowProviderName] = useState('')
   const { status, data } = useQueryProviders()
   const dispatch = useAppDispatch()
@@ -35,7 +37,7 @@ export const QuizSelect: VFC = memo(() => {
   const nowProvider = data?.find(
     (provider) => provider.name === nowProviderName
   )
-  console.log(nowProvider)
+  log.debug(nowProvider)
   return (
     <>
       <select

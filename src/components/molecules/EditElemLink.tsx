@@ -39,7 +39,7 @@ const EditElemLink: VFC<Props> = ({
             </span>
             <TextareaAutosize
               className={linkStyle}
-              value={editElem.link}
+              value={editElem.link || ""}
               onChange={(e) => onChangeText(index, 'link', e.target.value)}
             />
           </li>
@@ -49,7 +49,7 @@ const EditElemLink: VFC<Props> = ({
             </span>
             <TextareaAutosize
               className={urlStyle}
-              value={editElem.url}
+              value={editElem.url || ""}
               onChange={(e) => onChangeText(index, 'url', e.target.value)}
             />
           </li>

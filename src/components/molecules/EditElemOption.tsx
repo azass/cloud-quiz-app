@@ -4,6 +4,7 @@ import { EditElemTextarea } from './EditElemTextarea'
 import { EditElemImage } from './EditElemImage'
 import { DocumentAddIcon, PhotographIcon } from '@heroicons/react/solid'
 import { ColorContext } from '../../App'
+import log from 'loglevel'
 
 interface Props {
   editElem: EditElem
@@ -11,7 +12,7 @@ interface Props {
   onClickAdd: any
   onChangeText: any
   onChangeCheck: any
-  hiddenCheckbox?: boolean
+  showCheckbox?: boolean
   editting: boolean
 }
 export const EditElemOption: VFC<Props> = memo(
@@ -21,13 +22,14 @@ export const EditElemOption: VFC<Props> = memo(
     onClickAdd,
     onChangeText,
     onChangeCheck,
-    hiddenCheckbox,
+    showCheckbox,
     editting,
   }) => {
-    console.log('<EditElemOption>')
+    log.setLevel("info")
+    log.debug('<EditElemOption>')
     const [textareaToggle, setTextareaToggle] = useState('text' in editElem)
     const [imageToggle, setImageToggle] = useState('image_path' in editElem)
-    console.log(`${editElem.correct}`)
+    log.debug(`${editElem.correct}`)
     const color = useContext(ColorContext)
     const getBgColor = () => {
       return 'h-5 w-5 mx-4 text-gray-700 cursor-pointer hover:text-blue-500'
@@ -36,7 +38,7 @@ export const EditElemOption: VFC<Props> = memo(
       <>
         <li>
           <div className="flex px-4 -mt-4 space-x-1">
-            {hiddenCheckbox && (
+            {showCheckbox && (
               <input
                 type="checkbox"
                 checked={editElem.correct}

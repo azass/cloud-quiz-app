@@ -1,5 +1,6 @@
 import { VFC, memo } from 'react'
 import { Tag } from '../../types/types'
+import log from 'loglevel'
 
 interface Props {
   tag: Tag
@@ -8,7 +9,8 @@ interface Props {
 }
 export const SelectableTag: VFC<Props> = memo(
   ({ tag, selected, onClickTag }) => {
-    console.log('<SelectableTag>')
+    log.setLevel("info")
+    log.debug('<SelectableTag>')
     const bgcolor = selected
       ? 'text-white bg-pink-600'
       : 'text-gray-500 bg-gray-300'

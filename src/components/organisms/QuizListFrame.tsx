@@ -5,14 +5,16 @@ import { useParams } from 'react-router-dom'
 import { ColorContext } from '../../App'
 import { useAppSelector } from '../../app/hooks'
 import { selectScArgs } from '../../slices/editSlice'
+import log from 'loglevel'
 
 export const QuizListFrame: VFC = memo(() => {
-  console.log('<QuizListFrame>')
+  log.setLevel("info")
+  log.debug('<QuizListFrame>')
   const color = useContext(ColorContext)
   const params = useParams()
   const scArgs = useAppSelector(selectScArgs)
   const args = { ...scArgs, exam_ids: [params.exam_id] }
-  console.log(args)
+  log.debug(args)
   const { status, data } = useQueryQuestions(args)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>

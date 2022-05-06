@@ -33,7 +33,6 @@ export const TermEditFrame: VFC = memo(() => {
   const examTags = useAppSelector(selectExamTags)
   const { getTag } = useTags()
   const tag = getTag(editedContext.chosenTag.tag_name)
-  // examTags.find((t) => t.tag_name === editedContext.chosenTagName) || voidTag
   const { status, data } = useQueryTerms(tag)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>

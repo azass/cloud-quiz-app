@@ -1,114 +1,112 @@
-import { VFC, memo, useContext, useState } from 'react'
-import { TrashIcon } from '@heroicons/react/solid'
-import { EditElem, EditElemType } from '../../types/types'
-import { EditElemTextarea } from './EditElemTextarea'
-import { EditElemLinkMemo } from './EditElemLink'
-import { EditElemImage } from './EditElemImage'
+import { VFC, memo, useState, useContext } from 'react'
+import { EditBlockContent } from './EditBlockContent'
+import { Question, EditElem } from '../../types/types'
+import { SaveButton } from '../atoms/SaveButton'
 import { EditElemAdds } from '../atoms/EditElemAdds'
-import { EditElemOption } from './EditElemOption'
+import { useEditElem } from '../../hooks/useEditElem'
 import { ColorContext } from '../../App'
-import { PencilAltIcon } from '@heroicons/react/outline'
+import { EyeIcon } from '@heroicons/react/outline'
+import log, { setLevel } from 'loglevel'
 
 interface Props {
-  editElem: EditElem
+  questId: string
+  editElems: EditElem[]
+  title: string
   name: string
-  index: number
-  onClickAdd: any
-  onClickDelete: any
-  onChangeText: any
-  onChangeCheck: any
-  hiddenCheckbox?: boolean
   editable: boolean
 }
 
 export const EditBlock: VFC<Props> = memo(
-  ({
-    editElem,
-    name,
-    index,
-    onClickAdd,
-    onClickDelete,
-    onChangeText,
-    onChangeCheck,
-    hiddenCheckbox,
-    editable,
-  }) => {
-    console.log('EditBlock start!')
-    console.log(index)
-    console.log(editElem)
+  ({ questId, editElems, title, name, editable }) => {
+    setLevel("debug")
+    log.debug('EditBlock start!!')
     const color = useContext(ColorContext)
-    const [editting, setEditting] = useState(false)
-    const id = name + '_' + index
-    if (!editElem.type || editElem.type === '') {
-      if (name === 'options') {
-        editElem.type = EditElemType.OPTION
-      } else if ('text' in editElem) {
-        editElem.type = EditElemType.TEXTAREA
-      } else if ('link' in editElem) {
-        editElem.type = EditElemType.LINK
-      } else if ('image_path' in editElem) {
-        editElem.type = EditElemType.IMAGE
-      }
+    const {
+      editElemsState,
+      setEditElemsState,
+      saveButtonToggle,
+      setSaveButtonToggle,
+      showCheckbox,
+      setShowCheckbox,
+      add,
+      del,
+      changeText,
+      changeCheck,
+      save,
+    } = useEditElem(editElems)
+
+    const [questIdState, setQuestIdState] = useState(questId)
+    log.debug(`questIdState=${questIdState}`)
+    log.debug(editElemsState)
+    if (questIdState !== questId) {
+      log.debug(`${questIdState} => ${questId}`)
+      setQuestIdState(questId)
+      log.debug('EditBlock change !!!')
+      setEditElemsState(editElems)
+      setSaveButtonToggle(false)
     }
+
+    /**
+     * for scraping
+     * if no content; set new content
+     */
+    if (editElemsState.length === 0 && editElemsState !== editElems) {
+      log.debug('EditBlock new!!!')
+      setEditElemsState(editElems)
+    }
+
+    const onClickSave = () => {
+      const requestData: Question = {
+        quest_id: questId,
+      }
+      if (name === 'question_items') {
+        requestData.question_items = editElemsState
+      } else if (name === 'options') {
+        requestData.options = editElemsState
+        requestData.correct_answer = []
+        editElemsState.forEach((option) => {
+          if (option.correct)
+            requestData.correct_answer?.push(option.mark || '')
+        })
+        log.debug(requestData)
+      } else if (name === 'explanation') {
+        requestData.explanation = editElemsState
+      }
+      save(requestData, 'question')
+    }
+
     return (
-      <div key={id} className={color.bgColor}>
-        <ul className="transform transition-transform border-gray-600 pt-4">
-          {editable && (
-            <li className="flex flex-row-reverse pr-3">
-              <div className="flex flex-row gap-4">
-                <PencilAltIcon
-                  className="h-5 w-5 text-gray-700 cursor-pointer hover:text-blue-500"
-                  onClick={() => setEditting(!editting)}
-                />
-                <TrashIcon
-                  className="h-5 w-5 text-gray-700 cursor-pointer hover:text-blue-500"
-                  onClick={() => {
-                    onClickDelete(index)
-                  }}
-                />
-              </div>
-            </li>
-          )}
-          {editElem.type === EditElemType.OPTION && (
-            <EditElemOption
-              editElem={editElem}
-              index={index}
-              onClickAdd={onClickAdd}
-              onChangeText={onChangeText}
-              onChangeCheck={onChangeCheck}
-              hiddenCheckbox={hiddenCheckbox}
-              editting={editting}
+      <div className={`pb-2  ${color.bgColor}`}>
+        <div className={`flex gap-2 my-4 font-bold ${color.baseText}`}>
+          {title}
+          {name === 'options' && (
+            <EyeIcon
+              className="w-4 h-4 cursor-pointer"
+              onClick={() => {
+                setShowCheckbox(!showCheckbox)
+              }}
             />
           )}
-          {editElem.type === EditElemType.TEXTAREA && (
-            <EditElemTextarea
+        </div>
+        {editElemsState.length === 0 ? (
+          <EditElemAdds index={-1} name={name} onClickAdd={add} />
+         ) : (
+          editElemsState.map((editElem, index) => (
+            <EditBlockContent
               editElem={editElem}
+              name={name}
               index={index}
-              onChangeText={onChangeText}
-            />
-          )}
-          {editElem.type === EditElemType.LINK && (
-            <EditElemLinkMemo
-              editElem={editElem}
-              index={index}
-              onChangeText={onChangeText}
+              onClickAdd={add}
+              onClickDelete={del}
+              onChangeText={changeText}
+              onChangeCheck={changeCheck}
+              showCheckbox={showCheckbox}
               editable={editable}
-              editting={editting}
             />
-          )}
-          {editElem.type === EditElemType.IMAGE && (
-            <EditElemImage
-              editElem={editElem}
-              index={index}
-              onChangeText={onChangeText}
-              editable={editable}
-              editting={editting}
-            />
-          )}
-        </ul>
-        {editable && editting && (
-          <EditElemAdds index={index} name={name} onClickAdd={onClickAdd} />
-        )}
+          )))}
+        <div className="flex justify-center mx-auto">
+          {saveButtonToggle && <SaveButton onClick={onClickSave} />}
+        </div>
       </div>
     )
   }

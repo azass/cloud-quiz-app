@@ -1,10 +1,12 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Question } from '../types/types'
+import log from 'loglevel'
 
 export const useQueryQuestions = (args:any) => {
+  log.setLevel("info")
   const getQuestions = async () => {
-    console.log(">>>>getQuestions")
+    log.debug(">>>>getQuestions")
     const condition = {
       Method: "SEARCH_QUESTIONS",
       Args: args
@@ -12,6 +14,7 @@ export const useQueryQuestions = (args:any) => {
     const { data } = await axios.post<Question[]>(
       `${process.env.REACT_APP_REST_URL}/dynamodbctrl`, condition
     )
+    log.debug(data)
     return data
   }
   return useQuery<Question[], Error>({

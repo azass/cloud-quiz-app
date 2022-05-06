@@ -7,8 +7,10 @@ import { memo, useState, VFC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 import { setIdToken } from '../../slices/editSlice'
+import log from 'loglevel'
 
 export const Login: VFC = memo(() => {
+  log.setLevel("info")
   const dispatch = useAppDispatch()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -32,11 +34,11 @@ export const Login: VFC = memo(() => {
 
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
-        console.log('result: ' + result)
+        log.debug('result: ' + result)
         const accessToken = result.getAccessToken().getJwtToken()
-        console.log('AccessToken: ' + accessToken)
+        log.debug('AccessToken: ' + accessToken)
         const idToken = result.getIdToken().getJwtToken()
-        console.log('IdToken: ' + idToken)
+        log.debug('IdToken: ' + idToken)
         dispatch(setIdToken(idToken))
         setEmail('')
         setPassword('')
@@ -109,8 +111,9 @@ export const Login: VFC = memo(() => {
           >
             ログイン
           </button>
+
           <a
-            className="fit-content m-auto block align-baseline font-bold text-sm text-blue hover:text-blue-darker"
+            className="fit-content mt-10 block align-baseline font-bold text-sm text-blue hover:text-blue-darker"
             href="{{ route('password.request') }}"
           >
             パスワードを忘れたかた

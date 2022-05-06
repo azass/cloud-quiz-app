@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom'
 import { QTags } from './QTags'
 import { setEditContext } from '../../slices/editSlice'
 import { ColorContext } from '../../App'
+import log from 'loglevel'
 
 interface Props {
   question: Question
 }
 
 export const QItem: VFC<Props> = memo(({ question }) => {
-  console.log('<QItem>')
+  log.setLevel("info")
+  log.debug('<QItem>')
   const color = useContext(ColorContext)
   const dispatch = useAppDispatch()
 
@@ -25,7 +27,7 @@ export const QItem: VFC<Props> = memo(({ question }) => {
             dispatch(
               setEditContext({
                 quest_id: question.quest_id,
-                keywordsJson: JSON.stringify(question.keywords),
+                keywordsJson: question.keywords || "",
                 chosenTag: voidTag,
               })
             )
