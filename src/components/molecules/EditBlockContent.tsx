@@ -9,6 +9,8 @@ import { EditElemOption } from './EditElemOption'
 import { ColorContext } from '../../App'
 import { PencilAltIcon } from '@heroicons/react/outline'
 import log from 'loglevel'
+import { useAppSelector } from '../../app/hooks'
+import { selectLang } from '../../slices/editSlice'
 
 interface Props {
   editElem: EditElem
@@ -39,6 +41,7 @@ export const EditBlockContent: VFC<Props> = memo(
     log.debug(index)
     log.debug(editElem)
 
+    const nowLang = useAppSelector(selectLang)
     const shouldEdit = () => {
       if (editElem.type === "link" && editElem.link === "") {
         return true
@@ -97,6 +100,7 @@ export const EditBlockContent: VFC<Props> = memo(
               onChangeCheck={onChangeCheck}
               showCheckbox={showCheckbox}
               editting={editting}
+              lang={nowLang}
             />
           )}
           {editElem.type === EditElemType.TEXTAREA && (
@@ -104,6 +108,7 @@ export const EditBlockContent: VFC<Props> = memo(
               editElem={editElem}
               index={index}
               onChangeText={onChangeText}
+              lang={name === 'question_items' ? nowLang : 1}
             />
           )}
           {editElem.type === EditElemType.LINK && (

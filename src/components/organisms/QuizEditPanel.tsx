@@ -1,6 +1,6 @@
 import { VFC, useState, memo, useContext } from 'react'
 import { Question } from '../../types/types'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../hooks/useQueryQuestion'
 import { EditBlock } from '../molecules/EditBlock'
 import { QScraping } from '../molecules/QScraping'
@@ -10,11 +10,12 @@ import { CloudUploadIcon } from '@heroicons/react/outline'
 import { useMutateQuestion } from '../../hooks/useMutateQuestion'
 import log from 'loglevel'
 
-export const QuizEditFrame: VFC = memo(() => {
+export const QuizEditPanel: VFC = memo(() => {
   log.setLevel('info')
   log.debug('Question Edit')
   const color = useContext(ColorContext)
   const params = useParams()
+  const navigate = useNavigate()
   log.debug(`QEdit quest_id=${params.quest_id}`)
   const [question, setQuestion] = useState<Question>()
   const quest_id = params.quest_id || ''
@@ -25,7 +26,7 @@ export const QuizEditFrame: VFC = memo(() => {
   if (status === 'loading') return <div>{'Loading...'}</div>
   if (status === 'error') {
     alert(error?.message)
-    return <div>{'Error'}</div>
+    navigate('/editor')
   }
 
   if (!question || (params.quest_id && questId !== params.quest_id)) {

@@ -12,7 +12,7 @@ interface Props {
   onClickTag: any
   setSelectSearchTags?: any
 }
-export const TagSelectFrame: VFC<Props> = memo(
+export const TagSelectTab: VFC<Props> = memo(
   ({ selectTags, onClickTag, setSelectSearchTags }) => {
     log.setLevel("info")
     log.debug('<TagSelectFrame>')

@@ -14,6 +14,7 @@ interface Props {
   onChangeCheck: any
   showCheckbox?: boolean
   editting: boolean
+  lang: number
 }
 export const EditElemOption: VFC<Props> = memo(
   ({
@@ -24,6 +25,7 @@ export const EditElemOption: VFC<Props> = memo(
     onChangeCheck,
     showCheckbox,
     editting,
+    lang
   }) => {
     log.setLevel("info")
     log.debug('<EditElemOption>')
@@ -59,6 +61,7 @@ export const EditElemOption: VFC<Props> = memo(
             editElem={editElem}
             index={index}
             onChangeText={onChangeText}
+            lang={lang}
           />
         )}
         {imageToggle && (

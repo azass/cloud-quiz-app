@@ -1,3 +1,4 @@
+
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import {
@@ -54,6 +55,7 @@ export const useEditElem = (editElems: EditElem[]) => {
     const newEditElems = [...editElemsState]
     if (
       attr === 'text' ||
+      attr === 'text_en' ||
       attr === 'link' ||
       attr === 'url' ||
       attr === 'image_path' ||

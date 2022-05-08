@@ -12,7 +12,7 @@ import {
 } from '../../slices/editSlice'
 import log from 'loglevel'
 
-export const ExamSelect: VFC = memo(() => {
+export const ExamSelectTab: VFC = memo(() => {
   log.setLevel("info")
   const [nowProviderName, setNowProviderName] = useState('')
   const { status, data } = useQueryProviders()

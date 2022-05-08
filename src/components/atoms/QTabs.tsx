@@ -16,8 +16,8 @@ export const QTabs: VFC = () => {
   const editedContext = useAppSelector(selectEditContext)
   const exam = useAppSelector(selectExam)
   const nowTab = useAppSelector(selectTab)
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const onCllickTab = (index: number) => {
     dispatch(setTab(tabs[index]))
     if (index === 0) {

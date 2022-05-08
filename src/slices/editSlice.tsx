@@ -13,6 +13,7 @@ export interface EditState {
   callTermEdit: boolean
   edittingTerms: Term[]
   scArgs: any
+  lang: number
 }
 
 export const tabs = ['試験一覧', '問題一覧', '絞り込み']
@@ -43,6 +44,7 @@ export const initialState: EditState = {
     exclusives: [],
     order: 0,
   },
+  lang: 1,
 }
 
 export const editSlice = createSlice({
@@ -117,6 +119,9 @@ export const editSlice = createSlice({
       console.log('>>>editSlice.resetScArgs')
       state.scArgs = initialState.scArgs
     },
+    setLangs: (state, action: PayloadAction<number>) => {
+      state.lang = action.payload
+    }
   },
 })
 
@@ -138,6 +143,7 @@ export const {
   resetEdittingTerms,
   setScArgs,
   resetScArgs,
+  setLangs,
 } = editSlice.actions
 
 export const selectIdToken = (state: RootState) => state.edit.idToken
@@ -152,5 +158,5 @@ export const selectCallTermEdit = (state: RootState) => state.edit.callTermEdit
 export const selectEdittingTerms = (state: RootState) =>
   state.edit.edittingTerms
 export const selectScArgs = (state: RootState) => state.edit.scArgs
-
+export const selectLang = (state: RootState) => state.edit.lang
 export default editSlice.reducer

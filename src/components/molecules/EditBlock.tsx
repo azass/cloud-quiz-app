@@ -18,7 +18,7 @@ interface Props {
 
 export const EditBlock: VFC<Props> = memo(
   ({ questId, editElems, title, name, editable }) => {
-    setLevel("debug")
+    setLevel("info")
     log.debug('EditBlock start!!')
     const color = useContext(ColorContext)
     const {

@@ -6,6 +6,7 @@
     "@chakra-ui/react": "^1.7.4",
     "@emotion/react": "11",
     "@emotion/styled": "11",
+    "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.5",
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.2",
