@@ -43,8 +43,22 @@ export const useMutateQuestion = () => {
     }).catch((error) => console.log(error))
   }
 
+  const deleteBug = (question: Question) => {
+    const requestData: Question = {
+      quest_id: question.quest_id,
+      is_bug: question.is_bug
+    }
+    axios.put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
+    .then((response) => {
+      queryClient.setQueryData<Question>(
+        question.quest_id, question
+      )
+    }).catch((error) => console.log(error))
+  }
+
   return {
     createQuestion,
-    updateQuestion
+    updateQuestion,
+    deleteBug
   }
 }

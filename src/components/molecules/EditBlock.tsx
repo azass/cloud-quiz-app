@@ -41,7 +41,6 @@ export const EditBlock: VFC<Props> = memo(
     if (questIdState !== questId) {
       log.debug(`${questIdState} => ${questId}`)
       setQuestIdState(questId)
-      log.debug('EditBlock change !!!')
       setEditElemsState(editElems)
       setSaveButtonToggle(false)
     }
@@ -68,7 +67,6 @@ export const EditBlock: VFC<Props> = memo(
           if (option.correct)
             requestData.correct_answer?.push(option.mark || '')
         })
-        log.debug(requestData)
       } else if (name === 'explanation') {
         requestData.explanation = editElemsState
       }
@@ -82,9 +80,7 @@ export const EditBlock: VFC<Props> = memo(
           {name === 'options' && (
             <EyeIcon
               className="w-4 h-4 cursor-pointer"
-              onClick={() => {
-                setShowCheckbox(!showCheckbox)
-              }}
+              onClick={() => setShowCheckbox(!showCheckbox)}
             />
           )}
         </div>

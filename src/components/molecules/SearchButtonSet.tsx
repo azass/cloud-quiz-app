@@ -74,13 +74,13 @@ export const SearchButtonSet: VFC<Props> = memo(
         <div className="flex flex-row">
           <Link to={`/editor/${examId}/`}>
             <DocumentSearchIcon
-              className="w-8 h-8 text-gray-200 cursor-pointer"
+              className="w-6 h-6 text-gray-200 cursor-pointer"
               onClick={() => search()}
             />
           </Link>
           {selectTags.length > 0 && (
             <DocumentRemoveIcon
-              className={'w-8 h-8 ml-8 text-gray-200 cursor-pointer'}
+              className={'w-6 h-6 ml-8 text-gray-200 cursor-pointer'}
               onClick={() => setSelectSearchTags([])}
             />
           )}

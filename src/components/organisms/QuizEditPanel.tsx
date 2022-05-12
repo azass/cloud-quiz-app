@@ -9,6 +9,9 @@ import { ColorContext } from '../../App'
 import { CloudUploadIcon } from '@heroicons/react/outline'
 import { useMutateQuestion } from '../../hooks/useMutateQuestion'
 import log from 'loglevel'
+import { useAppDispatch } from '../../app/hooks'
+import { setTab, tabs } from '../../slices/editSlice'
+import { QBug } from '../molecules/QBug'
 
 export const QuizEditPanel: VFC = memo(() => {
   log.setLevel('info')
@@ -16,17 +19,20 @@ export const QuizEditPanel: VFC = memo(() => {
   const color = useContext(ColorContext)
   const params = useParams()
   const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   log.debug(`QEdit quest_id=${params.quest_id}`)
   const [question, setQuestion] = useState<Question>()
   const quest_id = params.quest_id || ''
   const [questId, setQuestId] = useState(quest_id)
   const [registerToggle, setRegisterToggle] = useState(false)
   const { createQuestion } = useMutateQuestion()
+  const { deleteBug } = useMutateQuestion()
   const { status, data, error } = useQueryQuestion(quest_id)
   if (status === 'loading') return <div>{'Loading...'}</div>
   if (status === 'error') {
     alert(error?.message)
-    navigate('/editor')
+    dispatch(setTab(tabs[0]))
+    navigate('/login')
   }
 
   if (!question || (params.quest_id && questId !== params.quest_id)) {
@@ -49,6 +55,13 @@ export const QuizEditPanel: VFC = memo(() => {
         setQuestion(data)
         setRegisterToggle(false)
       }
+    }
+  }
+  const onClickDelete = () => {
+    if (question) {
+      const newQuestion = { ...question, is_bug: false }
+      deleteBug(newQuestion)
+      setQuestion(newQuestion)
     }
   }
   const onClickRegister = () => {
@@ -94,6 +107,9 @@ export const QuizEditPanel: VFC = memo(() => {
             <QTags question={question} withAdd={true} />
           </div>
           <QScraping question={question} setQuestion={setQuestion} />
+          {"is_bug" in question && question.is_bug && question.bug_points && (
+            <QBug bug={question.bug_points} onClickDelete={onClickDelete} />
+          )}
           <EditBlock
             questId={questId}
             title={'知識'}

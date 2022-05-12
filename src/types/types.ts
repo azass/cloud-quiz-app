@@ -10,7 +10,10 @@ export interface Question {
   keywords?: string
   tags?: string[]
   original_url?: string
+  is_bug?: boolean
+  bug_points?: Bug
 }
+
 export interface EditElem {
   type?: string
   text?: string
@@ -21,6 +24,14 @@ export interface EditElem {
   url?: string
   mark?: string
   correct?: boolean
+}
+
+export interface Bug {
+  in_question?: boolean
+  in_option?: boolean
+  in_tag?: boolean
+  in_explanation?: boolean
+  memo?: string
 }
 
 export interface Provider {

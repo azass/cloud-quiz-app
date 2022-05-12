@@ -29,8 +29,8 @@ export const EditElemOption: VFC<Props> = memo(
   }) => {
     log.setLevel("info")
     log.debug('<EditElemOption>')
-    const [textareaToggle, setTextareaToggle] = useState('text' in editElem)
-    const [imageToggle, setImageToggle] = useState('image_path' in editElem)
+    const textareaToggle = ('text' in editElem)
+    const imageToggle = ('image_path' in editElem)
     log.debug(`${editElem.correct}`)
     const color = useContext(ColorContext)
     const getBgColor = () => {

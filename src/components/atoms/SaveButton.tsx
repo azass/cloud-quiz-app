@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { useState, VFC } from 'react'
 import log from 'loglevel'
 
 interface Props {
@@ -7,12 +7,14 @@ interface Props {
 
 export const SaveButton: VFC<Props> = ({ onClick }) => {
   log.debug('save button')
+  const [onSaving, setOnSaving] = useState(false)
   return (
     <button
       type="submit"
       className="inline-flex items-center justify-center space-x-2 py-3 px-4 border border-transparent text-sm font-medium rounded text-green-600 hover:text-green-700 bg-green-50 hover:bg-green-100 transition-colors"
       onClick={() => {
         onClick()
+        setOnSaving(true)
       }}
     >
       <svg
@@ -28,7 +30,9 @@ export const SaveButton: VFC<Props> = ({ onClick }) => {
           clip-rule="evenodd"
         />
       </svg>{' '}
-      <div>SAVE</div>
+      <div>
+        {onSaving ? <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full border-t-transparent"></div> : "SAVE"}
+      </div>
     </button>
   )
 }

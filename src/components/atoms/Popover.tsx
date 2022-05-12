@@ -1,15 +1,4 @@
 import React from 'react'
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-} from '@chakra-ui/react'
 
 function Index() {
   return (
