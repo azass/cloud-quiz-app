@@ -13,11 +13,11 @@ interface Props {
 }
 export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
   const getBgColor = () => {
-    return 'h-5 w-5 mx-2 text-gray-700 cursor-pointer hover:text-blue-500'
+    return 'h-5 w-5 mx-2 text-gray-500 cursor-pointer hover:text-blue-500'
   }
   return (
-    <div className="flex justify-between">
-      <div className="flex justify-start py-2">
+    <div className="flex justify-between py-2">
+      <div className="flex justify-start">
         {name === 'explanation' && (
           <ExternalLinkIcon
             className={getBgColor()}
@@ -30,7 +30,7 @@ export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
             onClick={() => onClickAdd(index, 'textarea')}
           />
         )}
-        {name === 'description' && (
+        {name.startsWith('description') && (
           <ExternalLinkIcon
             className={getBgColor()}
             onClick={() => onClickAdd(index, 'link')}

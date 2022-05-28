@@ -10,7 +10,7 @@ import { ColorContext } from '../../App'
 import { PencilAltIcon } from '@heroicons/react/outline'
 import log from 'loglevel'
 import { useAppSelector } from '../../app/hooks'
-import { selectLang } from '../../slices/editSlice'
+import { selectEditContext, selectLang } from '../../slices/editSlice'
 
 interface Props {
   editElem: EditElem
@@ -41,6 +41,8 @@ export const EditBlockContent: VFC<Props> = memo(
     log.debug(index)
     log.debug(editElem)
 
+    const color = useContext(ColorContext)
+    const editContext = useAppSelector(selectEditContext)
     const nowLang = useAppSelector(selectLang)
     const shouldEdit = () => {
       if (editElem.type === "link" && editElem.link === "") {
@@ -52,7 +54,6 @@ export const EditBlockContent: VFC<Props> = memo(
       }
       return false
     }
-    const color = useContext(ColorContext)
     const [editting, setEditting] = useState(shouldEdit())
     const id = name + '_' + index
     if (!editElem.type || editElem.type === '') {
@@ -70,20 +71,27 @@ export const EditBlockContent: VFC<Props> = memo(
       setEditting(true)
     }
     return (
-      <div key={id} className={color.bgColor}>
+      <div key={id} className={color.bgColor} title="EditBlockContent">
         {editable && editting && index === 0 && (
           <EditElemAdds index={-1} name={name} onClickAdd={onClickAdd} />
         )}
-        <ul className="transform transition-transform border-gray-600 pt-4">
+        <ul className="transform transition-transform border-gray-600 my-4">
           {editable && (
-            <li className="flex flex-row-reverse pr-3">
-              <div className="flex flex-row gap-4">
+            <li className="flex justify-between items-center mb-2">
+              <div className="flex">
+                {name === 'description_for_question' && (
+                  <input type="checkbox"
+                    checked={editElem.quest_ids ? editElem.quest_ids.includes(editContext.quest_id) : false}
+                    onChange={(e) => onChangeCheck(index)} />
+                )}
+              </div>
+              <div className="flex flex-row pr-3 gap-4">
                 <PencilAltIcon
-                  className="h-5 w-5 text-gray-700 cursor-pointer hover:text-blue-500"
+                  className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
                   onClick={() => setEditting(!editting)}
                 />
                 <TrashIcon
-                  className="h-5 w-5 text-gray-700 cursor-pointer hover:text-blue-500"
+                  className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
                   onClick={() => {
                     onClickDelete(index)
                   }}

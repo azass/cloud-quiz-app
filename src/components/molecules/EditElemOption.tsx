@@ -34,7 +34,7 @@ export const EditElemOption: VFC<Props> = memo(
     log.debug(`${editElem.correct}`)
     const color = useContext(ColorContext)
     const getBgColor = () => {
-      return 'h-5 w-5 mx-4 text-gray-700 cursor-pointer hover:text-blue-500'
+      return `h-5 w-5 mx-4 ${color.iconColor} cursor-pointer hover:text-blue-500`
     }
     return (
       <>

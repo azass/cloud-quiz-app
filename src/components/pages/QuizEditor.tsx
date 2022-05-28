@@ -1,4 +1,4 @@
-import { useContext, VFC } from 'react'
+import { memo, useContext, VFC } from 'react'
 import { useParams } from 'react-router-dom'
 import { QuizEditPanel } from '../organisms/QuizEditPanel'
 import { TagSelectTab } from '../organisms/TagSelectTab'
@@ -15,7 +15,7 @@ import log from 'loglevel'
 import { Header } from '../molecules/Header'
 import { QuizSelectTab } from '../organisms/QuizSelectTab'
 
-export const QuizEditor: VFC = () => {
+export const QuizEditor: VFC = memo(() => {
   log.setLevel("info")
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
@@ -66,3 +66,4 @@ export const QuizEditor: VFC = () => {
     </>
   )
 }
+)

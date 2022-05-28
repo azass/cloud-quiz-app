@@ -10,7 +10,7 @@ interface Props {
 }
 export const EditElemTextarea: VFC<Props> = memo(
   ({ editElem, index, onChangeText, lang }) => {
-    const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-4 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${editElem.text === '' && 'bg-pink-50'
+    const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${editElem.text === '' && 'bg-pink-50'
       }`
     return (
       <>

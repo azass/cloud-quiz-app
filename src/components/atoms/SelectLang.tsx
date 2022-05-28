@@ -1,8 +1,8 @@
-import { VFC } from "react";
+import { memo, VFC } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectLang, setLangs } from "../../slices/editSlice";
 
-export const SelectLang: VFC = (() => {
+export const SelectLang: VFC = memo(() => {
   const nowLang = useAppSelector(selectLang)
   const dispatch = useAppDispatch()
   const bgcolor = (lang: number) => {

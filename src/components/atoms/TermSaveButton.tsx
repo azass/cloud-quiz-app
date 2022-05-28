@@ -10,7 +10,7 @@ import {
 import { ArrowCircleUpIcon } from '@heroicons/react/solid'
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
-import { Term } from '../../types/types'
+import { Tag, Term } from '../../types/types'
 import { useTags } from '../../hooks/useTags'
 import log from 'loglevel'
 
@@ -20,18 +20,22 @@ const config = {
   },
 }
 
-export const TermSaveButton: VFC = memo(() => {
+interface Props {
+  chosenTag: Tag
+}
+export const TermSaveButton: VFC<Props> = memo(({ chosenTag }) => {
   log.setLevel("info")
   log.debug("TermSaveButton start")
   const update = useAppSelector(selectUpdateTerm)
   const terms = useAppSelector(selectEdittingTerms)
   const editContext = useAppSelector(selectEditContext)
+  // const chosenTag = useAppSelector(selectChosenTag)
   const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
   const { getTag } = useTags()
   const [saving, setSaving] = useState(false)
   const saveTerms = () => {
-    const tag = getTag(editContext.chosenTag.tag_name)
+    const tag = getTag(chosenTag.tag_name)
     setSaving(true)
     log.debug(terms)
     const newTerms = [...terms]
@@ -86,6 +90,7 @@ export const TermSaveButton: VFC = memo(() => {
             level: term.level,
             sort: term.sort,
             provider: term.provider,
+            tag_no: term.tag_no,
             description: term.description,
           }))
         )

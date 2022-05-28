@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { memo, VFC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
@@ -12,7 +12,7 @@ import {
   tabs,
 } from '../../slices/editSlice'
 
-export const QTabs: VFC = () => {
+export const QTabs: VFC = memo(() => {
   const editedContext = useAppSelector(selectEditContext)
   const exam = useAppSelector(selectExam)
   const nowTab = useAppSelector(selectTab)
@@ -40,10 +40,9 @@ export const QTabs: VFC = () => {
         <button
           className={
             'flex-1 pt-4 pb-2 px-6 block hover:text-blue-500 focus:outline-none' +
-            `${
-              nowTab === tab
-                ? ' text-blue-500 border-b-2 font-medium border-blue-500'
-                : ' text-gray-500'
+            `${nowTab === tab
+              ? ' text-blue-500 border-b-2 font-medium border-blue-500'
+              : ' text-gray-500'
             }`
           }
           onClick={() => onCllickTab(index)}
@@ -53,4 +52,4 @@ export const QTabs: VFC = () => {
       ))}
     </nav>
   )
-}
+})

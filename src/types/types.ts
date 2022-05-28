@@ -14,6 +14,10 @@ export interface Question {
   bug_points?: Bug
 }
 
+export interface TagTerms {
+  [key: string]: Term[];
+}
+
 export interface EditElem {
   type?: string
   text?: string
@@ -24,6 +28,7 @@ export interface EditElem {
   url?: string
   mark?: string
   correct?: boolean
+  quest_ids?: string[]
 }
 
 export interface Bug {
@@ -64,10 +69,10 @@ export interface Term {
   level: number
   sort: number
   provider: string
+  tag_no: number
   selected?: boolean
   changed?: string
   draggableId?: string
-  // describe?: string
   description?: EditElem[]
 }
 
@@ -75,6 +80,7 @@ export interface EditContext {
   quest_id: string
   keywordsJson: string
   chosenTag: Tag
+  // tag_terms: TagTerms
 }
 
 export namespace EditElemType {
@@ -84,13 +90,6 @@ export namespace EditElemType {
   export const OPTION = "option"
 }
 
-// export const bgcolor = [
-//   'bg-purple-700',
-//   'bg-indigo-600',
-//   'bg-blue-500',
-//   'bg-teal-400',
-//   'bg-blue-300',
-// ]
 export const bgcolor = [
   'bg-indigo-600',
   'bg-blue-500',
@@ -109,16 +108,3 @@ export const voidTag: Tag = {
   tag_name: '',
   provider: ''
 }
-
-// export const voidQuestion: Question = {
-//   quest_id: '',
-//   quest_no: 0,
-//   exam_id: '',
-//   exam_no: 0,
-//   question_items: [],
-//   options: [],
-//   explanation: [],
-//   correct_answer: [],
-//   keywords: [],
-//   tags: [],
-// }

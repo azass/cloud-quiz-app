@@ -25,6 +25,7 @@ export const TermAddButton: VFC<Props> = memo(({ terms, tag }) => {
               level: 1,
               sort: terms.length,
               provider: tag.provider,
+              tag_no: tag.tag_no,
               changed: 'new',
             },
           ])

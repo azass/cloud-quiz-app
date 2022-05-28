@@ -21,7 +21,7 @@ export const TagSelectTab: VFC<Props> = memo(
     const tags = useAppSelector(selectExamTags)
     const [searchWord, setSearchWord] = useState('')
     return (
-      <div className="mx-6 my-6">
+      <div className="mx-6 my-6" title="TagSelectTab">
         <TagSelectHeader
           examId={params.exam_id || ''}
           selectTags={selectTags}

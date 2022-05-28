@@ -1,4 +1,4 @@
-import { useContext, VFC } from "react";
+import { memo, useContext, VFC } from "react";
 import { ColorContext } from "../../App";
 import { Bug } from "../../types/types";
 import { TrashIcon } from '@heroicons/react/solid'
@@ -8,7 +8,7 @@ interface Props {
   onClickDelete: any
 }
 
-export const QBug: VFC<Props> = (({ bug, onClickDelete }) => {
+export const QBug: VFC<Props> = memo(({ bug, onClickDelete }) => {
   const color = useContext(ColorContext)
   return (
     <>
@@ -17,7 +17,7 @@ export const QBug: VFC<Props> = (({ bug, onClickDelete }) => {
           バグ
         </div>
         <TrashIcon
-          className="h-5 w-5 text-gray-700 cursor-pointer hover:text-blue-500 mr-4"
+          className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500 mr-4`}
           onClick={() => onClickDelete()}
         />
         {("in_question" in bug && bug.in_question) && (

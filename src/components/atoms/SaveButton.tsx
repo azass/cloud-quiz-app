@@ -1,11 +1,11 @@
-import { useState, VFC } from 'react'
+import { memo, useState, VFC } from 'react'
 import log from 'loglevel'
 
 interface Props {
   onClick: any
 }
 
-export const SaveButton: VFC<Props> = ({ onClick }) => {
+export const SaveButton: VFC<Props> = memo(({ onClick }) => {
   log.debug('save button')
   const [onSaving, setOnSaving] = useState(false)
   return (
@@ -35,4 +35,4 @@ export const SaveButton: VFC<Props> = ({ onClick }) => {
       </div>
     </button>
   )
-}
+})

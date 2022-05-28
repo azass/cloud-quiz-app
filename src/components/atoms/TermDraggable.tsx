@@ -1,4 +1,4 @@
-import { VFC } from 'react'
+import { memo, VFC } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
 import { Term } from '../../types/types'
 import { EditTerm } from '../molecules/EditTerm'
@@ -7,9 +7,10 @@ interface Props {
   term: Term
   index: number
   terms: Term[]
+  forQuestion: boolean
 }
 
-export const TermDraggable: VFC<Props> = ({ term, index, terms }) => {
+export const TermDraggable: VFC<Props> = memo(({ term, index, terms, forQuestion }) => {
   return (
     <Draggable index={index} draggableId={term.term_id}>
       {(provided) => (
@@ -26,6 +27,7 @@ export const TermDraggable: VFC<Props> = ({ term, index, terms }) => {
               index={index}
               terms={terms}
               draggable={true}
+              forQuestion={forQuestion}
             />
             {/* </div> */}
           </div>
@@ -34,3 +36,4 @@ export const TermDraggable: VFC<Props> = ({ term, index, terms }) => {
     </Draggable>
   )
 }
+)

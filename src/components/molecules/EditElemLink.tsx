@@ -1,5 +1,6 @@
-import { VFC, memo } from 'react'
+import { VFC, memo, useContext } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
+import { ColorContext } from '../../App'
 import { EditElem } from '../../types/types'
 
 interface Props {
@@ -16,10 +17,11 @@ const EditElemLink: VFC<Props> = ({
   editable,
   editting,
 }) => {
-  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs text-gray-700 focus:text-white ${
+  const color = useContext(ColorContext)
+  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${color.iconColor} focus:text-white ${
     editElem.link === '' && 'bg-pink-50'
   }`
-  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs text-gray-700 focus:text-white ${
+  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${color.iconColor} focus:text-white ${
     editElem.url === '' && 'bg-pink-50'
   }`
   return (

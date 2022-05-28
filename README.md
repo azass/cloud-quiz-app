@@ -58,3 +58,12 @@ dispatch(setTab(tabs[1]))
 ````
 ## 横一列
 flex justify-start
+
+## 左メニューから用語を選択
+EditTerm > select()
+-> EditState > edittingTerms
+TermSaveButton > saveTerms()
+  edittingTerms -> db
+
+Term Editor を開く
+-> Tag に紐づく Terms を db から取得

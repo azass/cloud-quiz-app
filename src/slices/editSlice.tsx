@@ -10,6 +10,7 @@ export interface EditState {
   editedContext: EditContext
   examTags: Tag[]
   updateTerm: boolean
+  edittingTag?: Tag
   callTermEdit: boolean
   edittingTerms: Term[]
   scArgs: any
@@ -27,9 +28,11 @@ export const initialState: EditState = {
     quest_id: '',
     keywordsJson: '',
     chosenTag: voidTag,
+    // tag_terms: {}
   },
   examTags: [],
   updateTerm: false,
+  edittingTag: undefined,
   callTermEdit: false,
   edittingTerms: [],
   scArgs: {
@@ -95,6 +98,12 @@ export const editSlice = createSlice({
       console.log('>>>editSlice.resetUpdateTerm')
       state.updateTerm = initialState.updateTerm
     },
+    setEdittingTag: (state, action: PayloadAction<Tag>) => {
+      state.edittingTag = action.payload
+    },
+    resetEdittingTag: (state) => {
+      state.edittingTag = initialState.edittingTag
+    },
     setCallTermEdit: (state, action: PayloadAction<boolean>) => {
       console.log('>>>editSlice.setCallTermEdit')
       state.callTermEdit = action.payload
@@ -137,6 +146,8 @@ export const {
   resetExamTags,
   setUpdateTerm,
   resetUpdateTerm,
+  setEdittingTag,
+  resetEdittingTag,
   setCallTermEdit,
   resetCallTermEdit,
   setEdittingTerms,
@@ -154,6 +165,7 @@ export const selectEditedContent = (state: RootState) =>
 export const selectEditContext = (state: RootState) => state.edit.editedContext
 export const selectExamTags = (state: RootState) => state.edit.examTags
 export const selectUpdateTerm = (state: RootState) => state.edit.updateTerm
+export const selectEdittingTag = (state: RootState) => state.edit.edittingTag
 export const selectCallTermEdit = (state: RootState) => state.edit.callTermEdit
 export const selectEdittingTerms = (state: RootState) =>
   state.edit.edittingTerms

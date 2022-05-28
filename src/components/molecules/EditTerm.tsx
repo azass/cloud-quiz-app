@@ -11,18 +11,20 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { useEditElem } from '../../hooks/useEditElem'
 import { EditTermDescription } from './EditTermDesciption'
 import log from 'loglevel'
+import { PencilAltIcon } from '@heroicons/react/outline'
 
 interface Props {
   term: Term
   index: number
   terms: Term[]
   draggable?: boolean
+  forQuestion: boolean
 }
 export const EditTerm: VFC<Props> = memo(
-  ({ term, index, terms, draggable }) => {
+  ({ term, index, terms, draggable, forQuestion }) => {
     log.setLevel("info")
     const updateTem = useAppSelector(selectUpdateTerm)
-    const [editable, setEditable] = useState(false)
+    const [editting, setEditting] = useState(false)
     const [termId, setTermId] = useState(term.term_id)
     const [word, setWord] = useState(term.word)
     const [level, setLevel] = useState(term.level)
@@ -35,7 +37,7 @@ export const EditTerm: VFC<Props> = memo(
     const dispatch = useAppDispatch()
     const { editElemsState } = useEditElem([])
     const enter = () => {
-      setEditable(false)
+      setEditting(false)
       if (word !== term.word || level !== term.level) {
         const newTerms = [...terms]
         const term = {
@@ -58,48 +60,49 @@ export const EditTerm: VFC<Props> = memo(
       setDescribe(!describe)
     }
     const select = () => {
-      const newTerms = [...terms]
-      const newTerm = { ...newTerms[index] }
-      newTerm.selected = !term.selected
-      newTerms[index] = newTerm
-      dispatch(setEdittingTerms(newTerms))
-      if (!updateTem) dispatch(setUpdateTerm(true))
+      if (forQuestion) {
+        const newTerms = [...terms]
+        const newTerm = { ...newTerms[index] }
+        newTerm.selected = !term.selected
+        newTerms[index] = newTerm
+        dispatch(setEdittingTerms(newTerms))
+        if (!updateTem) dispatch(setUpdateTerm(true))
+      }
     }
     const remove = () => {
-      setEditable(false)
+      setEditting(false)
       const newTerms = [...terms]
       newTerms.splice(index, 1)
       dispatch(setEdittingTerms(newTerms))
       if (!updateTem) dispatch(setUpdateTerm(true))
     }
-    const getBgColor = () => {
-      return `${
-        term.selected ? selectedBgcolor[level - 1] : bgcolor[level - 1]
-      }`
+    const getBgColor = (lv: number) => {
+      return `${term.selected ? selectedBgcolor[lv - 1] : bgcolor[lv - 1]
+        }`
     }
     return (
-      <div onDoubleClick={() => (editable ? enter() : setEditable(true))}>
+      <div>
         <div
           className={
             `${draggable && `pl-${term.level * 8}`} ` +
             'place-items-center flex justify-between border rounded-full my-1 py-1 mx-1 pr-2 ' +
             'text-white font-bold text-sm text-center ' +
-            getBgColor()
+            getBgColor(level)
           }
         >
           <div className="flex items-center">
             {draggable && (
               <AcademicCapIcon
-                className="w-6 h-6"
+                className="w-6 h-6 cursor-pointer"
                 onClick={() => onClickDescribe()}
               />
             )}
-            {!editable ? (
+            {!editting ? (
               <span
                 key={term.term_id}
                 className={
-                  'rounded-full px-6 py-1 text-left text-white font-black text-base cursor-pointer ' +
-                  getBgColor()
+                  'rounded-full px-6 py-1 text-left text-white text-sm font-black ' +
+                  `${forQuestion && 'cursor-pointer '}` + getBgColor(level)
                 }
                 onClick={() => select()}
               >
@@ -116,7 +119,7 @@ export const EditTerm: VFC<Props> = memo(
                 <div
                   className={
                     ' place-items-center flex border-0 bg-opacity-0 ' +
-                    getBgColor()
+                    getBgColor(level)
                   }
                 >
                   <TextareaAutosize
@@ -130,25 +133,23 @@ export const EditTerm: VFC<Props> = memo(
                     onChange={(e) => setLevel(Number(e.target.value))}
                   >
                     {[1, 2, 3, 4].map((i) => (
-                      <option className={getBgColor()} value={`${i}`}></option>
+                      <option className={getBgColor(i)} value={`${i}`}></option>
                     ))}
                   </select>
                 </div>
               </form>
             )}
+            <PencilAltIcon className="w-6 h-6 ml-4 mr-1 cursor-pointer" onClick={() => (editting ? enter() : setEditting(true))} />
           </div>
-          {editable && (
-            <XCircleIcon
-              className="w-6 h-6 ml-1 mr-1"
-              onClick={() => remove()}
-            />
+          {editting && (
+            <XCircleIcon className="w-6 h-6 mx-1" onClick={() => remove()} />
           )}
         </div>
-        {!editable && describe && (
-          <EditTermDescription term={term} editable={false} />
+        {!editting && describe && (
+          <EditTermDescription term={term} editable={false} forQuestion={forQuestion} />
         )}
-        {editable && draggable && describe && (
-          <EditTermDescription term={term} editable={true} />
+        {editting && draggable && describe && (
+          <EditTermDescription term={term} editable={true} forQuestion={forQuestion} />
         )}
       </div>
     )

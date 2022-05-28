@@ -77,7 +77,8 @@ export const useMutateTerms = () => {
             word: term.word,
             level: term.level,
             sort: term.sort,
-            provider: term.provider
+            provider: term.provider,
+            tag_no: term.tag_no
           }))
         )
         dispatch(setEditContext(newEditContext))

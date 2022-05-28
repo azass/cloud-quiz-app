@@ -8,7 +8,7 @@ export const QuizSelectFrame: VFC = memo(() => {
   const [selectNo, setSelectNo] = useState('')
   return (
     <>
-      <div className="inline-flex pl-6 pb-6 space-x-4">
+      <div className="inline-flex pl-6 pb-6 space-x-4" title="QuizSelectFrame">
         <Link to={`/editor/${params.exam_id}/${params.exam_id}-${selectNo}`}>
           <PencilAltIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" />
         </Link>

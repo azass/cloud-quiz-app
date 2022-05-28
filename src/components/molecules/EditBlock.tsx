@@ -49,7 +49,7 @@ export const EditBlock: VFC<Props> = memo(
      * for scraping
      * if no content; set new content
      */
-    if (editElemsState.length === 0 && editElemsState !== editElems) {
+    if (editElemsState.length === 0 && editElemsState !== editElems && name !== 'explanation') {
       log.debug('EditBlock new!!!')
       setEditElemsState(editElems)
     }
@@ -74,7 +74,7 @@ export const EditBlock: VFC<Props> = memo(
     }
 
     return (
-      <div className={`pb-2  ${color.bgColor}`}>
+      <div className={`pb-2  ${color.bgColor}`} title="EditBlock">
         <div className={`flex gap-2 my-4 font-bold ${color.baseText}`}>
           {title}
           {name === 'options' && (
@@ -86,7 +86,7 @@ export const EditBlock: VFC<Props> = memo(
         </div>
         {editElemsState.length === 0 ? (
           <EditElemAdds index={-1} name={name} onClickAdd={add} />
-         ) : (
+        ) : (
           editElemsState.map((editElem, index) => (
             <EditBlockContent
               editElem={editElem}

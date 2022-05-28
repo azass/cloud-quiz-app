@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 export const ColorContext = createContext({
   bgColor: 'bg-gray-800',
   baseText: 'text-white',
+  iconColor: 'text-gray-600',
 })
 
 const queryClient = new QueryClient({

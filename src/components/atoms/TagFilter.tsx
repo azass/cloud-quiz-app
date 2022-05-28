@@ -1,11 +1,11 @@
 import { SearchCircleIcon } from '@heroicons/react/solid'
-import { VFC } from 'react'
+import { memo, VFC } from 'react'
 interface Props {
   setSearchWord: any
 }
-export const TagFilter: VFC<Props> = ({ setSearchWord }) => {
+export const TagFilter: VFC<Props> = memo(({ setSearchWord }) => {
   return (
-    <div className="flex flex-row items-center pt-4">
+    <div className="flex flex-row items-center pt-4" title="TagFilter">
       <SearchCircleIcon className="w-6 h-6 ml-4" />
       <form className="bg-opacity-0 pl-4 pr-12">
         <input
@@ -16,4 +16,4 @@ export const TagFilter: VFC<Props> = ({ setSearchWord }) => {
       </form>
     </div>
   )
-}
+})
