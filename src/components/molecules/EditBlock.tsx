@@ -7,6 +7,7 @@ import { useEditElem } from '../../hooks/useEditElem'
 import { ColorContext } from '../../App'
 import { EyeIcon } from '@heroicons/react/outline'
 import log, { setLevel } from 'loglevel'
+import { PencilAltIcon } from '@heroicons/react/solid'
 
 interface Props {
   questId: string
@@ -44,7 +45,7 @@ export const EditBlock: VFC<Props> = memo(
       setEditElemsState(editElems)
       setSaveButtonToggle(false)
     }
-
+    const [enableEdit, setEnableEdit] = useState(false)
     /**
      * for scraping
      * if no content; set new content
@@ -83,6 +84,12 @@ export const EditBlock: VFC<Props> = memo(
               onClick={() => setShowCheckbox(!showCheckbox)}
             />
           )}
+          <div>
+                <PencilAltIcon
+                  className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+                  onClick={() => setEnableEdit(!enableEdit)}
+                />
+          </div>
         </div>
         {editElemsState.length === 0 ? (
           <EditElemAdds index={-1} name={name} onClickAdd={add} />
@@ -98,6 +105,7 @@ export const EditBlock: VFC<Props> = memo(
               onChangeCheck={changeCheck}
               showCheckbox={showCheckbox}
               editable={editable}
+              enableEdit={enableEdit}
             />
           )))}
         <div className="flex justify-center mx-auto">

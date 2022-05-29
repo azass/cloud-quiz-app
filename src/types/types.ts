@@ -16,6 +16,7 @@ export interface Question {
   is_difficult?: boolean
   is_weak?: boolean
   is_mandatory?: boolean
+  learning_note?: string
 }
 
 export interface TagTerms {

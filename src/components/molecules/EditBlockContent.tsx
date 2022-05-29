@@ -7,10 +7,9 @@ import { EditElemImage } from './EditElemImage'
 import { EditElemAdds } from '../atoms/EditElemAdds'
 import { EditElemOption } from './EditElemOption'
 import { ColorContext } from '../../App'
-import { PencilAltIcon } from '@heroicons/react/outline'
-import log from 'loglevel'
 import { useAppSelector } from '../../app/hooks'
 import { selectEditContext, selectLang } from '../../slices/editSlice'
+import log from 'loglevel'
 
 interface Props {
   editElem: EditElem
@@ -22,6 +21,7 @@ interface Props {
   onChangeCheck: any
   showCheckbox?: boolean
   editable: boolean
+  enableEdit: boolean
 }
 
 export const EditBlockContent: VFC<Props> = memo(
@@ -35,21 +35,18 @@ export const EditBlockContent: VFC<Props> = memo(
     onChangeCheck,
     showCheckbox,
     editable,
+    enableEdit,
   }) => {
-    log.setLevel("info")
-    log.debug('EditBlock start!')
-    log.debug(index)
-    log.debug(editElem)
-
+    log.setLevel('info')
     const color = useContext(ColorContext)
     const editContext = useAppSelector(selectEditContext)
     const nowLang = useAppSelector(selectLang)
     const shouldEdit = () => {
-      if (editElem.type === "link" && editElem.link === "") {
+      if (editElem.type === 'link' && editElem.link === '') {
         return true
-      } else if (editElem.type === "image" && editElem.image_path === "") {
+      } else if (editElem.type === 'image' && editElem.image_path === '') {
         return true
-      } else if (editElem.type === "textarea" && editElem.text === "") {
+      } else if (editElem.type === 'textarea' && editElem.text === '') {
         return true
       }
       return false
@@ -67,8 +64,13 @@ export const EditBlockContent: VFC<Props> = memo(
         editElem.type = EditElemType.IMAGE
       }
     }
+
     if (!editting && shouldEdit()) {
       setEditting(true)
+    } else {
+      if (editting !== enableEdit) {
+        setEditting(enableEdit)
+      }
     }
     return (
       <div key={id} className={color.bgColor} title="EditBlockContent">
@@ -80,16 +82,18 @@ export const EditBlockContent: VFC<Props> = memo(
             <li className="flex justify-between items-center mb-2">
               <div className="flex">
                 {name === 'description_for_question' && (
-                  <input type="checkbox"
-                    checked={editElem.quest_ids ? editElem.quest_ids.includes(editContext.quest_id) : false}
-                    onChange={(e) => onChangeCheck(index)} />
+                  <input
+                    type="checkbox"
+                    checked={
+                      editElem.quest_ids
+                        ? editElem.quest_ids.includes(editContext.quest_id)
+                        : false
+                    }
+                    onChange={(e) => onChangeCheck(index)}
+                  />
                 )}
               </div>
               <div className="flex flex-row pr-3 gap-4">
-                <PencilAltIcon
-                  className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-                  onClick={() => setEditting(!editting)}
-                />
                 <TrashIcon
                   className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
                   onClick={() => {

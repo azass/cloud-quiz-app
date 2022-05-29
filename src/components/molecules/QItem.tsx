@@ -22,7 +22,7 @@ export const QItem: VFC<Props> = memo(({ question }) => {
     <li className="inline-flex my-3 space-x-4" title="QItem">
       <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
         <PencilAltIcon
-          className="h-5 w-5 mx-1 text-blue-500 cursor-pointer"
+          className="h-5 w-5 mx-1 mt-1 text-blue-500 cursor-pointer"
           onClick={() => {
             dispatch(
               setEditContext({
@@ -36,7 +36,7 @@ export const QItem: VFC<Props> = memo(({ question }) => {
           }}
         />
       </Link>
-      <span className={`font-bold w-3 ${color.baseText}`}>
+      <span className={`font-bold w-3 mt-2 ${color.baseText}`}>
         Q{question.quest_no}
       </span>
       <div className="pl-4">

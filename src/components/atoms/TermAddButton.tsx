@@ -8,28 +8,26 @@ import { Tag, Term } from '../../types/types'
 interface Props {
   terms: Term[]
   tag: Tag
+  index: number
 }
 
-export const TermAddButton: VFC<Props> = memo(({ terms, tag }) => {
+export const TermAddButton: VFC<Props> = memo(({ terms, tag, index }) => {
   const dispatch = useAppDispatch()
   return (
     <PlusCircleIcon
-      className="w-10 h-10 pt-2 text-red-600"
+      className="w-6 h-6 text-white ml-2"
       onClick={() => {
-        dispatch(
-          setEdittingTerms([
-            ...terms,
-            {
-              term_id: `trm-${uuidv4().substring(0, 6)}`,
-              word: '',
-              level: 1,
-              sort: terms.length,
-              provider: tag.provider,
-              tag_no: tag.tag_no,
-              changed: 'new',
-            },
-          ])
-        )
+        const newTerms = [...terms]
+        newTerms.splice(index + 1, 0, {
+          term_id: `trm-${uuidv4().substring(0, 6)}`,
+          word: '',
+          level: 1,
+          sort: terms.length,
+          provider: tag.provider,
+          tag_no: tag.tag_no,
+          changed: 'new',
+        })
+        dispatch(setEdittingTerms(newTerms))
       }}
     />
   )

@@ -10,7 +10,7 @@ import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
 
 export const QuizListFrame: VFC = memo(() => {
-  log.setLevel("info")
+  log.setLevel('info')
   log.debug('<QuizListFrame>')
   const color = useContext(ColorContext)
   const params = useParams()
@@ -32,22 +32,23 @@ export const QuizListFrame: VFC = memo(() => {
             return true
           } else {
             if (keywords[tagName].length > 0) {
-              return keywords[tagName].filter((term: Term) => {
-                return term.word
-                  .toLowerCase()
-                  .includes(searchWord.toLowerCase())
-              }).length > 0
-            } else {
-              return false
+              if (
+                keywords[tagName].filter((term: Term) => {
+                  return term.word
+                    .toLowerCase()
+                    .includes(searchWord.toLowerCase())
+                }).length > 0
+              ) {
+                return true
+              }
             }
           }
         }
-      } else {
-        return false
       }
     } else {
       return true
     }
+    return false
   }
   return (
     <div id="navWrapper" className={color.bgColor} title="QuizListFrame">
@@ -60,12 +61,13 @@ export const QuizListFrame: VFC = memo(() => {
       >
         {data?.map((question) => (
           <>
-            {show(question) &&
+            {show(question) && (
               <div key={question.quest_id}>
                 <ul>
                   <QItem question={question} />
                 </ul>
-              </div>}
+              </div>
+            )}
           </>
         ))}
       </nav>

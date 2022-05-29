@@ -36,7 +36,9 @@ export const TermEditFrame: VFC = memo(() => {
 
   if (callTermEdit) {
     if (editedContext.forQuestion) {
-      const selectedTerms: Term[] = JSON.parse(editedContext.keywordsJson)[editedContext.chosenTag.tag_name]
+      const selectedTerms: Term[] = JSON.parse(editedContext.keywordsJson)[
+        editedContext.chosenTag.tag_name
+      ]
       const selectedTermIds = selectedTerms.map((term) => term.term_id)
       if (data) {
         const newTerms: Term[] = []
@@ -91,27 +93,43 @@ export const TermEditFrame: VFC = memo(() => {
                     ref={provided.innerRef}
                   >
                     {terms.map((term, index) => (
-                      <div key={term.term_id}>
+                      <div
+                        key={term.term_id}
+                        className="flex justify-between items-center"
+                      >
                         <TermDraggable
                           term={term}
                           index={index}
                           terms={terms}
                           forQuestion={editedContext.forQuestion}
                         />
+                        <TermAddButton
+                          terms={terms}
+                          tag={editedContext.chosenTag}
+                          index={index}
+                        />
                       </div>
                     ))}
-                    <TermAddButton terms={terms} tag={editedContext.chosenTag} />
                     {provided.placeholder}
                   </div>
                 )}
               </Droppable>
             </DragDropContext>
           ) : (
-            <div className="flex flex-wrap justify-start pt-8 pb-60">
+            <div className="flex flex-wrap justify-start items-center pt-8 pb-60">
               {terms.map((term, index) => (
-                <EditTerm term={term} index={index} terms={terms} forQuestion={editedContext.forQuestion} />
+                <EditTerm
+                  term={term}
+                  index={index}
+                  terms={terms}
+                  forQuestion={editedContext.forQuestion}
+                />
               ))}
-              <TermAddButton terms={terms} tag={editedContext.chosenTag} />
+              <TermAddButton
+                terms={terms}
+                tag={editedContext.chosenTag}
+                index={terms.length}
+              />
             </div>
           )}
         </nav>

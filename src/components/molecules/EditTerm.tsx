@@ -24,7 +24,7 @@ export const EditTerm: VFC<Props> = memo(
   ({ term, index, terms, draggable, forQuestion }) => {
     log.setLevel("info")
     const updateTem = useAppSelector(selectUpdateTerm)
-    const [editting, setEditting] = useState(false)
+    const [editting, setEditting] = useState(term.changed === 'new')
     const [termId, setTermId] = useState(term.term_id)
     const [word, setWord] = useState(term.word)
     const [level, setLevel] = useState(term.level)
@@ -85,7 +85,7 @@ export const EditTerm: VFC<Props> = memo(
         <div
           className={
             `${draggable && `pl-${term.level * 8}`} ` +
-            'place-items-center flex justify-between border rounded-full my-1 py-1 mx-1 pr-2 ' +
+            'place-items-center flex justify-between border rounded-full my-1 mx-1 pr-2 ' +
             'text-white font-bold text-sm text-center ' +
             getBgColor(level)
           }
@@ -93,7 +93,7 @@ export const EditTerm: VFC<Props> = memo(
           <div className="flex items-center">
             {draggable && (
               <AcademicCapIcon
-                className="w-6 h-6 cursor-pointer"
+                className="w-4 h-4 cursor-pointer"
                 onClick={() => onClickDescribe()}
               />
             )}
@@ -118,7 +118,7 @@ export const EditTerm: VFC<Props> = memo(
               >
                 <div
                   className={
-                    ' place-items-center flex border-0 bg-opacity-0 ' +
+                    'place-items-center flex border-0 bg-opacity-0 ' +
                     getBgColor(level)
                   }
                 >
@@ -139,10 +139,10 @@ export const EditTerm: VFC<Props> = memo(
                 </div>
               </form>
             )}
-            <PencilAltIcon className="w-6 h-6 ml-4 mr-1 cursor-pointer" onClick={() => (editting ? enter() : setEditting(true))} />
+            <PencilAltIcon className="w-4 h-4 ml-4 mr-1 cursor-pointer" onClick={() => (editting ? enter() : setEditting(true))} />
           </div>
           {editting && (
-            <XCircleIcon className="w-6 h-6 mx-1" onClick={() => remove()} />
+            <XCircleIcon className="w-6 h-6 mx-1 cursor-pointer" onClick={() => remove()} />
           )}
         </div>
         {!editting && describe && (

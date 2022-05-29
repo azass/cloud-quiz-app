@@ -123,6 +123,7 @@ export const EditTermDescription: VFC<Props> = memo(({ term, editable, forQuesti
               onChangeText={changeText}
               onChangeCheck={changeCheck}
               editable={editable}
+              enableEdit={editable}
             />
           ))
         )}

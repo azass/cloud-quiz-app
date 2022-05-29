@@ -126,13 +126,22 @@ export const QuizEditPanel: VFC = memo(() => {
             editable={true}
           />
           <QScraping question={question} setQuestion={setQuestion} />
-          {"is_bug" in question && question.is_bug && question.bug_points && (
+          {'is_bug' in question && question.is_bug && question.bug_points && (
             <QBug bug={question.bug_points} onClickDelete={onClickDelete} />
           )}
           <div className="pt-10">
-            <QKeywords question={question} keywords={getKeywordsJson()} withAdd={true} />
-            <div className={`flex gap-2 mt-8 mb-4 underline font-bold ${color.baseText}`}>参照ドキュメント</div>
-            <QTermDescriptions quest_id={questId} keywords={getKeywordsJson()} />
+            <QKeywords
+              question={question}
+              keywords={getKeywordsJson()}
+              withAdd={true}
+            />
+            <div className={`flex gap-2 mt-12 mb-4 font-bold ${color.baseText}`}>
+              リファレンス
+            </div>
+            <QTermDescriptions
+              quest_id={questId}
+              keywords={getKeywordsJson()}
+            />
           </div>
           <EditBlock
             questId={questId}
@@ -141,6 +150,9 @@ export const QuizEditPanel: VFC = memo(() => {
             editElems={question.explanation || []}
             editable={true}
           />
+          <div className={`flex gap-2 mt-12 mb-4 font-bold ${color.baseText}`}>
+            学習プロファイル
+          </div>
           <QLeaningProfiles question={question} />
         </>
       )}

@@ -14,7 +14,7 @@ export const TermDraggable: VFC<Props> = memo(({ term, index, terms, forQuestion
   return (
     <Draggable index={index} draggableId={term.term_id}>
       {(provided) => (
-        <div className="">
+        <div className="w-full">
           <div
             // className={`z-10 w-0 h-0 pl-${term.level * 8}`}
             ref={provided.innerRef}
