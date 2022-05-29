@@ -12,6 +12,10 @@ export interface Question {
   original_url?: string
   is_bug?: boolean
   bug_points?: Bug
+  more_study?: boolean
+  is_difficult?: boolean
+  is_weak?: boolean
+  is_mandatory?: boolean
 }
 
 export interface TagTerms {
@@ -80,6 +84,7 @@ export interface EditContext {
   quest_id: string
   keywordsJson: string
   chosenTag: Tag
+  forQuestion: boolean
   // tag_terms: TagTerms
 }
 

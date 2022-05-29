@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectEditContext, setTab, tabs } from '../../slices/editSlice'
 import { QBug } from '../molecules/QBug'
 import { QTermDescriptions } from '../molecules/QTermDescriptions'
+import { QLeaningProfiles } from '../molecules/QLeaningProfiles'
 
 export const QuizEditPanel: VFC = memo(() => {
   log.setLevel('info')
@@ -140,6 +141,7 @@ export const QuizEditPanel: VFC = memo(() => {
             editElems={question.explanation || []}
             editable={true}
           />
+          <QLeaningProfiles question={question} />
         </>
       )}
     </>

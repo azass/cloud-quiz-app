@@ -25,6 +25,7 @@ export const QKeywords: VFC<Props> = memo(({ question, keywords, withAdd }) => {
         quest_id: question.quest_id,
         keywordsJson: JSON.stringify(keywords),
         chosenTag: voidTag,
+        forQuestion: true
         // tag_terms: keywords
       })
     )

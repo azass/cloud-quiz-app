@@ -36,11 +36,20 @@ export const useMutateQuestion = () => {
 
   const updateQuestion = (question: Question) => {
     axios.put(`${process.env.REACT_APP_REST_URL}/question`, question, config)
-    .then((response) => {
-      queryClient.setQueryData<Question>(
-        question.quest_id, question
-      )
-    }).catch((error) => console.log(error))
+      .then((response) => {
+        queryClient.setQueryData<Question>(
+          question.quest_id, question
+        )
+      }).catch((error) => console.log(error))
+  }
+
+  const putQuestion = (requestData: any, question: Question) => {
+    axios.put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
+      .then((response) => {
+        queryClient.setQueryData<Question>(
+          question.quest_id, question
+        )
+      }).catch((error) => console.log(error))
   }
 
   const deleteBug = (question: Question) => {
@@ -49,16 +58,17 @@ export const useMutateQuestion = () => {
       is_bug: question.is_bug
     }
     axios.put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
-    .then((response) => {
-      queryClient.setQueryData<Question>(
-        question.quest_id, question
-      )
-    }).catch((error) => console.log(error))
+      .then((response) => {
+        queryClient.setQueryData<Question>(
+          question.quest_id, question
+        )
+      }).catch((error) => console.log(error))
   }
 
   return {
     createQuestion,
     updateQuestion,
+    putQuestion,
     deleteBug
   }
 }

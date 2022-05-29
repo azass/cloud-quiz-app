@@ -7,11 +7,9 @@ import {
   selectEdittingTerms,
   resetCallTermEdit,
   setEdittingTerms,
-  selectEdittingTag,
-  resetEdittingTag,
 } from '../../slices/editSlice'
 import { useQueryTerms } from '../../hooks/useQueryTerms'
-import { Tag, Term, voidTag } from '../../types/types'
+import { Tag, Term } from '../../types/types'
 import { TermSaveButton } from '../atoms/TermSaveButton'
 import { EditTerm } from '../molecules/EditTerm'
 import { TermAddButton } from '../atoms/TermAddButton'
@@ -28,26 +26,16 @@ export const TermEditFrame: VFC = memo(() => {
   const [draggable, setDraggable] = useState(true)
   const dispatch = useAppDispatch()
   const editedContext = useAppSelector(selectEditContext)
-  const edittingTag = useAppSelector(selectEdittingTag)
-  const [chosenTag, setChosenTag] = useState<Tag>(edittingTag ? { ...edittingTag } : editedContext.chosenTag)
-  const [forQuestion] = useState(!edittingTag)
   const callTermEdit = useAppSelector(selectCallTermEdit)
   const terms = useAppSelector(selectEdittingTerms)
 
-  const { status, data } = useQueryTerms(chosenTag)
+  const { status, data } = useQueryTerms(editedContext.chosenTag)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>
   if (status === 'error') return <div>{'Error'}</div>
 
   if (callTermEdit) {
-    if (edittingTag) {
-      setChosenTag(edittingTag)
-      if (data) {
-        dispatch(setEdittingTerms(data))
-      }
-      dispatch(resetEdittingTag())
-    } else {
-      setChosenTag(editedContext.chosenTag)
+    if (editedContext.forQuestion) {
       const selectedTerms: Term[] = JSON.parse(editedContext.keywordsJson)[editedContext.chosenTag.tag_name]
       const selectedTermIds = selectedTerms.map((term) => term.term_id)
       if (data) {
@@ -59,6 +47,10 @@ export const TermEditFrame: VFC = memo(() => {
           })
         }
         dispatch(setEdittingTerms(newTerms))
+      }
+    } else {
+      if (data) {
+        dispatch(setEdittingTerms(data))
       }
     }
     dispatch(resetCallTermEdit())
@@ -83,9 +75,9 @@ export const TermEditFrame: VFC = memo(() => {
             setDraggable(!draggable)
           }}
         >
-          {chosenTag.tag_name}
+          {editedContext.chosenTag.tag_name}
         </span>
-        <TermSaveButton chosenTag={chosenTag} />
+        <TermSaveButton chosenTag={editedContext.chosenTag} />
       </div>
       <div id="navWrapper" className={color.bgColor}>
         <nav id="nav" className="px-6 overflow-y-auto text-base h-screen pb-60">
@@ -104,11 +96,11 @@ export const TermEditFrame: VFC = memo(() => {
                           term={term}
                           index={index}
                           terms={terms}
-                          forQuestion={forQuestion}
+                          forQuestion={editedContext.forQuestion}
                         />
                       </div>
                     ))}
-                    <TermAddButton terms={terms} tag={chosenTag} />
+                    <TermAddButton terms={terms} tag={editedContext.chosenTag} />
                     {provided.placeholder}
                   </div>
                 )}
@@ -117,9 +109,9 @@ export const TermEditFrame: VFC = memo(() => {
           ) : (
             <div className="flex flex-wrap justify-start pt-8 pb-60">
               {terms.map((term, index) => (
-                <EditTerm term={term} index={index} terms={terms} forQuestion={forQuestion} />
+                <EditTerm term={term} index={index} terms={terms} forQuestion={editedContext.forQuestion} />
               ))}
-              <TermAddButton terms={terms} tag={chosenTag} />
+              <TermAddButton terms={terms} tag={editedContext.chosenTag} />
             </div>
           )}
         </nav>

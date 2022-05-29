@@ -29,6 +29,7 @@ export const QItem: VFC<Props> = memo(({ question }) => {
                 quest_id: question.quest_id,
                 keywordsJson: question.keywords || "",
                 chosenTag: voidTag,
+                forQuestion: true
                 // tag_terms: {}
               })
             )
