@@ -12,6 +12,7 @@ import {
   setTab,
   tabs,
 } from '../../slices/editSlice'
+import { optionElemsState } from '../../store/qauisElemsState'
 interface Props {
   examId: string
   selectTags: string[]
@@ -31,7 +32,7 @@ export const SearchButtonSet: VFC<Props> = memo(
       } else {
         return selectOptions.length === 0
           ? 'text-white bg-blue-600'
-          : 'text-gray-500 bg-gray-300'
+          : 'text-white bg-red-300'
       }
     }
     const noSelectBgcolor = () => {
@@ -39,6 +40,13 @@ export const SearchButtonSet: VFC<Props> = memo(
         return ' bg-blue-500'
       } else {
         return ''
+      }
+    }
+    const onClick0 = () => {
+      if (selectOptions.includes(-2)) {
+        setSelectOptions([])
+      } else {
+        setSelectOptions([...selectOptions, -2])
       }
     }
     const onClick = (option?: number) => {
@@ -56,6 +64,7 @@ export const SearchButtonSet: VFC<Props> = memo(
         }
       }
     }
+
     const search = () => {
       const argTags = tags
         .filter((tag) => selectTags.includes(tag.tag_name))
@@ -92,9 +101,9 @@ export const SearchButtonSet: VFC<Props> = memo(
                 'rounded-full w-full p-2 bg-blue-500 text-white font-bold ' +
                 getBgColor()
               }
-              onClick={() => onClick()}
+              onClick={() => onClick0()}
             >
-              すべて
+              {selectOptions.includes(-2) ? "対象外" : "すべて"}
             </button>
           </div>
           <div className="w-1/6 px-2">

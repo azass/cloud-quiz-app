@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Question } from '../types/types'
 import log from 'loglevel'
 
-export const useQueryQuestions = (args:any) => {
+export const useQueryQuestions = (args: any) => {
   log.setLevel("info")
   const getQuestions = async () => {
     log.debug(">>>>getQuestions")
@@ -20,7 +20,7 @@ export const useQueryQuestions = (args:any) => {
   return useQuery<Question[], Error>({
     queryKey: args.exam_ids[0],
     queryFn: getQuestions,
-    staleTime: 300,
-    refetchOnWindowFocus: true,
+    // staleTime: 300,
+    // refetchOnWindowFocus: true,
   })
 }

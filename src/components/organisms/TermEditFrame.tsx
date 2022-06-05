@@ -93,22 +93,26 @@ export const TermEditFrame: VFC = memo(() => {
                     ref={provided.innerRef}
                   >
                     {terms.map((term, index) => (
-                      <div
-                        key={term.term_id}
-                        className="flex justify-between items-center"
-                      >
-                        <TermDraggable
-                          term={term}
-                          index={index}
-                          terms={terms}
-                          forQuestion={editedContext.forQuestion}
-                        />
-                        <TermAddButton
-                          terms={terms}
-                          tag={editedContext.chosenTag}
-                          index={index}
-                        />
-                      </div>
+                      <>
+                        {term.changed !== "delete" && (
+                          <div
+                            key={term.term_id}
+                            className="flex justify-between items-center"
+                          >
+                            <TermDraggable
+                              term={term}
+                              index={index}
+                              terms={terms}
+                              forQuestion={editedContext.forQuestion}
+                            />
+                            <TermAddButton
+                              terms={terms}
+                              tag={editedContext.chosenTag}
+                              index={index}
+                            />
+                          </div>
+                        )}
+                      </>
                     ))}
                     {provided.placeholder}
                   </div>

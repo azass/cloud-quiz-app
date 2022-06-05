@@ -14,6 +14,7 @@ import { selectEditContext, setTab, tabs } from '../../slices/editSlice'
 import { QBug } from '../molecules/QBug'
 import { QTermDescriptions } from '../molecules/QTermDescriptions'
 import { QLeaningProfiles } from '../molecules/QLeaningProfiles'
+import { QLabels } from '../molecules/QLabels'
 
 export const QuizEditPanel: VFC = memo(() => {
   log.setLevel('info')
@@ -154,6 +155,7 @@ export const QuizEditPanel: VFC = memo(() => {
             学習プロファイル
           </div>
           <QLeaningProfiles question={question} />
+          <QLabels question={question} readonly={false} />
         </>
       )}
     </>

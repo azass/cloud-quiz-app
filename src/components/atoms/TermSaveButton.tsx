@@ -44,14 +44,14 @@ export const TermSaveButton: VFC<Props> = memo(({ chosenTag }) => {
         newTerms.splice(index, 1, {
           ...term,
           sort: index + 1,
-          changed: term.changed === 'new' ? 'new' : 'update',
+          changed: (term.changed === 'new' || term.changed === 'delete') ? term.changed : 'update',
         })
       }
     })
     log.debug(newTerms)
 
     const newTerms2 = newTerms.filter(
-      (term) => term.changed === 'new' || term.changed === 'update'
+      (term) => term.changed === 'new' || term.changed === 'update' || term.changed === 'delete'
     )
     log.debug(newTerms2)
     const selectedTerms = newTerms
@@ -82,9 +82,10 @@ export const TermSaveButton: VFC<Props> = memo(({ chosenTag }) => {
       .then((response) => {
         let result = response.data
         log.debug(result)
+        const newTerms3 = newTerms.filter((term) => term.changed !== 'delete')
         queryClient.setQueryData<Term[]>(
           tag?.provider + '_' + tag?.tag_no,
-          newTerms.map((term) => ({
+          newTerms3.map((term) => ({
             term_id: term.term_id,
             word: term.word,
             level: term.level,

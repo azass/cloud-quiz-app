@@ -22,22 +22,18 @@ export const QuizSelectTab: VFC = memo(() => {
           <SelectLang />
         </div>
       </div>
-      {(() => {
-        if (editedContent === 'QuizList') {
-          return (
-            <QuizSelectFrame />
-          )
-        } else if (editedContent === 'TagSelect') {
-          return (
-            <TagSelectTab
-              selectTags={Object.keys(keywords)}
-              onClickTag={onClickTag}
-            />
-          )
-        } else if (editedContent === 'TermEdit') {
-          return <TermEditFrame />
-        }
-      })()}
+      <div className={`${editedContent === 'QuizList' ? '' : 'hidden'}`}>
+        <QuizSelectFrame />
+      </div>
+      <div className={`${editedContent === 'TagSelect' ? '' : 'hidden'}`}>
+        <TagSelectTab
+          selectTags={Object.keys(keywords)}
+          onClickTag={onClickTag}
+        />
+      </div>
+      <div className={`${editedContent === 'TermEdit' ? '' : 'hidden'}`}>
+        <TermEditFrame />
+      </div>
     </div>
   )
 })

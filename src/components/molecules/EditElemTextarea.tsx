@@ -7,9 +7,11 @@ interface Props {
   index: number
   onChangeText: any
   lang: number
+  editable: boolean
+  editting: boolean
 }
 export const EditElemTextarea: VFC<Props> = memo(
-  ({ editElem, index, onChangeText, lang }) => {
+  ({ editElem, index, onChangeText, lang, editable, editting }) => {
     const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${editElem.text === '' && 'bg-pink-50'
       }`
     return (
@@ -18,12 +20,12 @@ export const EditElemTextarea: VFC<Props> = memo(
           {lang !== 2 && (<TextareaAutosize
             value={editElem.text || ""}
             className={textareaStyle}
-            onChange={(e) => onChangeText(index, 'text', e.target.value)}
+            onChange={(e) => (editable && editting) && onChangeText(index, 'text', e.target.value)}
           ></TextareaAutosize>)}
           {lang !== 1 && (<TextareaAutosize
             value={editElem.text_en || ""}
             className={textareaStyle}
-            onChange={(e) => onChangeText(index, 'text_en', e.target.value)}
+            onChange={(e) => (editable && editting) && onChangeText(index, 'text_en', e.target.value)}
           ></TextareaAutosize>)}
         </li>
       </>

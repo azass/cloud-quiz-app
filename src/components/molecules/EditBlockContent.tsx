@@ -121,6 +121,8 @@ export const EditBlockContent: VFC<Props> = memo(
               index={index}
               onChangeText={onChangeText}
               lang={name === 'question_items' ? nowLang : 1}
+              editable={editable}
+              editting={editting}
             />
           )}
           {editElem.type === EditElemType.LINK && (

@@ -45,6 +45,13 @@ export const QuizListFrame: VFC = memo(() => {
           }
         }
       }
+      if (question.labels) {
+        if (question.labels.filter((label) => {
+          return label.toLowerCase().includes(searchWord.toLowerCase())
+        }).length > 0) {
+          return true
+        }
+      }
     } else {
       return true
     }

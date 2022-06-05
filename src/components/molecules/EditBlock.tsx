@@ -76,7 +76,7 @@ export const EditBlock: VFC<Props> = memo(
 
     return (
       <div className={`pb-2  ${color.bgColor}`} title="EditBlock">
-        <div className={`flex gap-2 my-4 font-bold ${color.baseText}`}>
+        <div className={`flex items-center gap-2 my-4 font-bold ${color.baseText}`}>
           {title}
           {name === 'options' && (
             <EyeIcon
@@ -85,10 +85,10 @@ export const EditBlock: VFC<Props> = memo(
             />
           )}
           <div>
-                <PencilAltIcon
-                  className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-                  onClick={() => setEnableEdit(!enableEdit)}
-                />
+            <PencilAltIcon
+              className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+              onClick={() => setEnableEdit(!enableEdit)}
+            />
           </div>
         </div>
         {editElemsState.length === 0 ? (

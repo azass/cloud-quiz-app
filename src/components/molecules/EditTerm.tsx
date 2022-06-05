@@ -71,8 +71,9 @@ export const EditTerm: VFC<Props> = memo(
     }
     const remove = () => {
       setEditting(false)
-      const newTerms = [...terms]
-      newTerms.splice(index, 1)
+      const newTerms = terms.map((term, i) => i === index ? { ...term, changed: 'delete', selected: false } : term)
+      // const newTerms = [...terms]
+      // newTerms.splice(index, 1)
       dispatch(setEdittingTerms(newTerms))
       if (!updateTem) dispatch(setUpdateTerm(true))
     }
@@ -84,7 +85,7 @@ export const EditTerm: VFC<Props> = memo(
       <div>
         <div
           className={
-            `${draggable && `pl-${term.level * 8}`} ` +
+            `${draggable && `pl-${term.level * 4}`} ` +
             'place-items-center flex justify-between border rounded-full my-1 mx-1 pr-2 ' +
             'text-white font-bold text-sm text-center ' +
             getBgColor(level)

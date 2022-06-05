@@ -1,4 +1,4 @@
-import { VFC, memo, useState, useContext } from 'react'
+import { VFC, memo, useContext } from 'react'
 import { EditElem } from '../../types/types'
 import { EditElemTextarea } from './EditElemTextarea'
 import { EditElemImage } from './EditElemImage'
@@ -62,6 +62,8 @@ export const EditElemOption: VFC<Props> = memo(
             index={index}
             onChangeText={onChangeText}
             lang={lang}
+            editable={true}
+            editting={editting}
           />
         )}
         {imageToggle && (

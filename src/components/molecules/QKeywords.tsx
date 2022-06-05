@@ -44,6 +44,11 @@ export const QKeywords: VFC<Props> = memo(({ question, keywords, withAdd }) => {
             {keywords[tagName].length > 0 && <QTerms terms={keywords[tagName]} />}
           </>
         ))}
+        {!withAdd && question.labels &&
+          question.labels.map((label, index) => (
+            <span className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-orange-400 text-white font-bold text-xs">{label}</span>
+          ))
+        }
       </div>
       <PlusCircleIcon
         onClick={() => addTag()}
