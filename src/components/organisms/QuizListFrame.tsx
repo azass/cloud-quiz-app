@@ -3,15 +3,17 @@ import { useQueryQuestions } from '../../hooks/useQueryQuestions'
 import { QItem } from '../molecules/QItem'
 import { useParams } from 'react-router-dom'
 import { ColorContext } from '../../App'
-import { useAppSelector } from '../../app/hooks'
-import { selectScArgs } from '../../slices/editSlice'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { selectScArgs, setEditedContent } from '../../slices/editSlice'
 import log from 'loglevel'
 import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
+import { SearchCircleIcon } from '@heroicons/react/outline'
 
 export const QuizListFrame: VFC = memo(() => {
   log.setLevel('info')
   log.debug('<QuizListFrame>')
+  const dispatch = useAppDispatch()
   const color = useContext(ColorContext)
   const params = useParams()
   const scArgs = useAppSelector(selectScArgs)
@@ -60,7 +62,14 @@ export const QuizListFrame: VFC = memo(() => {
   return (
     <div id="navWrapper" className={color.bgColor} title="QuizListFrame">
       <div className="flex justify-end -mt-12">
-        <TagFilter setSearchWord={setSearchWord} />
+        <div className="flex flex-row items-center">
+          <div className="mt-3 pr-8">
+            <SearchCircleIcon
+              className="h-8 w-8 text-gray-400 cursor-pointer"
+              onClick={() => dispatch(setEditedContent('Search'))} />
+          </div>
+          <TagFilter setSearchWord={setSearchWord} />
+        </div>
       </div>
       <nav
         id="nav"

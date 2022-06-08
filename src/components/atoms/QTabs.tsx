@@ -8,6 +8,7 @@ import {
   selectEditContext,
   selectExam,
   selectTab,
+  setEditedContent,
   setTab,
   tabs,
 } from '../../slices/editSlice'
@@ -31,6 +32,8 @@ export const QTabs: VFC = memo(() => {
       } else {
         navigate(`/editor/${exam.examId}`)
       }
+    } else if (index === 2) {
+      dispatch(setEditedContent('TagSelect'))
     }
   }
 

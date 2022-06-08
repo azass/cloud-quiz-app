@@ -6,13 +6,13 @@ import { memo, useState, VFC } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
+  resetEditedContent,
   selectExamTags,
   selectScArgs,
   setScArgs,
   setTab,
   tabs,
 } from '../../slices/editSlice'
-import { optionElemsState } from '../../store/qauisElemsState'
 interface Props {
   examId: string
   selectTags: string[]
@@ -77,6 +77,7 @@ export const SearchButtonSet: VFC<Props> = memo(
         })
       )
       dispatch(setTab(tabs[1]))
+      dispatch(resetEditedContent())
     }
     return (
       <>

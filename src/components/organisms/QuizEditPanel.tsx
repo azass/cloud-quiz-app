@@ -1,5 +1,5 @@
 import { VFC, useState, memo, useContext } from 'react'
-import { Question } from '../../types/types'
+import { Question, voidTag } from '../../types/types'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../hooks/useQueryQuestion'
 import { EditBlock } from '../molecules/EditBlock'
@@ -10,13 +10,16 @@ import { CloudUploadIcon } from '@heroicons/react/outline'
 import { useMutateQuestion } from '../../hooks/useMutateQuestion'
 import log from 'loglevel'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectEditContext, setTab, tabs } from '../../slices/editSlice'
+import { selectEditContext, setEditContext } from '../../slices/editSlice'
 import { QBug } from '../molecules/QBug'
 import { QTermDescriptions } from '../molecules/QTermDescriptions'
 import { QLeaningProfiles } from '../molecules/QLeaningProfiles'
 import { QLabels } from '../molecules/QLabels'
 
-export const QuizEditPanel: VFC = memo(() => {
+interface Props {
+  logout: any
+}
+export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
   log.setLevel('info')
   log.debug('Question Edit')
   const color = useContext(ColorContext)
@@ -36,9 +39,9 @@ export const QuizEditPanel: VFC = memo(() => {
   if (status === 'loading') return <div>{'Loading...'}</div>
   if (status === 'error') {
     if (!err) {
-      alert(error?.message)
       setErr(true)
-      dispatch(setTab(tabs[0]))
+      alert(error?.message)
+      logout()
       navigate('/login')
     }
   }
@@ -62,6 +65,14 @@ export const QuizEditPanel: VFC = memo(() => {
       if (data) {
         setQuestion(data)
         setRegisterToggle(false)
+        dispatch(
+          setEditContext({
+            quest_id: data.quest_id,
+            keywordsJson: data.keywords || "",
+            chosenTag: voidTag,
+            forQuestion: true
+          })
+        )
       }
     }
   }
@@ -88,6 +99,7 @@ export const QuizEditPanel: VFC = memo(() => {
     } else {
       if (question && question.keywords) {
         const keywordsJson: Object = JSON.parse(question.keywords)
+        console.log(keywordsJson)
         return keywordsJson
       } else {
         return {}

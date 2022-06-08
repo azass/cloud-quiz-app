@@ -1,6 +1,7 @@
 import { memo, VFC } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { useEditElem } from "../../hooks/useEditElem";
+import { useSearch } from "../../hooks/useSearch";
 import { selectEditedContent, selectExam } from "../../slices/editSlice";
 import { SelectLang } from "../atoms/SelectLang";
 import { QuizSelectFrame } from "./QuizSelectFrame";
@@ -11,6 +12,7 @@ export const QuizSelectTab: VFC = memo(() => {
   const editedContent = useAppSelector(selectEditedContent)
   const { keywords, onClickTag } = useEditElem([])
   const exam = useAppSelector(selectExam)
+  const { selectSearchTags, setSelectSearchTags, onClickSearchTag } = useSearch()
 
   return (
     <div className={``} title="QuizSelectTab">
@@ -33,6 +35,13 @@ export const QuizSelectTab: VFC = memo(() => {
       </div>
       <div className={`${editedContent === 'TermEdit' ? '' : 'hidden'}`}>
         <TermEditFrame />
+      </div>
+      <div className={`${editedContent === 'Search' ? '' : 'hidden'}`}>
+        <TagSelectTab
+          selectTags={selectSearchTags}
+          onClickTag={onClickSearchTag}
+          setSelectSearchTags={setSelectSearchTags}
+        />
       </div>
     </div>
   )

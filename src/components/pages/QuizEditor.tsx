@@ -1,32 +1,47 @@
 import { memo, useContext, VFC } from 'react'
 import { useParams } from 'react-router-dom'
 import { QuizEditPanel } from '../organisms/QuizEditPanel'
-import { TagSelectTab } from '../organisms/TagSelectTab'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
   selectTab,
+  setTab,
   tabs,
 } from '../../slices/editSlice'
 import { ExamSelectTab } from '../organisms/ExamSelectTab'
 import { ColorContext } from '../../App'
 import { QTabs } from '../atoms/QTabs'
-import { useSearch } from '../../hooks/useSearch'
 import log from 'loglevel'
 import { Header } from '../molecules/Header'
 import { QuizSelectTab } from '../organisms/QuizSelectTab'
+import { TermNoteTab } from '../organisms/TermNoteTab'
+import { CognitoUserPool } from 'amazon-cognito-identity-js'
 
 export const QuizEditor: VFC = memo(() => {
   log.setLevel("info")
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
   const color = useContext(ColorContext)
-  const { selectSearchTags, setSelectSearchTags, onClickSearchTag } =
-    useSearch()
+  const dispatch = useAppDispatch()
+  const userPool = new CognitoUserPool({
+    UserPoolId: process.env.REACT_APP_AUTH_USER_POOL_ID || '',
+    ClientId: process.env.REACT_APP_AUTH_USER_POOL_WEB_CLIENT_ID || '',
+  })
+  const logout = () => {
+    const cognitoUser = userPool.getCurrentUser()
+    if (cognitoUser) {
+      cognitoUser.signOut()
+      localStorage.clear()
+      dispatch(setTab(tabs[0]))
+      log.debug('signed out')
+    } else {
+      localStorage.clear()
+      log.debug('no user signing in')
+    }
+  }
 
   return (
     <>
-      <Header />
-
+      <Header logout={logout} />
       <div className="mt-30 h-full z-0">
         <div
           id="sidebar"
@@ -44,11 +59,7 @@ export const QuizEditor: VFC = memo(() => {
             <QuizSelectTab />
           )}
           {nowTab === tabs[2] && (
-            <TagSelectTab
-              selectTags={selectSearchTags}
-              onClickTag={onClickSearchTag}
-              setSelectSearchTags={setSelectSearchTags}
-            />
+            <TermNoteTab />
           )}
         </div>
         <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
@@ -57,7 +68,7 @@ export const QuizEditor: VFC = memo(() => {
               <div
                 className={`px-8 absolute pt-12 pb-12 w-1/2  ${color.bgColor}`}
               >
-                <QuizEditPanel />
+                <QuizEditPanel logout={logout} />
               </div>
             </div>
           )}

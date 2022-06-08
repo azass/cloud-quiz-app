@@ -1,7 +1,8 @@
 import { VFC, memo } from 'react'
+import ReactMarkdown from 'react-markdown'
 import TextareaAutosize from 'react-textarea-autosize'
 import { EditElem } from '../../types/types'
-
+import rehypeRaw from 'rehype-raw'
 interface Props {
   editElem: EditElem
   index: number
@@ -17,16 +18,32 @@ export const EditElemTextarea: VFC<Props> = memo(
     return (
       <>
         <li>
-          {lang !== 2 && (<TextareaAutosize
-            value={editElem.text || ""}
-            className={textareaStyle}
-            onChange={(e) => (editable && editting) && onChangeText(index, 'text', e.target.value)}
-          ></TextareaAutosize>)}
-          {lang !== 1 && (<TextareaAutosize
-            value={editElem.text_en || ""}
-            className={textareaStyle}
-            onChange={(e) => (editable && editting) && onChangeText(index, 'text_en', e.target.value)}
-          ></TextareaAutosize>)}
+          {lang !== 2 && (
+            <div className={`px-4 py-3 mt-1 ${!editting && 'bg-gray-900'}`}>
+              {(editable && editting) ? (
+                <TextareaAutosize
+                  value={editElem.text || ""}
+                  className={textareaStyle}
+                  onChange={(e) => onChangeText(index, 'text', e.target.value)}
+                ></TextareaAutosize>
+              ) : (
+                <ReactMarkdown className="text-base text-white whitespace-pre-wrap w-full" rehypePlugins={[rehypeRaw]} children={editElem.text || ""} />
+              )}
+            </div>
+          )}
+          {lang !== 1 && (
+            <div className="px-4 py-3 mt-1">
+              {(editable && editting) ? (
+                <TextareaAutosize
+                  value={editElem.text_en || ""}
+                  className={textareaStyle}
+                  onChange={(e) => onChangeText(index, 'text_en', e.target.value)}
+                ></TextareaAutosize>
+              ) : (
+                <span className="text-white whitespace-pre-wrap">{editElem.text_en || ""}</span>
+              )}
+            </div>
+          )}
         </li>
       </>
     )

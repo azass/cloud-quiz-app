@@ -14,7 +14,7 @@ export const TagSelectHeader: VFC<Props> = memo(
     const nowTab = useAppSelector(selectTab)
     return (
       <div title="TagSelectHeader">
-        {nowTab === tabs[2] && (
+        {nowTab === tabs[1] && (
           <div className="pb-2">
             <div className="pt-4 pl-8">
               <SearchButtonSet

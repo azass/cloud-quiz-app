@@ -9,7 +9,7 @@ import {
   setEdittingTerms,
 } from '../../slices/editSlice'
 import { useQueryTerms } from '../../hooks/useQueryTerms'
-import { Tag, Term } from '../../types/types'
+import { Term } from '../../types/types'
 import { TermSaveButton } from '../atoms/TermSaveButton'
 import { EditTerm } from '../molecules/EditTerm'
 import { TermAddButton } from '../atoms/TermAddButton'

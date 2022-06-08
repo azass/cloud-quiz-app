@@ -25,7 +25,6 @@ export const QTermDescriptions: VFC<Props> = memo(({ quest_id, keywords }) => {
         keywordsJson: JSON.stringify(keywords),
         chosenTag: getTag(tagName),
         forQuestion: true,
-        // tag_terms: keywords
       })
     )
     dispatch(setCallTermEdit(true))

@@ -1,10 +1,8 @@
 import { VFC, memo, useContext } from 'react'
-import { useAppDispatch } from '../../app/hooks'
 import { PencilAltIcon } from '@heroicons/react/solid'
-import { Question, voidTag } from '../../types/types'
+import { Question } from '../../types/types'
 import { Link } from 'react-router-dom'
 import { QKeywords } from './QKeywords'
-import { setEditContext } from '../../slices/editSlice'
 import { ColorContext } from '../../App'
 import log from 'loglevel'
 
@@ -16,7 +14,6 @@ export const QItem: VFC<Props> = memo(({ question }) => {
   log.setLevel("info")
   log.debug('<QItem>')
   const color = useContext(ColorContext)
-  const dispatch = useAppDispatch()
 
   return (
     <li className="inline-flex my-3 space-x-4" title="QItem">
@@ -24,15 +21,6 @@ export const QItem: VFC<Props> = memo(({ question }) => {
         <PencilAltIcon
           className="h-5 w-5 mx-1 mt-1 text-blue-500 cursor-pointer"
           onClick={() => {
-            dispatch(
-              setEditContext({
-                quest_id: question.quest_id,
-                keywordsJson: question.keywords || "",
-                chosenTag: voidTag,
-                forQuestion: true
-                // tag_terms: {}
-              })
-            )
           }}
         />
       </Link>

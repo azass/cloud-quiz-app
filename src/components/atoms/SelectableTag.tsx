@@ -29,7 +29,7 @@ export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) =>
         dispatch(setEditedContent('TermEdit'))
         dispatch(setEditContext({ ...editContext, chosenTag: tag, forQuestion: false }))
         dispatch(setCallTermEdit(true))
-        dispatch(setTab(tabs[1]))
+        dispatch(setTab(tabs[2]))
       }}
     >
       {tag.tag_name}
