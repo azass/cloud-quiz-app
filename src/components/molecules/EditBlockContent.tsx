@@ -1,5 +1,5 @@
 import { VFC, memo, useContext, useState } from 'react'
-import { TrashIcon } from '@heroicons/react/solid'
+import { TrashIcon } from '@heroicons/react/outline'
 import { EditElem, EditElemType } from '../../types/types'
 import { EditElemTextarea } from './EditElemTextarea'
 import { EditElemLinkMemo } from './EditElemLink'
@@ -72,78 +72,95 @@ export const EditBlockContent: VFC<Props> = memo(
         setEditting(enableEdit)
       }
     }
+    const on = () => {
+      return editElem.quest_ids?.includes(editContext.quest_id) || false
+    }
     return (
       <div key={id} className={color.bgColor} title="EditBlockContent">
         {editable && editting && index === 0 && (
           <EditElemAdds index={-1} name={name} onClickAdd={onClickAdd} />
         )}
-        <ul className="transform transition-transform border-gray-600 my-4">
-          {editable && (
-            <li className="flex justify-between items-center mb-2">
+        {/* <ul className="transform transition-transform border-gray-600 my-4"> */}
+        <div className="border-gray-600 pt-2">
+          {enableEdit && (
+            <div className="flex justify-between items-center">
               <div className="flex">
-                {name === 'description_for_question' && (
-                  <input
-                    type="checkbox"
-                    checked={
-                      editElem.quest_ids
-                        ? editElem.quest_ids.includes(editContext.quest_id)
-                        : false
-                    }
-                    onChange={(e) => onChangeCheck(index)}
-                  />
-                )}
+                <div className="flex">
+                  {name === 'description_for_question' && (
+                    <input
+                      type="checkbox"
+                      className="w-5 h-5"
+                      checked={on()}
+                      onChange={(e) => onChangeCheck(index)}
+                    />
+                  )}
+                  {name !== 'explanation' && name !== 'options' && (
+                    <select
+                      className={`ml-8 w-10 h-5`}
+                      onChange={(e) => onChangeText(index, 'lv', e.target.value)}
+                      value={editElem.lv}
+                      title={name}
+                    >
+                      {["1", "2", "3", "4"].map((i) => (
+                        <option value={`${i}`}>{`${i}`}</option>
+                      ))}
+                    </select>
+                  )}
+                </div>
               </div>
               <div className="flex flex-row pr-3 gap-4">
                 <TrashIcon
-                  className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-                  onClick={() => {
-                    onClickDelete(index)
-                  }}
+                  className={`h-6 w-6 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+                  onClick={() => onClickDelete(index)}
                 />
               </div>
-            </li>
+            </div>
           )}
-          {editElem.type === EditElemType.OPTION && (
-            <EditElemOption
-              editElem={editElem}
-              index={index}
-              onClickAdd={onClickAdd}
-              onChangeText={onChangeText}
-              onChangeCheck={onChangeCheck}
-              showCheckbox={showCheckbox}
-              editting={editting}
-              lang={nowLang}
-            />
-          )}
-          {editElem.type === EditElemType.TEXTAREA && (
-            <EditElemTextarea
-              editElem={editElem}
-              index={index}
-              onChangeText={onChangeText}
-              lang={name === 'question_items' ? nowLang : 1}
-              editable={editable}
-              editting={editting}
-            />
-          )}
-          {editElem.type === EditElemType.LINK && (
-            <EditElemLinkMemo
-              editElem={editElem}
-              index={index}
-              onChangeText={onChangeText}
-              editable={editable}
-              editting={editting}
-            />
-          )}
-          {editElem.type === EditElemType.IMAGE && (
-            <EditElemImage
-              editElem={editElem}
-              index={index}
-              onChangeText={onChangeText}
-              editable={editable}
-              editting={editting}
-            />
-          )}
-        </ul>
+          <div className={`${editElem.lv && `pl-${(Number(editElem.lv) - 1) * 4}`} `}>
+            {editElem.type === EditElemType.OPTION && (
+              <EditElemOption
+                editElem={editElem}
+                index={index}
+                onClickAdd={onClickAdd}
+                onChangeText={onChangeText}
+                onChangeCheck={onChangeCheck}
+                showCheckbox={showCheckbox}
+                editting={editting}
+                lang={nowLang}
+              />
+            )}
+            {editElem.type === EditElemType.TEXTAREA && (
+              <EditElemTextarea
+                editElem={editElem}
+                index={index}
+                onChangeText={onChangeText}
+                lang={name === 'question_items' ? nowLang : 1}
+                editable={editable}
+                editting={editting}
+                on={on()}
+              />
+            )}
+            {editElem.type === EditElemType.LINK && (
+              <EditElemLinkMemo
+                editElem={editElem}
+                index={index}
+                onChangeText={onChangeText}
+                editable={editable}
+                editting={editting}
+                on={on()}
+              />
+            )}
+            {editElem.type === EditElemType.IMAGE && (
+              <EditElemImage
+                editElem={editElem}
+                index={index}
+                onChangeText={onChangeText}
+                editable={editable}
+                editting={editting}
+              />
+            )}
+          </div>
+        </div>
         {editable && editting && (
           <EditElemAdds index={index} name={name} onClickAdd={onClickAdd} />
         )}

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { VFC, memo } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import { EditElem } from '../../types/types'
@@ -14,22 +15,18 @@ export const EditElemImage: VFC<Props> = memo(
     if (!editElem.image_height || editElem.image_height === '') {
       editElem.image_height = '100'
     }
-    const pathStyle = `px-4 py-2 w-full border-gray-300 text-xs ${
-      editElem.image_path === '' && 'bg-pink-50'
-    }`
-    const heightStyle = `px-4 py-2 w-full border-gray-300 text-xs ${
-      editElem.image_height === '' && 'bg-pink-50'
-    }`
+    const pathStyle = `px-4 py-2 w-full border-gray-300 text-xs ${editElem.image_path === '' && 'bg-pink-50'
+      }`
+    const heightStyle = `px-4 py-2 w-full border-gray-300 text-xs ${editElem.image_height === '' && 'bg-pink-50'
+      }`
     return (
       <>
-        <li>
-          <div className="py-8">
-            <img src={editElem.image_path} />
-          </div>
-        </li>
+        <div className="py-8 bg-white">
+          <img src={editElem.image_path} />
+        </div>
         {editable && editting && (
           <>
-            <li>
+            <div>
               <span className="mx-6 py-4 my-2 text-blue-700 font-bold text-xs">
                 画像パス
               </span>
@@ -40,8 +37,8 @@ export const EditElemImage: VFC<Props> = memo(
                   onChangeText(index, 'image_path', e.target.value)
                 }
               />
-            </li>
-            <li>
+            </div>
+            <div>
               <span className="mx-6 py-4 my-2 text-blue-700 font-bold text-xs">
                 画像高さ
               </span>
@@ -52,7 +49,7 @@ export const EditElemImage: VFC<Props> = memo(
                   onChangeText(index, 'image_height', e.target.value)
                 }
               />
-            </li>
+            </div>
           </>
         )}
       </>

@@ -18,7 +18,7 @@ export const QuizSelectTab: VFC = memo(() => {
     <div className={``} title="QuizSelectTab">
       <div className="flex justify-between">
         <div>
-          <p className="pt-8 pb-4 pl-8 text-white">{exam.examName}</p>
+          <p className="pt-8 pb-4 pl-8 text-white font-bold">{exam.examName}</p>
         </div>
         <div className="mt-4 mr-8">
           <SelectLang />

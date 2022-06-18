@@ -109,7 +109,7 @@ export const EditTermDescription: VFC<Props> = memo(({ term, editable, forQuesti
     setSaveButtonToggle(true)
   }
   return (
-    <div className={`px-6 pb-6  ${color.bgColor}`}>
+    <div className={`px-2 pb-6  ${color.bgColor}`} title="EditTermDescription">
       {editElemsState.length === 0 && editable ?
         <EditElemAdds index={0} name={name} onClickAdd={add} />
         : (
@@ -122,7 +122,7 @@ export const EditTermDescription: VFC<Props> = memo(({ term, editable, forQuesti
               onClickDelete={del}
               onChangeText={changeText}
               onChangeCheck={changeCheck}
-              editable={editable}
+              editable={true}
               enableEdit={editable}
             />
           ))

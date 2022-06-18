@@ -1,5 +1,4 @@
 import { atom } from 'recoil'
-import { EditElem } from '../types/types'
 
 export const questElemsState = atom({
   key: 'questElemsState',

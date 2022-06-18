@@ -5,7 +5,7 @@ import { ToastProvider } from './hooks/useToast'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 export const ColorContext = createContext({
-  bgColor: 'bg-gray-800',
+  bgColor: 'bg-black',
   baseText: 'text-white',
   iconColor: 'text-gray-600',
 })
@@ -23,7 +23,7 @@ const App: React.VFC = () => {
   const color = useContext(ColorContext)
   return (
     <div
-      className={`flex items-center flex-col min-h-screen text-gray-600 text-sm font-mono ${color.bgColor}`}
+      className={`flex items-center flex-col min-h-screen text-gray-600 text-sm ${color.bgColor}`}
     >
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>

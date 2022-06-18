@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Question } from '../types/types'

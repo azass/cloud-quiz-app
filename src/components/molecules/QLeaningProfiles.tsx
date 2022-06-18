@@ -1,6 +1,8 @@
 /* eslint-disable no-useless-concat */
-import { memo, useState, VFC } from 'react'
+import { PencilAltIcon } from '@heroicons/react/outline'
+import { memo, useContext, useState, VFC } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
+import { ColorContext } from '../../App'
 import { useMutateQuestion } from '../../hooks/useMutateQuestion'
 import { Question } from '../../types/types'
 
@@ -8,12 +10,14 @@ interface Props {
   question: Question
 }
 export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
+  const color = useContext(ColorContext)
   const [lastQuestId, setLastQuestId] = useState(question.quest_id)
   const [moreStudy, setMoreStudy] = useState(question.more_study || false)
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
   const [isWeak, setIsWeak] = useState(question.is_weak || false)
   const [isMandatory, setIsMandatory] = useState(question.is_mandatory || false)
   const [learningNote, setLearningNote] = useState(question.learning_note)
+  const [editting, setEditting] = useState(false)
   const { putQuestion } = useMutateQuestion()
 
   if (lastQuestId !== question.quest_id) {
@@ -106,22 +110,30 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
         >
           <span className="px-8">必須</span>
         </button>
+        <PencilAltIcon
+          className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+          onClick={() => setEditting(!editting)}
+        />
       </div>
-      <ReactTextareaAutosize
-        value={learningNote || ''}
-        className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
-        onChange={(e) => {
-          setLearningNote(e.target.value)
-          question.learning_note = e.target.value
-          putQuestion(
-            {
-              quest_id: question.quest_id,
-              learning_note: question.learning_note,
-            },
-            question
-          )
-        }}
-      ></ReactTextareaAutosize>
+      {(editting) ? (
+        <ReactTextareaAutosize
+          value={learningNote || ''}
+          className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
+          onChange={(e) => {
+            setLearningNote(e.target.value)
+            question.learning_note = e.target.value
+            putQuestion(
+              {
+                quest_id: question.quest_id,
+                learning_note: question.learning_note,
+              },
+              question
+            )
+          }}
+        ></ReactTextareaAutosize>
+      ) : (
+        <span className="text-white whitespace-pre-wrap">{learningNote || ''}</span>
+      )}
     </>
   )
 })

@@ -16,7 +16,7 @@ export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
     return 'h-5 w-5 mx-2 text-gray-500 cursor-pointer hover:text-blue-500'
   }
   return (
-    <div className="flex justify-between py-2">
+    <div className={`flex justify-between ${name !== 'options' && 'pt-4'}`}>
       <div className="flex justify-start">
         {name === 'explanation' && (
           <ExternalLinkIcon

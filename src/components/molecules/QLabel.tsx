@@ -25,7 +25,7 @@ export const QLabel: VFC<Props> = memo(({ index, label, editable, update, remove
     setEditting(true)
   }
   return (
-    <div className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-orange-500 text-white font-bold text-xs">
+    <div className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-orange-500 text-white font-bold text-xs" title="QLabel">
       {(!editable || !editting) ? (
         <span className="">{value}</span>
       ) : (

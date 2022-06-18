@@ -35,6 +35,7 @@ export interface EditElem {
   mark?: string
   correct?: boolean
   quest_ids?: string[]
+  lv?: string
 }
 
 export interface Bug {
@@ -87,7 +88,6 @@ export interface EditContext {
   keywordsJson: string
   chosenTag: Tag
   forQuestion: boolean
-  // tag_terms: TagTerms
 }
 
 export namespace EditElemType {

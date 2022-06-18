@@ -26,7 +26,6 @@ export const QKeywords: VFC<Props> = memo(({ question, keywords, withAdd }) => {
         keywordsJson: JSON.stringify(keywords),
         chosenTag: voidTag,
         forQuestion: true
-        // tag_terms: keywords
       })
     )
   }
@@ -37,7 +36,7 @@ export const QKeywords: VFC<Props> = memo(({ question, keywords, withAdd }) => {
           <>
             <span
               key={question.quest_id + '_' + index++}
-              className="rounded-full border my-1 mr-1 py-1 px-3 bg-pink-600 text-white font-bold"
+              className="flex items-center rounded-full border py-1 my-1 mr-1 px-3 bg-pink-600 text-white font-bold"
             >
               {tagName}
             </span>
@@ -46,15 +45,14 @@ export const QKeywords: VFC<Props> = memo(({ question, keywords, withAdd }) => {
         ))}
         {!withAdd && question.labels &&
           question.labels.map((label, index) => (
-            <span className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-orange-400 text-white font-bold text-xs">{label}</span>
+            <span className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-blue-900 text-white font-bold text-xs">{label}</span>
           ))
         }
+        <PlusCircleIcon
+          onClick={() => addTag()}
+          className={`h-5 w-5 mt-2 ml-8 text-pink-500 cursor-pointer ${withAdd ? '' : 'hidden'}`}
+        />
       </div>
-      <PlusCircleIcon
-        onClick={() => addTag()}
-        className={`h-5 w-5 my-4 text-pink-500 cursor-pointer ${withAdd ? '' : 'hidden'
-          }`}
-      />
     </>
   )
 })

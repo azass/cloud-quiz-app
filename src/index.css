@@ -2,21 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+ul {
+  list-style: disc;
+  padding: 0 12px;
+}
+
 .pl-12 {
   padding-left: 48px;
 }
+
 .pl-16 {
   padding-left: 64px;
 }
+
 .pl-24 {
   padding-left: 96px;
 }
+
 .pl-32 {
   padding-left: 128px;
 }
+
 .pl-36 {
   padding-left: 144px;
 }
+
 .pl-48 {
   padding-left: 196px;
 }

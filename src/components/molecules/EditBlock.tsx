@@ -6,8 +6,8 @@ import { EditElemAdds } from '../atoms/EditElemAdds'
 import { useEditElem } from '../../hooks/useEditElem'
 import { ColorContext } from '../../App'
 import { EyeIcon } from '@heroicons/react/outline'
+import { CheckCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
 import log, { setLevel } from 'loglevel'
-import { PencilAltIcon } from '@heroicons/react/solid'
 
 interface Props {
   questId: string
@@ -80,18 +80,24 @@ export const EditBlock: VFC<Props> = memo(
           {title}
           {name === 'options' && (
             <EyeIcon
-              className="w-4 h-4 cursor-pointer"
+              className="w-4 h-4 ml-4 cursor-pointer hover:text-blue-500"
               onClick={() => setShowCheckbox(!showCheckbox)}
             />
           )}
           <div>
-            <PencilAltIcon
-              className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-              onClick={() => setEnableEdit(!enableEdit)}
-            />
+            {enableEdit ? (
+              <CheckCircleIcon
+                className={`h-6 w-6 ml-8 ${color.iconColor} cursor-pointer text-blue-500`}
+                onClick={() => setEnableEdit(!enableEdit)}
+              />
+            ) : (
+              <PencilAltIcon
+                className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+                onClick={() => setEnableEdit(!enableEdit)}
+              />)}
           </div>
         </div>
-        {editElemsState.length === 0 ? (
+        {enableEdit && editElemsState.length === 0 ? (
           <EditElemAdds index={-1} name={name} onClickAdd={add} />
         ) : (
           editElemsState.map((editElem, index) => (

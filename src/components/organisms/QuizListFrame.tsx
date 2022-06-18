@@ -79,9 +79,9 @@ export const QuizListFrame: VFC = memo(() => {
           <>
             {show(question) && (
               <div key={question.quest_id}>
-                <ul>
+                <div>
                   <QItem question={question} />
-                </ul>
+                </div>
               </div>
             )}
           </>

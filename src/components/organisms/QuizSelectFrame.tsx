@@ -18,7 +18,7 @@ export const QuizSelectFrame: VFC = memo(() => {
           </div>
           <input
             type="text"
-            className="w-10 ml-1 px-1"
+            className="w-12 ml-1 px-1"
             value={selectNo}
             onChange={(e) => {
               if (Number.isInteger(e.target.value)) {

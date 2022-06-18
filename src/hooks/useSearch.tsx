@@ -9,7 +9,7 @@ export const useSearch = () => {
     } else {
       setSelectSearchTags(
         selectSearchTags.filter((tagName) => {
-          return tagName != tag.tag_name
+          return tagName !== tag.tag_name
         })
       )
     }

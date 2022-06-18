@@ -1,6 +1,6 @@
 import { VFC, useState, memo, useContext } from 'react'
 import { Question, voidTag } from '../../types/types'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../hooks/useQueryQuestion'
 import { EditBlock } from '../molecules/EditBlock'
 import { QScraping } from '../molecules/QScraping'
@@ -10,7 +10,7 @@ import { CloudUploadIcon } from '@heroicons/react/outline'
 import { useMutateQuestion } from '../../hooks/useMutateQuestion'
 import log from 'loglevel'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectEditContext, setEditContext } from '../../slices/editSlice'
+import { selectEditContext, setCallTermEdit, setEditContext } from '../../slices/editSlice'
 import { QBug } from '../molecules/QBug'
 import { QTermDescriptions } from '../molecules/QTermDescriptions'
 import { QLeaningProfiles } from '../molecules/QLeaningProfiles'
@@ -31,6 +31,9 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
   const [question, setQuestion] = useState<Question>()
   const quest_id = params.quest_id || ''
   const [questId, setQuestId] = useState(quest_id)
+  const search = useLocation().search;
+  const query = new URLSearchParams(search);
+  const fromTermEditor = query.has('fromTermEditor')
   const [registerToggle, setRegisterToggle] = useState(false)
   const { createQuestion } = useMutateQuestion()
   const { deleteBug } = useMutateQuestion()
@@ -40,8 +43,8 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
   if (status === 'error') {
     if (!err) {
       setErr(true)
-      alert(error?.message)
       logout()
+      alert(error?.message)
       navigate('/login')
     }
   }
@@ -69,10 +72,11 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
           setEditContext({
             quest_id: data.quest_id,
             keywordsJson: data.keywords || "",
-            chosenTag: voidTag,
-            forQuestion: true
+            chosenTag: (fromTermEditor) ? editContext.chosenTag : voidTag,
+            forQuestion: true,
           })
         )
+        if (fromTermEditor) dispatch(setCallTermEdit(true))
       }
     }
   }
@@ -142,18 +146,12 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
           {'is_bug' in question && question.is_bug && question.bug_points && (
             <QBug bug={question.bug_points} onClickDelete={onClickDelete} />
           )}
-          <div className="pt-10">
-            <QKeywords
-              question={question}
-              keywords={getKeywordsJson()}
-              withAdd={true}
-            />
-            <div className={`flex gap-2 mt-12 mb-4 font-bold ${color.baseText}`}>
+          <div className="pt-4">
+            <QKeywords question={question} keywords={getKeywordsJson()} withAdd={true} />
+            <div className={`flex gap-2 mt-6 font-bold ${color.baseText}`}>
               リファレンス
             </div>
-            <QTermDescriptions
-              quest_id={questId}
-              keywords={getKeywordsJson()}
+            <QTermDescriptions quest_id={questId} keywords={getKeywordsJson()}
             />
           </div>
           <EditBlock

@@ -67,3 +67,6 @@ TermSaveButton > saveTerms()
 
 Term Editor を開く
 -> Tag に紐づく Terms を db から取得
+
+
+npm install react-markdown

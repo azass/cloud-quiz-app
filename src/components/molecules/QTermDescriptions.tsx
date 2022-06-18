@@ -30,37 +30,37 @@ export const QTermDescriptions: VFC<Props> = memo(({ quest_id, keywords }) => {
     dispatch(setCallTermEdit(true))
   }
   return (
-    <ul className="py-4" title="QTermDescriptions">
+    <div className="pb-4" title="QTermDescriptions">
       {Object.keys(keywords).map((tagName, index) => (
         <>
-          <li className="pb-4">
+          <div className="pt-4">
             <span
-              className="rounded-full border my-1 mr-1 py-1 px-3 bg-pink-600 text-white font-bold text-xs cursor-pointer"
+              className="rounded-full border mr-1 py-1 px-3 bg-pink-600 text-white font-bold text-xs cursor-pointer"
               onClick={() => callTermEdit(tagName)}
             >
               {tagName}
             </span>
-          </li>
+          </div>
           {keywords[tagName].map((term) => (
             <>
               {term.word !== 'is ?' && (
-                <li className="pl-2 pb-3">
+                <div className="pl-2 pt-4">
                   <span
                     key={term.term_id}
                     className={
-                      'rounded-full border my-1 mr-1 py-1 px-3 text-white font-bold text-left text-xs ' +
+                      'rounded-full border mr-1 py-1 px-3 text-white font-bold text-left text-xs ' +
                       `${bgcolor[term.level - 1]}`
                     }
                   >
                     {term.word}
                   </span>
-                </li>
+                </div>
               )}
 
               {term.description?.map(
                 (editElem, index) =>
                   editElem.quest_ids?.includes(quest_id) && (
-                    <li className="pl-2">
+                    <div className="pl-2">
                       <EditBlockContent
                         editElem={editElem}
                         name="description"
@@ -72,13 +72,13 @@ export const QTermDescriptions: VFC<Props> = memo(({ quest_id, keywords }) => {
                         editable={false}
                         enableEdit={false}
                       />
-                    </li>
+                    </div>
                   )
               )}
             </>
           ))}
         </>
       ))}
-    </ul>
+    </div>
   )
 })

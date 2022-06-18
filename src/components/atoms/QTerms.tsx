@@ -9,7 +9,7 @@ export const QTerms: VFC<Props> = memo(({ terms }) => {
     <>
       {terms.map((term) => (
         <>
-          {term.word !== "is ?" && <span
+          {term.word !== "is ?" && <span title="QTerms"
             key={term.term_id}
             className={
               'rounded-full border my-1 mr-1 py-1 px-3 text-white font-bold text-left ' +

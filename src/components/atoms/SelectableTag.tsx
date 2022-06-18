@@ -18,7 +18,7 @@ export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) =>
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
   return (
-    <span
+    <span title="SelectableTag"
       key={tag.tag_no}
       className={
         'rounded-md border my-1 py-1 mx-1 px-3 font-extrabold text-sm cursor-pointer ' +

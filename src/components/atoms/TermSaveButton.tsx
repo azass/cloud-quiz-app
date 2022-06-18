@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { memo, useState, VFC } from 'react'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import {

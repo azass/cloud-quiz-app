@@ -16,13 +16,10 @@ export const QItem: VFC<Props> = memo(({ question }) => {
   const color = useContext(ColorContext)
 
   return (
-    <li className="inline-flex my-3 space-x-4" title="QItem">
+    <div className="inline-flex my-3 space-x-4" title="QItem">
       <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
         <PencilAltIcon
-          className="h-5 w-5 mx-1 mt-1 text-blue-500 cursor-pointer"
-          onClick={() => {
-          }}
-        />
+          className="h-5 w-5 mx-1 mt-1 text-blue-500 cursor-pointer" />
       </Link>
       <span className={`font-bold w-3 mt-2 ${color.baseText}`}>
         Q{question.quest_no}
@@ -33,6 +30,6 @@ export const QItem: VFC<Props> = memo(({ question }) => {
           keywords={question.keywords ? JSON.parse(question.keywords) : {}}
           withAdd={false} />
       </div>
-    </li>
+    </div>
   )
 })

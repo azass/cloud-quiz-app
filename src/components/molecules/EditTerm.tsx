@@ -11,7 +11,7 @@ import TextareaAutosize from 'react-textarea-autosize'
 import { useEditElem } from '../../hooks/useEditElem'
 import { EditTermDescription } from './EditTermDesciption'
 import log from 'loglevel'
-import { PencilAltIcon } from '@heroicons/react/outline'
+import { PencilAltIcon, StatusOnlineIcon } from '@heroicons/react/outline'
 
 interface Props {
   term: Term
@@ -72,8 +72,6 @@ export const EditTerm: VFC<Props> = memo(
     const remove = () => {
       setEditting(false)
       const newTerms = terms.map((term, i) => i === index ? { ...term, changed: 'delete', selected: false } : term)
-      // const newTerms = [...terms]
-      // newTerms.splice(index, 1)
       dispatch(setEdittingTerms(newTerms))
       if (!updateTem) dispatch(setUpdateTerm(true))
     }
@@ -93,10 +91,13 @@ export const EditTerm: VFC<Props> = memo(
         >
           <div className="flex items-center">
             {draggable && (
-              <AcademicCapIcon
-                className="w-4 h-4 cursor-pointer"
-                onClick={() => onClickDescribe()}
-              />
+              <>
+                {(term.description && term.description.length > 0) ? (
+                  <AcademicCapIcon className="w-4 h-4 cursor-pointer" onClick={() => onClickDescribe()} />
+                ) : (
+                  <StatusOnlineIcon className="w-4 h-4 cursor-pointer" onClick={() => onClickDescribe()} />
+                )}
+              </>
             )}
             {!editting ? (
               <span

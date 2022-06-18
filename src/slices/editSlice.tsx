@@ -16,7 +16,7 @@ export interface EditState {
   lang: number
 }
 
-export const tabs = ['試験一覧', '問題一覧', '絞り込み']
+export const tabs = ['試験一覧', '問題一覧', 'ノート']
 
 export const initialState: EditState = {
   idToken: '',

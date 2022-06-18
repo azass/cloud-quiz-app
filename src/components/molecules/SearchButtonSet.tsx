@@ -35,13 +35,6 @@ export const SearchButtonSet: VFC<Props> = memo(
           : 'text-white bg-red-300'
       }
     }
-    const noSelectBgcolor = () => {
-      if (selectTags.length > 0) {
-        return ' bg-blue-500'
-      } else {
-        return ''
-      }
-    }
     const onClick0 = () => {
       if (selectOptions.includes(-2)) {
         setSelectOptions([])

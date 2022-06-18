@@ -13,7 +13,7 @@ import log from 'loglevel'
 export const useEditElem = (editElems: EditElem[]) => {
   log.setLevel("info")
   log.debug("useEditElem start!")
-
+  const mark = ["A", "B", "C", "D", "E", "F"]
   const isCheckOn = editElems.some(x => x.correct)
   log.debug(isCheckOn)
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)
@@ -36,6 +36,7 @@ export const useEditElem = (editElems: EditElem[]) => {
       newEditElem.image_height = ''
     } else if (newEditElem.type === EditElemType.OPTION) {
       newEditElem.text = ''
+      newEditElem.mark = mark[index + 1]
     }
     newEditElems.splice(index + 1, 0, newEditElem)
     log.debug('add!!!')
@@ -59,7 +60,8 @@ export const useEditElem = (editElems: EditElem[]) => {
       attr === 'link' ||
       attr === 'url' ||
       attr === 'image_path' ||
-      attr === 'image_height'
+      attr === 'image_height' ||
+      attr === 'lv'
     ) {
       const newEditElem = { ...newEditElems[index] }
       newEditElem[attr] = text
@@ -78,7 +80,7 @@ export const useEditElem = (editElems: EditElem[]) => {
     setSaveButtonToggle(true)
   }
 
-  const validate = (newEditElems:EditElem[]) => {
+  const validate = (newEditElems: EditElem[]) => {
     newEditElems.map((editElem) => {
       if (
         editElem.type === EditElemType.TEXTAREA ||

@@ -1,11 +1,9 @@
 import { FilterIcon } from '@heroicons/react/solid'
-import { memo, useContext, VFC } from 'react'
-import { ColorContext } from '../../App'
+import { memo, VFC } from 'react'
 interface Props {
   setSearchWord: any
 }
 export const TagFilter: VFC<Props> = memo(({ setSearchWord }) => {
-  const color = useContext(ColorContext)
   return (
     <div className="flex flex-row items-center pt-4" title="TagFilter">
       <div className="bg-gray-100 border-gray-300">

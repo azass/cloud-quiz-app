@@ -50,9 +50,9 @@ export const ExamSelectTab: VFC = memo(() => {
         {providerOptions}
       </select>
       <div>
-        <ul>
+        <div>
           {nowProvider?.exams.map((exam) => (
-            <li>
+            <div>
               <button
                 className={
                   'inline-flex items-center justify-center ' +
@@ -76,9 +76,9 @@ export const ExamSelectTab: VFC = memo(() => {
               >
                 {exam.exam_name}
               </button>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </>
   )

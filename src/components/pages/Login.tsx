@@ -59,24 +59,24 @@ export const Login: VFC = memo(() => {
           Cloud Quiz
         </span>
       </a>
-      <ul className="flex mx-auto my-12">
-        <li className="list-none text-center mr-2">
+      <div className="flex mx-auto my-12">
+        <div className="list-none text-center mr-2">
           <a
             className="bg-blue-600 hover:opacity-75 text-white font-bold py-3 px-16 rounded"
             href="{{ route('login') }}"
           >
             ログイン
           </a>
-        </li>
-        <li className="list-none text-center">
+        </div>
+        <div className="list-none text-center">
           <a
             className="border-solid border border-gray-400 text-gray-600 font-bold py-3 px-16 rounded hover:bg-gray-200"
             href="{{ route('register') }}"
           >
             新規登録
           </a>
-        </li>
-      </ul>
+        </div>
+      </div>
       <form method="POST" action="{{ route('login') }}">
         <div className="mb-4">
           <label className="block text-grey-darker text-sm font-bold mb-2">
