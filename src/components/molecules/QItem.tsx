@@ -27,7 +27,7 @@ export const QItem: VFC<Props> = memo(({ question }) => {
       <div className="pl-4">
         <QKeywords
           question={question}
-          keywords={question.keywords ? JSON.parse(question.keywords) : {}}
+          // keywords={question.keywords ? JSON.parse(question.keywords) : {}}
           withAdd={false} />
       </div>
     </div>

@@ -15,7 +15,7 @@ export const TermAddButton: VFC<Props> = memo(({ terms, tag, index }) => {
   const dispatch = useAppDispatch()
   return (
     <PlusCircleIcon
-      className="w-6 h-6 text-white ml-2"
+      className="w-4 h-4 text-white ml-2 cursor-pointer"
       onClick={() => {
         const newTerms = [...terms]
         newTerms.splice(index + 1, 0, {

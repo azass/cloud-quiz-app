@@ -63,7 +63,7 @@ export const QuizEditor: VFC = memo(() => {
           )}
         </div>
         <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
-          {nowTab === tabs[1] && params.quest_id && (
+          {nowTab !== tabs[0] && params.quest_id && (
             <div className={`flex w-full `}>
               <div
                 className={`px-8 absolute pt-12 pb-12 w-1/2  ${color.bgColor}`}

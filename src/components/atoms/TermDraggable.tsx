@@ -1,39 +1,46 @@
 import { memo, VFC } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { Term } from '../../types/types'
+import { Tag, Term } from '../../types/types'
 import { EditTerm } from '../molecules/EditTerm'
+import { TermAddButton } from './TermAddButton'
 
 interface Props {
   term: Term
   index: number
   terms: Term[]
   forQuestion: boolean
+  tag: Tag
 }
 
-export const TermDraggable: VFC<Props> = memo(({ term, index, terms, forQuestion }) => {
+export const TermDraggable: VFC<Props> = memo(({ term, index, terms, forQuestion, tag }) => {
   return (
-    <Draggable index={index} draggableId={term.term_id}>
-      {(provided) => (
-        <div className="w-full">
-          <div
-            // className={`z-10 w-0 h-0 pl-${term.level * 8}`}
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-          >
-            {/* <div className={`pl-${term.level * 8}`}> */}
-            <EditTerm
-              term={term}
-              index={index}
-              terms={terms}
-              draggable={true}
-              forQuestion={forQuestion}
-            />
-            {/* </div> */}
+    <div
+      key={term.term_id}
+      className="flex justify-between items-center"
+    >
+      <Draggable index={index} draggableId={term.term_id}>
+        {(provided) => (
+          <div className="w-full">
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+            >
+              <EditTerm
+                term={term}
+                index={index}
+                forQuestion={forQuestion}
+              />
+            </div>
           </div>
-        </div>
-      )}
-    </Draggable>
+        )}
+      </Draggable>
+      <TermAddButton
+        terms={terms}
+        tag={tag}
+        index={index}
+      />
+    </div>
   )
 }
 )

@@ -1,14 +1,15 @@
+/* eslint-disable array-callback-return */
 import axios from 'axios'
-import { useQueryClient } from 'react-query'
-import { useAppDispatch, useAppSelector } from '../app/hooks'
+import { useAppSelector, useAppDispatch } from '../app/hooks'
 import {
-  resetUpdateTerm,
   selectEditContext,
-  selectEdittingTerms,
-  selectExamTags,
   setEditContext,
+  selectEdittingTerms,
+  resetUpdateTerm,
 } from '../slices/editSlice'
-import { Term, voidTag } from '../types/types'
+import { useQueryClient } from 'react-query'
+import { Term } from '../types/types'
+import { useTags } from './useTags'
 
 const config = {
   headers: {
@@ -19,30 +20,28 @@ const config = {
 export const useMutateTerms = () => {
   const terms = useAppSelector(selectEdittingTerms)
   const editContext = useAppSelector(selectEditContext)
-  const examTags = useAppSelector(selectExamTags)
   const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
+  const { getTag } = useTags()
+
   const save = () => {
-    const tag =
-      examTags.find((t) => t.tag_name === editContext.chosenTag.tag_name) ||
-      voidTag
-    console.log(terms)
+    const tag = getTag(editContext.chosenTag.tag_name)
+
     const newTerms = [...terms]
     newTerms.map((term, index) => {
       if (term.sort !== index + 1) {
         newTerms.splice(index, 1, {
           ...term,
           sort: index + 1,
-          changed: term.changed === 'new' ? 'new' : 'update',
+          changed: (term.changed === 'new' || term.changed === 'delete') ? term.changed : 'update',
         })
       }
     })
-    console.log(newTerms)
 
     const newTerms2 = newTerms.filter(
-      (term) => term.changed === 'new' || term.changed === 'update'
+      (term) => term.changed === 'new' || term.changed === 'update' || term.changed === 'delete'
     )
-    console.log(newTerms2)
+
     const selectedTerms = newTerms
       .filter((term) => term.selected)
       .map((term) => ({
@@ -50,14 +49,13 @@ export const useMutateTerms = () => {
         word: term.word,
         level: term.level,
         sort: term.sort,
+        description: term.description,
       }))
     const keywords = JSON.parse(editContext.keywordsJson)
     keywords[editContext.chosenTag.tag_name] = selectedTerms
-    const newEditContext = {
-      ...editContext,
-      keywordsJson: JSON.stringify(keywords),
-    }
-    console.log(keywords)
+
+    const newEditContext = { ...editContext, keywordsJson: JSON.stringify(keywords), }
+
     const requestData = {
       provider: tag.provider,
       tag_no: tag.tag_no,
@@ -65,26 +63,31 @@ export const useMutateTerms = () => {
       quest_id: editContext.quest_id,
       quest_keywords: JSON.stringify(keywords),
     }
-    axios
-      .post(`${process.env.REACT_APP_REST_URL}/keywords`, requestData, config)
+    axios.post(`${process.env.REACT_APP_REST_URL}/keywords`, requestData, config)
       .then((response) => {
         let result = response.data
         console.log(result)
+        const newTerms3 = newTerms.filter((term) => term.changed !== 'delete')
         queryClient.setQueryData<Term[]>(
           tag?.provider + '_' + tag?.tag_no,
-          newTerms.map((term) => ({
+          newTerms3.map((term) => ({
             term_id: term.term_id,
             word: term.word,
             level: term.level,
             sort: term.sort,
             provider: term.provider,
-            tag_no: term.tag_no
+            tag_no: term.tag_no,
+            description: term.description,
           }))
         )
         dispatch(setEditContext(newEditContext))
         dispatch(resetUpdateTerm())
+        return true
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        return false
+      })
   }
   return {
     save,

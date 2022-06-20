@@ -1,33 +1,34 @@
 import { memo, VFC } from 'react'
 import { useAppDispatch } from '../../app/hooks'
+import { useKeywords } from '../../hooks/useKeywords'
 import { useTags } from '../../hooks/useTags'
 import {
-  setCallTermEdit,
   setEditContext,
   setEditedContent,
 } from '../../slices/editSlice'
-import { bgcolor, TagTerms } from '../../types/types'
+import { bgcolor, Question } from '../../types/types'
 import { EditBlockContent } from './EditBlockContent'
 
 interface Props {
-  quest_id: string
-  keywords: TagTerms
+  question: Question
 }
 
-export const QTermDescriptions: VFC<Props> = memo(({ quest_id, keywords }) => {
+export const QTermDescriptions: VFC<Props> = memo(({ question }) => {
   const dispatch = useAppDispatch()
   const { getTag } = useTags()
+  const { getKeywordsJson } = useKeywords(question)
+  const keywords = getKeywordsJson()
+
   const callTermEdit = (tagName: string) => {
     dispatch(setEditedContent('TermEdit'))
     dispatch(
       setEditContext({
-        quest_id: quest_id,
+        quest_id: question.quest_id,
         keywordsJson: JSON.stringify(keywords),
         chosenTag: getTag(tagName),
         forQuestion: true,
       })
     )
-    dispatch(setCallTermEdit(true))
   }
   return (
     <div className="pb-4" title="QTermDescriptions">
@@ -59,7 +60,7 @@ export const QTermDescriptions: VFC<Props> = memo(({ quest_id, keywords }) => {
 
               {term.description?.map(
                 (editElem, index) =>
-                  editElem.quest_ids?.includes(quest_id) && (
+                  editElem.quest_ids?.includes(question.quest_id) && (
                     <div className="pl-2">
                       <EditBlockContent
                         editElem={editElem}

@@ -5,19 +5,22 @@ import {
   setEditContext,
 } from '../../slices/editSlice'
 import { QTerms } from '../atoms/QTerms'
-import { Question, TagTerms, voidTag } from '../../types/types'
+import { Question, voidTag } from '../../types/types'
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import log from 'loglevel'
+import { useKeywords } from '../../hooks/useKeywords'
 
 interface Props {
   question: Question
-  keywords: TagTerms
+  // keywords: TagTerms
   withAdd: boolean
 }
-export const QKeywords: VFC<Props> = memo(({ question, keywords, withAdd }) => {
+export const QKeywords: VFC<Props> = memo(({ question, withAdd }) => {
   log.setLevel("info")
   log.debug("QTags start")
   const dispatch = useAppDispatch()
+  const { getKeywordsJson } = useKeywords(question)
+  const keywords = getKeywordsJson()
   const addTag = () => {
     dispatch(setEditedContent('TagSelect'))
     dispatch(

@@ -7,8 +7,6 @@ export const useQueryTerms = (tag?: Tag) => {
     const { data } = await axios.get<Term[]>(
       `${process.env.REACT_APP_REST_URL}/keywords?provider=${tag?.provider}&tag_no=${tag?.tag_no}`
     )
-    console.log('getTerms')
-    console.log(data)
     return data
   }
   return useQuery<Term[], Error>({

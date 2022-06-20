@@ -2,7 +2,7 @@ import { VFC, memo } from 'react'
 import { Tag } from '../../types/types'
 import log from 'loglevel'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectEditContext, setCallTermEdit, setEditContext, setEditedContent, setTab, tabs } from '../../slices/editSlice'
+import { selectEditContext, setEditContext, setEditedContent, setTab, tabs } from '../../slices/editSlice'
 
 interface Props {
   tag: Tag
@@ -28,7 +28,6 @@ export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) =>
       onDoubleClick={() => {
         dispatch(setEditedContent('TermEdit'))
         dispatch(setEditContext({ ...editContext, chosenTag: tag, forQuestion: false }))
-        dispatch(setCallTermEdit(true))
         dispatch(setTab(tabs[2]))
       }}
     >

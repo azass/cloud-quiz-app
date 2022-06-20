@@ -1,6 +1,4 @@
-import { ChevronDownIcon } from '@heroicons/react/solid'
 import { VFC, memo, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import TextareaAutosize from 'react-textarea-autosize'
 import { ColorContext } from '../../App'
 import { EditElem } from '../../types/types'

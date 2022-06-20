@@ -10,7 +10,6 @@ export interface EditState {
   editedContext: EditContext
   examTags: Tag[]
   updateTerm: boolean
-  callTermEdit: boolean
   edittingTerms: Term[]
   scArgs: any
   lang: number
@@ -31,7 +30,6 @@ export const initialState: EditState = {
   },
   examTags: [],
   updateTerm: false,
-  callTermEdit: false,
   edittingTerms: [],
   scArgs: {
     exam_ids: [],
@@ -53,71 +51,48 @@ export const editSlice = createSlice({
   initialState,
   reducers: {
     setIdToken: (state, action: PayloadAction<string>) => {
-      console.log('>>>editSlice.setIdToken')
       state.idToken = action.payload
     },
     setTab: (state, action: PayloadAction<string>) => {
-      console.log('>>>editSlice.setTab')
       state.tab = action.payload
     },
     setExam: (state, action: PayloadAction<any>) => {
-      console.log('>>>editSlice.setExam')
       state.exam = action.payload
     },
     setEditedContent: (state, action: PayloadAction<string>) => {
-      console.log('>>>editSlice.setEditedContent')
       state.editedContent = action.payload
     },
     resetEditedContent: (state) => {
-      console.log('>>>editSlice.resetEditedContent')
       state.editedContent = initialState.editedContent
     },
     setEditContext: (state, action: PayloadAction<EditContext>) => {
-      console.log('>>>editSlice.setEditContext')
       state.editedContext = action.payload
     },
     resetEditContext: (state) => {
-      console.log('>>>editSlice.resetEditContext')
       state.editedContext = initialState.editedContext
     },
     setExamTags: (state, action: PayloadAction<Tag[]>) => {
-      console.log('>>>editSlice.setExamTags')
       state.examTags = action.payload
     },
     resetExamTags: (state) => {
-      console.log('>>>editSlice.resetExamTags')
       state.examTags = initialState.examTags
     },
     setUpdateTerm: (state, action: PayloadAction<boolean>) => {
-      console.log('>>>editSlice.setUpdateTerm')
       state.updateTerm = action.payload
     },
     resetUpdateTerm: (state) => {
-      console.log('>>>editSlice.resetUpdateTerm')
       state.updateTerm = initialState.updateTerm
     },
-    setCallTermEdit: (state, action: PayloadAction<boolean>) => {
-      console.log('>>>editSlice.setCallTermEdit')
-      state.callTermEdit = action.payload
-    },
-    resetCallTermEdit: (state) => {
-      console.log('>>>editSlice.resetCallTermEdit')
-      state.callTermEdit = initialState.callTermEdit
-    },
     setEdittingTerms: (state, action: PayloadAction<Term[]>) => {
-      console.log('>>>editSlice.setEdittingTerms')
       state.edittingTerms = action.payload
     },
     resetEdittingTerms: (state) => {
-      console.log('>>>editSlice.resetEdittingTerms')
       state.edittingTerms = initialState.edittingTerms
     },
     setScArgs: (state, action: PayloadAction<any>) => {
-      console.log('>>>editSlice.setScArgs')
       state.scArgs = action.payload
     },
     resetScArgs: (state) => {
-      console.log('>>>editSlice.resetScArgs')
       state.scArgs = initialState.scArgs
     },
     setLangs: (state, action: PayloadAction<number>) => {
@@ -138,8 +113,6 @@ export const {
   resetExamTags,
   setUpdateTerm,
   resetUpdateTerm,
-  setCallTermEdit,
-  resetCallTermEdit,
   setEdittingTerms,
   resetEdittingTerms,
   setScArgs,
@@ -155,7 +128,6 @@ export const selectEditedContent = (state: RootState) =>
 export const selectEditContext = (state: RootState) => state.edit.editedContext
 export const selectExamTags = (state: RootState) => state.edit.examTags
 export const selectUpdateTerm = (state: RootState) => state.edit.updateTerm
-export const selectCallTermEdit = (state: RootState) => state.edit.callTermEdit
 export const selectEdittingTerms = (state: RootState) =>
   state.edit.edittingTerms
 export const selectScArgs = (state: RootState) => state.edit.scArgs

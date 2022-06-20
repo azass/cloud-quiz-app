@@ -8,5 +8,12 @@ export const useTags = () => {
     const tag = examTags.find((t) => t.tag_name === tagName)
     return tag || voidTag
   }
-  return { getTag }
+  const getTagOfNo = (tagNo: number) => {
+    const tag = examTags.find((t) => t.tag_no === tagNo)
+    return tag || voidTag
+  }
+  return {
+    getTag,
+    getTagOfNo,
+  }
 }
