@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown'
 import TextareaAutosize from 'react-textarea-autosize'
 import { EditElem } from '../../types/types'
 import rehypeRaw from 'rehype-raw'
-import { ChevronDownIcon } from '@heroicons/react/solid'
 import { QLinkPopup } from '../atoms/QLinkPopup'
 interface Props {
   editElem: EditElem
@@ -28,7 +27,7 @@ export const EditElemTextarea: VFC<Props> = memo(
       <>
         <div>
           {lang !== 2 && (
-            <div className={`px-4 py-1 mt-1 ${!editting && 'py-3 bg-gray-900 border-2 rounded-md ' + border_color()}`}>
+            <div className={`px-4 py-1 mt-1 ${!editting && 'py-3 bg-black border-2 rounded-md ' + border_color()}`}>
               {(editable && editting) ? (
                 <TextareaAutosize
                   value={editElem.text || ""}

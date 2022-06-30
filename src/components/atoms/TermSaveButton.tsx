@@ -19,8 +19,7 @@ export const TermSaveButton: VFC<Props> = memo(({ chosenTag }) => {
   const [saving, setSaving] = useState(false)
   const saveTerms = () => {
     setSaving(true)
-    save()
-    setSaving(false)
+    save(setSaving)
   }
   return (
     <>

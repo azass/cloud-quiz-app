@@ -43,7 +43,7 @@ export const EditTerms: VFC = () => {
         <TermSaveButton chosenTag={editedContext.chosenTag} />
       </div>
       <div id="navWrapper" className={color.bgColor}>
-        <nav id="nav" className="px-6 overflow-y-auto text-base h-screen pb-60">
+        <nav id="nav" className="pr-2 overflow-y-auto text-base h-screen pb-60">
           {draggable ? (
             <>
               {terms.length === 0 ? (

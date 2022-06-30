@@ -7,8 +7,8 @@ import { setEditContext } from '../../slices/editSlice'
 import { EditQuestion } from '../molecules/EditQuestion'
 import { ColorContext } from '../../App'
 import { useTags } from '../../hooks/useTags'
-import log from 'loglevel'
 import { QNewRegister } from '../atoms/QNewRegister'
+import log from 'loglevel'
 
 interface Props {
   logout: any

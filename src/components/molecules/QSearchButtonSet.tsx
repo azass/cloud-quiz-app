@@ -18,7 +18,7 @@ interface Props {
   selectTags: string[]
   setSelectSearchTags: any
 }
-export const SearchButtonSet: VFC<Props> = memo(
+export const QSearchButtonSet: VFC<Props> = memo(
   ({ examId, selectTags, setSelectSearchTags }) => {
     const scArgs = useAppSelector(selectScArgs)
     const tags = useAppSelector(selectExamTags)

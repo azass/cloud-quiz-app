@@ -48,7 +48,7 @@ export const QKeywords: VFC<Props> = memo(({ question, withAdd }) => {
         ))}
         {!withAdd && question.labels &&
           question.labels.map((label, index) => (
-            <span className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-blue-900 text-white font-bold text-xs">{label}</span>
+            <span className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-pink-300 text-white font-bold text-xs">{label}</span>
           ))
         }
         <PlusCircleIcon

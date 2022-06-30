@@ -57,7 +57,7 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
         sort: term.sort,
         description: term.description,
       }))
-    const keywords = JSON.parse(editContext.keywordsJson)
+    const keywords = JSON.parse(editContext.keywordsJson || '{}')
     keywords[editContext.chosenTag.tag_name] = selectedTerms
     const newEditContext = {
       ...editContext,

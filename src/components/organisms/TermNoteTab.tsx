@@ -2,7 +2,7 @@ import { memo, VFC } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { useSearch } from "../../hooks/useSearch";
 import { selectEditedContent } from "../../slices/editSlice";
-import { TagSelectTab } from "./TagSelectTab";
+import { TagSelectPanel } from "./TagSelectPanel";
 import { TermEditFrame } from "./TermEditFrame";
 
 export const TermNoteTab: VFC = memo(() => {
@@ -11,7 +11,8 @@ export const TermNoteTab: VFC = memo(() => {
   return (
     <>
       {editedContent === 'TagSelect' && (
-        <TagSelectTab
+        <TagSelectPanel
+          useExamTags={false}
           selectTags={selectSearchTags}
           onClickTag={onClickSearchTag}
           setSelectSearchTags={setSelectSearchTags}

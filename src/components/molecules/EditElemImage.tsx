@@ -13,7 +13,7 @@ interface Props {
 export const EditElemImage: VFC<Props> = memo(
   ({ editElem, index, onChangeText, editable, editting }) => {
     if (!editElem.image_height || editElem.image_height === '') {
-      editElem.image_height = '100'
+      editElem.image_height = '200'
     }
     const pathStyle = `px-4 py-2 w-full border-gray-300 text-xs ${editElem.image_path === '' && 'bg-pink-50'
       }`

@@ -5,7 +5,7 @@ import { ToastProvider } from './hooks/useToast'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
 export const ColorContext = createContext({
-  bgColor: 'bg-black',
+  bgColor: 'bg-gray-900',
   baseText: 'text-white',
   iconColor: 'text-gray-600',
 })

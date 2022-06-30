@@ -8,6 +8,7 @@ export interface EditState {
   exam: any
   editedContent: string
   editedContext: EditContext
+  providerTags: Tag[]
   examTags: Tag[]
   updateTerm: boolean
   edittingTerms: Term[]
@@ -28,6 +29,7 @@ export const initialState: EditState = {
     chosenTag: voidTag,
     forQuestion: false
   },
+  providerTags: [],
   examTags: [],
   updateTerm: false,
   edittingTerms: [],
@@ -41,6 +43,7 @@ export const initialState: EditState = {
     other_options: [],
     maturities: [],
     exclusives: [],
+    scorings: [],
     order: 0,
   },
   lang: 1,
@@ -70,6 +73,12 @@ export const editSlice = createSlice({
     },
     resetEditContext: (state) => {
       state.editedContext = initialState.editedContext
+    },
+    setProviderTags: (state, action: PayloadAction<Tag[]>) => {
+      state.providerTags = action.payload
+    },
+    resetProviderTags: (state) => {
+      state.providerTags = initialState.providerTags
     },
     setExamTags: (state, action: PayloadAction<Tag[]>) => {
       state.examTags = action.payload
@@ -109,6 +118,8 @@ export const {
   resetEditedContent,
   setEditContext,
   resetEditContext,
+  setProviderTags,
+  resetProviderTags,
   setExamTags,
   resetExamTags,
   setUpdateTerm,
@@ -126,6 +137,7 @@ export const selectExam = (state: RootState) => state.edit.exam
 export const selectEditedContent = (state: RootState) =>
   state.edit.editedContent
 export const selectEditContext = (state: RootState) => state.edit.editedContext
+export const selectProviderTags = (state: RootState) => state.edit.providerTags
 export const selectExamTags = (state: RootState) => state.edit.examTags
 export const selectUpdateTerm = (state: RootState) => state.edit.updateTerm
 export const selectEdittingTerms = (state: RootState) =>

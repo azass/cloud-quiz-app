@@ -6,7 +6,7 @@ import { useAppDispatch } from '../../app/hooks'
 import {
   resetEditedContent,
   setExam,
-  setExamTags,
+  setProviderTags,
   setTab,
   tabs,
 } from '../../slices/editSlice'
@@ -63,12 +63,13 @@ export const ExamSelectTab: VFC = memo(() => {
                 }
                 onClick={() => {
                   dispatch(resetEditedContent())
-                  dispatch(setExamTags(nowProvider.tags))
+                  dispatch(setProviderTags(nowProvider.tags))
                   dispatch(setTab(tabs[1]))
                   dispatch(
                     setExam({
                       examId: exam.exam_id,
                       examName: exam.exam_name,
+                      provider: exam.provider
                     })
                   )
                   navigate('/editor/' + exam.exam_id)

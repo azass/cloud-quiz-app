@@ -68,6 +68,7 @@ export interface Tag {
   tag_no: number
   tag_name: string
   provider: string
+  count?: number
 }
 
 export interface Term {
@@ -81,6 +82,7 @@ export interface Term {
   changed?: string
   draggableId?: string
   description?: EditElem[]
+  quest_ids?: string[]
 }
 
 export interface EditContext {

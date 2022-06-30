@@ -24,7 +24,7 @@ export const useMutateTerms = () => {
   const queryClient = useQueryClient()
   const { getTag } = useTags()
 
-  const save = () => {
+  const save = (setSaving: any) => {
     const tag = getTag(editContext.chosenTag.tag_name)
 
     const newTerms = [...terms]
@@ -51,7 +51,7 @@ export const useMutateTerms = () => {
         sort: term.sort,
         description: term.description,
       }))
-    const keywords = JSON.parse(editContext.keywordsJson)
+    const keywords = JSON.parse(editContext.keywordsJson || '{}')
     keywords[editContext.chosenTag.tag_name] = selectedTerms
 
     const newEditContext = { ...editContext, keywordsJson: JSON.stringify(keywords), }
@@ -82,11 +82,11 @@ export const useMutateTerms = () => {
         )
         dispatch(setEditContext(newEditContext))
         dispatch(resetUpdateTerm())
-        return true
+        setSaving(false)
       })
       .catch((error) => {
         console.log(error)
-        return false
+        setSaving(false)
       })
   }
   return {

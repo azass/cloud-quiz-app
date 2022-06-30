@@ -1,9 +1,11 @@
+/* eslint-disable array-callback-return */
 
 import { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 import {
+  resetExamTags,
   selectEditContext,
-  selectExamTags,
+  selectProviderTags,
   setEditContext,
 } from '../slices/editSlice'
 import { EditElem, EditElemType, Question, Tag } from '../types/types'
@@ -128,13 +130,13 @@ export const useEditElem = (editElems: EditElem[]) => {
   }
 
   const editedContext = useAppSelector(selectEditContext)
-  const tags = useAppSelector(selectExamTags)
+  const tags = useAppSelector(selectProviderTags)
   const dispatch = useAppDispatch()
 
   const keywords =
     !editedContext.keywordsJson || editedContext.keywordsJson === ''
       ? {}
-      : JSON.parse(editedContext.keywordsJson)
+      : JSON.parse(editedContext.keywordsJson || '{}')
 
   const onClickTag = (tag: Tag, include: boolean) => {
     if (include) {
@@ -170,6 +172,7 @@ export const useEditElem = (editElems: EditElem[]) => {
               keywordsJson: JSON.stringify(keywords),
             })
           )
+          dispatch(resetExamTags())
         }
       })
       .catch((error) => log.debug(error))

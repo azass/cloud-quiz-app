@@ -11,14 +11,13 @@ interface Props {
 }
 export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) => {
   log.setLevel("info")
-  log.debug('<SelectableTag>')
   const bgcolor = selected
     ? 'text-white bg-pink-600'
     : 'text-gray-500 bg-gray-300'
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
   return (
-    <span title="SelectableTag"
+    <span title={String(tag.count)}
       key={tag.tag_no}
       className={
         'rounded-md border my-1 py-1 mx-1 px-3 font-extrabold text-sm cursor-pointer ' +

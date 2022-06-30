@@ -18,7 +18,7 @@ export const TermEditFrame: VFC = memo(() => {
 
   if (data) {
     if (editedContext.forQuestion) {
-      const selectedTerms: Term[] = JSON.parse(editedContext.keywordsJson)[
+      const selectedTerms: Term[] = JSON.parse(editedContext.keywordsJson || '{}')[
         editedContext.chosenTag.tag_name
       ]
       const selectedTermIds = selectedTerms?.map((term) => term.term_id)
