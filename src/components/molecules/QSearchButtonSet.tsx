@@ -62,13 +62,13 @@ export const QSearchButtonSet: VFC<Props> = memo(
       const argTags = tags
         .filter((tag) => selectTags.includes(tag.tag_name))
         .map((tag) => tag.tag_no.toString())
-      dispatch(
-        setScArgs({
-          ...scArgs,
-          category_ids: argTags,
-          other_options: selectOptions,
-        })
-      )
+      const newScArgs = {
+        ...scArgs,
+        exam_ids: [examId],
+        category_ids: argTags,
+        other_options: selectOptions,
+      }
+      dispatch(setScArgs(newScArgs))
       dispatch(setTab(tabs[1]))
       dispatch(resetEditedContent())
     }
@@ -97,7 +97,7 @@ export const QSearchButtonSet: VFC<Props> = memo(
               }
               onClick={() => onClick0()}
             >
-              {selectOptions.includes(-2) ? "対象外" : "すべて"}
+              {selectOptions.includes(-2) ? '対象外' : 'すべて'}
             </button>
           </div>
           <div className="w-1/6 px-2">

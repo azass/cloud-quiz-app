@@ -2,22 +2,25 @@ import { VFC, memo, useState } from 'react'
 import { useQueryProviders } from '../../hooks/useQueryProviders'
 import { Provider } from '../../types/types'
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
   resetEditedContent,
+  selectScArgs,
   setExam,
   setProviderTags,
+  setScArgs,
   setTab,
   tabs,
 } from '../../slices/editSlice'
 import log from 'loglevel'
 
 export const ExamSelectTab: VFC = memo(() => {
-  log.setLevel("info")
+  log.setLevel('info')
   const [nowProviderName, setNowProviderName] = useState('')
   const { status, data } = useQueryProviders()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const srcArgs = useAppSelector(selectScArgs)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>
   if (status === 'error') return <div>{'Error'}</div>
@@ -69,9 +72,13 @@ export const ExamSelectTab: VFC = memo(() => {
                     setExam({
                       examId: exam.exam_id,
                       examName: exam.exam_name,
-                      provider: exam.provider
+                      provider: exam.provider,
                     })
                   )
+                  setScArgs({
+                    ...srcArgs,
+                    exam_ids: [exam.exam_id],
+                  })
                   navigate('/editor/' + exam.exam_id)
                 }}
               >
