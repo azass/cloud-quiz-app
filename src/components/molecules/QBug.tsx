@@ -20,6 +20,9 @@ export const QBug: VFC<Props> = memo(({ bug, onClickDelete }) => {
           className={`h-5 w-5 ${color.iconColor} cursor-pointer hover:text-blue-500 mr-4`}
           onClick={() => onClickDelete()}
         />
+        {("more_study" in bug && bug.more_study) && (
+          <div className={`flex-shrink-0  w-20 border p-1 text-center ${color.baseText}`}>要復習</div>
+        )}
         {("in_question" in bug && bug.in_question) && (
           <div className={`flex-shrink-0  w-20 border p-1 text-center ${color.baseText}`}>問題</div>
         )}

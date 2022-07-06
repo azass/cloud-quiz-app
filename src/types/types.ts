@@ -13,6 +13,7 @@ export interface Question {
   is_bug?: boolean
   bug_points?: Bug
   more_study?: boolean
+  is_easy?: boolean
   is_difficult?: boolean
   is_weak?: boolean
   is_mandatory?: boolean
@@ -39,6 +40,7 @@ export interface EditElem {
 }
 
 export interface Bug {
+  more_study?: boolean
   in_question?: boolean
   in_option?: boolean
   in_tag?: boolean

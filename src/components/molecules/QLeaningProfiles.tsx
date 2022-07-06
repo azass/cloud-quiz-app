@@ -13,6 +13,7 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
   const color = useContext(ColorContext)
   const [lastQuestId, setLastQuestId] = useState(question.quest_id)
   const [moreStudy, setMoreStudy] = useState(question.more_study || false)
+  const [isEasy, setIsEasy] = useState(question.is_easy || false)
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
   const [isWeak, setIsWeak] = useState(question.is_weak || false)
   const [isMandatory, setIsMandatory] = useState(question.is_mandatory || false)
@@ -34,21 +35,21 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
           type="button"
           className={
             'flex-shrink-0 border p-1 text-white text-bold' +
-            `${moreStudy && ` bg-purple-600`}`
+            `${isEasy && ` bg-purple-600`}`
           }
           onClick={() => {
-            setMoreStudy(!moreStudy)
-            question.more_study = !moreStudy
+            setIsEasy(!isEasy)
+            question.is_easy = !isEasy
             putQuestion(
               {
                 quest_id: question.quest_id,
-                more_study: question.more_study,
+                is_easy: question.is_easy,
               },
               question
             )
           }}
         >
-          <span className="px-8">復習</span>
+          <span className="px-8">簡単</span>
         </button>
         <button
           type="button"

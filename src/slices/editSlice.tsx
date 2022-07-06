@@ -44,6 +44,7 @@ export const initialState: EditState = {
     maturities: [],
     exclusives: [],
     scorings: [],
+    target_days_agos: [],
     order: 0,
   },
   lang: 1,

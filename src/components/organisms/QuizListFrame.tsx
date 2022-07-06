@@ -1,5 +1,4 @@
 import { VFC, memo, useContext, useState } from 'react'
-import { useQueryQuestions } from '../../hooks/useQueryQuestions'
 import { QItem } from '../molecules/QItem'
 import { useParams } from 'react-router-dom'
 import { ColorContext } from '../../App'
@@ -8,6 +7,7 @@ import { selectScArgs } from '../../slices/editSlice'
 import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
 import log from 'loglevel'
+import { useQueryQuestions } from '../../hooks/useQueryQuestions'
 
 export const QuizListFrame: VFC = memo(() => {
   log.setLevel('info')
