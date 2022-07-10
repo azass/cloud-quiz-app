@@ -42,12 +42,7 @@ export const EditTerm: VFC<Props> = memo(({ term, index, forQuestion }) => {
           'text-white font-bold text-sm text-center ' +
           getBgColor(level)
         }>
-        <div className="flex justify-start items-center">
-          {!editting ? (
-            <PencilAltIcon className="w-4 h-4 ml-4 mr-1 cursor-pointer" onClick={() => setEditting(true)} />
-          ) : (
-            <CheckCircleIcon className="w-6 h-6 ml-4 mr-1 cursor-pointer" onClick={() => update()} />
-          )}
+        <div className="flex justify-start items-center px-2">
           <div className={`flex items-center pl-${term.level * 2}`}>
             {!describe ?
               ((term.description && term.description.length > 0) ? (
@@ -93,9 +88,16 @@ export const EditTerm: VFC<Props> = memo(({ term, index, forQuestion }) => {
             )}
           </div>
         </div>
-        <div className="flex items-center">
-          {term.quest_ids && term.quest_ids.length > 0 && <QLinkPopup quest_ids={term.quest_ids} />}
-          {editting && <XCircleIcon className="w-6 h-6 mx-1 cursor-pointer" onClick={() => del()} />}
+        <div className="flex">
+          <div className="flex items-center">
+            {term.quest_ids && term.quest_ids.length > 0 && <QLinkPopup quest_ids={term.quest_ids} />}
+            {editting && <XCircleIcon className="w-6 h-6 mx-1 cursor-pointer" onClick={() => del()} />}
+          </div>
+          {!editting ? (
+            <PencilAltIcon className="w-4 h-4 ml-4 mr-1 cursor-pointer" onClick={() => setEditting(true)} />
+          ) : (
+            <CheckCircleIcon className="w-6 h-6 ml-4 mr-1 cursor-pointer" onClick={() => update()} />
+          )}
         </div>
       </div>
       {describe &&
