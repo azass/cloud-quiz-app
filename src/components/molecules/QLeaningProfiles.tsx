@@ -23,7 +23,7 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
 
   if (lastQuestId !== question.quest_id) {
     setLastQuestId(question.quest_id)
-    setMoreStudy(question.more_study || false)
+    setIsEasy(question.more_study || false)
     setIsDifficult(question.is_difficult || false)
     setIsWeak(question.is_weak || false)
     setIsMandatory(question.is_mandatory || false)
