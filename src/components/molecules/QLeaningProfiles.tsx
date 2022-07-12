@@ -12,7 +12,7 @@ interface Props {
 export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
   const color = useContext(ColorContext)
   const [lastQuestId, setLastQuestId] = useState(question.quest_id)
-  const [moreStudy, setMoreStudy] = useState(question.more_study || false)
+  const [setMoreStudy] = useState(question.more_study || false)
   const [isEasy, setIsEasy] = useState(question.is_easy || false)
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
   const [isWeak, setIsWeak] = useState(question.is_weak || false)
