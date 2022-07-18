@@ -5,6 +5,7 @@ import {
   PhotographIcon,
   PlusCircleIcon,
 } from '@heroicons/react/solid'
+import { AnnotationIcon } from '@heroicons/react/outline'
 
 interface Props {
   index: number
@@ -16,7 +17,10 @@ export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
     return 'h-5 w-5 mx-2 text-gray-500 cursor-pointer hover:text-blue-500'
   }
   return (
-    <div className={`flex justify-between ${name !== 'options' && 'pt-4'}`}>
+    <div
+      className={`flex justify-between ${name !== 'options' && 'pt-4'}`}
+      title="EditElemAdds"
+    >
       <div className="flex justify-start">
         {name === 'explanation' && (
           <ExternalLinkIcon
@@ -43,10 +47,16 @@ export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
           />
         )}
         {name === 'options' && (
-          <PlusCircleIcon
-            className={getBgColor()}
-            onClick={() => onClickAdd(index, 'option')}
-          />
+          <>
+            <PlusCircleIcon
+              className={getBgColor()}
+              onClick={() => onClickAdd(index, 'option')}
+            />
+            <AnnotationIcon
+              className={getBgColor()}
+              onClick={() => onClickAdd(index, 'textbox')}
+            />
+          </>
         )}
       </div>
     </div>

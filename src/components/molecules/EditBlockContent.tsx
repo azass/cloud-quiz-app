@@ -10,6 +10,7 @@ import { ColorContext } from '../../App'
 import { useAppSelector } from '../../app/hooks'
 import { selectEditContext, selectLang } from '../../slices/editSlice'
 import log from 'loglevel'
+import { EditElemTextbox } from './EditElemTextbox'
 
 interface Props {
   editElem: EditElem
@@ -97,11 +98,13 @@ export const EditBlockContent: VFC<Props> = memo(
                   {name !== 'explanation' && name !== 'options' && (
                     <select
                       className={`ml-8 w-10 h-5`}
-                      onChange={(e) => onChangeText(index, 'lv', e.target.value)}
+                      onChange={(e) =>
+                        onChangeText(index, 'lv', e.target.value)
+                      }
                       value={editElem.lv}
                       title={name}
                     >
-                      {["1", "2", "3", "4"].map((i) => (
+                      {['1', '2', '3', '4'].map((i) => (
                         <option value={`${i}`}>{`${i}`}</option>
                       ))}
                     </select>
@@ -116,7 +119,11 @@ export const EditBlockContent: VFC<Props> = memo(
               </div>
             </div>
           )}
-          <div className={`${editElem.lv && `pl-${(Number(editElem.lv) - 1) * 4}`} `}>
+          <div
+            className={`${
+              editElem.lv && `pl-${(Number(editElem.lv) - 1) * 4}`
+            } `}
+          >
             {editElem.type === EditElemType.OPTION && (
               <EditElemOption
                 editElem={editElem}
@@ -159,6 +166,7 @@ export const EditBlockContent: VFC<Props> = memo(
                 editting={editting}
               />
             )}
+            {editElem.type === EditElemType.TEXTBOX && <EditElemTextbox />}
           </div>
         </div>
         {editable && editting && (

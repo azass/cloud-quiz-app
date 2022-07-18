@@ -18,13 +18,17 @@ export const QuizSelectFrame: VFC = memo(() => {
           </div>
           <input
             type="text"
-            className="w-12 ml-1 px-1"
+            className="w-20 ml-1 px-1"
             value={selectNo}
             onChange={(e) => {
               if (Number.isInteger(e.target.value)) {
-                alert("")
+                alert('')
               } else {
-                setSelectNo(('0000' + e.target.value).slice(-4))
+                if (params.exam_id !== 'PM-551') {
+                  setSelectNo(('0000' + e.target.value).slice(-4))
+                } else {
+                  setSelectNo(e.target.value)
+                }
               }
             }}
           ></input>

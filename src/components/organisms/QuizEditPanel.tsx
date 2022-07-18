@@ -23,8 +23,8 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
   const [questId, setQuestId] = useState(quest_id)
   const [question, setQuestion] = useState<Question>()
   const [registerToggle, setRegisterToggle] = useState(false)
-  const search = useLocation().search;
-  const query = new URLSearchParams(search);
+  const search = useLocation().search
+  const query = new URLSearchParams(search)
   const fromTermEditor = query.has('fromTermEditor')
   const { getTagOfNo } = useTags()
   const chosenTag = getTagOfNo(Number(query.get('fromTermEditor')))
@@ -46,10 +46,11 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
     if (data === undefined || data === null) {
       params.quest_id && setQuestId(params.quest_id)
       setRegisterToggle(true)
+      const exam_id = params.exam_id || ''
       setQuestion({
         quest_id: quest_id,
-        quest_no: parseInt(quest_id.slice(-4)),
-        exam_id: params.exam_id,
+        quest_no: parseInt(quest_id.slice(exam_id.length + 1)),
+        exam_id: exam_id,
       })
     } else {
       if (params.quest_id) {
@@ -63,8 +64,8 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
         dispatch(
           setEditContext({
             quest_id: data.quest_id,
-            keywordsJson: data.keywords || "",
-            chosenTag: (fromTermEditor) ? chosenTag : voidTag,
+            keywordsJson: data.keywords || '',
+            chosenTag: fromTermEditor ? chosenTag : voidTag,
             forQuestion: true,
           })
         )
@@ -78,7 +79,10 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
       >
         {quest_id}
         {registerToggle && question && (
-          <QNewRegister question={question} setRegisterToggle={setRegisterToggle} />
+          <QNewRegister
+            question={question}
+            setRegisterToggle={setRegisterToggle}
+          />
         )}
       </div>
       {!registerToggle && question && (

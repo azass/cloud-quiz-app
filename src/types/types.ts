@@ -99,6 +99,7 @@ export namespace EditElemType {
   export const IMAGE = "image"
   export const LINK = "link"
   export const OPTION = "option"
+  export const TEXTBOX = "textbox"
 }
 
 export const bgcolor = [
