@@ -1,9 +1,6 @@
 import { VFC, memo } from 'react'
 import { useAppSelector, useAppDispatch } from '../../app/hooks'
-import {
-  selectEditContext,
-  setEdittingTerms,
-} from '../../slices/editSlice'
+import { selectEditContext, setEdittingTerms } from '../../slices/editSlice'
 import { useQueryTerms } from '../../hooks/useQueryTerms'
 import { Term } from '../../types/types'
 import { EditTerms } from '../molecules/EditTerms'
@@ -18,9 +15,9 @@ export const TermEditFrame: VFC = memo(() => {
 
   if (data) {
     if (editedContext.forQuestion) {
-      const selectedTerms: Term[] = JSON.parse(editedContext.keywordsJson || '{}')[
-        editedContext.chosenTag.tag_name
-      ]
+      const selectedTerms: Term[] = JSON.parse(
+        editedContext.keywordsJson || '{}'
+      )[editedContext.chosenTag.tag_name]
       const selectedTermIds = selectedTerms?.map((term) => term.term_id)
       const newTerms: Term[] = []
       for (var term of data) {

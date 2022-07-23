@@ -12,6 +12,5 @@ export const useQueryExamTags = (exam: any) => {
   return useQuery<Tag[], Error>({
     queryKey: exam.examId,
     queryFn: getExamTags,
-    // staleTime: ,
   })
 }

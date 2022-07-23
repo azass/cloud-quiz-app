@@ -85,6 +85,7 @@ export interface Term {
   draggableId?: string
   description?: EditElem[]
   quest_ids?: string[]
+  ref?: Term
 }
 
 export interface EditContext {
@@ -107,16 +108,26 @@ export const bgcolor = [
   'bg-blue-500',
   'bg-indigo-400',
   'bg-blue-400',
+  'bg-indigo-300',
+  'bg-blue-300',
 ]
 export const selectedBgcolor = [
   'bg-red-500',
   'bg-pink-400',
   'bg-red-300',
   'bg-pink-300',
+  'bg-red-200',
+  'bg-pink-200',
 ]
 
 export const voidTag: Tag = {
   tag_no: 0,
   tag_name: '',
   provider: ''
+}
+
+export const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
 }

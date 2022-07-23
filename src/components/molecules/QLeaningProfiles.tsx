@@ -12,7 +12,6 @@ interface Props {
 export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
   const color = useContext(ColorContext)
   const [lastQuestId, setLastQuestId] = useState(question.quest_id)
-  const [setMoreStudy] = useState(question.more_study || false)
   const [isEasy, setIsEasy] = useState(question.is_easy || false)
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
   const [isWeak, setIsWeak] = useState(question.is_weak || false)
@@ -116,7 +115,7 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
           onClick={() => setEditting(!editting)}
         />
       </div>
-      {(editting) ? (
+      {editting ? (
         <ReactTextareaAutosize
           value={learningNote || ''}
           className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
@@ -133,7 +132,9 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
           }}
         ></ReactTextareaAutosize>
       ) : (
-        <span className="text-white whitespace-pre-wrap">{learningNote || ''}</span>
+        <span className="text-white whitespace-pre-wrap">
+          {learningNote || ''}
+        </span>
       )}
     </>
   )

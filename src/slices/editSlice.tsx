@@ -14,6 +14,7 @@ export interface EditState {
   edittingTerms: Term[]
   scArgs: any
   lang: number
+  suggestTerms: Term[]
 }
 
 export const tabs = ['試験一覧', '問題一覧', 'ノート']
@@ -27,7 +28,7 @@ export const initialState: EditState = {
     quest_id: '',
     keywordsJson: '',
     chosenTag: voidTag,
-    forQuestion: false
+    forQuestion: false,
   },
   providerTags: [],
   examTags: [],
@@ -48,6 +49,7 @@ export const initialState: EditState = {
     order: 0,
   },
   lang: 1,
+  suggestTerms: [],
 }
 
 export const editSlice = createSlice({
@@ -107,7 +109,13 @@ export const editSlice = createSlice({
     },
     setLangs: (state, action: PayloadAction<number>) => {
       state.lang = action.payload
-    }
+    },
+    setSuggestTerms: (state, action: PayloadAction<Term[]>) => {
+      state.suggestTerms = action.payload
+    },
+    resetSuggestTerms: (state) => {
+      state.suggestTerms = initialState.suggestTerms
+    },
   },
 })
 
@@ -130,6 +138,8 @@ export const {
   setScArgs,
   resetScArgs,
   setLangs,
+  setSuggestTerms,
+  resetSuggestTerms,
 } = editSlice.actions
 
 export const selectIdToken = (state: RootState) => state.edit.idToken
@@ -146,3 +156,4 @@ export const selectEdittingTerms = (state: RootState) =>
 export const selectScArgs = (state: RootState) => state.edit.scArgs
 export const selectLang = (state: RootState) => state.edit.lang
 export default editSlice.reducer
+export const selectSuggestTerms = (state: RootState) => state.edit.suggestTerms

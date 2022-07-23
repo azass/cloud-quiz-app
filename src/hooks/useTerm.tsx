@@ -1,19 +1,24 @@
 /* eslint-disable array-callback-return */
-// import { useState } from "react";
-import { useQueryClient } from "react-query";
-import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { selectEditContext, selectEdittingTerms, selectUpdateTerm, setEditContext, setEdittingTerms, setUpdateTerm } from "../slices/editSlice";
-import { bgcolor, selectedBgcolor, Term } from "../types/types";
+import { useQueryClient } from 'react-query'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
+import {
+  selectEditContext,
+  selectEdittingTerms,
+  selectUpdateTerm,
+  setEditContext,
+  setEdittingTerms,
+  setUpdateTerm,
+} from '../slices/editSlice'
+import { bgcolor, selectedBgcolor, Term } from '../types/types'
 
 export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
-  // const [termState, setTermState] = useState(term)
   const terms = useAppSelector(selectEdittingTerms)
   const updateTem = useAppSelector(selectUpdateTerm)
   const editContext = useAppSelector(selectEditContext)
   const queryClient = useQueryClient()
   const dispatch = useAppDispatch()
 
-  const enter = (word: string, level: number) => {
+  const enter = (word: string, level: number, ref?: Term) => {
     if (word !== term.word || level !== term.level) {
       const newTerms = [...terms]
       const term = {
@@ -22,6 +27,9 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
         level: level,
         changed: newTerms[index].changed || 'update',
       }
+      if (ref) {
+        term.ref = ref
+      }
       newTerms[index] = term
       dispatch(setEdittingTerms(newTerms))
       if (!updateTem) dispatch(setUpdateTerm(true))
@@ -29,7 +37,9 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
   }
 
   const remove = () => {
-    const newTerms = terms.map((term, i) => i === index ? { ...term, changed: 'delete', selected: false } : term)
+    const newTerms = terms.map((term, i) =>
+      i === index ? { ...term, changed: 'delete', selected: false } : term
+    )
     dispatch(setEdittingTerms(newTerms))
     if (!updateTem) dispatch(setUpdateTerm(true))
   }
@@ -41,7 +51,6 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
       newTerm.selected = !term.selected
       newTerms[index] = newTerm
       dispatch(setEdittingTerms(newTerms))
-      // setTermState(newTerm)
       if (!updateTem) dispatch(setUpdateTerm(true))
     }
   }
@@ -67,7 +76,7 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
 
     newTerms.map((newTerm, index) => {
       if (newTerm.term_id === requestData.term_id) {
-        newTerms.splice(index, 1, { ...requestData, })
+        newTerms.splice(index, 1, { ...requestData })
       }
     })
     dispatch(setEdittingTerms(newTerms))
