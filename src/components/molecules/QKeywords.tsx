@@ -9,6 +9,7 @@ import { Question, voidTag } from '../../types/types'
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import log from 'loglevel'
 import { useKeywords } from '../../hooks/useKeywords'
+import { useTags } from '../../hooks/useTags'
 
 interface Props {
   question: Question
@@ -18,6 +19,7 @@ interface Props {
 export const QKeywords: VFC<Props> = memo(({ question, withAdd }) => {
   log.setLevel("info")
   log.debug("QTags start")
+  const { getTagName } = useTags()
   const dispatch = useAppDispatch()
   const { getKeywordsJson } = useKeywords(question)
   const keywords = getKeywordsJson()
@@ -35,15 +37,15 @@ export const QKeywords: VFC<Props> = memo(({ question, withAdd }) => {
   return (
     <>
       <div className="flex flex-wrap justify-start " title="QKeywords">
-        {Object.keys(keywords).map((tagName, index) => (
+        {Object.keys(keywords).map((key, index) => (
           <>
             <span
               key={question.quest_id + '_' + index++}
               className="flex items-center rounded-full border py-1 my-1 mr-1 px-3 bg-pink-600 text-white font-bold"
             >
-              {tagName}
+              {getTagName(key)}
             </span>
-            {keywords[tagName].length > 0 && <QTerms terms={keywords[tagName]} />}
+            {keywords[key].length > 0 && <QTerms terms={keywords[key]} />}
           </>
         ))}
         {!withAdd && question.labels &&

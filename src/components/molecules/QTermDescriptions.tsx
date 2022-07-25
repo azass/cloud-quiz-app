@@ -15,34 +15,34 @@ interface Props {
 
 export const QTermDescriptions: VFC<Props> = memo(({ question }) => {
   const dispatch = useAppDispatch()
-  const { getTag } = useTags()
+  const { getTag, getTagName } = useTags()
   const { getKeywordsJson } = useKeywords(question)
   const keywords = getKeywordsJson()
 
-  const callTermEdit = (tagName: string) => {
+  const callTermEdit = (key: string) => {
     dispatch(setEditedContent('TermEdit'))
     dispatch(
       setEditContext({
         quest_id: question.quest_id,
         keywordsJson: JSON.stringify(keywords),
-        chosenTag: getTag(tagName),
+        chosenTag: getTag(key),
         forQuestion: true,
       })
     )
   }
   return (
     <div className="pb-4" title="QTermDescriptions">
-      {Object.keys(keywords).map((tagName, index) => (
+      {Object.keys(keywords).map((key, index) => (
         <>
           <div className="pt-4">
             <span
               className="rounded-full border mr-1 py-1 px-3 bg-pink-600 text-white font-bold text-xs cursor-pointer"
-              onClick={() => callTermEdit(tagName)}
+              onClick={() => callTermEdit(key)}
             >
-              {tagName}
+              {getTagName(key)}
             </span>
           </div>
-          {keywords[tagName].map((term) => (
+          {keywords[key].map((term) => (
             <>
               {term.word !== 'is ?' && (
                 <div className="pl-2 pt-4">

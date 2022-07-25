@@ -2,7 +2,7 @@ import { VFC, memo } from 'react'
 import { Tag } from '../../types/types'
 import log from 'loglevel'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectEditContext, setEditContext, setEditedContent, setTab, tabs } from '../../slices/editSlice'
+import { selectEditContext, selectTab, setEditContext, setEditedContent, setTab, tabs } from '../../slices/editSlice'
 
 interface Props {
   tag: Tag
@@ -16,6 +16,7 @@ export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) =>
     : 'text-gray-500 bg-gray-300'
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
+  const tab = useAppSelector(selectTab)
   return (
     <span title={String(tag.count)}
       key={tag.tag_no}
@@ -25,9 +26,11 @@ export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) =>
       }
       onClick={() => onClickTag(tag, !selected)}
       onDoubleClick={() => {
-        dispatch(setEditedContent('TermEdit'))
-        dispatch(setEditContext({ ...editContext, chosenTag: tag, forQuestion: false }))
-        dispatch(setTab(tabs[2]))
+        if (tab === tabs[2]) {
+          dispatch(setEditedContent('TermEdit'))
+          dispatch(setEditContext({ ...editContext, chosenTag: tag, forQuestion: false }))
+          dispatch(setTab(tabs[2]))
+        }
       }}
     >
       {tag.tag_name}

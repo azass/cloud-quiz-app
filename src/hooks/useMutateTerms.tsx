@@ -59,7 +59,10 @@ export const useMutateTerms = () => {
         description: term.description,
       }))
     const keywords = JSON.parse(editContext.keywordsJson || '{}')
-    keywords[editContext.chosenTag.tag_name] = selectedTerms
+    keywords[editContext.chosenTag.tag_no] = selectedTerms
+    if (editContext.chosenTag.tag_name in keywords) {
+      delete keywords[editContext.chosenTag.tag_name]
+    }
 
     const newEditContext = {
       ...editContext,

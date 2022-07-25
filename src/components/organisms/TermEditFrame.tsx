@@ -15,9 +15,10 @@ export const TermEditFrame: VFC = memo(() => {
 
   if (data) {
     if (editedContext.forQuestion) {
-      const selectedTerms: Term[] = JSON.parse(
+      const keywords = JSON.parse(
         editedContext.keywordsJson || '{}'
-      )[editedContext.chosenTag.tag_name]
+      )
+      const selectedTerms: Term[] = (editedContext.chosenTag.tag_name in keywords) ? keywords[editedContext.chosenTag.tag_name] : keywords[editedContext.chosenTag.tag_no.toString()]
       const selectedTermIds = selectedTerms?.map((term) => term.term_id)
       const newTerms: Term[] = []
       for (var term of data) {

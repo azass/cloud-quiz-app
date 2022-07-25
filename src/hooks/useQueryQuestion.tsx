@@ -21,7 +21,7 @@ export const useQueryQuestion = (questId: string) => {
       const question: Question = data.body
       if (question) {
         question.options?.map((option) => {
-          if (!('mark' in option)) {
+          if (!('mark' in option)) { // 連想配列キーの存在チェック
             const mark = option.text?.slice(0, 1) || ''
             option.mark = mark
           }

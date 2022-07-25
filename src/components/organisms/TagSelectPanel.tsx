@@ -35,7 +35,7 @@ export const TagSelectPanel: VFC<Props> = memo(
                 .map((tag) => (
                   <SelectableTag
                     tag={tag}
-                    selected={selectTags.includes(tag.tag_name)}
+                    selected={selectTags.includes(tag.tag_name) || selectTags.includes(tag.tag_no.toString())}
                     onClickTag={onClickTag}
                   />
                 ))}

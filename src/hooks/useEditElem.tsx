@@ -140,13 +140,21 @@ export const useEditElem = (editElems: EditElem[]) => {
 
   const onClickTag = (tag: Tag, include: boolean) => {
     if (include) {
-      keywords[tag.tag_name] = []
+      keywords[tag.tag_no] = []
     } else {
-      if (keywords[tag.tag_name].length !== 0) {
-        var res = window.confirm('用語も削除されます')
-        if (!res) return
+      if (tag.tag_name in keywords) {
+        if (keywords[tag.tag_name].length !== 0) {
+          var res = window.confirm('用語も削除されます')
+          if (!res) return
+        }
+        delete keywords[tag.tag_name] // 連想配列の要素（キー）を削除
+      } else {
+        if (keywords[tag.tag_no].length !== 0) {
+          var res2 = window.confirm('用語も削除されます')
+          if (!res2) return
+        }
+        delete keywords[tag.tag_no] // 連想配列の要素（キー）を削除
       }
-      delete keywords[tag.tag_name]
     }
     log.debug('keys')
     log.debug(Object.keys(keywords))
