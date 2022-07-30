@@ -68,7 +68,7 @@ export const EditTerm: VFC<Props> = memo(({ term, index, forQuestion }) => {
         }
       >
         <div className="flex justify-start items-center px-2">
-          <div className={`flex items-center pl-${term.level * 2}`}>
+          <div className={`flex items-center pl-${term.level * 4}`}>
             {!describe ? (
               term.description && term.description.length > 0 ? (
                 <AcademicCapIcon
