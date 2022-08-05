@@ -3,10 +3,17 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Question } from '../types/types'
 import { useAppSelector } from '../app/hooks'
-import { selectIdToken } from '../slices/editSlice'
+import { selectEditContext, selectIdToken } from '../slices/editSlice'
 
-export const useQueryQuestion = (questId: string) => {
+export const useQueryQuestion = (questId: string, question?: Question) => {
   const idToken = useAppSelector(selectIdToken)
+  const appendCaseId = () => {
+    if (question && question.quest_id === questId && question.case_id) {
+      return `&case_id=${question.case_id}`
+    } else {
+      return ''
+    }
+  }
   const getQuestion = async () => {
     try {
       const headers = {
@@ -15,7 +22,7 @@ export const useQueryQuestion = (questId: string) => {
         },
       }
       const { data } = await axios.get(
-        `${process.env.REACT_APP_REST_URL}/question?quest_id=${questId}`,
+        `${process.env.REACT_APP_REST_URL}/question?quest_id=${questId}` + appendCaseId(),
         headers
       )
       const question: Question = data.body

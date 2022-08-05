@@ -19,6 +19,8 @@ export interface Question {
   is_mandatory?: boolean
   learning_note?: string
   labels?: string[]
+  case_id?: string
+  case_items?: EditElem[]
 }
 
 export interface TagTerms {

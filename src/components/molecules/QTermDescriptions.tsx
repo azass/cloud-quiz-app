@@ -70,6 +70,7 @@ export const QTermDescriptions: VFC<Props> = memo(({ question }) => {
                         onClickDelete={undefined}
                         onChangeText={undefined}
                         onChangeCheck={undefined}
+                        onSelectCase={undefined}
                         editable={false}
                         enableEdit={false}
                       />

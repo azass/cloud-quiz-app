@@ -57,7 +57,7 @@ const dispatch = useAppDispatch()
 dispatch(setTab(tabs[1]))
 ````
 ## 横一列
-flex justify-start
+flex justify-start items-center
 
 ## 左メニューから用語を選択
 EditTerm > select()

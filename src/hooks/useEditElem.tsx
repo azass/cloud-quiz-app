@@ -13,7 +13,7 @@ import axios from 'axios'
 import log from 'loglevel'
 
 export const useEditElem = (editElems: EditElem[]) => {
-  log.setLevel("info")
+  log.setLevel("debug")
   log.debug("useEditElem start!")
   const mark = ["A", "B", "C", "D", "E", "F"]
   const isCheckOn = editElems.some(x => x.correct)
@@ -21,6 +21,7 @@ export const useEditElem = (editElems: EditElem[]) => {
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)
   const [editElemsState, setEditElemsState] = useState<EditElem[]>(editElems)
   const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
+  const editContext = useAppSelector(selectEditContext)
 
   const add = (index: number, type: string) => {
     log.debug(index)
@@ -78,6 +79,31 @@ export const useEditElem = (editElems: EditElem[]) => {
     const newEditElems = [...editElemsState]
     newEditElems[index].correct = !newEditElems[index].correct
     log.debug('changeCheck!!!')
+    setEditElemsState(newEditElems)
+    setSaveButtonToggle(true)
+  }
+
+  const changeCheck2 = (index: number, questId: string) => {
+    const newEditElems = [...editElemsState]
+    if (!newEditElems[index].quest_ids) {
+      const newEditElem = { ...newEditElems[index], quest_ids: [editContext.quest_id] }
+      newEditElems[index] = newEditElem
+    } else {
+      const quest_ids = editElemsState[index].quest_ids
+      if (quest_ids) {
+        if (quest_ids.includes(editContext.quest_id)) {
+          const newEditElem = {
+            ...newEditElems[index], quest_ids: quest_ids.filter((quest_id) => {
+              return quest_id !== editContext.quest_id
+            })
+          }
+          newEditElems[index] = newEditElem
+        } else {
+          const newEditElem = { ...newEditElems[index], quest_ids: [...quest_ids, editContext.quest_id] }
+          newEditElems[index] = newEditElem
+        }
+      }
+    }
     setEditElemsState(newEditElems)
     setSaveButtonToggle(true)
   }
@@ -197,6 +223,7 @@ export const useEditElem = (editElems: EditElem[]) => {
     del,
     changeText,
     changeCheck,
+    changeCheck2,
     save,
     keywords,
     onClickTag,

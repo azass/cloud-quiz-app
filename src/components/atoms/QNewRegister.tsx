@@ -2,12 +2,16 @@ import { CloudUploadIcon } from "@heroicons/react/outline";
 import { memo, VFC } from "react";
 import { useMutateQuestion } from "../../hooks/useMutateQuestion";
 import { Question } from "../../types/types";
+import log from 'loglevel'
 
 interface Props {
   question: Question
   setRegisterToggle: any
 }
 export const QNewRegister: VFC<Props> = memo(({ question, setRegisterToggle }) => {
+
+  log.setLevel('debug')
+  log.debug('QNewRegister')
   const { createQuestion } = useMutateQuestion()
   const onClickRegister = () => {
     createQuestion(question)

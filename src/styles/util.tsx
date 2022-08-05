@@ -60,3 +60,9 @@ export const media = {
   tablet: customMediaQuery(768),
   phone: customMediaQuery(576),
 };
+
+export const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}

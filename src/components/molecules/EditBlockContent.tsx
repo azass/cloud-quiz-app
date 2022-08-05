@@ -1,16 +1,12 @@
+import log from 'loglevel'
 import { VFC, memo, useContext, useState } from 'react'
-import { TrashIcon } from '@heroicons/react/outline'
 import { EditElem, EditElemType } from '../../types/types'
-import { EditElemTextarea } from './EditElemTextarea'
-import { EditElemLinkMemo } from './EditElemLink'
-import { EditElemImage } from './EditElemImage'
 import { EditElemAdds } from '../atoms/EditElemAdds'
-import { EditElemOption } from './EditElemOption'
 import { ColorContext } from '../../App'
 import { useAppSelector } from '../../app/hooks'
-import { selectEditContext, selectLang } from '../../slices/editSlice'
-import log from 'loglevel'
-import { EditElemTextbox } from './EditElemTextbox'
+import { selectEditContext } from '../../slices/editSlice'
+import { EditBlockContentBar } from './EditBlockContentBar'
+import { EditBlockContentBody } from './EditBlockContentBody'
 
 interface Props {
   editElem: EditElem
@@ -20,6 +16,7 @@ interface Props {
   onClickDelete: any
   onChangeText: any
   onChangeCheck: any
+  onSelectCase?: any
   showCheckbox?: boolean
   editable: boolean
   enableEdit: boolean
@@ -34,14 +31,14 @@ export const EditBlockContent: VFC<Props> = memo(
     onClickDelete,
     onChangeText,
     onChangeCheck,
+    onSelectCase,
     showCheckbox,
     editable,
     enableEdit,
   }) => {
-    log.setLevel('info')
+    log.setLevel('debug')
     const color = useContext(ColorContext)
     const editContext = useAppSelector(selectEditContext)
-    const nowLang = useAppSelector(selectLang)
     const shouldEdit = () => {
       if (editElem.type === 'link' && editElem.link === '') {
         return true
@@ -81,93 +78,31 @@ export const EditBlockContent: VFC<Props> = memo(
         {editable && editting && index === 0 && (
           <EditElemAdds index={-1} name={name} onClickAdd={onClickAdd} />
         )}
-        {/* <ul className="transform transition-transform border-gray-600 my-4"> */}
         <div className="border-gray-600 pt-2">
           {enableEdit && (
-            <div className="flex justify-between items-center">
-              <div className="flex">
-                <div className="flex">
-                  {name === 'description_for_question' && (
-                    <input
-                      type="checkbox"
-                      className="w-5 h-5"
-                      checked={on()}
-                      onChange={(e) => onChangeCheck(index)}
-                    />
-                  )}
-                  {name !== 'explanation' && name !== 'options' && (
-                    <select
-                      className={`ml-8 w-10 h-5`}
-                      onChange={(e) =>
-                        onChangeText(index, 'lv', e.target.value)
-                      }
-                      value={editElem.lv}
-                      title={name}
-                    >
-                      {['1', '2', '3', '4'].map((i) => (
-                        <option value={`${i}`}>{`${i}`}</option>
-                      ))}
-                    </select>
-                  )}
-                </div>
-              </div>
-              <div className="flex flex-row pr-3 gap-4">
-                <TrashIcon
-                  className={`h-6 w-6 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-                  onClick={() => onClickDelete(index)}
-                />
-              </div>
-            </div>
+            <EditBlockContentBar
+              editElem={editElem}
+              name={name}
+              index={index}
+              onClickDelete={onClickDelete}
+              onChangeText={onChangeText}
+              onChangeCheck={onChangeCheck}
+              onSelectCase={onSelectCase}
+              on={on}
+            />
           )}
-          <div
-            className={`${
-              editElem.lv && `pl-${(Number(editElem.lv) - 1) * 4}`
-            } `}
-          >
-            {editElem.type === EditElemType.OPTION && (
-              <EditElemOption
-                editElem={editElem}
-                index={index}
-                onClickAdd={onClickAdd}
-                onChangeText={onChangeText}
-                onChangeCheck={onChangeCheck}
-                showCheckbox={showCheckbox}
-                editting={editting}
-                lang={nowLang}
-              />
-            )}
-            {editElem.type === EditElemType.TEXTAREA && (
-              <EditElemTextarea
-                editElem={editElem}
-                index={index}
-                onChangeText={onChangeText}
-                lang={name === 'question_items' ? nowLang : 1}
-                editable={editable}
-                editting={editting}
-                on={on()}
-              />
-            )}
-            {editElem.type === EditElemType.LINK && (
-              <EditElemLinkMemo
-                editElem={editElem}
-                index={index}
-                onChangeText={onChangeText}
-                editable={editable}
-                editting={editting}
-                on={on()}
-              />
-            )}
-            {editElem.type === EditElemType.IMAGE && (
-              <EditElemImage
-                editElem={editElem}
-                index={index}
-                onChangeText={onChangeText}
-                editable={editable}
-                editting={editting}
-              />
-            )}
-            {editElem.type === EditElemType.TEXTBOX && <EditElemTextbox />}
-          </div>
+          <EditBlockContentBody
+            editElem={editElem}
+            name={name}
+            index={index}
+            onClickAdd={onClickAdd}
+            onChangeText={onChangeText}
+            onChangeCheck={onChangeCheck}
+            showCheckbox={showCheckbox}
+            editable={editable}
+            editting={editting}
+            on={on}
+          />
         </div>
         {editable && editting && (
           <EditElemAdds index={index} name={name} onClickAdd={onClickAdd} />

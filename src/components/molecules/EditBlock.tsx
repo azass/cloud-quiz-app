@@ -1,3 +1,4 @@
+import log, { setLevel } from 'loglevel'
 import { VFC, memo, useState, useContext } from 'react'
 import { EditBlockContent } from './EditBlockContent'
 import { Question, EditElem } from '../../types/types'
@@ -5,12 +6,10 @@ import { SaveButton } from '../atoms/SaveButton'
 import { EditElemAdds } from '../atoms/EditElemAdds'
 import { useEditElem } from '../../hooks/useEditElem'
 import { ColorContext } from '../../App'
-import { EyeIcon } from '@heroicons/react/outline'
-import { CheckCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
-import log, { setLevel } from 'loglevel'
+import { EditBlockHeader } from './EditBlockHeader'
 
 interface Props {
-  questId: string
+  question: Question
   editElems: EditElem[]
   title: string
   name: string
@@ -18,10 +17,11 @@ interface Props {
 }
 
 export const EditBlock: VFC<Props> = memo(
-  ({ questId, editElems, title, name, editable }) => {
+  ({ question, editElems, title, name, editable }) => {
     setLevel("info")
     log.debug('EditBlock start!!')
     const color = useContext(ColorContext)
+    const questId = question.quest_id
     const {
       editElemsState,
       setEditElemsState,
@@ -33,6 +33,7 @@ export const EditBlock: VFC<Props> = memo(
       del,
       changeText,
       changeCheck,
+      changeCheck2,
       save,
     } = useEditElem(editElems)
 
@@ -70,33 +71,23 @@ export const EditBlock: VFC<Props> = memo(
         })
       } else if (name === 'explanation') {
         requestData.explanation = editElemsState
+      } else if (name === 'case_items') {
+        requestData.case_id = question.case_id
+        requestData.case_items = editElemsState
       }
       save(requestData, 'question')
     }
 
     return (
       <div className={`pb-2  ${color.bgColor}`} title="EditBlock">
-        <div className={`flex items-center gap-2 my-4 font-bold ${color.baseText}`}>
-          {title}
-          {name === 'options' && (
-            <EyeIcon
-              className="w-4 h-4 ml-4 cursor-pointer hover:text-blue-500"
-              onClick={() => setShowCheckbox(!showCheckbox)}
-            />
-          )}
-          <div>
-            {enableEdit ? (
-              <CheckCircleIcon
-                className={`h-6 w-6 ml-8 ${color.iconColor} cursor-pointer text-blue-500`}
-                onClick={() => setEnableEdit(!enableEdit)}
-              />
-            ) : (
-              <PencilAltIcon
-                className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-                onClick={() => setEnableEdit(!enableEdit)}
-              />)}
-          </div>
-        </div>
+        <EditBlockHeader
+          name={name}
+          title={title}
+          enableEdit={enableEdit}
+          setEnableEdit={setEnableEdit}
+          showCheckbox={showCheckbox}
+          setShowCheckbox={setShowCheckbox}
+        />
         {enableEdit && editElemsState.length === 0 ? (
           <EditElemAdds index={-1} name={name} onClickAdd={add} />
         ) : (
@@ -109,6 +100,7 @@ export const EditBlock: VFC<Props> = memo(
               onClickDelete={del}
               onChangeText={changeText}
               onChangeCheck={changeCheck}
+              onSelectCase={changeCheck2}
               showCheckbox={showCheckbox}
               editable={editable}
               enableEdit={enableEdit}

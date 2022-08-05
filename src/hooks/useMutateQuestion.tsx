@@ -43,12 +43,13 @@ export const useMutateQuestion = () => {
       }).catch((error) => console.log(error))
   }
 
-  const putQuestion = (requestData: any, question: Question) => {
+  const putQuestion = (requestData: any, question: Question, post?: any) => {
     axios.put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
       .then((response) => {
         queryClient.setQueryData<Question>(
           question.quest_id, question
         )
+        if (post) post({ ...question })
       }).catch((error) => console.log(error))
   }
 
