@@ -18,7 +18,7 @@ interface Props {
 
 export const EditBlock: VFC<Props> = memo(
   ({ question, editElems, title, name, editable }) => {
-    setLevel("info")
+    setLevel('info')
     log.debug('EditBlock start!!')
     const color = useContext(ColorContext)
     const questId = question.quest_id
@@ -38,6 +38,7 @@ export const EditBlock: VFC<Props> = memo(
     } = useEditElem(editElems)
 
     const [questIdState, setQuestIdState] = useState(questId)
+    const [showAllQuestionCase, setShowAllQuestionCase] = useState(false)
     log.debug(`questIdState=${questIdState}`)
     log.debug(editElemsState)
     if (questIdState !== questId) {
@@ -51,7 +52,11 @@ export const EditBlock: VFC<Props> = memo(
      * for scraping
      * if no content; set new content
      */
-    if (editElemsState.length === 0 && editElemsState !== editElems && name !== 'explanation') {
+    if (
+      editElemsState.length === 0 &&
+      editElemsState !== editElems &&
+      name !== 'explanation'
+    ) {
       log.debug('EditBlock new!!!')
       setEditElemsState(editElems)
     }
@@ -78,6 +83,17 @@ export const EditBlock: VFC<Props> = memo(
       save(requestData, 'question')
     }
 
+    const isShow = (editElem: EditElem) => {
+      if (name === 'case_items') {
+        if (showAllQuestionCase) {
+          return true
+        } else {
+          return editElem.quest_ids?.includes(questId)
+        }
+      } else {
+        return true
+      }
+    }
     return (
       <div className={`pb-2  ${color.bgColor}`} title="EditBlock">
         <EditBlockHeader
@@ -87,25 +103,32 @@ export const EditBlock: VFC<Props> = memo(
           setEnableEdit={setEnableEdit}
           showCheckbox={showCheckbox}
           setShowCheckbox={setShowCheckbox}
+          showAllQuestionCase={showAllQuestionCase}
+          setShowAllQuestionCase={setShowAllQuestionCase}
         />
         {enableEdit && editElemsState.length === 0 ? (
           <EditElemAdds index={-1} name={name} onClickAdd={add} />
         ) : (
           editElemsState.map((editElem, index) => (
-            <EditBlockContent
-              editElem={editElem}
-              name={name}
-              index={index}
-              onClickAdd={add}
-              onClickDelete={del}
-              onChangeText={changeText}
-              onChangeCheck={changeCheck}
-              onSelectCase={changeCheck2}
-              showCheckbox={showCheckbox}
-              editable={editable}
-              enableEdit={enableEdit}
-            />
-          )))}
+            <>
+              {isShow(editElem) && (
+                <EditBlockContent
+                  editElem={editElem}
+                  name={name}
+                  index={index}
+                  onClickAdd={add}
+                  onClickDelete={del}
+                  onChangeText={changeText}
+                  onChangeCheck={changeCheck}
+                  onSelectCase={changeCheck2}
+                  showCheckbox={showCheckbox}
+                  editable={editable}
+                  enableEdit={enableEdit}
+                />
+              )}
+            </>
+          ))
+        )}
         <div className="flex justify-center mx-auto">
           {saveButtonToggle && <SaveButton onClick={onClickSave} />}
         </div>

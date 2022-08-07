@@ -22,16 +22,16 @@ export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
       title="EditElemAdds"
     >
       <div className="flex justify-start">
-        {name === 'explanation' && (
-          <ExternalLinkIcon
-            className={getBgColor()}
-            onClick={() => onClickAdd(index, 'link')}
-          />
-        )}
         {name !== 'options' && (
           <DocumentAddIcon
             className={getBgColor()}
             onClick={() => onClickAdd(index, 'textarea')}
+          />
+        )}
+        {name === 'explanation' && (
+          <ExternalLinkIcon
+            className={getBgColor()}
+            onClick={() => onClickAdd(index, 'link')}
           />
         )}
         {name.startsWith('description') && (
