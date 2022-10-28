@@ -94,7 +94,7 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
           type="button"
           className={
             'flex-shrink-0 border-t border-r border-b p-1 text-white text-bold' +
-            `${isMandatory && ` bg-teal-600`}`
+            `${isMandatory && ` bg-green-600`}`
           }
           onClick={() => {
             setIsMandatory(!isMandatory)

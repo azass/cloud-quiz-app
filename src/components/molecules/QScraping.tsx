@@ -234,7 +234,7 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
         {editFlg && (
           <>
             <CheckIcon
-              className="h-4 w-4 text-teal-400 cursor-pointer"
+              className="h-4 w-4 text-green-400 cursor-pointer"
               fill="currentColor"
               onClick={() => onClickCheck()}
             />
