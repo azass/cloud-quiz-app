@@ -7,7 +7,7 @@ export const SelectLang: VFC = memo(() => {
   const dispatch = useAppDispatch()
   const bgcolor = (lang: number) => {
     if (nowLang === 0 || nowLang === lang) {
-      return "bg-teal-500"
+      return "bg-green-500"
     } else {
       return ""
     }

@@ -187,7 +187,7 @@ export const useEditElem = (editElems: EditElem[]) => {
     const requestData: Question = {
       quest_id: editedContext.quest_id,
       tags: tags
-        .filter((tag) => Object.keys(keywords).includes(tag.tag_name))
+        .filter((tag) => Object.keys(keywords).includes(tag.tag_name) || Object.keys(keywords).includes(tag.tag_no.toString()))
         .map((tag) => tag.tag_no.toString()),
       keywords: JSON.stringify(keywords),
     }

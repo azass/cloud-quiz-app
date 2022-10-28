@@ -28,7 +28,7 @@ const EditElemLink: VFC<Props> = ({
   return (
     <>
       <div className={`flex justify-between items-center pl-4 py-1`}>
-        <a href={editElem.url} target="_blank" rel="noreferrer" className={`underline text-base  ${on ? 'font-bold text-white' : 'text-teal-500'}`}>
+        <a href={editElem.url} target="_blank" rel="noreferrer" className={`underline text-base  ${on ? 'font-bold text-white' : 'text-green-500'}`}>
           {editElem.link}
         </a>
         {editable && editElem.quest_ids && editElem.quest_ids.length > 0 && (
