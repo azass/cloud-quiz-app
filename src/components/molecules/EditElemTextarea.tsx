@@ -17,22 +17,24 @@ interface Props {
 export const EditElemTextarea: VFC<Props> = memo(
   ({ editElem, index, onChangeText, lang, editable, editting, on }) => {
     const [pre, setPre] = useState(true)
-    const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${editElem.text === '' && 'bg-pink-50'
-      }`
+    const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${
+      editElem.text === '' && 'bg-pink-50'
+    }`
     const border_color = () => {
-      return editable && on ? 'border-white' : 'border-teal-900'
+      return editable && on ? 'border-white' : 'border-green-900'
     }
     const text_color = () => {
-      return editable && on ? 'text-white' : 'text-teal-400'
+      return editable && on ? 'text-white' : 'text-green-400'
     }
     return (
       <>
         <div title="EditElemTextarea">
           {lang !== 2 && (
             <div
-              className={`px-4 py-1 mt-1 ${!editting &&
+              className={`px-4 py-1 mt-1 ${
+                !editting &&
                 'py-3 bg-black border-2 rounded-md ' + border_color()
-                }`}
+              }`}
             >
               {editable && editting ? (
                 <div>

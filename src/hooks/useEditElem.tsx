@@ -13,10 +13,10 @@ import axios from 'axios'
 import log from 'loglevel'
 
 export const useEditElem = (editElems: EditElem[]) => {
-  log.setLevel("debug")
-  log.debug("useEditElem start!")
-  const mark = ["A", "B", "C", "D", "E", "F"]
-  const isCheckOn = editElems.some(x => x.correct)
+  log.setLevel('debug')
+  log.debug('useEditElem start!')
+  const mark = ['A', 'B', 'C', 'D', 'E', 'F']
+  const isCheckOn = editElems.some((x) => x.correct)
   log.debug(isCheckOn)
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)
   const [editElemsState, setEditElemsState] = useState<EditElem[]>(editElems)
@@ -86,20 +86,27 @@ export const useEditElem = (editElems: EditElem[]) => {
   const changeCheck2 = (index: number, questId: string) => {
     const newEditElems = [...editElemsState]
     if (!newEditElems[index].quest_ids) {
-      const newEditElem = { ...newEditElems[index], quest_ids: [editContext.quest_id] }
+      const newEditElem = {
+        ...newEditElems[index],
+        quest_ids: [editContext.quest_id],
+      }
       newEditElems[index] = newEditElem
     } else {
       const quest_ids = editElemsState[index].quest_ids
       if (quest_ids) {
         if (quest_ids.includes(editContext.quest_id)) {
           const newEditElem = {
-            ...newEditElems[index], quest_ids: quest_ids.filter((quest_id) => {
+            ...newEditElems[index],
+            quest_ids: quest_ids.filter((quest_id) => {
               return quest_id !== editContext.quest_id
-            })
+            }),
           }
           newEditElems[index] = newEditElem
         } else {
-          const newEditElem = { ...newEditElems[index], quest_ids: [...quest_ids, editContext.quest_id] }
+          const newEditElem = {
+            ...newEditElems[index],
+            quest_ids: [...quest_ids, editContext.quest_id],
+          }
           newEditElems[index] = newEditElem
         }
       }
@@ -187,7 +194,11 @@ export const useEditElem = (editElems: EditElem[]) => {
     const requestData: Question = {
       quest_id: editedContext.quest_id,
       tags: tags
-        .filter((tag) => Object.keys(keywords).includes(tag.tag_name))
+        .filter(
+          (tag) =>
+            Object.keys(keywords).includes(tag.tag_name) ||
+            Object.keys(keywords).includes(tag.tag_no.toString())
+        )
         .map((tag) => tag.tag_no.toString()),
       keywords: JSON.stringify(keywords),
     }

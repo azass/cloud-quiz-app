@@ -18,17 +18,26 @@ const EditElemLink: VFC<Props> = ({
   onChangeText,
   editable,
   editting,
-  on
+  on,
 }) => {
   const color = useContext(ColorContext)
-  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${color.iconColor} focus:text-white ${editElem.link === '' && 'bg-pink-50'
-    }`
-  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${color.iconColor} focus:text-white ${editElem.url === '' && 'bg-pink-50'
-    }`
+  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${
+    color.iconColor
+  } focus:text-white ${editElem.link === '' && 'bg-pink-50'}`
+  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${
+    color.iconColor
+  } focus:text-white ${editElem.url === '' && 'bg-pink-50'}`
   return (
     <>
       <div className={`flex justify-between items-center pl-4 py-1`}>
-        <a href={editElem.url} target="_blank" rel="noreferrer" className={`underline text-base  ${on ? 'font-bold text-white' : 'text-teal-500'}`}>
+        <a
+          href={editElem.url}
+          target="_blank"
+          rel="noreferrer"
+          className={`underline text-base  ${
+            on ? 'font-bold text-white' : 'text-green-500'
+          }`}
+        >
           {editElem.link}
         </a>
         {editable && editElem.quest_ids && editElem.quest_ids.length > 0 && (
@@ -43,7 +52,7 @@ const EditElemLink: VFC<Props> = ({
             </span>
             <TextareaAutosize
               className={linkStyle}
-              value={editElem.link || ""}
+              value={editElem.link || ''}
               onChange={(e) => onChangeText(index, 'link', e.target.value)}
             />
           </div>
@@ -53,7 +62,7 @@ const EditElemLink: VFC<Props> = ({
             </span>
             <TextareaAutosize
               className={urlStyle}
-              value={editElem.url || ""}
+              value={editElem.url || ''}
               onChange={(e) => onChangeText(index, 'url', e.target.value)}
             />
           </div>
