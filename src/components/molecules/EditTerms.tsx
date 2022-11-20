@@ -37,6 +37,7 @@ export const EditTerms: VFC = () => {
         <span
           className={`rounded-full px-6 pt-1 bg-pink-600 text-white font-bold cursor-pointer ${color.bgColor}`}
           onClick={() => toggle()}
+          title={String(editedContext.chosenTag.tag_no)}
         >
           {editedContext.chosenTag.tag_name}
         </span>

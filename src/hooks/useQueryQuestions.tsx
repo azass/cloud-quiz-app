@@ -20,7 +20,7 @@ export const useQueryQuestions = (args: any) => {
   return useQuery<Question[], Error>({
     queryKey: args.exam_ids[0] + JSON.stringify(args),
     queryFn: getQuestions,
-    // staleTime: 300,
+    staleTime: 300,
     // refetchOnWindowFocus: true,
   })
 }
