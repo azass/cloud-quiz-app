@@ -65,6 +65,7 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
     str = str?.replaceAll('オンプレミス', ' オンプレミス ')
     str = str?.replaceAll('メトリック', 'メトリクス')
     str = str?.replaceAll('クラスター', 'クラスタ')
+    str = str?.replaceAll('コンテナー', 'コンテナ')
     str = str?.replaceAll('VM', ' VM ')
     str = str?.replaceAll('ETL', ' ETL ')
     str = str?.replaceAll('Hadoop', ' Hadoop ')

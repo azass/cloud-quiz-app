@@ -24,7 +24,7 @@ export const EditBlockContentBar: VFC<Props> = memo(({
 }) => {
   const color = useContext(ColorContext)
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center" title="EditBlockContentBar">
       <div className="flex">
         {name === 'description_for_question' && (
           <input
@@ -32,6 +32,7 @@ export const EditBlockContentBar: VFC<Props> = memo(({
             className="w-5 h-5 text-black"
             checked={on()}
             onChange={(e) => onChangeCheck(index)}
+            title="related"
           />
         )}
         {name === 'case_items' && (
@@ -40,6 +41,7 @@ export const EditBlockContentBar: VFC<Props> = memo(({
             className="w-5 h-5"
             checked={on()}
             onChange={(e) => onSelectCase(index)}
+            title="related"
           />
         )}
         {name !== 'explanation' && name !== 'options' && (

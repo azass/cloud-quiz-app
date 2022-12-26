@@ -21,6 +21,7 @@ export interface Question {
   labels?: string[]
   case_id?: string
   case_items?: EditElem[]
+  is_old?: boolean
 }
 
 export interface TagTerms {
