@@ -21,6 +21,7 @@ export interface Question {
   labels?: string[]
   case_id?: string
   case_items?: EditElem[]
+  scoring?: number
   is_old?: boolean
 }
 

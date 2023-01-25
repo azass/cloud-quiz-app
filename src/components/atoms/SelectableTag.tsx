@@ -18,7 +18,8 @@ export const SelectableTag: VFC<Props> = memo(({ tag, selected, onClickTag }) =>
   const editContext = useAppSelector(selectEditContext)
   const tab = useAppSelector(selectTab)
   return (
-    <span title={String(tag.count)}
+    <span
+    // <span title={'count' in tag ? String(tag.count) : ''}
       key={tag.tag_no}
       className={
         'rounded-md border my-1 py-1 mx-1 px-3 font-extrabold text-sm cursor-pointer ' +

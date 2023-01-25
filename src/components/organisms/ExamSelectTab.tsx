@@ -15,7 +15,7 @@ import {
 import log from 'loglevel'
 
 export const ExamSelectTab: VFC = memo(() => {
-  log.setLevel('info')
+  log.setLevel('debug')
   const [nowProviderName, setNowProviderName] = useState('')
   const { status, data } = useQueryProviders()
   const dispatch = useAppDispatch()
@@ -37,10 +37,10 @@ export const ExamSelectTab: VFC = memo(() => {
       {provider.display_name}
     </option>
   ))
-  const nowProvider = data?.find(
+  const nowProvider = list.find(
     (provider) => provider.name === nowProviderName
   )
-  log.debug(nowProvider)
+  log.debug('nowProvider=', nowProvider)
   return (
     <>
       <select

@@ -5,6 +5,10 @@ import ReactTextareaAutosize from 'react-textarea-autosize'
 import { ColorContext } from '../../App'
 import { useMutateQuestion } from '../../hooks/useMutateQuestion'
 import { Question } from '../../types/types'
+import { SaveButton } from '../atoms/SaveButton'
+import rehypeRaw from 'rehype-raw'
+import remarkGfm from 'remark-gfm'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 
 interface Props {
   question: Question
@@ -19,6 +23,7 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
   const [learningNote, setLearningNote] = useState(question.learning_note)
   const [editting, setEditting] = useState(false)
   const { putQuestion } = useMutateQuestion()
+  const [registerToggle, setRegisterToggle] = useState<boolean>(false)
 
   if (lastQuestId !== question.quest_id) {
     setLastQuestId(question.quest_id)
@@ -26,10 +31,21 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
     setIsDifficult(question.is_difficult || false)
     setIsWeak(question.is_weak || false)
     setIsMandatory(question.is_mandatory || false)
+    setRegisterToggle(false)
+  }
+  const onClickSave = () => {
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        learning_note: learningNote,
+      },
+      question
+    )
+    setRegisterToggle(false)
   }
   return (
     <>
-      <div className="flex items-center py-4">
+      <div className="flex items-center py-4" title='QLeaningProfiles'>
         <button
           type="button"
           className={
@@ -116,25 +132,33 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
         />
       </div>
       {editting ? (
+        <>
         <ReactTextareaAutosize
           value={learningNote || ''}
           className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
           onChange={(e) => {
             setLearningNote(e.target.value)
             question.learning_note = e.target.value
-            putQuestion(
-              {
-                quest_id: question.quest_id,
-                learning_note: question.learning_note,
-              },
-              question
-            )
+            setRegisterToggle(true)
           }}
         ></ReactTextareaAutosize>
+        <div className="flex justify-center mx-auto">
+          {registerToggle && <SaveButton onClick={onClickSave} />}
+        </div>
+        </>
       ) : (
-        <span className="text-white whitespace-pre-wrap">
-          {learningNote || ''}
-        </span>
+        // <span className="text-white whitespace-pre-wrap">
+// {learningNote || ''}
+//         </span>
+      <ReactMarkdown
+        className={
+          'text-base w-full text-white' +
+          ' whitespace-pre-wrap '
+        }
+        rehypePlugins={[rehypeRaw]}
+        remarkPlugins={[remarkGfm]}
+        children={learningNote || ''}
+        />
       )}
     </>
   )

@@ -4,7 +4,7 @@ import { Question } from '../types/types'
 import log from 'loglevel'
 
 export const useQueryQuestions = (args: any) => {
-  log.setLevel("info")
+  log.setLevel("debug")
   const getQuestions = async () => {
     log.debug(">>>>getQuestions")
     const condition = {
@@ -12,15 +12,16 @@ export const useQueryQuestions = (args: any) => {
       Args: args
     }
     const { data } = await axios.post<Question[]>(
-      `${process.env.REACT_APP_REST_URL}/dynamodbctrl`, condition
+      `${process.env.REACT_APP_REST_URL}/questions`, condition
     )
     log.debug(data)
     return data
   }
   return useQuery<Question[], Error>({
-    queryKey: args.exam_ids[0] + JSON.stringify(args),
+    queryKey: 'Questions' + args.exam_ids[0],
+    // queryKey: args.exam_ids[0] + JSON.stringify(args),
     queryFn: getQuestions,
-    staleTime: 300,
+    staleTime: 300000,
     // refetchOnWindowFocus: true,
   })
 }

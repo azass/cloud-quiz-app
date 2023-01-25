@@ -15,7 +15,7 @@ import log from 'loglevel'
 export const useEditElem = (editElems: EditElem[]) => {
   log.setLevel('debug')
   log.debug('useEditElem start!')
-  const mark = ['A', 'B', 'C', 'D', 'E', 'F']
+  const mark = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
   const isCheckOn = editElems.some((x) => x.correct)
   log.debug(isCheckOn)
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)

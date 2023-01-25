@@ -86,6 +86,7 @@ export const QSearchButtonSet: VFC<Props> = memo(
     }
 
     const search = () => {
+      console.log('QSearchButtonSet search() execute')
       const argTags = tags
         .filter((tag) => selectTags.includes(tag.tag_name))
         .map((tag) => tag.tag_no.toString())
@@ -99,6 +100,7 @@ export const QSearchButtonSet: VFC<Props> = memo(
       dispatch(setScArgs(newScArgs))
       dispatch(setTab(tabs[1]))
       dispatch(resetEditedContent())
+      console.log("editedContent: 'QuizList'")
     }
     return (
       <>

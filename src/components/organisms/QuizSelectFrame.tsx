@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom'
 import { QuizListFrame } from './QuizListFrame'
 
 export const QuizSelectFrame: VFC = memo(() => {
+  console.log('QuizSelectFrame start')
   const params = useParams()
   const [selectNo, setSelectNo] = useState('')
   return (

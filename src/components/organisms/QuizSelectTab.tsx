@@ -10,6 +10,7 @@ import { TagSelectPanel } from "./TagSelectPanel";
 import { TermEditFrame } from "./TermEditFrame";
 
 export const QuizSelectTab: VFC = memo(() => {
+  console.log('QuizSelectTab start')
   const dispatch = useAppDispatch()
   const editedContent = useAppSelector(selectEditedContent)
   const { keywords, onClickTag } = useEditElem([])

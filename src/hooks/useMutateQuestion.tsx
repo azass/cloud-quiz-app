@@ -23,7 +23,7 @@ export const useMutateQuestion = () => {
           )
           if (previousQuestions) {
             queryClient.setQueryData<Question[]>(
-              question.exam_id,
+              'Questions' + question.exam_id,
               previousQuestions.map((quest) =>
                 quest.quest_id === question.quest_id ? question : quest
               )
