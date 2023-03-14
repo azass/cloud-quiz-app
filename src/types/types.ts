@@ -23,6 +23,7 @@ export interface Question {
   case_items?: EditElem[]
   scoring?: number
   is_old?: boolean
+  not_ready?: boolean
 }
 
 export interface TagTerms {

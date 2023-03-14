@@ -1,4 +1,5 @@
-import { CloudUploadIcon, DocumentTextIcon } from "@heroicons/react/outline";
+import { CloudUploadIcon, DocumentTextIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
+import { PauseIcon, RssIcon, SparklesIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { memo, useContext, useState, VFC } from "react";
 import { useQueryClient } from "react-query";
@@ -23,6 +24,7 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
   const [edittingCaseNo, setEdittingCaseNo] = useState(false)
   const [questId, setQuestId] = useState(question.quest_id)
   const [isOld, setIsOld] = useState(question.is_old || false);
+  const [notReady, setNotReady] = useState(question.not_ready || false)
   const [caseNo, setCaseNo] = useState(
     question.case_id && question.exam_id
       ? question.case_id.slice(question.exam_id.length + 1)
@@ -31,6 +33,7 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
   if (questId !== question.quest_id) {
     setQuestId(question.quest_id)
     setIsOld(question.is_old || false)
+    setNotReady(question.not_ready || false)
   }
   const onChangeCaseNo = (val: string) => {
     if (Number.isInteger(val)) {
@@ -49,6 +52,15 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
       {
         quest_id: question.quest_id,
         is_old: _isOld,
+      },
+      question
+    )
+  }
+  const onClickReady = (_notReady: boolean) => {
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        not_ready: _notReady,
       },
       question
     )
@@ -92,6 +104,7 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
           newQuestion.keywords = JSON.stringify(newQuestion.keywords)
           setQuestion(newQuestion)
           setIsOld(newQuestion.is_old || false);
+          setNotReady(newQuestion.not_ready || false)
         }
       })
       .catch((error) => console.log(error))
@@ -118,6 +131,19 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
               className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
             ></div>
           </label>
+        </div>
+        <div>
+          {notReady ? (
+            <PauseIcon
+              className={`h-8 w-8 ml-8 ${color.iconColor} cursor-pointer text-pink-500`}
+              onClick={() => onClickReady(!notReady)}
+            />
+          ) : (
+            <RssIcon
+              className={`h-8 w-8 ml-8 ${color.iconColor} cursor-pointer text-blue-500`}
+              onClick={() => onClickReady(!notReady)}
+            />
+          )}
         </div>
         <DocumentTextIcon
           className="w-6 h-6 ml-8 cursor-pointer hover:text-blue-500"

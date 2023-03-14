@@ -8,6 +8,10 @@ export const ColorContext = createContext({
   bgColor: 'bg-gray-900',
   baseText: 'text-white',
   iconColor: 'text-gray-600',
+  linkIconColor: 'text-green-300',
+  linkIconColorOld: 'text-gray-600',
+  linkIconColorNotReady: 'text-pink-600',
+  linkIconColorBug: 'text-orange-300',
 })
 
 const queryClient = new QueryClient({

@@ -9,7 +9,7 @@ export const TagFilter: VFC<Props> = memo(({ setSearchWord }) => {
       <div className="bg-gray-100 border-gray-300">
         <FilterIcon className={`w-5 h-5 mx-1 text-gray-400`} />
       </div>
-      <form className="bg-opacity-0 pr-10">
+      <form className="bg-opacity-0 pr-2">
         <input
           type="text"
           className="px-2"

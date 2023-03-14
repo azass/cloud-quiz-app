@@ -122,11 +122,20 @@ export const QuizListFrame: VFC = memo(() => {
       return false
     }
   }
+  const count = () => {
+    var count = 0
+    if (data) {
+      data.map((question) => (show))
+    }
+  }
   return (
     <div id="navWrapper" className={color.bgColor} title="QuizListFrame">
       <div className="flex justify-end -mt-12">
         <div className="flex flex-row items-center">
           <TagFilter setSearchWord={setSearchWord} />
+          <div className="rounded-full bg-gray-300 h-8 w-8 mt-3 mr-8 flex items-center justify-center font-bold text-blue-700">
+            {data ? data.filter((question) => show(question)).length : 0}
+          </div>
         </div>
       </div>
       <nav className="px-6 pt-2 overflow-y-auto text-xs h-screen pb-60">

@@ -68,5 +68,15 @@ TermSaveButton > saveTerms()
 Term Editor を開く
 -> Tag に紐づく Terms を db から取得
 
+## 色切り替え
+  const bgcolor = selected
+    ? 'text-white bg-pink-600'
+    : 'text-gray-500 bg-gray-300'
+
+      className={
+        'rounded-md border my-1 py-1 mx-1 px-3 font-extrabold text-sm cursor-pointer ' +
+        `${bgcolor}`
+      }
+
 
 npm install react-markdown

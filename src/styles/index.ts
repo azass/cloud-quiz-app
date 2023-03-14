@@ -16,8 +16,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Helvetica Neue', 'Helvetica', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
-      'Arial', 'Yu Gothic', 'Meiryo', sans-serif;
+    font-family: 'Meiryo';
     line-height: 2;
     font-size: 16px;
     letter-spacing: 0.05em;
