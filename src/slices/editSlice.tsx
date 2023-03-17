@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
-import { Tag, Term, EditContext, voidTag } from '../types/types'
+import { Tag, Term, EditContext, voidTag, Question } from '../types/types'
 
 export interface EditState {
   idToken: string
@@ -15,6 +15,7 @@ export interface EditState {
   scArgs: any
   lang: number
   suggestTerms: Term[]
+  questions: Question[]
 }
 
 export const tabs = ['試験一覧', '問題一覧', 'ノート']
@@ -50,6 +51,7 @@ export const initialState: EditState = {
   },
   lang: 1,
   suggestTerms: [],
+  questions: [],
 }
 
 export const editSlice = createSlice({
@@ -61,6 +63,7 @@ export const editSlice = createSlice({
     },
     setTab: (state, action: PayloadAction<string>) => {
       state.tab = action.payload
+      console.log('setTab start')
     },
     setExam: (state, action: PayloadAction<any>) => {
       state.exam = action.payload
@@ -116,6 +119,12 @@ export const editSlice = createSlice({
     resetSuggestTerms: (state) => {
       state.suggestTerms = initialState.suggestTerms
     },
+    setQuestions: (state, action: PayloadAction<Question[]>) => {
+      state.questions = action.payload
+    },
+    resetQuestions: (state) => {
+      state.questions = initialState.questions
+    }
   },
 })
 
@@ -140,6 +149,8 @@ export const {
   setLangs,
   setSuggestTerms,
   resetSuggestTerms,
+  setQuestions,
+  resetQuestions,
 } = editSlice.actions
 
 export const selectIdToken = (state: RootState) => state.edit.idToken
@@ -157,3 +168,4 @@ export const selectScArgs = (state: RootState) => state.edit.scArgs
 export const selectLang = (state: RootState) => state.edit.lang
 export default editSlice.reducer
 export const selectSuggestTerms = (state: RootState) => state.edit.suggestTerms
+export const selectQuestions = (state: RootState) => state.edit.questions

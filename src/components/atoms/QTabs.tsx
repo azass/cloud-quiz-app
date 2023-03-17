@@ -20,7 +20,9 @@ export const QTabs: VFC = memo(() => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onCllickTab = (index: number) => {
-    dispatch(setTab(tabs[index]))
+    if (nowTab !== tabs[index]) {
+      dispatch(setTab(tabs[index]))
+    }
     if (index === 0) {
       navigate('/editor')
     } else if (index === 1) {
@@ -28,7 +30,7 @@ export const QTabs: VFC = memo(() => {
       dispatch(resetUpdateTerm())
       dispatch(resetEdittingTerms())
       if (editedContext.quest_id) {
-        navigate(`/editor/${exam.examId}/${editedContext.quest_id}`)
+        // navigate(`/editor/${exam.examId}/${editedContext.quest_id}`)
       } else {
         navigate(`/editor/${exam.examId}`)
       }

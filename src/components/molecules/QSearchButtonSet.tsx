@@ -3,15 +3,15 @@ import {
   DocumentSearchIcon,
 } from '@heroicons/react/outline'
 import { memo, useState, VFC } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
   resetEditedContent,
   selectExamTags,
   selectScArgs,
   setScArgs,
-  setTab,
-  tabs,
+  // setTab,
+  // tabs,
 } from '../../slices/editSlice'
 interface Props {
   examId: string
@@ -98,19 +98,19 @@ export const QSearchButtonSet: VFC<Props> = memo(
         scorings: selectScorings,
       }
       dispatch(setScArgs(newScArgs))
-      dispatch(setTab(tabs[1]))
+      // dispatch(setTab(tabs[1]))
       dispatch(resetEditedContent())
       console.log("editedContent: 'QuizList'")
     }
     return (
       <>
         <div className="flex flex-row">
-          <Link to={`/editor/${examId}/`}>
-            <DocumentSearchIcon
-              className="w-6 h-6 text-gray-200 cursor-pointer"
-              onClick={() => search()}
-            />
-          </Link>
+          {/* <Link to={`/editor/${examId}/`}> */}
+          <DocumentSearchIcon
+            className="w-6 h-6 ml-4 text-gray-200 cursor-pointer"
+            onClick={() => search()}
+          />
+          {/* </Link> */}
           {selectTags.length > 0 && (
             <DocumentRemoveIcon
               className={'w-6 h-6 ml-8 text-gray-200 cursor-pointer'}

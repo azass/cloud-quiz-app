@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import axios from 'axios'
 import { Question } from '../types/types'
 import { useAppSelector } from '../app/hooks'
-import { selectEditContext, selectIdToken } from '../slices/editSlice'
+import { selectIdToken } from '../slices/editSlice'
 
 export const useQueryQuestion = (questId: string, question?: Question) => {
   const idToken = useAppSelector(selectIdToken)

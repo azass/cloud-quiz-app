@@ -15,8 +15,11 @@ import { Header } from '../molecules/Header'
 import { QuizSelectTab } from '../organisms/QuizSelectTab'
 import { TermNoteTab } from '../organisms/TermNoteTab'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
+import { QListQuery } from '../molecules/QListQuery'
 
 export const QuizEditor: VFC = memo(() => {
+  console.log('QuizEditor start')
+
   log.setLevel("info")
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
@@ -55,8 +58,11 @@ export const QuizEditor: VFC = memo(() => {
               <ExamSelectTab />
             </div>
           )}
-          {nowTab === tabs[1] && (
+          {nowTab === tabs[1] && params.quest_id && (
             <QuizSelectTab />
+          )}
+          {nowTab === tabs[1] && !params.quest_id && (
+            <QListQuery />
           )}
           {nowTab === tabs[2] && (
             <TermNoteTab />

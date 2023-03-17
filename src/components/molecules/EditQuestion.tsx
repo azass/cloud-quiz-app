@@ -11,6 +11,9 @@ import { QTermDescriptions } from './QTermDescriptions'
 import { QLeaningProfiles } from './QLeaningProfiles'
 import { QLabels } from './QLabels'
 import { EditQuestionHeader } from './EditQuestionHeader'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { selectQuestions, setQuestions } from '../../slices/editSlice'
+// import { useQueryClient } from 'react-query'
 interface Props {
   question: Question
   setQuestion: any
@@ -20,15 +23,28 @@ export const EditQuestion: VFC<Props> = memo(
   ({ question, setQuestion, isNew }) => {
     log.setLevel('debug')
     log.debug('Question Edit')
+    const dispatch = useAppDispatch()
+    // const queryClient = useQueryClient()
     const color = useContext(ColorContext)
     const { deleteBug } = useMutateQuestion()
     const [registerToggle, setRegisterToggle] = useState<boolean>(isNew)
+    const questions = useAppSelector(selectQuestions)
+    // const exam = useAppSelector(selectExam)
 
     const onClickDelete = () => {
       if (question) {
         const newQuestion = { ...question, is_bug: false }
         deleteBug(newQuestion)
         setQuestion(newQuestion)
+        dispatch(setQuestions(questions.map((quest) =>
+          quest.quest_id === newQuestion.quest_id ? newQuestion : quest
+        )))
+        // queryClient.setQueryData<Question[]>(
+        //   'Questions' + exam.exam_id,
+        //   questions.map((quest) =>
+        //     quest.quest_id === newQuestion.quest_id ? newQuestion : quest
+        //   )
+        // )
       }
     }
 
