@@ -17,12 +17,7 @@ export const QuizSelectTab: VFC = memo(() => {
 
   return (
     <div className={``} title="QuizSelectTab">
-      <div className="flex justify-between pb-2">
-        <QListHeader exam={exam} />
-        <div className="mt-4 mr-8">
-          <SelectLang />
-        </div>
-      </div>
+      <QListHeader exam={exam} />
       <div className={`${editedContent === 'QuizList' ? '' : 'hidden'}`}>
         <QuizSelectFrame />
       </div>

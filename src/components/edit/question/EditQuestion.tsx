@@ -54,7 +54,7 @@ export const EditQuestion: VFC<Props> = memo(
           changeCaseNo={changeCaseNo}
         />
         {!isNew && question && (
-          <>
+          <div className="pt-24">
             <EditQuestionCase
               question={question}
               editCaseNo={editCaseNo}
@@ -98,7 +98,7 @@ export const EditQuestion: VFC<Props> = memo(
             </div>
             <QLeaningProfiles question={question} />
             <QLabels question={question} readonly={false} />
-          </>
+          </div>
         )}
       </div>
     )
