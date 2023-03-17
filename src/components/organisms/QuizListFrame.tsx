@@ -7,7 +7,6 @@ import { selectQuestions, selectScArgs } from '../../slices/editSlice'
 import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
 import log from 'loglevel'
-// import { useQueryQuestions } from '../../hooks/useQueryQuestions'
 
 export const QuizListFrame: VFC = memo(() => {
   console.log('QuizListFrame start')
@@ -18,10 +17,6 @@ export const QuizListFrame: VFC = memo(() => {
   const args = { ...scArgs, exam_ids: [params.exam_id], except_old: false }
   log.debug(args)
   const [searchWord, setSearchWord] = useState('')
-  // const { status, data } = useQueryQuestions(args)
-  // if (status === 'loading')
-  //   return <div className="pl-8 pt-8">{'Loading...'}</div>
-  // if (status === 'error') return <div>{'Error'}</div>
   const data = useAppSelector(selectQuestions)
   const filterOtherOptions = (question: Question) => {
     if (args.other_options.length > 0) {

@@ -22,7 +22,7 @@ export const QSearchQuery: VFC = memo(() => {
     <>
       <div className="pb-2 px-6">
         <QSearchButtonSet
-          examId={exam.examId}
+          examId={exam.exam_id}
           selectTags={selectSearchTags}
           setSelectSearchTags={setSelectSearchTags}
         />

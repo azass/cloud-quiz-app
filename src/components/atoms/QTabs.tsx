@@ -32,7 +32,7 @@ export const QTabs: VFC = memo(() => {
       if (editedContext.quest_id) {
         // navigate(`/editor/${exam.examId}/${editedContext.quest_id}`)
       } else {
-        navigate(`/editor/${exam.examId}`)
+        navigate(`/editor/${exam.exam_id}`)
       }
     } else if (index === 2) {
       dispatch(setEditedContent('TagSelect'))

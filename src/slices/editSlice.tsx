@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
-import { Tag, Term, EditContext, voidTag, Question } from '../types/types'
+import { Tag, Term, EditContext, voidTag, Question, Exam } from '../types/types'
 
 export interface EditState {
   idToken: string
   tab: string
-  exam: any
+  exam: Exam
   editedContent: string
   editedContext: EditContext
   providerTags: Tag[]
@@ -23,7 +23,16 @@ export const tabs = ['試験一覧', '問題一覧', 'ノート']
 export const initialState: EditState = {
   idToken: '',
   tab: tabs[0],
-  exam: {},
+  exam: {
+    exam_id: '',
+    exam_name: '',
+    provider: '',
+    icon_path: '',
+    exam_count: 0,
+    level: 0,
+    point: 0,
+    div: 0
+  },
   editedContent: 'QuizList',
   editedContext: {
     quest_id: '',

@@ -1,14 +1,13 @@
-import { CloudUploadIcon, DocumentTextIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
-import { PauseIcon, RssIcon, SparklesIcon } from "@heroicons/react/solid";
+import { DocumentTextIcon } from "@heroicons/react/outline";
+import { PauseIcon, RssIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { memo, useContext, useState, VFC } from "react";
-import { useQueryClient } from "react-query";
 import { ColorContext } from "../../App";
 import { useAppSelector } from "../../app/hooks";
 import { selectIdToken } from "../../slices/editSlice";
 import { config } from "../../styles/util";
 import { Question } from "../../types/types";
-import { QNewRegister } from "../atoms/QNewRegister";
+import { EditQuestionCase } from "./EditQuestionCase";
 
 interface Props {
   question: Question
@@ -18,32 +17,15 @@ interface Props {
 }
 export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, registerToggle, setRegisterToggle }) => {
   const color = useContext(ColorContext)
-  const queryClient = useQueryClient()
   const idToken = useAppSelector(selectIdToken)
   const [editCaseNo, setEditCaseNo] = useState(false)
-  const [edittingCaseNo, setEdittingCaseNo] = useState(false)
   const [questId, setQuestId] = useState(question.quest_id)
   const [isOld, setIsOld] = useState(question.is_old || false);
   const [notReady, setNotReady] = useState(question.not_ready || false)
-  const [caseNo, setCaseNo] = useState(
-    question.case_id && question.exam_id
-      ? question.case_id.slice(question.exam_id.length + 1)
-      : ''
-  )
   if (questId !== question.quest_id) {
     setQuestId(question.quest_id)
     setIsOld(question.is_old || false)
     setNotReady(question.not_ready || false)
-  }
-  const onChangeCaseNo = (val: string) => {
-    if (Number.isInteger(val)) {
-      alert('')
-    } else {
-      setCaseNo(('0000' + val).slice(-4))
-      question.case_id = question.exam_id + '-' + caseNo
-      // question.case_items = []
-      setEdittingCaseNo(true)
-    }
   }
   const onClickOld = (_isOld: boolean) => {
     setIsOld(_isOld)
@@ -61,17 +43,6 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
       {
         quest_id: question.quest_id,
         not_ready: _notReady,
-      },
-      question
-    )
-  }
-  const onClickRegister = () => {
-    setEdittingCaseNo(false)
-    queryClient.resetQueries([question.quest_id])
-    putQuestion(
-      {
-        quest_id: question.quest_id,
-        case_id: question.exam_id + '-' + caseNo,
       },
       question
     )
@@ -149,40 +120,14 @@ export const EditQuestionHeader: VFC<Props> = memo(({ question, setQuestion, reg
           className="w-6 h-6 ml-8 cursor-pointer hover:text-blue-500"
           onClick={() => setEditCaseNo(!editCaseNo)}
         />
-        {(editCaseNo || question.case_id) && (
-          <>
-            <div className="pl-4 text-white">ケース問題</div>
-            <div className="pl-4 text-white">
-              <i>{question.exam_id}-</i>
-            </div>
-            {editCaseNo ? (
-              <input
-                type="text"
-                className="w-20 ml-1 px-1 text-black"
-                value={caseNo}
-                onChange={(e) => {
-                  onChangeCaseNo(e.target.value)
-                }}
-              ></input>
-            ) : (
-              <span>{caseNo}</span>
-            )}
-            {edittingCaseNo && (
-              <CloudUploadIcon
-                className="h-5 w-5 ml-4 text-blue-400 cursor-pointer "
-                onClick={() => onClickRegister()}
-              />
-            )}
-          </>
-        )}
-      </div>
-
-      {registerToggle && question && (
-        <QNewRegister
+        <EditQuestionCase
           question={question}
+          setQuestion={setQuestion}
+          registerToggle={registerToggle}
           setRegisterToggle={setRegisterToggle}
-        />
-      )}
+          putQuestion={putQuestion}
+          editCaseNo={editCaseNo} />
+      </div>
     </div>
   )
 }

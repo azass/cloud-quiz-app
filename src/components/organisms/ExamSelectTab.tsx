@@ -69,11 +69,7 @@ export const ExamSelectTab: VFC = memo(() => {
                   dispatch(setProviderTags(nowProvider.tags))
                   dispatch(setTab(tabs[1]))
                   dispatch(
-                    setExam({
-                      examId: exam.exam_id,
-                      examName: exam.exam_name,
-                      provider: exam.provider,
-                    })
+                    setExam(exam)
                   )
                   setScArgs({
                     ...srcArgs,
