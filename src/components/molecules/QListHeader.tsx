@@ -22,7 +22,7 @@ export const QListHeader: VFC<Props> = memo(({ exam }) => {
             onClick={() => dispatch(setEditedContent('Search'))} />
         </div>
       </div>
-      <div className="mt-3 pl-8 pr-8">
+      <div className="mt-4 pl-8 pr-8">
         <ServerIcon
           className="h-8 w-8 text-gray-400 cursor-pointer"
           onClick={() => onClick(exam)} />

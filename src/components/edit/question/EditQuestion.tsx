@@ -31,7 +31,7 @@ export const EditQuestion: VFC<Props> = memo(
     const [editCaseNo, setEditCaseNo] = useState(false)
     const [changeCaseNo, setChangeCaseNo] = useState(false)
 
-    const onClickDelete = () => {
+    const onClickDeleteBug = () => {
       if (question) {
         const newQuestion = { ...question, is_bug: false }
         deleteBug(newQuestion)
@@ -54,7 +54,7 @@ export const EditQuestion: VFC<Props> = memo(
           changeCaseNo={changeCaseNo}
         />
         {!isNew && question && (
-          <div className="pt-24">
+          <div className="pt-20">
             <EditQuestionCase
               question={question}
               editCaseNo={editCaseNo}
@@ -75,7 +75,7 @@ export const EditQuestion: VFC<Props> = memo(
             />
             <QScraping question={question} setQuestion={setQuestion} />
             {'is_bug' in question && question.is_bug && question.bug_points && (
-              <QBug bug={question.bug_points} onClickDelete={onClickDelete} />
+              <QBug bug={question.bug_points} onClickDelete={onClickDeleteBug} />
             )}
             <div className="pt-4">
               <QKeywords question={question} withAdd={true} />

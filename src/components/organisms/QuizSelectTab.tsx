@@ -2,7 +2,6 @@ import { memo, VFC } from "react";
 import { useAppSelector } from "../../app/hooks";
 import { useEditElem } from "../../hooks/useEditElem";
 import { selectEditedContent, selectExam } from "../../slices/editSlice";
-import { SelectLang } from "../atoms/SelectLang";
 import { QListHeader } from "../molecules/QListHeader";
 import { QSearchQuery } from "../molecules/QSearchQuery";
 import { QuizSelectFrame } from "./QuizSelectFrame";
