@@ -1,5 +1,5 @@
 import { VFC, memo, useState } from 'react'
-import { Term, bgcolor, Tag } from '../../types/types'
+import { Term, bgcolor, Tag } from '../../../types/types'
 import { XCircleIcon, AcademicCapIcon } from '@heroicons/react/solid'
 import TextareaAutosize from 'react-textarea-autosize'
 import { EditTermDescription } from './EditTermDesciption'
@@ -9,13 +9,13 @@ import {
   CheckCircleIcon,
   MinusCircleIcon,
 } from '@heroicons/react/outline'
-import { useTerm } from '../../hooks/useTerm'
-import { QLinkPopup } from '../atoms/QLinkPopup'
+import { useTerm } from '../../../hooks/useTerm'
+import { QLinkPopup } from '../../atoms/QLinkPopup'
 import { EditTermRefTags } from './EditTermRefTags'
 import { EditTermRefTerms } from './EditTermRefTerms'
 import { EditTermRefEdittingTerms } from './EditTermRefEdittingTerms'
 import log from 'loglevel'
-import { useTags } from '../../hooks/useTags'
+import { useTags } from '../../../hooks/useTags'
 
 interface Props {
   term: Term

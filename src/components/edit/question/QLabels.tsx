@@ -1,8 +1,8 @@
 import { PlusCircleIcon } from "@heroicons/react/outline";
 import { PencilAltIcon } from "@heroicons/react/solid";
 import { memo, useState, VFC } from "react";
-import { useMutateQuestion } from "../../hooks/useMutateQuestion";
-import { Question } from "../../types/types";
+import { useMutateQuestion } from "../../../hooks/useMutateQuestion";
+import { Question } from "../../../types/types";
 import { QLabel } from "./QLabel";
 
 interface Props {

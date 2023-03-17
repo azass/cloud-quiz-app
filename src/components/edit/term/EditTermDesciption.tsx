@@ -1,15 +1,15 @@
 import { VFC, memo, useContext } from 'react'
-import { EditBlockContent } from './EditBlockContent'
-import { Term } from '../../types/types'
-import { SaveButton } from '../atoms/SaveButton'
-import { EditElemAdds } from '../atoms/EditElemAdds'
-import { useEditElem } from '../../hooks/useEditElem'
-import { ColorContext } from '../../App'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { EditBlockContent } from '../EditBlockContent'
+import { Term } from '../../../types/types'
+import { SaveButton } from '../../atoms/SaveButton'
+import { EditElemAdds } from '../../atoms/EditElemAdds'
+import { useEditElem } from '../../../hooks/useEditElem'
+import { ColorContext } from '../../../App'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import {
   selectUpdateTerm,
   setUpdateTerm,
-} from '../../slices/editSlice'
+} from '../../../slices/editSlice'
 
 interface Props {
   term: Term

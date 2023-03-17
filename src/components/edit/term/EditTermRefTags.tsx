@@ -1,8 +1,8 @@
 import { BaseSyntheticEvent, FC, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
-import { useAppSelector } from '../../app/hooks'
-import { selectExamTags, selectProviderTags } from '../../slices/editSlice'
-import { Tag } from '../../types/types'
+import { useAppSelector } from '../../../app/hooks'
+import { selectExamTags, selectProviderTags } from '../../../slices/editSlice'
+import { Tag } from '../../../types/types'
 
 interface Props {
   refTag?: Tag

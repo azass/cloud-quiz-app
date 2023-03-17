@@ -1,7 +1,7 @@
 import { memo, VFC } from 'react'
 import { Draggable } from 'react-beautiful-dnd'
-import { Tag, Term } from '../../types/types'
-import { EditTerm } from '../molecules/EditTerm'
+import { Tag, Term } from '../../../types/types'
+import { EditTerm } from './EditTerm'
 import { TermAddButton } from './TermAddButton'
 
 interface Props {

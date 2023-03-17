@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { selectEditContext, setEdittingTerms } from '../../slices/editSlice'
 import { useQueryTerms } from '../../hooks/useQueryTerms'
 import { Term } from '../../types/types'
-import { EditTerms } from '../molecules/EditTerms'
+import { EditTerms } from '../edit/term/EditTerms'
 
 export const TermEditFrame: VFC = memo(() => {
   const dispatch = useAppDispatch()

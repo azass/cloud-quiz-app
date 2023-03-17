@@ -5,7 +5,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../hooks/useQueryQuestion'
 import { useAppDispatch } from '../../app/hooks'
 import { setEditContext } from '../../slices/editSlice'
-import { EditQuestion } from '../molecules/EditQuestion'
+import { EditQuestion } from '../edit/question/EditQuestion'
 import { useTags } from '../../hooks/useTags'
 
 interface Props {
@@ -47,6 +47,7 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
         quest_id: quest_id,
         quest_no: parseInt(quest_id.slice(exam_id.length + 1)),
         exam_id: exam_id,
+        not_ready: true
       })
     } else {
       if (params.quest_id) {
@@ -71,7 +72,7 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
   return (
     <>
       {question && (
-        <EditQuestion question={question} setQuestion={setQuestion} isNew={isNew} />
+        <EditQuestion question={question} setQuestion={setQuestion} isNew={isNew} setIsNew={setIsNew} />
       )}
     </>
   )

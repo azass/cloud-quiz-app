@@ -1,17 +1,17 @@
 import { useContext, useState, VFC } from "react";
 import { DragDropContext, Droppable, resetServerContext } from "react-beautiful-dnd";
-import { ColorContext } from "../../App";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { TermAddButton } from "../atoms/TermAddButton";
-import { TermDraggable } from "../atoms/TermDraggable";
+import { ColorContext } from "../../../App";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { TermAddButton } from "./TermAddButton";
+import { TermDraggable } from "./TermDraggable";
 import {
   selectEditContext,
   selectEdittingTerms,
   setEdittingTerms,
   setUpdateTerm
-} from "../../slices/editSlice";
-import { SelectTerm } from "../atoms/SelectTerm";
-import { TermSaveButton } from "../atoms/TermSaveButton";
+} from "../../../slices/editSlice";
+import { SelectTerm } from "./SelectTerm";
+import { TermSaveButton } from "./TermSaveButton";
 
 export const EditTerms: VFC = () => {
   const color = useContext(ColorContext)

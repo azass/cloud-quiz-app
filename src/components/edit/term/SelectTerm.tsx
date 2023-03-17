@@ -1,6 +1,6 @@
 import { memo, VFC } from "react";
-import { useTerm } from "../../hooks/useTerm";
-import { Term } from "../../types/types";
+import { useTerm } from "../../../hooks/useTerm";
+import { Term } from "../../../types/types";
 interface Props {
   term: Term
   index: number

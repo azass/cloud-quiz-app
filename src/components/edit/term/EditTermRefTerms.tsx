@@ -1,8 +1,8 @@
 import { FC } from 'react'
-import { useAppDispatch } from '../../app/hooks'
-import { useQueryTerms } from '../../hooks/useQueryTerms'
-import { setSuggestTerms } from '../../slices/editSlice'
-import { Tag, Term } from '../../types/types'
+import { useAppDispatch } from '../../../app/hooks'
+import { useQueryTerms } from '../../../hooks/useQueryTerms'
+import { setSuggestTerms } from '../../../slices/editSlice'
+import { Tag, Term } from '../../../types/types'
 import { EditTermSuggest } from './EditTermSuggest'
 
 interface Props {

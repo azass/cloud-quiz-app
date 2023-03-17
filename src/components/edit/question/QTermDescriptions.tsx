@@ -1,13 +1,13 @@
 import { memo, VFC } from 'react'
-import { useAppDispatch } from '../../app/hooks'
-import { useKeywords } from '../../hooks/useKeywords'
-import { useTags } from '../../hooks/useTags'
+import { useAppDispatch } from '../../../app/hooks'
+import { useKeywords } from '../../../hooks/useKeywords'
+import { useTags } from '../../../hooks/useTags'
 import {
   setEditContext,
   setEditedContent,
-} from '../../slices/editSlice'
-import { bgcolor, Question } from '../../types/types'
-import { EditBlockContent } from './EditBlockContent'
+} from '../../../slices/editSlice'
+import { bgcolor, Question } from '../../../types/types'
+import { EditBlockContent } from '../EditBlockContent'
 
 interface Props {
   question: Question

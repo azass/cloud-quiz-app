@@ -1,7 +1,7 @@
 import { CloudUploadIcon } from "@heroicons/react/outline";
 import { memo, VFC } from "react";
-import { useMutateQuestion } from "../../hooks/useMutateQuestion";
-import { Question } from "../../types/types";
+import { useMutateQuestion } from "../../../hooks/useMutateQuestion";
+import { Question } from "../../../types/types";
 import log from 'loglevel'
 
 interface Props {

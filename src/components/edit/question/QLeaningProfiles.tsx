@@ -2,10 +2,10 @@
 import { PencilAltIcon } from '@heroicons/react/outline'
 import { memo, useContext, useState, VFC } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
-import { ColorContext } from '../../App'
-import { useMutateQuestion } from '../../hooks/useMutateQuestion'
-import { Question } from '../../types/types'
-import { SaveButton } from '../atoms/SaveButton'
+import { ColorContext } from '../../../App'
+import { useMutateQuestion } from '../../../hooks/useMutateQuestion'
+import { Question } from '../../../types/types'
+import { SaveButton } from '../../atoms/SaveButton'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
@@ -133,31 +133,31 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
       </div>
       {editting ? (
         <>
-        <ReactTextareaAutosize
-          value={learningNote || ''}
-          className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
-          onChange={(e) => {
-            setLearningNote(e.target.value)
-            question.learning_note = e.target.value
-            setRegisterToggle(true)
-          }}
-        ></ReactTextareaAutosize>
-        <div className="flex justify-center mx-auto">
-          {registerToggle && <SaveButton onClick={onClickSave} />}
-        </div>
+          <ReactTextareaAutosize
+            value={learningNote || ''}
+            className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
+            onChange={(e) => {
+              setLearningNote(e.target.value)
+              question.learning_note = e.target.value
+              setRegisterToggle(true)
+            }}
+          ></ReactTextareaAutosize>
+          <div className="flex justify-center mx-auto">
+            {registerToggle && <SaveButton onClick={onClickSave} />}
+          </div>
         </>
       ) : (
         // <span className="text-white whitespace-pre-wrap">
-// {learningNote || ''}
-//         </span>
-      <ReactMarkdown
-        className={
-          'text-base w-full text-white' +
-          ' whitespace-pre-wrap '
-        }
-        rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm]}
-        children={learningNote || ''}
+        // {learningNote || ''}
+        //         </span>
+        <ReactMarkdown
+          className={
+            'text-base w-full text-white' +
+            ' whitespace-pre-wrap '
+          }
+          rehypePlugins={[rehypeRaw]}
+          remarkPlugins={[remarkGfm]}
+          children={learningNote || ''}
         />
       )}
     </>

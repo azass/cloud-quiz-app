@@ -1,8 +1,8 @@
 import { BaseSyntheticEvent, FC, useState } from 'react'
 import Autosuggest from 'react-autosuggest'
-import { useAppSelector } from '../../app/hooks'
-import { selectSuggestTerms } from '../../slices/editSlice'
-import { Term } from '../../types/types'
+import { useAppSelector } from '../../../app/hooks'
+import { selectSuggestTerms } from '../../../slices/editSlice'
+import { Term } from '../../../types/types'
 
 interface Props {
   refTerm?: Term

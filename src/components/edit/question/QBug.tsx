@@ -1,6 +1,6 @@
 import { memo, useContext, VFC } from "react";
-import { ColorContext } from "../../App";
-import { Bug } from "../../types/types";
+import { ColorContext } from "../../../App";
+import { Bug } from "../../../types/types";
 import { TrashIcon } from '@heroicons/react/solid'
 
 interface Props {

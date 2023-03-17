@@ -21,12 +21,10 @@ const EditElemLink: VFC<Props> = ({
   on,
 }) => {
   const color = useContext(ColorContext)
-  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${
-    color.iconColor
-  } focus:text-white ${editElem.link === '' && 'bg-pink-50'}`
-  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${
-    color.iconColor
-  } focus:text-white ${editElem.url === '' && 'bg-pink-50'}`
+  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${color.iconColor
+    } focus:text-white ${editElem.link === '' && 'bg-pink-50'}`
+  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${color.iconColor
+    } focus:text-white ${editElem.url === '' && 'bg-pink-50'}`
   return (
     <>
       <div className={`flex justify-between items-center pl-4 py-1`}>
@@ -34,9 +32,8 @@ const EditElemLink: VFC<Props> = ({
           href={editElem.url}
           target="_blank"
           rel="noreferrer"
-          className={`underline text-base  ${
-            on ? 'font-bold text-white' : 'text-green-500'
-          }`}
+          className={`underline text-base  ${on ? 'font-bold text-white' : 'text-green-500'
+            }`}
         >
           {editElem.link}
         </a>

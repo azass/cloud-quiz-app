@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectEdittingTerms, setSuggestTerms } from '../../slices/editSlice'
-import { Tag, Term } from '../../types/types'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { selectEdittingTerms, setSuggestTerms } from '../../../slices/editSlice'
+import { Tag, Term } from '../../../types/types'
 import { EditTermSuggest } from './EditTermSuggest'
 
 interface Props {

@@ -1,10 +1,10 @@
 /* eslint-disable array-callback-return */
 import { memo, useState, VFC } from 'react'
-import { useAppSelector } from '../../app/hooks'
-import { selectUpdateTerm } from '../../slices/editSlice'
+import { useAppSelector } from '../../../app/hooks'
+import { selectUpdateTerm } from '../../../slices/editSlice'
 import { ArrowCircleUpIcon } from '@heroicons/react/solid'
-import { Tag } from '../../types/types'
-import { useMutateTerms } from '../../hooks/useMutateTerms'
+import { Tag } from '../../../types/types'
+import { useMutateTerms } from '../../../hooks/useMutateTerms'
 import log from 'loglevel'
 
 interface Props {

@@ -1,35 +1,35 @@
 import log from 'loglevel'
 import { memo, useContext, useState, VFC } from 'react'
-import { useMutateQuestion } from '../../hooks/useMutateQuestion'
-import { Question } from '../../types/types'
-import { ColorContext } from '../../App'
-import { EditBlock } from './EditBlock'
+import { useMutateQuestion } from '../../../hooks/useMutateQuestion'
+import { Question } from '../../../types/types'
+import { ColorContext } from '../../../App'
+import { EditBlock } from '../EditBlock'
 import { QScraping } from './QScraping'
 import { QBug } from './QBug'
-import { QKeywords } from './QKeywords'
+import { QKeywords } from '../../molecules/QKeywords'
 import { QTermDescriptions } from './QTermDescriptions'
 import { QLeaningProfiles } from './QLeaningProfiles'
 import { QLabels } from './QLabels'
 import { EditQuestionHeader } from './EditQuestionHeader'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectQuestions, setQuestions } from '../../slices/editSlice'
-// import { useQueryClient } from 'react-query'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { selectQuestions, setQuestions } from '../../../slices/editSlice'
+import { EditQuestionCase } from './EditQuestionCase'
 interface Props {
   question: Question
   setQuestion: any
   isNew: boolean
+  setIsNew: any
 }
 export const EditQuestion: VFC<Props> = memo(
-  ({ question, setQuestion, isNew }) => {
+  ({ question, setQuestion, isNew, setIsNew }) => {
     log.setLevel('debug')
     log.debug('Question Edit')
     const dispatch = useAppDispatch()
-    // const queryClient = useQueryClient()
     const color = useContext(ColorContext)
     const { deleteBug } = useMutateQuestion()
-    const [registerToggle, setRegisterToggle] = useState<boolean>(isNew)
     const questions = useAppSelector(selectQuestions)
-    // const exam = useAppSelector(selectExam)
+    const [editCaseNo, setEditCaseNo] = useState(false)
+    const [changeCaseNo, setChangeCaseNo] = useState(false)
 
     const onClickDelete = () => {
       if (question) {
@@ -39,12 +39,6 @@ export const EditQuestion: VFC<Props> = memo(
         dispatch(setQuestions(questions.map((quest) =>
           quest.quest_id === newQuestion.quest_id ? newQuestion : quest
         )))
-        // queryClient.setQueryData<Question[]>(
-        //   'Questions' + exam.exam_id,
-        //   questions.map((quest) =>
-        //     quest.quest_id === newQuestion.quest_id ? newQuestion : quest
-        //   )
-        // )
       }
     }
 
@@ -53,19 +47,18 @@ export const EditQuestion: VFC<Props> = memo(
         <EditQuestionHeader
           question={question}
           setQuestion={setQuestion}
-          registerToggle={registerToggle}
-          setRegisterToggle={setRegisterToggle} />
-        {!registerToggle && question && (
+          isNew={isNew}
+          setIsNew={setIsNew}
+          editCaseNo={editCaseNo}
+          setEditCaseNo={setEditCaseNo}
+          changeCaseNo={changeCaseNo}
+        />
+        {!isNew && question && (
           <>
-            {'case_id' in question && (
-              <EditBlock
-                question={question}
-                title={'与件'}
-                name="case_items"
-                editElems={question.case_items || []}
-                editable={true}
-              />
-            )}
+            <EditQuestionCase
+              question={question}
+              editCaseNo={editCaseNo}
+              setChangeCaseNo={setChangeCaseNo} />
             <EditBlock
               question={question}
               title={'問題文'}

@@ -1,9 +1,9 @@
 import { VFC, memo } from 'react'
 import { PlusCircleIcon } from '@heroicons/react/solid'
-import { useAppDispatch } from '../../app/hooks'
-import { setEdittingTerms } from '../../slices/editSlice'
+import { useAppDispatch } from '../../../app/hooks'
+import { setEdittingTerms } from '../../../slices/editSlice'
 import { v4 as uuidv4 } from 'uuid'
-import { Tag, Term } from '../../types/types'
+import { Tag, Term } from '../../../types/types'
 
 interface Props {
   terms: Term[]

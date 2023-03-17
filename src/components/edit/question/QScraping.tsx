@@ -1,7 +1,7 @@
 import { VFC, memo, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import axios from 'axios'
-import { useScraping } from '../../hooks/useScraping'
+import { useScraping } from '../../../hooks/useScraping'
 import {
   ChevronDoubleDownIcon,
   ChevronDoubleUpIcon,
@@ -9,8 +9,8 @@ import {
   CheckIcon,
 } from '@heroicons/react/solid'
 import { AcademicCapIcon } from '@heroicons/react/outline'
-import { Question } from '../../types/types'
-import { useMutateQuestion } from '../../hooks/useMutateQuestion'
+import { Question } from '../../../types/types'
+import { useMutateQuestion } from '../../../hooks/useMutateQuestion'
 import log from 'loglevel'
 
 interface Props {
