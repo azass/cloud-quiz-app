@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../app/hooks'
 import { selectEditContext, setEdittingTerms } from '../../slices/editSlice'
 import { useQueryTerms } from '../../hooks/useQueryTerms'
 import { Term } from '../../types/types'
-import { EditTerms } from '../edit/term/EditTerms'
+import { EditTerms } from '../molecules/edit/term/EditTerms'
 
 export const TermEditFrame: VFC = memo(() => {
   const dispatch = useAppDispatch()
@@ -18,7 +18,8 @@ export const TermEditFrame: VFC = memo(() => {
       const keywords = JSON.parse(
         editedContext.keywordsJson || '{}'
       )
-      const selectedTerms: Term[] = (editedContext.chosenTag.tag_name in keywords) ? keywords[editedContext.chosenTag.tag_name] : keywords[editedContext.chosenTag.tag_no.toString()]
+      const selectedTerms: Term[] = (editedContext.chosenTag.tag_name in keywords) ?
+        keywords[editedContext.chosenTag.tag_name] : keywords[editedContext.chosenTag.tag_no.toString()]
       const selectedTermIds = selectedTerms?.map((term) => term.term_id)
       const newTerms: Term[] = []
       for (var term of data) {
@@ -33,7 +34,7 @@ export const TermEditFrame: VFC = memo(() => {
     }
   }
   return (
-    <div className="mx-6 my-6">
+    <div className="mx-6 my-6" title="TermEditFrame">
       <div className="flex justify-between px-8 pb-8">
         <span>Term Editor</span>
       </div>

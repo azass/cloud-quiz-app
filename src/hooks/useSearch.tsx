@@ -3,6 +3,7 @@ import { Tag } from '../types/types'
 
 export const useSearch = () => {
   const [selectSearchTags, setSelectSearchTags] = useState<string[]>([])
+
   const onClickSearchTag = (tag: Tag, include: boolean) => {
     if (include) {
       setSelectSearchTags([...selectSearchTags, tag.tag_name])

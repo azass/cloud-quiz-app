@@ -1,18 +1,17 @@
 import log from 'loglevel'
-import { VFC, useState, memo } from 'react'
+import { VFC, useState, memo, useContext } from 'react'
 import { Question, voidTag } from '../../types/types'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../hooks/useQueryQuestion'
 import { useAppDispatch } from '../../app/hooks'
 import { setEditContext } from '../../slices/editSlice'
-import { EditQuestion } from '../edit/question/EditQuestion'
+import { EditQuestion } from '../molecules/edit/question/EditQuestion'
 import { useTags } from '../../hooks/useTags'
+import { EditorContext } from '../pages/QuizEditor'
 
-interface Props {
-  logout: any
-}
-export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
+export const QuizEditPanel: VFC = memo(() => {
   log.setLevel('debug')
+  const {logout} = useContext(EditorContext)
   const params = useParams()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -72,7 +71,11 @@ export const QuizEditPanel: VFC<Props> = memo(({ logout }) => {
   return (
     <>
       {question && (
-        <EditQuestion question={question} setQuestion={setQuestion} isNew={isNew} setIsNew={setIsNew} />
+        <EditQuestion
+          question={question}
+          setQuestion={setQuestion}
+          isNew={isNew}
+          setIsNew={setIsNew} />
       )}
     </>
   )

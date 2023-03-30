@@ -1,13 +1,13 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { RouteAuthGuard } from '../atoms/RouteAuthGuard'
-import { Home, QuizEditor } from '../pages'
+import { QuizEditor } from '../pages'
 import { Login } from '../pages/Login'
 
 export const Router: React.VFC = () => {
   return (
     <Routes>
-      <Route path="/" element={<RouteAuthGuard component={<Home />} />} />
+      <Route path="/" element={<RouteAuthGuard component={<Login />} />} />
       <Route path="/login" element={<Login />} />
       <Route
         path="/editor"

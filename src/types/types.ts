@@ -91,6 +91,8 @@ export interface Term {
   description?: EditElem[]
   quest_ids?: string[]
   ref?: Term
+  fold?: boolean
+  hide?: boolean
 }
 
 export interface EditContext {
@@ -98,6 +100,11 @@ export interface EditContext {
   keywordsJson: string
   chosenTag: Tag
   forQuestion: boolean
+}
+
+export interface ProgressState {
+  execute: string[][]
+  mistake: string[][]
 }
 
 export namespace EditElemType {

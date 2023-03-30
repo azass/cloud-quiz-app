@@ -8,7 +8,6 @@ import {
   resetUpdateTerm,
   selectQuestions,
   setQuestions,
-  // selectExam,
 } from '../slices/editSlice'
 import { useQueryClient } from 'react-query'
 import { Term } from '../types/types'

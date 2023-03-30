@@ -23,4 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     background: #ffffff;
     color: #333;
   }
-`;
+  .markdown h2 {
+    @apply border-red-500 border-l-4 text-2xl;
+  }
+  `;

@@ -1,5 +1,5 @@
 import { VFC, memo, useContext, useState } from 'react'
-import { QItem } from '../molecules/QItem'
+import { QItem } from '../molecules/list/QItem'
 import { useParams } from 'react-router-dom'
 import { ColorContext } from '../../App'
 import { useAppSelector } from '../../app/hooks'
@@ -7,16 +7,18 @@ import { selectQuestions, selectScArgs } from '../../slices/editSlice'
 import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
 import log from 'loglevel'
+import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/outline'
 
 export const QuizListFrame: VFC = memo(() => {
   console.log('QuizListFrame start')
   log.setLevel('debug')
   const color = useContext(ColorContext)
   const params = useParams()
+  const [searchWord, setSearchWord] = useState('')
+  const [asc, setAsc] = useState(true)
   const scArgs = useAppSelector(selectScArgs)
   const args = { ...scArgs, exam_ids: [params.exam_id], except_old: false }
   log.debug(args)
-  const [searchWord, setSearchWord] = useState('')
   const data = useAppSelector(selectQuestions)
   const filterOtherOptions = (question: Question) => {
     if (args.other_options.length > 0) {
@@ -117,10 +119,28 @@ export const QuizListFrame: VFC = memo(() => {
       return false
     }
   }
+  const list = () => {
+    if (data) {
+      if (asc) {
+        return data
+      } else {
+        return data.slice().reverse()
+      }
+    } else {
+      return []
+    }
+  }
   return (
     <div id="navWrapper" className={color.bgColor} title="QuizListFrame">
-      <div className="flex justify-end -mt-12">
-        <div className="flex flex-row items-center">
+      <div className="flex justify-between">
+        <div className="flex flex-row items-center ml-16">
+          {asc ?
+            <ArrowSmUpIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" onClick={() => setAsc(false)} />
+            :
+            <ArrowSmDownIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" onClick={() => setAsc(true)} />
+          }
+        </div>
+        <div className="flex flex-row items-center -mt-8">
           <TagFilter setSearchWord={setSearchWord} />
           <div className="rounded-full bg-gray-300 h-8 w-8 mt-3 mr-8 flex items-center justify-center font-bold text-blue-700">
             {data ? data.filter((question) => show(question)).length : 0}
@@ -128,7 +148,7 @@ export const QuizListFrame: VFC = memo(() => {
         </div>
       </div>
       <nav className="px-6 pt-2 overflow-y-auto text-xs h-screen pb-60">
-        {data && data.map((question) => (
+        {list().map((question) => (
           <>
             {show(question) && (
               <div key={question.quest_id}>

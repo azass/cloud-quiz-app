@@ -6,7 +6,9 @@ import {
   resetExamTags,
   selectEditContext,
   selectProviderTags,
+  selectQuestions,
   setEditContext,
+  setQuestions,
 } from '../slices/editSlice'
 import { EditElem, EditElemType, Question, Tag } from '../types/types'
 import axios from 'axios'
@@ -22,6 +24,7 @@ export const useEditElem = (editElems: EditElem[]) => {
   const [editElemsState, setEditElemsState] = useState<EditElem[]>(editElems)
   const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
   const editContext = useAppSelector(selectEditContext)
+  const questions = useAppSelector(selectQuestions)
 
   const add = (index: number, type: string) => {
     log.debug(index)
@@ -218,6 +221,12 @@ export const useEditElem = (editElems: EditElem[]) => {
             })
           )
           dispatch(resetExamTags())
+          dispatch(setQuestions(questions.map((quest) =>
+            quest.quest_id === editedContext.quest_id ? {
+              ...quest,
+              keywords: JSON.stringify(keywords),
+            } : quest
+          )))
         }
       })
       .catch((error) => log.debug(error))

@@ -1,5 +1,5 @@
 import log from 'loglevel'
-import { memo, useContext, VFC } from 'react'
+import { createContext, memo, useContext, VFC } from 'react'
 import { useParams } from 'react-router-dom'
 import { QuizEditPanel } from '../organisms/QuizEditPanel'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -11,15 +11,19 @@ import {
 import { ExamSelectTab } from '../organisms/ExamSelectTab'
 import { ColorContext } from '../../App'
 import { QTabs } from '../atoms/QTabs'
-import { Header } from '../molecules/Header'
+import { Header } from '../organisms/Header'
 import { QuizSelectTab } from '../organisms/QuizSelectTab'
 import { TermNoteTab } from '../organisms/TermNoteTab'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
-import { QListQuery } from '../molecules/QListQuery'
+import { QListQuery } from '../molecules/list/QListQuery'
+import { TermNotePanel } from '../organisms/TermNotePanel'
 
+interface EditorContextValues {
+  logout?: any
+}
+export const EditorContext = createContext<EditorContextValues>({})
 export const QuizEditor: VFC = memo(() => {
   console.log('QuizEditor start')
-
   log.setLevel("info")
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
@@ -43,8 +47,8 @@ export const QuizEditor: VFC = memo(() => {
   }
 
   return (
-    <>
-      <Header logout={logout} />
+    <EditorContext.Provider value={{ logout }}>
+      <Header />
       <div className="mt-30 h-full z-0">
         <div
           id="sidebar"
@@ -69,18 +73,22 @@ export const QuizEditor: VFC = memo(() => {
           )}
         </div>
         <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
-          {nowTab !== tabs[0] && params.quest_id && (
-            <div className={`flex w-full `}>
-              <div
-                className={`px-8 absolute pt-12 pb-12 w-1/2  ${color.bgColor}`}
-              >
-                <QuizEditPanel logout={logout} />
-              </div>
+          <div className={`flex w-full `}>
+            <div
+              className={`px-8 absolute pt-12 pb-12 w-1/2 ${color.bgColor}`}
+            >
+              {nowTab !== tabs[0] && (
+                (params.quest_id ? (
+                  <QuizEditPanel />
+                ) : (
+                  nowTab === tabs[2] && <TermNotePanel />
+                ))
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
-    </>
+    </EditorContext.Provider>
   )
 }
 )
