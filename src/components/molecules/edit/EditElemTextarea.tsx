@@ -11,17 +11,17 @@ interface Props {
   lang: number
 }
 export const EditElemTextarea: VFC<Props> = memo(({ lang }) => {
-  const { changeCheck } = useContext(EditContext)
+  const { changeText } = useContext(EditContext)
   const { editElem, index, editable, editting, on } = useContext(EditElemContext)
   const [pre, setPre] = useState(true)
   const { textColor, borderColor } = useAppearanceTerm()
   const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${editElem.text === '' && 'bg-pink-50'
     }`
   const border_color = () => {
-    return editable && on ? 'border-white' : borderColor(editElem.quest_ids || [])
+    return editable && on() ? 'border-white' : borderColor(editElem.quest_ids || [])
   }
   const text_color = () => {
-    return on ? 'text-white' : textColor(editElem.quest_ids || [])
+    return on() ? 'text-white' : textColor(editElem.quest_ids || [])
   }
   return (
     <div title="EditElemTextarea">
@@ -49,7 +49,7 @@ export const EditElemTextarea: VFC<Props> = memo(({ lang }) => {
                 value={editElem.text || ''}
                 className={textareaStyle}
                 onChange={(e) =>
-                  changeCheck(index, 'text', e.target.value)
+                  changeText(index, 'text', e.target.value)
                 }
               ></TextareaAutosize>
             </div>
@@ -85,7 +85,7 @@ export const EditElemTextarea: VFC<Props> = memo(({ lang }) => {
               value={editElem.text_en || ''}
               className={textareaStyle}
               onChange={(e) =>
-                changeCheck(index, 'text_en', e.target.value)
+                changeText(index, 'text_en', e.target.value)
               }
             ></TextareaAutosize>
           ) : (

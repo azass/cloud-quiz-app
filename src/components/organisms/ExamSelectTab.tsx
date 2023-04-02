@@ -55,14 +55,14 @@ export const ExamSelectTab: VFC = memo(() => {
       <div>
         <div>
           {nowProvider?.exams.map((exam) => (
-            <div>
+            <div className="py-1">
               <button
                 className={
-                  'inline-flex items-center justify-center ' +
+                  'inline-flex items-center justify-center w-1/2 ' +
                   'space-x-2 py-3 px-4 border border-transparent ' +
-                  'text-sm font-medium rounded text-green-600 ' +
-                  'hover:text-green-700 hover:bg-green-100 ' +
-                  'bg-green-50 transition-colors'
+                  'text-sm font-medium rounded text-blue-600 ' +
+                  'hover:text-green-700 hover:bg-blue-100 ' +
+                  'bg-blue-50 transition-colors'
                 }
                 onClick={() => {
                   dispatch(resetEditedContent())

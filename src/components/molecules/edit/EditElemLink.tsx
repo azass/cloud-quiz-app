@@ -22,7 +22,7 @@ const EditElemLink: VFC = () => {
           href={editElem.url}
           target="_blank"
           rel="noreferrer"
-          className={`underline text-base  ${on && editable ? 'font-bold text-white' : textColor(editElem.quest_ids || [])
+          className={`underline text-base  ${on() && editable ? 'font-bold text-white' : textColor(editElem.quest_ids || [])
             }`}
         >
           {editElem.link}

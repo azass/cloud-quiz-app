@@ -45,7 +45,12 @@ export const QuizEditor: VFC = memo(() => {
       log.debug('no user signing in')
     }
   }
-
+  const isQuizEdit = () => {
+    return nowTab !== tabs[0] && params.quest_id
+  }
+  const isTermNote = () => {
+    return nowTab === tabs[2] && !params.quest_id
+  }
   return (
     <EditorContext.Provider value={{ logout }}>
       <Header />
@@ -77,18 +82,12 @@ export const QuizEditor: VFC = memo(() => {
             <div
               className={`px-8 absolute pt-12 pb-12 w-1/2 ${color.bgColor}`}
             >
-              {nowTab !== tabs[0] && (
-                (params.quest_id ? (
-                  <QuizEditPanel />
-                ) : (
-                  nowTab === tabs[2] && <TermNotePanel />
-                ))
-              )}
+              {isQuizEdit() && <QuizEditPanel />}
+              {isTermNote() && <TermNotePanel />}
             </div>
           </div>
         </div>
       </div>
     </EditorContext.Provider>
   )
-}
-)
+})

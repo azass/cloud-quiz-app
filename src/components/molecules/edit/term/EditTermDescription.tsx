@@ -49,7 +49,7 @@ export const EditTermDescription: VFC = memo(() => {
     add: onClickAdd,
     del: del,
     changeText: changeText,
-    changeCheck2: changeCheck2
+    changeCheck: changeCheck2
   }
   return (
     <div className={`px-2 pb-6  ${color.bgColor}`} title="EditTermDescription">

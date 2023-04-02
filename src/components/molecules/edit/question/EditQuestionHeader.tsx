@@ -77,7 +77,7 @@ export const EditQuestionHeader: VFC<Props> = memo(
             className={`font-light pt-1 pb-1 pr-8 text-base font-bold ${color.bgColor} ${color.baseText}`}
           >
             <div className="flex justify-start items-center">
-              <div className="w-40">{question.quest_id}</div>
+              <div className="w-40 font-bold">{question.quest_id}</div>
               <QRArchiveToggle
                 question={question}
                 isOld={isOld}
