@@ -1,16 +1,16 @@
-import { PlusCircleIcon } from "@heroicons/react/outline";
-import { PencilAltIcon } from "@heroicons/react/solid";
-import { memo, useState, VFC } from "react";
-import { useMutateQuestion } from "../../../../hooks/useMutateQuestion";
-import { Question } from "../../../../types/types";
-import { QLabel } from "./QLabel";
+import { PlusCircleIcon } from '@heroicons/react/outline'
+import { PencilAltIcon } from '@heroicons/react/solid'
+import { memo, useState, FC } from 'react'
+import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
+import { QLabel } from './QLabel'
+import { useQuestionContext } from './QuestionProvider'
 
 interface Props {
-  question: Question
   readonly: boolean
 }
-export const QLabels: VFC<Props> = memo(({ question, readonly }) => {
-  const [lastQuestId, setLastQuestId] = useState("")
+export const QLabels: FC<Props> = memo(({ readonly }) => {
+  const { question } = useQuestionContext()
+  const [lastQuestId, setLastQuestId] = useState('')
   const [labels, setLabels] = useState<string[]>([])
   const [editable, seteEditable] = useState(false)
   const { putQuestion } = useMutateQuestion()
@@ -24,10 +24,10 @@ export const QLabels: VFC<Props> = memo(({ question, readonly }) => {
     )
   }
   const add = () => {
-    setLabels([...labels, ""])
+    setLabels([...labels, ''])
   }
   const update = (index: number, value: string) => {
-    const newLabels = labels.map((label, i) => i === index ? value : label)
+    const newLabels = labels.map((label, i) => (i === index ? value : label))
     question.labels = newLabels
     setLabels(newLabels)
     save()
@@ -48,21 +48,31 @@ export const QLabels: VFC<Props> = memo(({ question, readonly }) => {
   }
   return (
     <div className="flex flex-wrap justify-start items-center pt-8 pb-60">
-      {labels.map((label, index) => (
-        !(!editable && label === "") && (
-          <QLabel index={index} label={label} editable={editable} update={update} remove={remove} />)
-      ))}
-      {editable && labels.length === (question.labels ? question.labels.length : 0) && (
-        <PlusCircleIcon
-          className="w-6 h-6 text-white ml-2 cursor-pointer"
-          onClick={() => add()}
-        />)}
-      {!readonly &&
+      {labels.map(
+        (label, index) =>
+          !(!editable && label === '') && (
+            <QLabel
+              index={index}
+              label={label}
+              editable={editable}
+              update={update}
+              remove={remove}
+            />
+          )
+      )}
+      {editable &&
+        labels.length === (question.labels ? question.labels.length : 0) && (
+          <PlusCircleIcon
+            className="w-6 h-6 text-white ml-2 cursor-pointer"
+            onClick={() => add()}
+          />
+        )}
+      {!readonly && (
         <PencilAltIcon
           className="w-6 h-6 text-white ml-2 cursor-pointer"
           onClick={() => seteEditable(!editable)}
         />
-      }
+      )}
     </div>
   )
 })

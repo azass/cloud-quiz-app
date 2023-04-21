@@ -1,14 +1,25 @@
-import { memo, useContext, VFC } from "react";
-import { SearchContext } from "./SearchContext";
+import { memo, FC } from 'react'
+import { useSelectMistakeDaysContext } from './SearchProvider'
 
 interface Props {
   index: number
   mistake_progress: string[][]
 }
-const conditionLetters = ["今日", "昨日", "2日前", "3日前", "4日前", "5日前", "6日前", "1週間以上前", "2週間以上前", "3週間以上前"]
+const conditionLetters = [
+  '今日',
+  '昨日',
+  '2日前',
+  '3日前',
+  '4日前',
+  '5日前',
+  '6日前',
+  '1週間以上前',
+  '2週間以上前',
+  '3週間以上前',
+]
 
-export const QMistakeButton: VFC<Props> = memo(({ index, mistake_progress }) => {
-  const { selectMistakeDays } = useContext(SearchContext)
+export const QMistakeButton: FC<Props> = memo(({ index, mistake_progress }) => {
+  const { selectMistakeDays } = useSelectMistakeDaysContext()
   const getBgColor = (option?: number) => {
     if (selectMistakeDays) {
       if (option || option === 0) {
@@ -28,17 +39,22 @@ export const QMistakeButton: VFC<Props> = memo(({ index, mistake_progress }) => 
     if (index < 7) {
       return mistake_progress[index].length
     } else if (index === 7) {
-      return mistake_progress.slice(7, 14).reduce((sum, count) => sum.concat(count)).length
+      return mistake_progress
+        .slice(7, 14)
+        .reduce((sum, count) => sum.concat(count)).length
     } else if (index === 8) {
-      return mistake_progress.slice(14, 21).reduce((sum, count) => sum.concat(count)).length
+      return mistake_progress
+        .slice(14, 21)
+        .reduce((sum, count) => sum.concat(count)).length
     } else if (index === 9) {
-      return mistake_progress.slice(21).reduce((sum, count) => sum.concat(count)).length
+      return mistake_progress
+        .slice(21)
+        .reduce((sum, count) => sum.concat(count)).length
     } else {
       return 0
     }
   }
-  const onClick = (option?: number) => {
-  }
+  const onClick = (option?: number) => {}
   return (
     <button
       className={

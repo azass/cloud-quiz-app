@@ -22,13 +22,15 @@ export const useQueryQuestion = (questId: string, question?: Question) => {
         },
       }
       const { data } = await axios.get(
-        `${process.env.REACT_APP_REST_URL}/question?quest_id=${questId}` + appendCaseId(),
+        `${process.env.REACT_APP_REST_URL}/question?quest_id=${questId}` +
+          appendCaseId(),
         headers
       )
       const question: Question = data.body
       if (question) {
         question.options?.map((option) => {
-          if (!('mark' in option)) { // 連想配列キーの存在チェック
+          if (!('mark' in option)) {
+            // 連想配列キーの存在チェック
             const mark = option.text?.slice(0, 1) || ''
             option.mark = mark
           }
@@ -42,8 +44,8 @@ export const useQueryQuestion = (questId: string, question?: Question) => {
       throw {
         code: error.code,
         message: error.response.data,
-        responseStatus: error.response?.status
-      };
+        responseStatus: error.response?.status,
+      }
     }
   }
   return useQuery<Question, Error>({

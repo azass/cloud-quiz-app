@@ -1,13 +1,16 @@
-import { memo, useState, VFC } from "react"
-import { Question } from "../../../../types/types"
-import { EditBlock } from "../EditBlock"
+import { FC, memo, useState } from 'react'
+import { EditBlock } from '../EditBlock'
+import {
+  useChangeCaseNoContext,
+  useEditCaseNoContext,
+} from './QuestionCaseProvider'
+import { useQuestionContext } from './QuestionProvider'
+import { EditElemsProvider } from '../EditElemsProvider'
 
-interface Props {
-  question: Question
-  editCaseNo: boolean
-  setChangeCaseNo: any
-}
-export const EditQuestionCase: VFC<Props> = memo(({ question, editCaseNo, setChangeCaseNo }) => {
+export const EditQuestionCase: FC = memo(() => {
+  const { question } = useQuestionContext()
+  const { editCaseNo } = useEditCaseNoContext()
+  const { setChangeCaseNo } = useChangeCaseNoContext()
   const [caseNo, setCaseNo] = useState(
     question.case_id && question.exam_id
       ? question.case_id.slice(question.exam_id.length + 1)
@@ -37,21 +40,19 @@ export const EditQuestionCase: VFC<Props> = memo(({ question, editCaseNo, setCha
                 type="text"
                 className="w-20 ml-1 px-1 text-black"
                 value={caseNo}
-                onChange={(e) => {
-                  onChangeCaseNo(e.target.value)
-                }}
+                onChange={(e) => onChangeCaseNo(e.target.value)}
               ></input>
             ) : (
               <span>{caseNo}</span>
             )}
           </div>
-          <EditBlock
-            question={question}
-            title={'与件'}
+          <EditElemsProvider
             name="case_items"
             editElems={question.case_items || []}
             editable={true}
-          />
+          >
+            <EditBlock title={'与件'} />
+          </EditElemsProvider>
         </>
       )}
     </>

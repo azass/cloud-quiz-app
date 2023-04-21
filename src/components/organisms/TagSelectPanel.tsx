@@ -1,6 +1,10 @@
-import { VFC, memo, useContext, useState } from 'react'
+import { FC, memo, useContext, useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
-import { selectEditedContent, selectExamTags, selectProviderTags } from '../../slices/editSlice'
+import {
+  selectShowContent,
+  selectExamTags,
+  selectProviderTags,
+} from '../../slices/editSlice'
 import { SelectableTag } from '../atoms/SelectableTag'
 import { ColorContext } from '../../App'
 import { TagFilter } from '../atoms/TagFilter'
@@ -13,13 +17,15 @@ interface Props {
   onClickTag: any
   setSelectSearchTags?: any
 }
-export const TagSelectPanel: VFC<Props> = memo(
+export const TagSelectPanel: FC<Props> = memo(
   ({ useExamTags, selectTags, onClickTag }) => {
-    log.setLevel("info")
+    log.setLevel('info')
     const color = useContext(ColorContext)
-    const tags = useAppSelector(useExamTags ? selectExamTags : selectProviderTags)
+    const tags = useAppSelector(
+      useExamTags ? selectExamTags : selectProviderTags
+    )
     const [searchWord, setSearchWord] = useState('')
-    const editedContent = useAppSelector(selectEditedContent)
+    const editedContent = useAppSelector(selectShowContent)
     if (searchWord !== '' && editedContent !== 'TagSelect') {
       setSearchWord('')
     }
@@ -37,7 +43,10 @@ export const TagSelectPanel: VFC<Props> = memo(
     const selected = (tag: Tag) => {
       if (tag) {
         if ('tag_no' in tag) {
-          return selectTags.includes(tag.tag_name) || selectTags.includes(tag.tag_no.toString())
+          return (
+            selectTags.includes(tag.tag_name) ||
+            selectTags.includes(tag.tag_no.toString())
+          )
         } else {
           return false
         }
@@ -59,11 +68,11 @@ export const TagSelectPanel: VFC<Props> = memo(
                 })
                 .map((tag) => (
                   <>
-                  <SelectableTag
-                    tag={tag}
-                    selected={selected(tag)}
-                    onClickTag={onClickTag}
-                  />
+                    <SelectableTag
+                      tag={tag}
+                      selected={selected(tag)}
+                      onClickTag={onClickTag}
+                    />
                   </>
                 ))}
             </div>

@@ -1,12 +1,12 @@
-import { memo, VFC } from "react";
-import { useTerm } from "../../../../hooks/useTerm";
-import { Term } from "../../../../types/types";
+import { memo, FC } from 'react'
+import { useTerm } from '../../../../hooks/useTerm'
+import { Term } from '../../../../types/types'
 interface Props {
   term: Term
   index: number
   forQuestion: boolean
 }
-export const SelectTerm: VFC<Props> = memo(({ term, index, forQuestion }) => {
+export const SelectTerm: FC<Props> = memo(({ term, index, forQuestion }) => {
   const { select, getBgColor } = useTerm(term, index, forQuestion)
 
   return (
@@ -21,7 +21,8 @@ export const SelectTerm: VFC<Props> = memo(({ term, index, forQuestion }) => {
         key={term.term_id}
         className={
           'rounded-full px-6 py-1 text-left text-white text-sm font-black ' +
-          `${forQuestion && 'cursor-pointer '}` + getBgColor(term.level)
+          `${forQuestion && 'cursor-pointer '}` +
+          getBgColor(term.level)
         }
         onClick={() => select()}
       >

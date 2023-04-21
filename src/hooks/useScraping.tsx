@@ -1,9 +1,14 @@
 import axios from 'axios'
 import { useState } from 'react'
+import { Question } from '../types/types'
+import { useMutateQuestion } from './useMutateQuestion'
+import { useMutateComments } from './useMutateComments'
 
-export const useScraping = (setQuestion: any) => {
+export const useScraping = (question: Question, setQuestion: any) => {
+  const { updateQuestion } = useMutateQuestion()
   const [showFlg, setShowFlg] = useState(false)
   const [html, setHtml] = useState('')
+  const { putComments } = useMutateComments()
   const onChange = (text: string) => {
     setHtml(text)
   }
@@ -22,9 +27,16 @@ export const useScraping = (setQuestion: any) => {
         let result = response.data
         console.log(result)
         console.log(questId)
-        if (questId === 'new') {
-          setQuestion(result)
+        const newQuestion = {
+          ...question,
+          question_items: result['question_items'],
+          options: result['options'],
         }
+        // if (questId === 'new') {
+        updateQuestion(newQuestion)
+        putComments(question.quest_id, result['comments'], result['answers'])
+        setQuestion(newQuestion)
+        // }
       })
       .catch((error) => console.log(error))
   }

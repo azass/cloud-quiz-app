@@ -1,17 +1,17 @@
-import { memo, VFC } from "react";
-import { useAppSelector } from "../../app/hooks";
-import { useEditElem } from "../../hooks/useEditElem";
-import { selectEditedContent } from "../../slices/editSlice";
-import { QListHeader } from "../molecules/list/QListHeader";
-import { QSearchQuery } from "../molecules/search/QSearchQuery";
-import { QuizSelectFrame } from "./QuizSelectFrame";
-import { TagSelectPanel } from "./TagSelectPanel";
-import { TermEditFrame } from "./TermEditFrame";
+import { memo, FC } from 'react'
+import { useAppSelector } from '../../app/hooks'
+import { useEditElem } from '../../hooks/useEditElem'
+import { selectShowContent } from '../../slices/editSlice'
+import { QListHeader } from '../molecules/list/QListHeader'
+import { QSearchQuery } from '../molecules/search/QSearchQuery'
+import { QuizSelectFrame } from './QuizSelectFrame'
+import { TagSelectPanel } from './TagSelectPanel'
+import { TermsLoader } from '../molecules/edit/term/TermsLoader'
+import { SearchProvider } from '../molecules/search/SearchProvider'
 
-export const QuizSelectTab: VFC = memo(() => {
-  console.log('QuizSelectTab start')
-  const editedContent = useAppSelector(selectEditedContent)
-  const { keywords, onClickTag } = useEditElem([])
+export const QuizSelectTab: FC = memo(() => {
+  const editedContent = useAppSelector(selectShowContent)
+  const { keywords, onClickTag } = useEditElem()
 
   return (
     <div className={``} title="QuizSelectTab">
@@ -27,12 +27,15 @@ export const QuizSelectTab: VFC = memo(() => {
         />
       </div>
       <div className={`${editedContent === 'TermEdit' ? '' : 'hidden'}`}>
-        <TermEditFrame />
+        <TermsLoader />
       </div>
-      {editedContent === 'Search' &&
+      {editedContent === 'Search' && (
         <div className={`${editedContent === 'Search' ? '' : 'hidden'}`}>
-          <QSearchQuery />
-        </div>}
+          <SearchProvider>
+            <QSearchQuery />
+          </SearchProvider>
+        </div>
+      )}
     </div>
   )
 })

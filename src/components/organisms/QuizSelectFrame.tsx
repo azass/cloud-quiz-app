@@ -1,10 +1,9 @@
-import { memo, VFC } from 'react'
+import { memo, FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { QInputItem } from '../molecules/list/QInputItem'
 import { QuizListFrame } from './QuizListFrame'
 
-export const QuizSelectFrame: VFC = memo(() => {
-  console.log('QuizSelectFrame start')
+export const QuizSelectFrame: FC = memo(() => {
   const params = useParams()
   return (
     <>

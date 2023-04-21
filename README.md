@@ -87,7 +87,7 @@ QuizEditor
 
 EditQuestion
 
-EditTermDescription⇒EditBlockContent
+TermDescription⇒EditBlockContent
             editElemsState.map((editElem, index) => (
               <EditBlockContent
 

@@ -1,12 +1,12 @@
-import { memo, useState, VFC } from "react";
-import { Link } from "react-router-dom";
+import { memo, useState, FC } from 'react'
+import { Link } from 'react-router-dom'
 import { ExternalLinkIcon } from '@heroicons/react/solid'
 
 interface Props {
   examId: String
 }
 
-export const QInputItem: VFC<Props> = memo(({ examId }) => {
+export const QInputItem: FC<Props> = memo(({ examId }) => {
   const [selectNo, setSelectNo] = useState('')
   return (
     <div className="inline-flex pl-6 pb-6 space-x-4" title="QInputItem">

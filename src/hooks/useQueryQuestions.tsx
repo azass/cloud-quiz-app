@@ -4,15 +4,16 @@ import { Question } from '../types/types'
 import log from 'loglevel'
 
 export const useQueryQuestions = (args: any) => {
-  log.setLevel("debug")
+  log.setLevel('debug')
   const getQuestions = async () => {
-    log.debug(">>>>getQuestions")
+    log.debug('>>>>getQuestions')
     const condition = {
-      Method: "SEARCH_QUESTIONS",
-      Args: args
+      Method: 'SEARCH_QUESTIONS',
+      Args: args,
     }
     const { data } = await axios.post<Question[]>(
-      `${process.env.REACT_APP_REST_URL}/questions`, condition
+      `${process.env.REACT_APP_REST_URL}/questions`,
+      condition
     )
     log.debug(data)
     return data

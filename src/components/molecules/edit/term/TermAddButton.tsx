@@ -1,4 +1,4 @@
-import { VFC, memo } from 'react'
+import { FC, memo } from 'react'
 import { PlusCircleIcon } from '@heroicons/react/solid'
 import { useAppDispatch } from '../../../../app/hooks'
 import { setEdittingTerms } from '../../../../slices/editSlice'
@@ -11,7 +11,7 @@ interface Props {
   index: number
 }
 
-export const TermAddButton: VFC<Props> = memo(({ terms, tag, index }) => {
+export const TermAddButton: FC<Props> = memo(({ terms, tag, index }) => {
   const dispatch = useAppDispatch()
   return (
     <PlusCircleIcon

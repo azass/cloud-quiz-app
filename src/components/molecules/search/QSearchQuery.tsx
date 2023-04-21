@@ -1,31 +1,34 @@
 import { DocumentRemoveIcon } from '@heroicons/react/outline'
-import { memo, useState, VFC } from 'react'
+import { memo, FC } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { useQueryExamTags } from '../../../hooks/useQueryExamTags'
 import { useSearch } from '../../../hooks/useSearch'
-import { resetEditedContent, selectExam, selectExamTags, selectScArgs, setExamTags, setScArgs } from '../../../slices/editSlice'
+import {
+  resetShowContent,
+  selectExam,
+  selectExamTags,
+  selectScArgs,
+  setExamTags,
+  setScArgs,
+} from '../../../slices/editSlice'
 import { TagSelectPanel } from '../../organisms/TagSelectPanel'
 import { QSProgressButtonSet } from './QProgressButtonSet'
 import { QSearchButtonSet } from './QSearchButtonSet'
-import { SearchContext } from './SearchContext'
+import {
+  SearchProvider,
+  useSelectOptionsContext,
+  useSelectScoringsContext,
+} from './SearchProvider'
 
-export const QSearchQuery: VFC = memo(() => {
+export const QSearchQuery: FC = memo(() => {
   const dispatch = useAppDispatch()
+  const { selectOptions } = useSelectOptionsContext()
+  const { selectScorings } = useSelectScoringsContext()
   const scArgs = useAppSelector(selectScArgs)
   const tags = useAppSelector(selectExamTags)
   const exam = useAppSelector(selectExam)
   const { selectSearchTags, setSelectSearchTags, onClickSearchTag } =
     useSearch()
-  const [selectOptions, setSelectOptions] = useState<number[]>([])
-  const [selectScorings, setSelectScorings] = useState<number[]>([])
-  const [selectExcludeDays, setSelectExcludeDays] = useState<number[]>([])
-  const [selectMistakeDays, setSelectMistakeDays] = useState<number[]>([])
-  const value = {
-    selectOptions, setSelectOptions,
-    selectScorings, setSelectScorings,
-    selectExcludeDays, setSelectExcludeDays,
-    selectMistakeDays, setSelectMistakeDays
-  }
 
   const { status, data } = useQueryExamTags(exam)
   if (status === 'loading')
@@ -47,11 +50,11 @@ export const QSearchQuery: VFC = memo(() => {
       scorings: selectScorings,
     }
     dispatch(setScArgs(newScArgs))
-    dispatch(resetEditedContent())
+    dispatch(resetShowContent())
     console.log("editedContent: 'QuizList'")
   }
   return (
-    <SearchContext.Provider value={value}>
+    <>
       <div className="px-6">
         <QSearchButtonSet />
       </div>
@@ -60,8 +63,11 @@ export const QSearchQuery: VFC = memo(() => {
       </div>
       <div className="flex flex-row pt-6 pl-8">
         <span
-          className="rounded-full border py-1 my-1 mr-1 px-3 bg-blue-600 text-white font-bold cursor-pointer"
-          onClick={() => search()}>SEARCH</span>
+          className="rounded-full border w-48 py-1 my-1 mr-1 px-3 bg-blue-600 text-white font-bold cursor-pointer"
+          onClick={() => search()}
+        >
+          SEARCH
+        </span>
         {selectSearchTags.length > 0 && (
           <DocumentRemoveIcon
             className={'w-8 h-8 ml-8 text-gray-200 cursor-pointer'}
@@ -77,6 +83,6 @@ export const QSearchQuery: VFC = memo(() => {
           setSelectSearchTags={setSelectSearchTags}
         />
       </div>
-    </SearchContext.Provider>
+    </>
   )
 })

@@ -1,15 +1,27 @@
-import { memo, useContext, VFC } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { selectQuestions } from "../../../slices/editSlice";
-import { SearchContext } from "./SearchContext";
+import { memo, FC } from 'react'
+import { useAppSelector } from '../../../app/hooks'
+import { selectQuestions } from '../../../slices/editSlice'
+import { useSelectScoringsContext } from './SearchProvider'
 interface Props {
   index: number
 }
-const scoreLetters = ["無印", "知識不足", "理解不足", "うろ覚え", "読解不足", "注意不足", "山勘", "残像", "ぼんやり", "ほぼ実力", "実力"]
+const scoreLetters = [
+  '無印',
+  '知識不足',
+  '理解不足',
+  'うろ覚え',
+  '読解不足',
+  '注意不足',
+  '山勘',
+  '残像',
+  'ぼんやり',
+  'ほぼ実力',
+  '実力',
+]
 
-export const QScoreButton: VFC<Props> = memo(({ index }) => {
+export const QScoreButton: FC<Props> = memo(({ index }) => {
   const questions = useAppSelector(selectQuestions)
-  const { selectScorings, setSelectScorings } = useContext(SearchContext)
+  const { selectScorings, setSelectScorings } = useSelectScoringsContext()
   const onClick = (option?: number) => {
     if (selectScorings) {
       if (option || option === 0) {

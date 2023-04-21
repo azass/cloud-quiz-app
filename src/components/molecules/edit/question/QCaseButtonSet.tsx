@@ -1,16 +1,19 @@
-import { memo, VFC } from "react";
-import { CloudUploadIcon, DocumentTextIcon } from "@heroicons/react/outline";
-import { Question } from "../../../../types/types";
-import { useQueryClient } from "react-query";
+import { memo, VFC } from 'react'
+import { CloudUploadIcon, DocumentTextIcon } from '@heroicons/react/outline'
+import { useQueryClient } from 'react-query'
+import { useQuestionContext } from './QuestionProvider'
+import {
+  useChangeCaseNoContext,
+  useEditCaseNoContext,
+} from './QuestionCaseProvider'
 
 interface Props {
-  question: Question
-  editCaseNo: boolean
-  setEditCaseNo: any
-  changeCaseNo: boolean
   putQuestion: any
 }
-export const QCaseButtonSet: VFC<Props> = memo(({ question, editCaseNo, setEditCaseNo, changeCaseNo, putQuestion }) => {
+export const QCaseButtonSet: VFC<Props> = memo(({ putQuestion }) => {
+  const { question } = useQuestionContext()
+  const { editCaseNo, setEditCaseNo } = useEditCaseNoContext()
+  const { changeCaseNo } = useChangeCaseNoContext()
   const queryClient = useQueryClient()
   const onClickCaseNo = () => {
     setEditCaseNo(false)
@@ -35,7 +38,6 @@ export const QCaseButtonSet: VFC<Props> = memo(({ question, editCaseNo, setEditC
           onClick={() => onClickCaseNo()}
         />
       )}
-
     </div>
   )
 })

@@ -27,7 +27,6 @@ export const useMutateTerms = () => {
   const queryClient = useQueryClient()
   const { getTag } = useTags()
   const questions = useAppSelector(selectQuestions)
-  // const exam = useAppSelector(selectExam)
 
   const save = (setSaving: any) => {
     const tag = getTag(editContext.chosenTag.tag_name)
@@ -99,12 +98,18 @@ export const useMutateTerms = () => {
             description: term.description,
           }))
         )
-        dispatch(setQuestions(questions.map((quest) =>
-          quest.quest_id === requestData.quest_id ? {
-            ...quest,
-            keywords: requestData.quest_keywords,
-          } : quest
-        )))
+        dispatch(
+          setQuestions(
+            questions.map((quest) =>
+              quest.quest_id === requestData.quest_id
+                ? {
+                    ...quest,
+                    keywords: requestData.quest_keywords,
+                  }
+                : quest
+            )
+          )
+        )
         // queryClient.setQueryData<Question[]>(
         //   'Questions' + exam.exam_id,
         //   questions.map((quest) =>

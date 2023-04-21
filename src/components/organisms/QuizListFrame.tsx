@@ -1,4 +1,5 @@
-import { VFC, memo, useContext, useState } from 'react'
+import log from 'loglevel'
+import { FC, memo, useContext, useState } from 'react'
 import { QItem } from '../molecules/list/QItem'
 import { useParams } from 'react-router-dom'
 import { ColorContext } from '../../App'
@@ -6,11 +7,9 @@ import { useAppSelector } from '../../app/hooks'
 import { selectQuestions, selectScArgs } from '../../slices/editSlice'
 import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
-import log from 'loglevel'
 import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/outline'
 
-export const QuizListFrame: VFC = memo(() => {
-  console.log('QuizListFrame start')
+export const QuizListFrame: FC = memo(() => {
   log.setLevel('debug')
   const color = useContext(ColorContext)
   const params = useParams()
@@ -105,9 +104,11 @@ export const QuizListFrame: VFC = memo(() => {
           }
         }
         if (question.labels) {
-          if (question.labels.filter((label) => {
-            return label.toLowerCase().includes(searchWord.toLowerCase())
-          }).length > 0) {
+          if (
+            question.labels.filter((label) => {
+              return label.toLowerCase().includes(searchWord.toLowerCase())
+            }).length > 0
+          ) {
             return true
           }
         }
@@ -133,12 +134,19 @@ export const QuizListFrame: VFC = memo(() => {
   return (
     <div id="navWrapper" className={color.bgColor} title="QuizListFrame">
       <div className="flex justify-between">
-        <div className="flex flex-row items-center ml-16">
-          {asc ?
-            <ArrowSmUpIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" onClick={() => setAsc(false)} />
-            :
-            <ArrowSmDownIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" onClick={() => setAsc(true)} />
-          }
+        <div className="flex flex-row items-center ml-1">
+          <div className="ml-7 mr-1 mb-1 text-sky-500">sort</div>
+          {asc ? (
+            <ArrowSmUpIcon
+              className="h-5 w-5 mx-1 text-sky-500 cursor-pointer"
+              onClick={() => setAsc(false)}
+            />
+          ) : (
+            <ArrowSmDownIcon
+              className="h-5 w-5 mx-1 text-sky-500 cursor-pointer"
+              onClick={() => setAsc(true)}
+            />
+          )}
         </div>
         <div className="flex flex-row items-center -mt-8">
           <TagFilter setSearchWord={setSearchWord} />

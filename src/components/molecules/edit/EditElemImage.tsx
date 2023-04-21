@@ -1,25 +1,28 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { VFC, memo, useContext } from 'react'
+import { FC, memo } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { EditContext } from './EditContext'
-import { EditElemContext } from './EditElemContext'
+import { useEditElemContext } from './EditElemProvider'
+import { useEditElemsContext, useEnableEditContext } from './EditElemsProvider'
 
-export const EditElemImage: VFC = memo(() => {
-  const { changeText } = useContext(EditContext)
-  const { editElem, index, editable, editting } = useContext(EditElemContext)
+export const EditElemImage: FC = memo(() => {
+  const { changeText, editable } = useEditElemsContext()
+  const { enableEdit } = useEnableEditContext()
+  const { editElem, index } = useEditElemContext()
   if (!editElem.image_height || editElem.image_height === '') {
-    editElem.image_height = '200'
+    editElem.image_height = '100'
   }
-  const pathStyle = `px-4 py-2 w-full border-gray-300 text-xs ${editElem.image_path === '' && 'bg-pink-50'
-    }`
-  const heightStyle = `px-4 py-2 w-full border-gray-300 text-xs ${editElem.image_height === '' && 'bg-pink-50'
-    }`
+  const pathStyle = `px-4 py-2 w-full border-gray-300 text-xs ${
+    editElem.image_path === '' && 'bg-pink-50'
+  }`
+  const heightStyle = `px-4 py-2 w-full border-gray-300 text-xs ${
+    editElem.image_height === '' && 'bg-pink-50'
+  }`
   return (
     <>
       <div className="py-8 bg-white">
         <img src={editElem.image_path} />
       </div>
-      {editable && editting && (
+      {editable && enableEdit && (
         <>
           <div>
             <span className="mx-6 py-4 my-2 text-blue-700 font-bold text-xs">
@@ -28,9 +31,7 @@ export const EditElemImage: VFC = memo(() => {
             <TextareaAutosize
               className={pathStyle}
               value={editElem.image_path}
-              onChange={(e) =>
-                changeText(index, 'image_path', e.target.value)
-              }
+              onChange={(e) => changeText(index, 'image_path', e.target.value)}
             />
           </div>
           <div>
@@ -49,5 +50,4 @@ export const EditElemImage: VFC = memo(() => {
       )}
     </>
   )
-}
-)
+})

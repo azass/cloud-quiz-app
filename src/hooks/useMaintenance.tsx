@@ -9,14 +9,18 @@ export const useMaintenance = () => {
   }
   const onClick = (exam: Exam) => {
     const requestData = {
-      Method: "setupReportItem",
+      Method: 'setupReportItem',
       Args: {
-        "provider": exam.provider,
-        "exam_id": exam.exam_id
-      }
+        provider: exam.provider,
+        exam_id: exam.exam_id,
+      },
     }
     axios
-      .post(`${process.env.REACT_APP_REST_URL}/maintenance`, requestData, config)
+      .post(
+        `${process.env.REACT_APP_REST_URL}/maintenance`,
+        requestData,
+        config
+      )
       .then((response) => {
         let result = response.data
         console.log(result)

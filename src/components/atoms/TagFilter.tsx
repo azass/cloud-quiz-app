@@ -1,9 +1,9 @@
 import { FilterIcon } from '@heroicons/react/solid'
-import { memo, VFC } from 'react'
+import { memo, FC } from 'react'
 interface Props {
   setSearchWord: any
 }
-export const TagFilter: VFC<Props> = memo(({ setSearchWord }) => {
+export const TagFilter: FC<Props> = memo(({ setSearchWord }) => {
   return (
     <div className="flex flex-row items-center pt-4" title="TagFilter">
       <div className="bg-gray-100 border-gray-300">

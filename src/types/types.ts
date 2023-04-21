@@ -100,11 +100,26 @@ export interface EditContext {
   keywordsJson: string
   chosenTag: Tag
   forQuestion: boolean
+  chosenTerm?: Term
 }
 
 export interface ProgressState {
   execute: string[][]
   mistake: string[][]
+}
+
+export interface Comment {
+  date?: string
+  badge?: string
+  selected?: string
+  comment_jp: string
+  comment_en: string
+  replays: Comment[]
+}
+
+export interface Comments {
+  comment_items: Comment[]
+  answer_items: EditElem[]
 }
 
 export namespace EditElemType {

@@ -6,8 +6,8 @@ export interface EditState {
   idToken: string
   tab: string
   exam: Exam
-  editedContent: string
-  editedContext: EditContext
+  showContent: string
+  editContext: EditContext
   providerTags: Tag[]
   examTags: Tag[]
   updateTerm: boolean
@@ -31,14 +31,15 @@ export const initialState: EditState = {
     exam_count: 0,
     level: 0,
     point: 0,
-    div: 0
+    div: 0,
   },
-  editedContent: 'QuizList',
-  editedContext: {
+  showContent: 'QuizList',
+  editContext: {
     quest_id: '',
     keywordsJson: '',
     chosenTag: voidTag,
     forQuestion: false,
+    chosenTerm: undefined
   },
   providerTags: [],
   examTags: [],
@@ -77,17 +78,17 @@ export const editSlice = createSlice({
     setExam: (state, action: PayloadAction<any>) => {
       state.exam = action.payload
     },
-    setEditedContent: (state, action: PayloadAction<string>) => {
-      state.editedContent = action.payload
+    setShowContent: (state, action: PayloadAction<string>) => {
+      state.showContent = action.payload
     },
-    resetEditedContent: (state) => {
-      state.editedContent = initialState.editedContent
+    resetShowContent: (state) => {
+      state.showContent = initialState.showContent
     },
     setEditContext: (state, action: PayloadAction<EditContext>) => {
-      state.editedContext = action.payload
+      state.editContext = action.payload
     },
     resetEditContext: (state) => {
-      state.editedContext = initialState.editedContext
+      state.editContext = initialState.editContext
     },
     setProviderTags: (state, action: PayloadAction<Tag[]>) => {
       state.providerTags = action.payload
@@ -133,7 +134,7 @@ export const editSlice = createSlice({
     },
     resetQuestions: (state) => {
       state.questions = initialState.questions
-    }
+    },
   },
 })
 
@@ -141,8 +142,8 @@ export const {
   setIdToken,
   setTab,
   setExam,
-  setEditedContent,
-  resetEditedContent,
+  setShowContent,
+  resetShowContent,
   setEditContext,
   resetEditContext,
   setProviderTags,
@@ -165,9 +166,8 @@ export const {
 export const selectIdToken = (state: RootState) => state.edit.idToken
 export const selectTab = (state: RootState) => state.edit.tab
 export const selectExam = (state: RootState) => state.edit.exam
-export const selectEditedContent = (state: RootState) =>
-  state.edit.editedContent
-export const selectEditContext = (state: RootState) => state.edit.editedContext
+export const selectShowContent = (state: RootState) => state.edit.showContent
+export const selectEditContext = (state: RootState) => state.edit.editContext
 export const selectProviderTags = (state: RootState) => state.edit.providerTags
 export const selectExamTags = (state: RootState) => state.edit.examTags
 export const selectUpdateTerm = (state: RootState) => state.edit.updateTerm
@@ -175,6 +175,6 @@ export const selectEdittingTerms = (state: RootState) =>
   state.edit.edittingTerms
 export const selectScArgs = (state: RootState) => state.edit.scArgs
 export const selectLang = (state: RootState) => state.edit.lang
-export default editSlice.reducer
 export const selectSuggestTerms = (state: RootState) => state.edit.suggestTerms
 export const selectQuestions = (state: RootState) => state.edit.questions
+export default editSlice.reducer

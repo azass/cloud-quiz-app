@@ -1,11 +1,11 @@
-import { memo, VFC } from "react";
-import { Question } from "../../../../types/types";
+import { memo, FC } from "react";
+import { useQuestionContext } from "./QuestionProvider";
 interface Props {
-  question: Question
   isOld: boolean
   putQuestion: any
 }
-export const QRArchiveToggle: VFC<Props> = memo(({ question, isOld, putQuestion }) => {
+export const QRArchiveToggle: FC<Props> = memo(({ isOld, putQuestion }) => {
+  const { question } = useQuestionContext()
   const onClickOld = (_isOld: boolean) => {
     putQuestion(
       {
@@ -32,6 +32,5 @@ export const QRArchiveToggle: VFC<Props> = memo(({ question, isOld, putQuestion 
         ></div>
       </label>
     </div>
-
   )
 })

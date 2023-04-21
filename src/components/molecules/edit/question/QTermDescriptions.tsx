@@ -1,27 +1,23 @@
-import { memo, VFC } from 'react'
+import { FC, memo } from 'react'
 import { useAppDispatch } from '../../../../app/hooks'
 import { useKeywords } from '../../../../hooks/useKeywords'
 import { useTags } from '../../../../hooks/useTags'
-import {
-  setEditContext,
-  setEditedContent,
-} from '../../../../slices/editSlice'
-import { bgcolor, Question } from '../../../../types/types'
+import { setEditContext, setShowContent } from '../../../../slices/editSlice'
+import { bgcolor } from '../../../../types/types'
 import { EditBlockContent } from '../EditBlockContent'
-import { EditContext } from '../EditContext'
+import { useQuestionContext } from './QuestionProvider'
+import { EditElemProvider } from '../EditElemProvider'
+import { EditElemsProvider } from '../EditElemsProvider'
 
-interface Props {
-  question: Question
-}
-
-export const QTermDescriptions: VFC<Props> = memo(({ question }) => {
+export const QTermDescriptions: FC = memo(() => {
   const dispatch = useAppDispatch()
+  const { question } = useQuestionContext()
   const { getTag, getTagName } = useTags()
   const { getKeywordsJson } = useKeywords(question)
   const keywords = getKeywordsJson()
 
   const callTermEdit = (key: string) => {
-    dispatch(setEditedContent('TermEdit'))
+    dispatch(setShowContent('TermEdit'))
     dispatch(
       setEditContext({
         quest_id: question.quest_id,
@@ -58,22 +54,22 @@ export const QTermDescriptions: VFC<Props> = memo(({ question }) => {
                   </span>
                 </div>
               )}
-              <EditContext.Provider value={{}}>
+              <EditElemsProvider
+                name="description"
+                editElems={term.description || []}
+                editable={false}
+              >
                 {term.description?.map(
                   (editElem, index) =>
                     editElem.quest_ids?.includes(question.quest_id) && (
                       <div className="pl-2">
-                        <EditBlockContent
-                          editElem={editElem}
-                          name="description"
-                          index={index}
-                          editable={false}
-                          enableEdit={false}
-                        />
+                        <EditElemProvider editElem={editElem} index={index}>
+                          <EditBlockContent />
+                        </EditElemProvider>
                       </div>
                     )
                 )}
-              </EditContext.Provider>
+              </EditElemsProvider>
             </>
           ))}
         </>

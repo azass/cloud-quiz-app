@@ -1,20 +1,18 @@
 /* eslint-disable no-useless-concat */
 import { PencilAltIcon } from '@heroicons/react/outline'
-import { memo, useContext, useState, VFC } from 'react'
+import { FC, memo, useContext, useState } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 import { ColorContext } from '../../../../App'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
-import { Question } from '../../../../types/types'
 import { SaveButton } from '../../../atoms/SaveButton'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import { useQuestionContext } from './QuestionProvider'
 
-interface Props {
-  question: Question
-}
-export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
+export const QLeaningProfiles: FC = memo(() => {
   const color = useContext(ColorContext)
+  const { question } = useQuestionContext()
   const [lastQuestId, setLastQuestId] = useState(question.quest_id)
   const [isEasy, setIsEasy] = useState(question.is_easy || false)
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
@@ -45,7 +43,7 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
   }
   return (
     <>
-      <div className="flex items-center py-4" title='QLeaningProfiles'>
+      <div className="flex items-center py-4" title="QLeaningProfiles">
         <button
           type="button"
           className={
@@ -147,14 +145,8 @@ export const QLeaningProfiles: VFC<Props> = memo(({ question }) => {
           </div>
         </>
       ) : (
-        // <span className="text-white whitespace-pre-wrap">
-        // {learningNote || ''}
-        //         </span>
         <ReactMarkdown
-          className={
-            'text-base w-full text-white' +
-            ' whitespace-pre-wrap '
-          }
+          className={'text-base w-full text-white' + ' whitespace-pre-wrap '}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
           children={learningNote || ''}

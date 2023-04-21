@@ -1,15 +1,15 @@
-import { memo, useContext, VFC } from "react";
-import { useAppSelector } from "../../../app/hooks";
-import { selectQuestions } from "../../../slices/editSlice";
-import { Question } from "../../../types/types";
-import { SearchContext } from "./SearchContext";
+import { memo, FC } from 'react'
+import { useAppSelector } from '../../../app/hooks'
+import { selectQuestions } from '../../../slices/editSlice'
+import { Question } from '../../../types/types'
+import { useSelectOptionsContext } from './SearchProvider'
 interface Props {
   index: number
 }
-const conditionLetters = ["復習", "難問", "苦手", "必須", "バグ"]
-export const QConditionButton: VFC<Props> = memo(({ index }) => {
+const conditionLetters = ['復習', '難問', '苦手', '必須', 'バグ']
+export const QConditionButton: FC<Props> = memo(({ index }) => {
   const questions = useAppSelector(selectQuestions)
-  const { selectOptions, setSelectOptions } = useContext(SearchContext)
+  const { selectOptions, setSelectOptions } = useSelectOptionsContext()
   const getBgColor = (option?: number) => {
     if (selectOptions) {
       if (option || option === 0) {

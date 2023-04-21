@@ -1,13 +1,14 @@
-import { memo, VFC } from "react";
-import { useAppSelector } from "../../app/hooks";
-import { useSearch } from "../../hooks/useSearch";
-import { selectEditedContent } from "../../slices/editSlice";
-import { TagSelectPanel } from "./TagSelectPanel";
-import { TermEditFrame } from "./TermEditFrame";
+import { memo, FC } from 'react'
+import { useAppSelector } from '../../app/hooks'
+import { useSearch } from '../../hooks/useSearch'
+import { selectShowContent } from '../../slices/editSlice'
+import { TagSelectPanel } from './TagSelectPanel'
+import { TermsLoader } from '../molecules/edit/term/TermsLoader'
 
-export const TermNoteTab: VFC = memo(() => {
-  const editedContent = useAppSelector(selectEditedContent)
-  const { selectSearchTags, setSelectSearchTags, onClickSearchTag } = useSearch()
+export const TermNoteTab: FC = memo(() => {
+  const editedContent = useAppSelector(selectShowContent)
+  const { selectSearchTags, setSelectSearchTags, onClickSearchTag } =
+    useSearch()
   return (
     <>
       {editedContent === 'TagSelect' && (
@@ -18,9 +19,7 @@ export const TermNoteTab: VFC = memo(() => {
           setSelectSearchTags={setSelectSearchTags}
         />
       )}
-      {editedContent === 'TermEdit' && (
-        <TermEditFrame />
-      )}
+      {editedContent === 'TermEdit' && <TermsLoader />}
     </>
   )
 })

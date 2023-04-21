@@ -6,7 +6,7 @@ import log from 'loglevel'
 type Props = {
   component: React.ReactNode
 }
-export const RouteAuthGuard: React.VFC<Props> = memo((props) => {
+export const RouteAuthGuard: React.FC<Props> = memo((props) => {
   log.setLevel("info")
   const userPool = new CognitoUserPool({
     UserPoolId: process.env.REACT_APP_AUTH_USER_POOL_ID || '',

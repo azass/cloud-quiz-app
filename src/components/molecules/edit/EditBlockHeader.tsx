@@ -1,23 +1,24 @@
 import { EyeIcon } from '@heroicons/react/outline'
 import { CheckCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
-import { memo, useContext, VFC } from 'react'
+import { memo, useContext, FC } from 'react'
 import { ColorContext } from '../../../App'
-import { EditContext } from './EditContext'
+import {
+  useEditElemsContext,
+  useEnableEditContext,
+  useShowAllQuestionCaseContext,
+  useShowCheckboxContext,
+} from './EditElemsProvider'
 interface Props {
-  name: string
   title: string
 }
-export const EditBlockHeader: VFC<Props> = memo(({ name, title }) => {
+export const EditBlockHeader: FC<Props> = memo(({ title }) => {
+  const { name } = useEditElemsContext()
   const color = useContext(ColorContext)
-  const {
-    enableEdit,
-    setEnableEdit,
-    showCheckbox,
-    setShowCheckbox,
-    showAllQuestionCase,
-    setShowAllQuestionCase
-  } = useContext(EditContext)
-  
+  const { enableEdit, setEnableEdit } = useEnableEditContext()
+  const { showCheckbox, setShowCheckbox } = useShowCheckboxContext()
+  const { showAllQuestionCase, setShowAllQuestionCase } =
+    useShowAllQuestionCaseContext()
+
   const onClickEye = () => {
     if (name === 'options') {
       setShowCheckbox(!showCheckbox)
@@ -26,9 +27,7 @@ export const EditBlockHeader: VFC<Props> = memo(({ name, title }) => {
     }
   }
   return (
-    <div
-      className={`flex items-center gap-2 my-4 font-bold ${color.baseText}`}
-    >
+    <div className={`flex items-center gap-2 my-4 font-bold ${color.baseText}`}>
       {title}
       {(name === 'options' || name === 'case_items') && (
         <EyeIcon
@@ -51,5 +50,4 @@ export const EditBlockHeader: VFC<Props> = memo(({ name, title }) => {
       </div>
     </div>
   )
-}
-)
+})

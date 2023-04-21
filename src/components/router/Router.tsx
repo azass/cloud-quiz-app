@@ -4,7 +4,7 @@ import { RouteAuthGuard } from '../atoms/RouteAuthGuard'
 import { QuizEditor } from '../pages'
 import { Login } from '../pages/Login'
 
-export const Router: React.VFC = () => {
+export const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<RouteAuthGuard component={<Login />} />} />

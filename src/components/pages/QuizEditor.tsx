@@ -1,13 +1,8 @@
 import log from 'loglevel'
-import { createContext, memo, useContext, VFC } from 'react'
+import { createContext, memo, useContext, FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { QuizEditPanel } from '../organisms/QuizEditPanel'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import {
-  selectTab,
-  setTab,
-  tabs,
-} from '../../slices/editSlice'
+import { selectTab, setTab, tabs } from '../../slices/editSlice'
 import { ExamSelectTab } from '../organisms/ExamSelectTab'
 import { ColorContext } from '../../App'
 import { QTabs } from '../atoms/QTabs'
@@ -17,14 +12,14 @@ import { TermNoteTab } from '../organisms/TermNoteTab'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
 import { QListQuery } from '../molecules/list/QListQuery'
 import { TermNotePanel } from '../organisms/TermNotePanel'
+import { EditPanel } from '../organisms/EditPanel'
 
 interface EditorContextValues {
   logout?: any
 }
 export const EditorContext = createContext<EditorContextValues>({})
-export const QuizEditor: VFC = memo(() => {
-  console.log('QuizEditor start')
-  log.setLevel("info")
+export const QuizEditor: FC = memo(() => {
+  log.setLevel('info')
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
   const color = useContext(ColorContext)
@@ -67,22 +62,14 @@ export const QuizEditor: VFC = memo(() => {
               <ExamSelectTab />
             </div>
           )}
-          {nowTab === tabs[1] && params.quest_id && (
-            <QuizSelectTab />
-          )}
-          {nowTab === tabs[1] && !params.quest_id && (
-            <QListQuery />
-          )}
-          {nowTab === tabs[2] && (
-            <TermNoteTab />
-          )}
+          {nowTab === tabs[1] && params.quest_id && <QuizSelectTab />}
+          {nowTab === tabs[1] && !params.quest_id && <QListQuery />}
+          {nowTab === tabs[2] && <TermNoteTab />}
         </div>
         <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
           <div className={`flex w-full `}>
-            <div
-              className={`px-8 absolute pt-12 pb-12 w-1/2 ${color.bgColor}`}
-            >
-              {isQuizEdit() && <QuizEditPanel />}
+            <div className={`px-8 absolute pt-12 pb-12 w-1/2 ${color.bgColor}`}>
+              {isQuizEdit() && <EditPanel />}
               {isTermNote() && <TermNotePanel />}
             </div>
           </div>

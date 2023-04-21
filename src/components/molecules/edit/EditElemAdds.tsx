@@ -1,4 +1,4 @@
-import { VFC, memo } from 'react'
+import { FC, memo } from 'react'
 import {
   DocumentAddIcon,
   ExternalLinkIcon,
@@ -6,13 +6,13 @@ import {
   PlusCircleIcon,
 } from '@heroicons/react/solid'
 import { AnnotationIcon } from '@heroicons/react/outline'
+import { useEditElemsContext } from './EditElemsProvider'
 
 interface Props {
   index: number
-  name: string
-  onClickAdd: any
 }
-export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
+export const EditElemAdds: FC<Props> = memo(({ index }) => {
+  const { name, add } = useEditElemsContext()
   const getBgColor = () => {
     return 'h-5 w-5 mx-2 text-gray-500 cursor-pointer hover:text-blue-500'
   }
@@ -25,36 +25,36 @@ export const EditElemAdds: VFC<Props> = memo(({ index, name, onClickAdd }) => {
         {name !== 'options' && (
           <DocumentAddIcon
             className={getBgColor()}
-            onClick={() => onClickAdd(index, 'textarea')}
+            onClick={() => add(index, 'textarea')}
           />
         )}
         {name === 'explanation' && (
           <ExternalLinkIcon
             className={getBgColor()}
-            onClick={() => onClickAdd(index, 'link')}
+            onClick={() => add(index, 'link')}
           />
         )}
         {name.startsWith('description') && (
           <ExternalLinkIcon
             className={getBgColor()}
-            onClick={() => onClickAdd(index, 'link')}
+            onClick={() => add(index, 'link')}
           />
         )}
         {name !== 'options' && (
           <PhotographIcon
             className={getBgColor()}
-            onClick={() => onClickAdd(index, 'image')}
+            onClick={() => add(index, 'image')}
           />
         )}
         {name === 'options' && (
           <>
             <PlusCircleIcon
               className={getBgColor()}
-              onClick={() => onClickAdd(index, 'option')}
+              onClick={() => add(index, 'option')}
             />
             <AnnotationIcon
               className={getBgColor()}
-              onClick={() => onClickAdd(index, 'textbox')}
+              onClick={() => add(index, 'textbox')}
             />
           </>
         )}

@@ -1,10 +1,10 @@
-import { VFC, memo, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import { useQueryProviders } from '../../hooks/useQueryProviders'
 import { Provider } from '../../types/types'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import {
-  resetEditedContent,
+  resetShowContent,
   selectScArgs,
   setExam,
   setProviderTags,
@@ -14,7 +14,7 @@ import {
 } from '../../slices/editSlice'
 import log from 'loglevel'
 
-export const ExamSelectTab: VFC = memo(() => {
+export const ExamSelectTab: FC = memo(() => {
   log.setLevel('debug')
   const [nowProviderName, setNowProviderName] = useState('')
   const { status, data } = useQueryProviders()
@@ -37,18 +37,13 @@ export const ExamSelectTab: VFC = memo(() => {
       {provider.display_name}
     </option>
   ))
-  const nowProvider = list.find(
-    (provider) => provider.name === nowProviderName
-  )
-  log.debug('nowProvider=', nowProvider)
+  const nowProvider = list.find((provider) => provider.name === nowProviderName)
   return (
     <>
       <select
         className="mb-3 px-3 py-2 border border-gray-300"
         value={nowProviderName}
-        onChange={(e) => {
-          setNowProviderName(e.target.value)
-        }}
+        onChange={(e) => setNowProviderName(e.target.value)}
       >
         {providerOptions}
       </select>
@@ -65,12 +60,10 @@ export const ExamSelectTab: VFC = memo(() => {
                   'bg-blue-50 transition-colors'
                 }
                 onClick={() => {
-                  dispatch(resetEditedContent())
+                  dispatch(resetShowContent())
                   dispatch(setProviderTags(nowProvider.tags))
                   dispatch(setTab(tabs[1]))
-                  dispatch(
-                    setExam(exam)
-                  )
+                  dispatch(setExam(exam))
                   setScArgs({
                     ...srcArgs,
                     exam_ids: [exam.exam_id],

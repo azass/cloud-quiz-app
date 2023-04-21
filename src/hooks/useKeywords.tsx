@@ -1,6 +1,6 @@
-import { useAppSelector } from "../app/hooks";
-import { selectEditContext } from "../slices/editSlice";
-import { bgcolor, Question, selectedBgcolor, TagTerms } from "../types/types";
+import { useAppSelector } from '../app/hooks'
+import { selectEditContext } from '../slices/editSlice'
+import { bgcolor, Question, selectedBgcolor, TagTerms } from '../types/types'
 
 export const useKeywords = (question: Question) => {
   const editContext = useAppSelector(selectEditContext)

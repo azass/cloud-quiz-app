@@ -1,4 +1,4 @@
-import { VFC, memo, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import axios from 'axios'
 import { useScraping } from '../../../../hooks/useScraping'
@@ -7,40 +7,42 @@ import {
   ChevronDoubleUpIcon,
   PencilIcon,
   CheckIcon,
+  ChatIcon,
 } from '@heroicons/react/solid'
 import { AcademicCapIcon } from '@heroicons/react/outline'
-import { Question } from '../../../../types/types'
+import { EditElem, Question } from '../../../../types/types'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import log from 'loglevel'
+import { QComments } from './QComments'
+import { useMutateComments } from '../../../../hooks/useMutateComments'
+import { useQuestionContext } from './QuestionProvider'
 
-interface Props {
-  question: Question
-  setQuestion?: any
-}
-export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
-  log.setLevel("info")
-  const { showFlg, setShowFlg, onChange, onClick } = useScraping(setQuestion)
+export const QScraping: FC = memo(() => {
+  const { question, setQuestion } = useQuestionContext()
+  const { showFlg, setShowFlg, onChange, onClick } = useScraping(
+    question,
+    setQuestion
+  )
   const { updateQuestion } = useMutateQuestion()
+  const { putComments } = useMutateComments()
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
+    timeout: 200000,
   }
   const [editFlg, setEditFlg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [showComment, setShowComment] = useState(false)
   const onChangeText = (text: string) => {
-    log.debug(`onChangeText:${text}`)
-    const newQuestion = {
-      ...question,
-      original_url: text,
-    }
+    const newQuestion = { ...question, original_url: text }
     setQuestion(newQuestion)
   }
 
   const onClickCheck = () => {
     const reqData: Question = {
       quest_id: question.quest_id,
-      original_url: question.original_url
+      original_url: question.original_url,
     }
     updateQuestion(reqData)
     setEditFlg(false)
@@ -74,9 +76,15 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
     str = str?.replaceAll('Git', ' Git ')
     str = str?.replaceAll('GCP', ' GCP ')
     str = str?.replaceAll('クラウドストレージ', ' Cloud Storage ')
-    str = str?.replaceAll('管理対象インスタンスグループ', ' マネージドインスタンスグループ ')
+    str = str?.replaceAll(
+      '管理対象インスタンスグループ',
+      ' マネージドインスタンスグループ '
+    )
     str = str?.replaceAll('ComputeEngine', ' Compute Engine ')
-    str = str?.replaceAll('GoogleKubernetesEngine', ' Google Kubernetes Engine ')
+    str = str?.replaceAll(
+      'GoogleKubernetesEngine',
+      ' Google Kubernetes Engine '
+    )
     str = str?.replaceAll('GKEクラスター', 'GKE クラスター')
     str = str?.replaceAll('Pub / Sub', ' Pub/Sub ')
     str = str?.replaceAll('CloudPub/Sub', ' Cloud Pub/Sub ')
@@ -115,11 +123,17 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
     str = str?.replaceAll('CloudLogging', ' Cloud Logging ')
     str = str?.replaceAll('Stackdriver', ' Stackdriver ')
     str = str?.replaceAll('CloudScheduler', ' Cloud Scheduler ')
-    str = str?.replaceAll('StackdriverMonitoringAgent', ' Stackdriver Monitoring Agent ')
+    str = str?.replaceAll(
+      'StackdriverMonitoringAgent',
+      ' Stackdriver Monitoring Agent '
+    )
     str = str?.replaceAll('StackdriverMonitoring', ' Stackdriver Monitoring ')
     str = str?.replaceAll('CloudBuild', ' Cloud Build ')
     str = str?.replaceAll('クラウドビルド', ' Cloud Build ')
-    str = str?.replaceAll('クラウドデータ損失防止', ' Cloud Data Loss Prevention ')
+    str = str?.replaceAll(
+      'クラウドデータ損失防止',
+      ' Cloud Data Loss Prevention '
+    )
     str = str?.replaceAll('、 ', '、')
     str = str?.replaceAll('。 ', '。')
     str = str?.replaceAll('.  ', '. ')
@@ -128,7 +142,6 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
   }
 
   const onClick2 = (retry: boolean) => {
-    log.debug(`scraping?url=${question.original_url}`)
     setIsLoading(true)
     axios
       .get(
@@ -137,17 +150,14 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
       )
       .then((response) => {
         let result = response.data
-        log.debug(result)
-        log.debug(question.quest_id)
-        log.debug('onClick2 setQuestion !!!')
         result['keywords'] = []
-        question.question_items = result['question_items'] || []
-        const questionItems = question.question_items?.map((editElem) => {
-          editElem.text = sub(editElem.text)
-          return editElem
-        })
-        question.options = result['options']
-        const options = question.options?.map((editElem) => {
+        const questionItems = (result['question_items'] as EditElem[])?.map(
+          (editElem) => {
+            editElem.text = sub(editElem.text)
+            return editElem
+          }
+        )
+        const options = (result['options'] as EditElem[])?.map((editElem) => {
           editElem.text = sub(editElem.text)
           return editElem
         })
@@ -157,14 +167,21 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
           question_items: questionItems,
           options: options,
         }
+        if (
+          question.question_items === undefined &&
+          question.options === undefined
+        ) {
+          updateQuestion(newQuest)
+        }
+        putComments(question.quest_id, result['comments'], result['answers'])
         setQuestion(newQuest)
         setIsLoading(false)
       })
       .catch((error) => {
         setIsLoading(false)
         log.debug(error.message)
-        log.debug(typeof (error))
-        if (error.message === "Network Error" && retry) {
+        log.debug(typeof error)
+        if (error.message === 'Network Error' && retry) {
           onClick2(false)
         } else {
           alert(error)
@@ -179,9 +196,7 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
             <ChevronDoubleDownIcon
               className="h-3 w-3 text-blue-500 cursor-pointer"
               fill="currentColor"
-              onClick={() => {
-                setShowFlg(false)
-              }}
+              onClick={() => setShowFlg(false)}
             />
           </div>
           <textarea
@@ -192,9 +207,7 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
           <button
             type="submit"
             className="px-4 py-2 mt-4 rounded-lg bg-blue-500 text-white font-bold flex justify-center mx-auto"
-            onClick={() => {
-              onClick(question.quest_id)
-            }}
+            onClick={() => onClick(question.quest_id)}
           >
             取り込み
           </button>
@@ -206,19 +219,17 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
             <ChevronDoubleUpIcon
               className="flex flex-row-reverse h-3 w-3 text-blue-500 cursor-pointer"
               fill="currentColor"
-              onClick={() => {
-                setShowFlg(true)
-              }}
+              onClick={() => setShowFlg(true)}
             />
           </div>
         </>
       )}
-      <div className="flex justify-start mt-2">
+      <div className="flex justify-start items-center mt-2">
         <span className="pr-2 text-blue-700 font-bold text-xs">URL</span>
         {!editFlg && (
           <>
             <PencilIcon
-              className="h-4 w-4 cursor-pointer"
+              className="h-6 w-6 pl-2 text-blue-500 cursor-pointer"
               fill="currentColor"
               onClick={() => setEditFlg(true)}
             />
@@ -226,9 +237,12 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
               className="h-4 w-4 ml-4 text-blue-500 cursor-pointer"
               fill="none"
               stroke="currentColor"
-              onClick={() => {
-                onClick2(true)
-              }}
+              onClick={() => onClick2(true)}
+            />
+            <ChatIcon
+              className="h-4 w-4 ml-4 text-blue-500 cursor-pointer"
+              stroke="currentColor"
+              onClick={() => setShowComment(!showComment)}
             />
           </>
         )}
@@ -259,6 +273,12 @@ export const QScraping: VFC<Props> = memo(({ question, setQuestion }) => {
           {question.original_url}
         </a>
       </div>
+      {showComment && (
+        <div>
+          <div className="py-4">コメント</div>
+          <QComments />
+        </div>
+      )}
     </div>
   )
 })

@@ -1,11 +1,11 @@
-import { memo, useState, VFC } from 'react'
+import { memo, useState, FC } from 'react'
 import log from 'loglevel'
 
 interface Props {
   onClick: any
 }
 
-export const SaveButton: VFC<Props> = memo(({ onClick }) => {
+export const SaveButton: FC<Props> = memo(({ onClick }) => {
   log.debug('save button')
   const [onSaving, setOnSaving] = useState(false)
   return (
@@ -31,7 +31,11 @@ export const SaveButton: VFC<Props> = memo(({ onClick }) => {
         />
       </svg>{' '}
       <div>
-        {onSaving ? <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full border-t-transparent"></div> : "SAVE"}
+        {onSaving ? (
+          <div className="animate-spin h-8 w-8 border-4 border-blue-500 rounded-full border-t-transparent"></div>
+        ) : (
+          'SAVE'
+        )}
       </div>
     </button>
   )

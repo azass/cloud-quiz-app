@@ -1,10 +1,10 @@
-import { memo, useContext, VFC } from 'react'
+import { memo, FC } from 'react'
 import { QConditionButton } from './QConditionButton'
 import { QScoreButton } from './QScoreButton'
-import { SearchContext } from './SearchContext'
+import { useSelectOptionsContext } from './SearchProvider'
 
-export const QSearchButtonSet: VFC = memo(() => {
-  const { selectOptions, setSelectOptions } = useContext(SearchContext)
+export const QSearchButtonSet: FC = memo(() => {
+  const { selectOptions, setSelectOptions } = useSelectOptionsContext()
   const getBgColor = () => {
     return selectOptions?.length === 0
       ? 'text-white bg-blue-600'
@@ -89,5 +89,4 @@ export const QSearchButtonSet: VFC = memo(() => {
       </div>
     </>
   )
-}
-)
+})

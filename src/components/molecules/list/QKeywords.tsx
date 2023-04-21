@@ -1,7 +1,7 @@
-import { VFC, memo } from 'react'
+import { FC, memo } from 'react'
 import { useAppDispatch } from '../../../app/hooks'
 import {
-  setEditedContent,
+  setShowContent,
   setEditContext,
 } from '../../../slices/editSlice'
 import { QTerms } from '../../atoms/QTerms'
@@ -15,15 +15,14 @@ interface Props {
   question: Question
   withAdd: boolean
 }
-export const QKeywords: VFC<Props> = memo(({ question, withAdd }) => {
+export const QKeywords: FC<Props> = memo(({ question, withAdd }) => {
   log.setLevel("info")
-  log.debug("QTags start")
   const { getTagName } = useTags()
   const dispatch = useAppDispatch()
   const { getKeywordsJson } = useKeywords(question)
   const keywords = getKeywordsJson()
   const addTag = () => {
-    dispatch(setEditedContent('TagSelect'))
+    dispatch(setShowContent('TagSelect'))
     dispatch(
       setEditContext({
         quest_id: question.quest_id,

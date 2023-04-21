@@ -1,7 +1,7 @@
-import { memo, useState, VFC } from 'react'
+import { memo, useState, FC } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 
-export const EditElemTextbox: VFC = memo(() => {
+export const EditElemTextbox: FC = memo(() => {
   const [word, setWord] = useState('')
 
   return (
