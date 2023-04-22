@@ -5,15 +5,15 @@ import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import { QLinkPopup } from '../../atoms/QLinkPopup'
 import { useAppearanceTerm } from '../../../hooks/useAppearanceTerm'
-import { useEditElemContext } from './EditElemProvider'
-import { useEditElemsContext, useEnableEditContext } from './EditElemsProvider'
+import { useNoteItemContext } from './NoteItemProvider'
+import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
 interface Props {
   lang: number
 }
-export const EditElemTextarea: FC<Props> = memo(({ lang }) => {
-  const { changeText, draggable, editable } = useEditElemsContext()
-  const { enableEdit } = useEnableEditContext()
-  const { editElem, index, on } = useEditElemContext()
+export const NoteTextarea: FC<Props> = memo(({ lang }) => {
+  const { changeText, draggable, editable } = useNoteItemsContext()
+  const { editting } = useEdittingContext()
+  const { editElem, index, on } = useNoteItemContext()
   const [pre, setPre] = useState(true)
   const { textColor, borderColor } = useAppearanceTerm()
   const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${
@@ -32,10 +32,10 @@ export const EditElemTextarea: FC<Props> = memo(({ lang }) => {
       {lang !== 2 && (
         <div
           className={`px-4 py-1 mt-1 ${
-            !enableEdit && 'py-3 bg-black border-2 rounded-md ' + border_color()
+            !editting && 'py-3 bg-black border-2 rounded-md ' + border_color()
           }`}
         >
-          {editable && enableEdit ? (
+          {editable && editting ? (
             <div>
               <button
                 type="button"
@@ -81,7 +81,7 @@ export const EditElemTextarea: FC<Props> = memo(({ lang }) => {
       )}
       {lang !== 1 && (
         <div className="px-4 py-3 mt-1">
-          {editable && enableEdit ? (
+          {editable && editting ? (
             <TextareaAutosize
               value={editElem.text_en || ''}
               className={textareaStyle}

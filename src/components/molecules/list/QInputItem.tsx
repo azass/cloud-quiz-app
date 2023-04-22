@@ -1,6 +1,7 @@
 import { memo, useState, FC } from 'react'
 import { Link } from 'react-router-dom'
 import { ExternalLinkIcon } from '@heroicons/react/solid'
+import { iconShine } from '../../../styles/util'
 
 interface Props {
   examId: String
@@ -11,7 +12,7 @@ export const QInputItem: FC<Props> = memo(({ examId }) => {
   return (
     <div className="inline-flex pl-6 pb-6 space-x-4" title="QInputItem">
       <Link to={`/editor/${examId}/${examId}-${selectNo}`}>
-        <ExternalLinkIcon className="h-5 w-5 mx-1 text-blue-500 cursor-pointer" />
+        <ExternalLinkIcon className={`h-5 w-5 mx-1 ${iconShine}`} />
       </Link>
       <div className="flex justify-start">
         <div className="pl-2 text-white">

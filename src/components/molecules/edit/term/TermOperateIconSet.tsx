@@ -13,14 +13,14 @@ import {
   useTermContext,
   useTermEdittingContext,
 } from './TermProvider'
-import { useEditElemsContext } from '../EditElemsProvider'
+import { useNoteItemsContext } from '../NoteItemsProvider'
+import { iconAccent } from '../../../../styles/util'
 
 export const TermOperateIconSet: FC = () => {
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
-  const { draggable } = useEditElemsContext()
+  const { draggable } = useNoteItemsContext()
   const { term } = useTermContext()
-  // const { enableEdit, setEnableEdit } = useEnableEditContext()
   const { termEditting, setTermEditting } = useTermEdittingContext()
   const { update, del } = useEditTermContext()
   const setChosenTerm = () => {
@@ -37,12 +37,12 @@ export const TermOperateIconSet: FC = () => {
         )}
         {!termEditting ? (
           <PencilAltIcon
-            className="w-4 h-4 my-1 ml-4 mr-4 cursor-pointer"
+            className={`w-4 h-4 my-1 ml-4 mr-4 ${iconAccent}`}
             onClick={() => setTermEditting(true)}
           />
         ) : (
           <CheckCircleIcon
-            className="w-6 h-6 ml-4 mr- cursor-pointer"
+            className={`w-6 h-6 ml-4 mr-4 ${iconAccent}`}
             onClick={() => update()}
           />
         )}
@@ -51,7 +51,7 @@ export const TermOperateIconSet: FC = () => {
         )}
         <ExternalLinkIcon
           className={
-            'h-2 w-2 my-1 ml-1 mr-1 cursor-pointer text-white hover:h-4 hover:w-4'
+            `h-2 w-2 my-1 ml-1 mr-1 ${iconAccent} hover:h-4 hover:w-4`
           }
           onClick={() => setChosenTerm()}
         />

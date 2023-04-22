@@ -1,6 +1,7 @@
 import { memo, FC } from 'react'
 import { useTerm } from '../../../../hooks/useTerm'
 import { Term } from '../../../../types/types'
+import { strongText } from '../../../../styles/util'
 interface Props {
   term: Term
   index: number
@@ -13,14 +14,14 @@ export const SelectTerm: FC<Props> = memo(({ term, index, forQuestion }) => {
     <div
       className={
         'place-items-center flex justify-between border rounded-full my-1 mx-1 pr-2 ' +
-        'text-white font-bold text-sm text-center ' +
+        `${strongText} text-sm text-center ` +
         getBgColor(term.level)
       }
     >
       <span
         key={term.term_id}
         className={
-          'rounded-full px-6 py-1 text-left text-white text-sm font-black ' +
+          `rounded-full px-6 py-1 text-left text-white text-sm font-black ` +
           `${forQuestion && 'cursor-pointer '}` +
           getBgColor(term.level)
         }

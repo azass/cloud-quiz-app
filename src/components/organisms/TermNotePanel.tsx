@@ -1,18 +1,18 @@
-import {
-  ChevronDoubleDownIcon,
-  ChevronDoubleUpIcon,
-} from '@heroicons/react/solid'
 import { FC, useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { useAppSelector } from '../../app/hooks'
 import { selectEdittingTerms } from '../../slices/editSlice'
-import { EditElemType } from '../../types/types'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
+import Prop from '../../consts/props'
+import { iconBase, strongText } from '../../styles/util'
+import {
+  ChevronDoubleDownIcon,
+  ChevronDoubleUpIcon,
+} from '@heroicons/react/solid'
 
 export const TermNotePanel: FC = () => {
   const terms = useAppSelector(selectEdittingTerms)
-
   const getNote = () => {
     var txt = ''
     terms.forEach((term) => {
@@ -22,10 +22,10 @@ export const TermNotePanel: FC = () => {
         .concat(term.word)
         .concat('\n\n')
       term.description?.forEach((elem) => {
-        if (elem.type === EditElemType.TEXTAREA) {
+        if (elem.type === Prop.NoteItemType.TEXTAREA) {
           var text = (elem.text || '').replaceAll('\n', '<br>')
           txt = txt.concat(text).concat('\n\n')
-        } else if (elem.type === EditElemType.LINK) {
+        } else if (elem.type === Prop.NoteItemType.LINK) {
           txt = txt
             .concat('[')
             .concat(elem.link || '')
@@ -33,7 +33,7 @@ export const TermNotePanel: FC = () => {
             .concat(elem.url || '')
             .concat(')')
             .concat('\n\n')
-        } else if (elem.type === EditElemType.IMAGE) {
+        } else if (elem.type === Prop.NoteItemType.IMAGE) {
           txt = txt
             .concat('\n![](')
             .concat(elem.image_path || '')
@@ -55,7 +55,7 @@ export const TermNotePanel: FC = () => {
         <>
           <div className="flex flex-row-reverse">
             <ChevronDoubleDownIcon
-              className="h-3 w-3 text-blue-500 cursor-pointer"
+              className={`h-3 w-3 ${iconBase}`}
               fill="currentColor"
               onClick={() => setShowFlg(false)}
             />
@@ -69,7 +69,7 @@ export const TermNotePanel: FC = () => {
           </textarea>
           <button
             type="submit"
-            className="px-4 py-2 mt-4 rounded-lg bg-blue-500 text-white font-bold flex justify-center mx-auto"
+            className={`flex justify-center mx-auto px-4 py-2 mt-4 rounded-lg bg-blue-500 ${strongText}`}
             onClick={() => {
               // onClick(question.quest_id)
             }}
@@ -78,15 +78,13 @@ export const TermNotePanel: FC = () => {
           </button>
         </>
       ) : (
-        <>
-          <div className="flex flex-row-reverse">
-            <ChevronDoubleUpIcon
-              className="flex flex-row-reverse h-3 w-3 text-blue-500 cursor-pointer"
-              fill="currentColor"
-              onClick={() => setShowFlg(true)}
-            />
-          </div>
-        </>
+        <div className="flex flex-row-reverse">
+          <ChevronDoubleUpIcon
+            className={`flex flex-row-reverse h-3 w-3 ${iconBase}`}
+            fill="currentColor"
+            onClick={() => setShowFlg(true)}
+          />
+        </div>
       )}
       <div className="markdown">
         <ReactMarkdown

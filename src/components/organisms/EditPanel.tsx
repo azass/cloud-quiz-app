@@ -5,7 +5,7 @@ import { QuestionProvider } from '../molecules/edit/question/QuestionProvider'
 import { TermEditor } from '../molecules/edit/term/TermEditor'
 import { EditQuestion } from '../molecules/edit/question/EditQuestion'
 import { QuestionCaseProvider } from '../molecules/edit/question/QuestionCaseProvider'
-import { EditElemsProvider } from '../molecules/edit/EditElemsProvider'
+import { NoteItemsProvider } from '../molecules/edit/NoteItemsProvider'
 import { TermProvider } from '../molecules/edit/term/TermProvider'
 export const EditPanel: FC = () => {
   const editContext = useAppSelector(selectEditContext)
@@ -24,15 +24,15 @@ export const EditPanel: FC = () => {
               index={-1}
               forQuestion={false}
             >
-          <EditElemsProvider
+          <NoteItemsProvider
             name={'description'}
-            editElems={editContext.chosenTerm.description || []}
+            noteItems={editContext.chosenTerm.description || []}
             editable={true}
             draggable={false}
             star={false}
           >
               <TermEditor />
-          </EditElemsProvider>
+          </NoteItemsProvider>
           </TermProvider>
         </div>
       )}

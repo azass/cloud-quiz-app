@@ -1,32 +1,31 @@
-import { FC, memo, useContext, useState } from 'react'
-import { EditBlockContent } from '../EditBlockContent'
+import { FC, memo, useState } from 'react'
+import { NoteBlockContent } from '../NoteBlockContent'
 import { Term } from '../../../../types/types'
 import { SaveButton } from '../../../atoms/SaveButton'
-import { EditElemAdds } from '../EditElemAdds'
-import { ColorContext } from '../../../../App'
+import { NoteItemAdds } from '../NoteItemAdds'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { selectUpdateTerm, setUpdateTerm } from '../../../../slices/editSlice'
 import { useAppearanceTerm } from '../../../../hooks/useAppearanceTerm'
-import { EditElemProvider } from '../EditElemProvider'
+import { NoteItemProvider } from '../NoteItemProvider'
 import {
-  useEditElemsContext,
-  useEditElemsStateContext,
-  useEnableEditContext,
+  useNoteItemsContext,
+  useEditItemsContext,
+  useEdittingContext,
   useSaveButtonToggleContext,
-} from '../EditElemsProvider'
+} from '../NoteItemsProvider'
 import { useEditTermContext, useTermContext } from './TermProvider'
-import { EditBlockHeader } from '../EditBlockHeader'
+import { NoteBlockHeader } from '../NoteBlockHeader'
+import Colors from '../../../../consts/colors'
 
 export const TermDescription: FC = memo(() => {
   const dispatch = useAppDispatch()
   const { term } = useTermContext()
-  const { star, draggable, editable } = useEditElemsContext()
-  const { enableEdit } = useEnableEditContext()
+  const { star, draggable, editable } = useNoteItemsContext()
+  const { editting } = useEdittingContext()
   const { updateCacheTerm } = useEditTermContext()
-  const { editElemsState, setEditElemsState } = useEditElemsStateContext()
+  const { editItems: editElemsState, setEditItems: setEditElemsState } = useEditItemsContext()
   const { saveButtonToggle } = useSaveButtonToggleContext()
-  const { save } = useEditElemsContext()
-  const color = useContext(ColorContext)
+  const { save } = useNoteItemsContext()
   const updateTem = useAppSelector(selectUpdateTerm)
   const [termId, setTermId] = useState(term.term_id)
   const { show } = useAppearanceTerm()
@@ -44,28 +43,28 @@ export const TermDescription: FC = memo(() => {
     <>
       {editable && (
         <div className="-ml-6 -mt-2 pt-1">
-          <EditBlockHeader title="" />
+          <NoteBlockHeader title="" />
         </div>
       )}
       <div
-        className={`px-2 pb-6 -mt-6 ${color.bgColor}`}
+        className={`px-2 pb-6 -mt-6 ${Colors.baseBg}`}
         title="TermDescription"
       >
-        {editElemsState.length === 0 && enableEdit ? (
-          <EditElemAdds index={0} />
+        {editElemsState.length === 0 && editting ? (
+          <NoteItemAdds index={0} />
         ) : (
           editElemsState.map((editElem, index) => (
             <>
               {show(!star, editElem.quest_ids || []) && (
-                <EditElemProvider editElem={editElem} index={index}>
-                  <EditBlockContent />
-                </EditElemProvider>
+                <NoteItemProvider editElem={editElem} index={index}>
+                  <NoteBlockContent />
+                </NoteItemProvider>
               )}
             </>
           ))
         )}
         <div className="flex justify-center mx-auto">
-          {saveButtonToggle && enableEdit && (
+          {saveButtonToggle && editting && (
             <SaveButton onClick={onClickSave} />
           )}
         </div>

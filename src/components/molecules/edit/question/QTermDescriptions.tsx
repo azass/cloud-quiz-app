@@ -3,11 +3,12 @@ import { useAppDispatch } from '../../../../app/hooks'
 import { useKeywords } from '../../../../hooks/useKeywords'
 import { useTags } from '../../../../hooks/useTags'
 import { setEditContext, setShowContent } from '../../../../slices/editSlice'
-import { bgcolor } from '../../../../types/types'
-import { EditBlockContent } from '../EditBlockContent'
+import { NoteBlockContent } from '../NoteBlockContent'
 import { useQuestionContext } from './QuestionProvider'
-import { EditElemProvider } from '../EditElemProvider'
-import { EditElemsProvider } from '../EditElemsProvider'
+import { NoteItemProvider } from '../NoteItemProvider'
+import { NoteItemsProvider } from '../NoteItemsProvider'
+import Colors from '../../../../consts/colors'
+import { strongText } from '../../../../styles/util'
 
 export const QTermDescriptions: FC = memo(() => {
   const dispatch = useAppDispatch()
@@ -33,7 +34,7 @@ export const QTermDescriptions: FC = memo(() => {
         <>
           <div className="pt-4">
             <span
-              className="rounded-full border mr-1 py-1 px-3 bg-pink-600 text-white font-bold text-xs cursor-pointer"
+              className={`rounded-full border mr-1 py-1 px-3 bg-pink-600 text-xs ${strongText} cursor-pointer`}
               onClick={() => callTermEdit(key)}
             >
               {getTagName(key)}
@@ -46,30 +47,30 @@ export const QTermDescriptions: FC = memo(() => {
                   <span
                     key={term.term_id}
                     className={
-                      'rounded-full border mr-1 py-1 px-3 text-white font-bold text-left text-xs ' +
-                      `${bgcolor[term.level - 1]}`
+                      `rounded-full border mr-1 py-1 px-3 text-left text-xs ${strongText} ` +
+                      `${Colors.bgcolors[term.level - 1]}`
                     }
                   >
                     {term.word}
                   </span>
                 </div>
               )}
-              <EditElemsProvider
+              <NoteItemsProvider
                 name="description"
-                editElems={term.description || []}
+                noteItems={term.description || []}
                 editable={false}
               >
                 {term.description?.map(
                   (editElem, index) =>
                     editElem.quest_ids?.includes(question.quest_id) && (
                       <div className="pl-2">
-                        <EditElemProvider editElem={editElem} index={index}>
-                          <EditBlockContent />
-                        </EditElemProvider>
+                        <NoteItemProvider editElem={editElem} index={index}>
+                          <NoteBlockContent />
+                        </NoteItemProvider>
                       </div>
                     )
                 )}
-              </EditElemsProvider>
+              </NoteItemsProvider>
             </>
           ))}
         </>

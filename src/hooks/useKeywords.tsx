@@ -1,6 +1,7 @@
 import { useAppSelector } from '../app/hooks'
+import Colors from '../consts/colors'
 import { selectEditContext } from '../slices/editSlice'
-import { bgcolor, Question, selectedBgcolor, TagTerms } from '../types/types'
+import { Question, TagTerms } from '../types/types'
 
 export const useKeywords = (question: Question) => {
   const editContext = useAppSelector(selectEditContext)
@@ -21,7 +22,9 @@ export const useKeywords = (question: Question) => {
     }
   }
   const getBgColor = (selected: boolean, lv: number) => {
-    return `${selected ? selectedBgcolor[lv - 1] : bgcolor[lv - 1]}`
+    return `${
+      selected ? Colors.selectedBgcolors[lv - 1] : Colors.bgcolors[lv - 1]
+    }`
   }
 
   return { getKeywordsJson, getBgColor }

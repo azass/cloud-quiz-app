@@ -1,11 +1,11 @@
 import { FC, memo, useState } from 'react'
-import { EditBlock } from '../EditBlock'
+import { NoteBlock } from '../NoteBlock'
 import {
   useChangeCaseNoContext,
   useEditCaseNoContext,
 } from './QuestionCaseProvider'
 import { useQuestionContext } from './QuestionProvider'
-import { EditElemsProvider } from '../EditElemsProvider'
+import { NoteItemsProvider } from '../NoteItemsProvider'
 
 export const EditQuestionCase: FC = memo(() => {
   const { question } = useQuestionContext()
@@ -46,13 +46,13 @@ export const EditQuestionCase: FC = memo(() => {
               <span>{caseNo}</span>
             )}
           </div>
-          <EditElemsProvider
+          <NoteItemsProvider
             name="case_items"
-            editElems={question.case_items || []}
+            noteItems={question.case_items || []}
             editable={true}
           >
-            <EditBlock title={'与件'} />
-          </EditElemsProvider>
+            <NoteBlock title={'与件'} />
+          </NoteItemsProvider>
         </>
       )}
     </>

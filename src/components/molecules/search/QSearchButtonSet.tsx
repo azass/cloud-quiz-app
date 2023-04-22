@@ -2,6 +2,7 @@ import { memo, FC } from 'react'
 import { QConditionButton } from './QConditionButton'
 import { QScoreButton } from './QScoreButton'
 import { useSelectOptionsContext } from './SearchProvider'
+import { strongText } from '../../../styles/util'
 
 export const QSearchButtonSet: FC = memo(() => {
   const { selectOptions, setSelectOptions } = useSelectOptionsContext()
@@ -26,7 +27,7 @@ export const QSearchButtonSet: FC = memo(() => {
         <div className="w-1/6 px-1">
           <button
             className={
-              'rounded-full w-full p-2 bg-blue-500 text-white font-bold ' +
+              `rounded-full w-full p-2 bg-blue-500 ${strongText} ` +
               getBgColor()
             }
             onClick={() => onClick0()}

@@ -1,6 +1,7 @@
 import { PencilAltIcon, XCircleIcon } from '@heroicons/react/solid'
 import { memo, useState, FC } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
+import { strongText } from '../../../../styles/util'
 
 interface Props {
   index: number
@@ -27,7 +28,7 @@ export const QLabel: FC<Props> = memo(
     }
     return (
       <div
-        className="flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-orange-500 text-white font-bold text-xs"
+        className={`flex items-center rounded-full border my-1 mr-1 py-1 px-3 text-xs bg-orange-500 ${strongText}`}
         title="QLabel"
       >
         {!editable || !editting ? (
@@ -43,7 +44,7 @@ export const QLabel: FC<Props> = memo(
         {editable && (
           <>
             <PencilAltIcon
-              className="w-4 h-4 ml-4 mr-1 cursor-pointer"
+              className={`w-4 h-4 ml-4 mr-1 cursor-pointer`}
               onClick={() => edit()}
             />
             <XCircleIcon

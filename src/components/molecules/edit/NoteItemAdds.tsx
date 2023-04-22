@@ -6,15 +6,16 @@ import {
   PlusCircleIcon,
 } from '@heroicons/react/solid'
 import { AnnotationIcon } from '@heroicons/react/outline'
-import { useEditElemsContext } from './EditElemsProvider'
+import { useNoteItemsContext } from './NoteItemsProvider'
+import { iconHover } from '../../../styles/util'
 
 interface Props {
   index: number
 }
-export const EditElemAdds: FC<Props> = memo(({ index }) => {
-  const { name, add } = useEditElemsContext()
+export const NoteItemAdds: FC<Props> = memo(({ index }) => {
+  const { name, add } = useNoteItemsContext()
   const getBgColor = () => {
-    return 'h-5 w-5 mx-2 text-gray-500 cursor-pointer hover:text-blue-500'
+    return `h-5 w-5 mx-2 ${iconHover}`
   }
   return (
     <div

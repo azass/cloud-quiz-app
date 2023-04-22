@@ -10,12 +10,15 @@ import {
   ChatIcon,
 } from '@heroicons/react/solid'
 import { AcademicCapIcon } from '@heroicons/react/outline'
-import { EditElem, Question } from '../../../../types/types'
+import { NoteItem, Question } from '../../../../types/types'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import log from 'loglevel'
 import { QComments } from './QComments'
 import { useMutateComments } from '../../../../hooks/useMutateComments'
 import { useQuestionContext } from './QuestionProvider'
+import Prop from '../../../../consts/props'
+import { iconBase, iconShine, strongText } from '../../../../styles/util'
+import Colors from '../../../../consts/colors'
 
 export const QScraping: FC = memo(() => {
   const { question, setQuestion } = useQuestionContext()
@@ -25,12 +28,6 @@ export const QScraping: FC = memo(() => {
   )
   const { updateQuestion } = useMutateQuestion()
   const { putComments } = useMutateComments()
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    timeout: 200000,
-  }
   const [editFlg, setEditFlg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [showComment, setShowComment] = useState(false)
@@ -146,18 +143,18 @@ export const QScraping: FC = memo(() => {
     axios
       .get(
         `${process.env.REACT_APP_REST_URL}/scraping?url=${question.original_url}`,
-        config
+        Prop.config
       )
       .then((response) => {
         let result = response.data
         result['keywords'] = []
-        const questionItems = (result['question_items'] as EditElem[])?.map(
+        const questionItems = (result['question_items'] as NoteItem[])?.map(
           (editElem) => {
             editElem.text = sub(editElem.text)
             return editElem
           }
         )
-        const options = (result['options'] as EditElem[])?.map((editElem) => {
+        const options = (result['options'] as NoteItem[])?.map((editElem) => {
           editElem.text = sub(editElem.text)
           return editElem
         })
@@ -194,7 +191,7 @@ export const QScraping: FC = memo(() => {
         <>
           <div className="flex flex-row-reverse">
             <ChevronDoubleDownIcon
-              className="h-3 w-3 text-blue-500 cursor-pointer"
+              className={`h-3 w-3 ${iconShine}`}
               fill="currentColor"
               onClick={() => setShowFlg(false)}
             />
@@ -206,7 +203,7 @@ export const QScraping: FC = memo(() => {
           ></textarea>
           <button
             type="submit"
-            className="px-4 py-2 mt-4 rounded-lg bg-blue-500 text-white font-bold flex justify-center mx-auto"
+            className={`flex justify-center mx-auto px-4 py-2 mt-4 rounded-lg bg-blue-500 ${strongText}`}
             onClick={() => onClick(question.quest_id)}
           >
             取り込み
@@ -217,7 +214,7 @@ export const QScraping: FC = memo(() => {
         <>
           <div className="flex flex-row-reverse">
             <ChevronDoubleUpIcon
-              className="flex flex-row-reverse h-3 w-3 text-blue-500 cursor-pointer"
+              className={`flex flex-row-reverse h-3 w-3 ${iconShine}`}
               fill="currentColor"
               onClick={() => setShowFlg(true)}
             />
@@ -225,22 +222,22 @@ export const QScraping: FC = memo(() => {
         </>
       )}
       <div className="flex justify-start items-center mt-2">
-        <span className="pr-2 text-blue-700 font-bold text-xs">URL</span>
+        <span className={`pr-2 font-bold text-xs ${Colors.shining}`}>URL</span>
         {!editFlg && (
           <>
             <PencilIcon
-              className="h-6 w-6 pl-2 text-blue-500 cursor-pointer"
+              className={`h-6 w-6 pl-2 ${iconBase}`}
               fill="currentColor"
               onClick={() => setEditFlg(true)}
             />
             <AcademicCapIcon
-              className="h-4 w-4 ml-4 text-blue-500 cursor-pointer"
+              className={`h-4 w-4 ml-4 ${iconBase}`}
               fill="none"
               stroke="currentColor"
               onClick={() => onClick2(true)}
             />
             <ChatIcon
-              className="h-4 w-4 ml-4 text-blue-500 cursor-pointer"
+              className={`h-4 w-4 ml-4 ${iconBase}`}
               stroke="currentColor"
               onClick={() => setShowComment(!showComment)}
             />

@@ -1,6 +1,5 @@
 import { FC, useState } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
-import { bgcolor } from '../../../../types/types'
 import { TermRefEdittingTerms } from './TermRefEdittingTerms'
 import { TermRefTags } from './TermRefTags'
 import { TermRefTerms } from './TermRefTerms'
@@ -12,6 +11,7 @@ import {
   useWordContext,
   useTermEdittingContext,
 } from './TermProvider'
+import Colors from '../../../../consts/colors'
 
 export const TermKeyword: FC = () => {
   const { term, forQuestion } = useTermContext()
@@ -65,7 +65,7 @@ export const TermKeyword: FC = () => {
               )}
             </div>
             <select
-              className={`pl-1 ${bgcolor[level - 1]}`}
+              className={`pl-1 ${Colors.bgcolors[level - 1]}`}
               onChange={(e) => setLevel(Number(e.target.value))}
             >
               {[1, 2, 3, 4, 5, 6].map((i) => (

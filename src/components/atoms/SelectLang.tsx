@@ -24,7 +24,7 @@ export const SelectLang: FC = memo(() => {
     <div className="flex items-center py-4">
       <button
         type="button"
-        className={`flex-shrink-0  w-20 border p-1 text-white ${bgcolor(1)}`}
+        className={`flex-shrink-0 w-20 border p-1 text-white ${bgcolor(1)}`}
         onClick={() => setLang(1)}
       >
         日本語

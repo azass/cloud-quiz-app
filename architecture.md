@@ -137,3 +137,43 @@ EditElemTextarea
               className={textareaStyle}
               onChange={(e) => changeText(index, 'text_en', e.target.value)}
 
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  timeout: 200000,
+}
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+  },
+}
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    timeout: 200000,
+  }
+
+

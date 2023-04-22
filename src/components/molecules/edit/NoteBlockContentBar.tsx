@@ -1,12 +1,11 @@
 import { TrashIcon } from '@heroicons/react/outline'
-import { memo, useContext, FC } from 'react'
-import { ColorContext } from '../../../App'
-import { useEditElemContext } from './EditElemProvider'
-import { useEditElemsContext } from './EditElemsProvider'
-export const EditBlockContentBar: FC = memo(() => {
-  const color = useContext(ColorContext)
-  const { name, del, changeText, changeCheck2 } = useEditElemsContext()
-  const { editElem, index, on } = useEditElemContext()
+import { memo, FC } from 'react'
+import { useNoteItemContext } from './NoteItemProvider'
+import { useNoteItemsContext } from './NoteItemsProvider'
+import { iconBase } from '../../../styles/util'
+export const NoteBlockContentBar: FC = memo(() => {
+  const { name, del, changeText, changeCheck2 } = useNoteItemsContext()
+  const { editElem, index, on } = useNoteItemContext()
   return (
     <div
       className="flex justify-between items-center"
@@ -46,7 +45,7 @@ export const EditBlockContentBar: FC = memo(() => {
       </div>
       <div className="flex flex-row pr-3 gap-4">
         <TrashIcon
-          className={`h-6 w-6 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+          className={`h-6 w-6 ${iconBase}`}
           onClick={() => del(index)}
         />
       </div>

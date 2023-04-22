@@ -1,9 +1,8 @@
 import { memo, useState, FC } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 
-export const EditElemTextbox: FC = memo(() => {
+export const NoteTextbox: FC = memo(() => {
   const [word, setWord] = useState('')
-
   return (
     <ReactTextareaAutosize
       className="text-black px-2 py-1 my-1 w-full border-0 resize"

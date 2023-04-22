@@ -1,20 +1,24 @@
 import { EyeIcon } from '@heroicons/react/outline'
 import { CheckCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
-import { memo, useContext, FC } from 'react'
-import { ColorContext } from '../../../App'
+import { memo, FC } from 'react'
 import {
-  useEditElemsContext,
-  useEnableEditContext,
+  useNoteItemsContext,
+  useEdittingContext,
   useShowAllQuestionCaseContext,
   useShowCheckboxContext,
-} from './EditElemsProvider'
+} from './NoteItemsProvider'
+import {
+  iconBase,
+  iconHover,
+  iconShine,
+  strongText,
+} from '../../../styles/util'
 interface Props {
   title: string
 }
-export const EditBlockHeader: FC<Props> = memo(({ title }) => {
-  const { name } = useEditElemsContext()
-  const color = useContext(ColorContext)
-  const { enableEdit, setEnableEdit } = useEnableEditContext()
+export const NoteBlockHeader: FC<Props> = memo(({ title }) => {
+  const { name } = useNoteItemsContext()
+  const { editting, setEditting } = useEdittingContext()
   const { showCheckbox, setShowCheckbox } = useShowCheckboxContext()
   const { showAllQuestionCase, setShowAllQuestionCase } =
     useShowAllQuestionCaseContext()
@@ -27,24 +31,24 @@ export const EditBlockHeader: FC<Props> = memo(({ title }) => {
     }
   }
   return (
-    <div className={`flex items-center gap-2 my-4 font-bold ${color.baseText}`}>
+    <div className={`flex items-center gap-2 my-4 ${strongText}`}>
       {title}
       {(name === 'options' || name === 'case_items') && (
         <EyeIcon
-          className="w-4 h-4 ml-4 cursor-pointer hover:text-blue-500"
+          className={`w-4 h-4 ml-4 ${iconHover}`}
           onClick={() => onClickEye()}
         />
       )}
       <div>
-        {enableEdit ? (
+        {editting ? (
           <CheckCircleIcon
-            className={`h-6 w-6 ml-8 ${color.iconColor} cursor-pointer text-blue-500`}
-            onClick={() => setEnableEdit(!enableEdit)}
+            className={`h-6 w-6 ml-8 ${iconShine}`}
+            onClick={() => setEditting(!editting)}
           />
         ) : (
           <PencilAltIcon
-            className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
-            onClick={() => setEnableEdit(!enableEdit)}
+            className={`h-5 w-5 ml-8 ${iconBase}`}
+            onClick={() => setEditting(!editting)}
           />
         )}
       </div>

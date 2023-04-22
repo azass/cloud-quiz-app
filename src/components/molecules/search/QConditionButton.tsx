@@ -3,26 +3,25 @@ import { useAppSelector } from '../../../app/hooks'
 import { selectQuestions } from '../../../slices/editSlice'
 import { Question } from '../../../types/types'
 import { useSelectOptionsContext } from './SearchProvider'
+import Label from '../../../consts/labels'
+import { searchKeyOff, searchKeyOn, strongText } from '../../../styles/util'
 interface Props {
   index: number
 }
-const conditionLetters = ['復習', '難問', '苦手', '必須', 'バグ']
 export const QConditionButton: FC<Props> = memo(({ index }) => {
   const questions = useAppSelector(selectQuestions)
   const { selectOptions, setSelectOptions } = useSelectOptionsContext()
   const getBgColor = (option?: number) => {
     if (selectOptions) {
       if (option || option === 0) {
-        return selectOptions.includes(option)
-          ? 'text-white bg-blue-600'
-          : 'text-gray-500 bg-gray-300'
+        return selectOptions.includes(option) ? searchKeyOn : searchKeyOff
       } else {
         return selectOptions.length === 0
           ? 'text-white bg-blue-600'
           : 'text-white bg-red-300'
       }
     } else {
-      return 'text-gray-500 bg-gray-300'
+      return searchKeyOff
     }
   }
   const onClick = (option?: number) => {
@@ -58,13 +57,15 @@ export const QConditionButton: FC<Props> = memo(({ index }) => {
   return (
     <button
       className={
-        'place-items-center flex justify-between rounded-full w-full h-8 p-2 bg-blue-500 text-white font-bold ' +
+        `place-items-center flex justify-between rounded-full w-full h-8 p-2 bg-blue-500 ${strongText} ` +
         getBgColor(index)
       }
       onClick={() => onClick(index)}
     >
-      <span className="flex pl-2">{conditionLetters[index]}</span>
-      <span className="rounded-full bg-blue-500 h-6 w-6 text-xs flex items-center justify-center font-bold text-gray-300">
+      <span className="flex pl-2">{Label.conditionLabels[index]}</span>
+      <span
+        className={`flex items-center justify-center rounded-full bg-blue-500 h-6 w-6 text-xs font-bold text-gray-300`}
+      >
         {questions.filter((question) => filter(question)).length}
       </span>
     </button>

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../app/hooks'
 import { setIdToken } from '../../slices/editSlice'
 import log from 'loglevel'
+import { strongText } from '../../styles/util'
 
 export const Login: VFC = memo(() => {
   log.setLevel("info")
@@ -62,7 +63,7 @@ export const Login: VFC = memo(() => {
       <div className="flex mx-auto my-12">
         <div className="list-none text-center mr-2">
           <a
-            className="bg-blue-600 hover:opacity-75 text-white font-bold py-3 px-16 rounded"
+            className={`bg-blue-600 hover:opacity-75 py-3 px-16 rounded ${strongText}`}
             href="{{ route('login') }}"
           >
             ログイン
@@ -105,7 +106,7 @@ export const Login: VFC = memo(() => {
         <div className="text-center">
           <button
             id="login-button"
-            className="bg-blue-600 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+            className={`bg-blue-600 hover:bg-blue-dark ${strongText} py-2 px-4 rounded`}
             type="button"
             onClick={signIn}
           >

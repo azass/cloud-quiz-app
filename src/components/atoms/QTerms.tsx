@@ -1,5 +1,6 @@
 import { memo, FC } from 'react'
-import { bgcolor } from '../../types/types'
+import Colors from '../../consts/colors'
+import { strongText } from '../../styles/util'
 
 interface Props {
   terms: any[]
@@ -14,8 +15,8 @@ export const QTerms: FC<Props> = memo(({ terms }) => {
               title="QTerms"
               key={term.term_id}
               className={
-                'rounded-full border my-1 mr-1 py-1 px-3 text-white font-bold text-left ' +
-                `${bgcolor[term.level - 1]}`
+                `rounded-full border my-1 mr-1 py-1 px-3 text-left ${strongText} ` +
+                `${Colors.bgcolors[term.level - 1]}`
               }
             >
               {term.word}

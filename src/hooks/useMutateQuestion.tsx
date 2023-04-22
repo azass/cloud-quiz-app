@@ -1,19 +1,13 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import { Question } from '../types/types'
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-}
+import Prop from '../consts/props'
 
 export const useMutateQuestion = () => {
   const queryClient = useQueryClient()
-
   const createQuestion = (question: Question) => {
     axios
-      .post(`${process.env.REACT_APP_REST_URL}/question`, question, config)
+      .post(`${process.env.REACT_APP_REST_URL}/question`, question, Prop.config)
       .then((response) => {
         let result = response.data
         console.log(result)
@@ -36,7 +30,7 @@ export const useMutateQuestion = () => {
 
   const updateQuestion = (question: Question) => {
     axios
-      .put(`${process.env.REACT_APP_REST_URL}/question`, question, config)
+      .put(`${process.env.REACT_APP_REST_URL}/question`, question, Prop.config)
       .then((response) => {
         // queryClient.setQueryData<Question>(question.quest_id, question)
       })
@@ -45,7 +39,11 @@ export const useMutateQuestion = () => {
 
   const putQuestion = (requestData: any, question: Question, post?: any) => {
     axios
-      .put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
+      .put(
+        `${process.env.REACT_APP_REST_URL}/question`,
+        requestData,
+        Prop.config
+      )
       .then((response) => {
         queryClient.setQueryData<Question>(question.quest_id, question)
         if (post) post({ ...question })
@@ -59,7 +57,11 @@ export const useMutateQuestion = () => {
       is_bug: question.is_bug,
     }
     axios
-      .put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
+      .put(
+        `${process.env.REACT_APP_REST_URL}/question`,
+        requestData,
+        Prop.config
+      )
       .then((response) => {
         queryClient.setQueryData<Question>(question.quest_id, question)
       })

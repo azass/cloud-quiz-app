@@ -12,12 +12,13 @@ import {
   useTermContext,
   useWordContext,
 } from './TermProvider'
-import { useEditElemsContext } from '../EditElemsProvider'
+import { useNoteItemsContext } from '../NoteItemsProvider'
+import { strongText } from '../../../../styles/util'
 
 export const TermEditor: FC = memo(() => {
   log.setLevel('info')
   const { term } = useTermContext()
-  const { draggable } = useEditElemsContext()
+  const { draggable } = useNoteItemsContext()
   const { word, setWord } = useWordContext()
   const { level, setLevel } = useLevelContext()
   const { describe } = useDescribeContext()
@@ -34,8 +35,8 @@ export const TermEditor: FC = memo(() => {
         <>
           <div
             className={
-              'place-items-center flex justify-between border rounded-full' +
-              ' my-1 mx-1 pr-2 text-white font-bold text-sm ' +
+              'place-items-center flex justify-between border rounded-full ' +
+              `my-1 mx-1 pr-2 text-sm ${strongText} ` +
               getBgColor(level)
             }
           >

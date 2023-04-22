@@ -1,29 +1,31 @@
 import { FC, ReactNode, createContext, useContext, useState } from 'react'
 import axios from 'axios'
 import log from 'loglevel'
-import { EditElem, EditElemType } from '../../../types/types'
+import { NoteItem } from '../../../types/types'
 import { useAppSelector } from '../../../app/hooks'
 import { selectEditContext } from '../../../slices/editSlice'
+import Label from '../../../consts/labels'
+import Prop from '../../../consts/props'
 
 interface Props {
   name: string
-  editElems: EditElem[]
+  noteItems: NoteItem[]
   editable: boolean
   draggable?: boolean
   star?: boolean
   editting?: boolean
   children: ReactNode
 }
-const EditElemsStateContext = createContext(
+const EditItemsContext = createContext(
   {} as {
-    editElemsState: EditElem[]
-    setEditElemsState: any
+    editItems: NoteItem[]
+    setEditItems: any
   }
 )
-const EnableEditContext = createContext(
+const EdittingContext = createContext(
   {} as {
-    enableEdit: boolean
-    setEnableEdit: any
+    editting: boolean
+    setEditting: any
   }
 )
 const ShowCheckboxContext = createContext(
@@ -44,9 +46,9 @@ const SaveButtonToggleContext = createContext(
     setSaveButtonToggle: any
   }
 )
-const EditElemsContext = createContext(
+const NoteItemsContext = createContext(
   {} as {
-    editElems: EditElem[]
+    noteItems: NoteItem[]
     name: string
     add: any
     del: any
@@ -59,56 +61,27 @@ const EditElemsContext = createContext(
     star?: boolean
   }
 )
-export const useEditElemsStateContext = () => useContext(EditElemsStateContext)
-export const useEnableEditContext = () => useContext(EnableEditContext)
+export const useEditItemsContext = () => useContext(EditItemsContext)
+export const useEdittingContext = () => useContext(EdittingContext)
 export const useShowCheckboxContext = () => useContext(ShowCheckboxContext)
 export const useShowAllQuestionCaseContext = () =>
   useContext(ShowAllQuestionCaseContext)
 export const useSaveButtonToggleContext = () =>
   useContext(SaveButtonToggleContext)
-export const useEditElemsContext = () => useContext(EditElemsContext)
+export const useNoteItemsContext = () => useContext(NoteItemsContext)
 
-const mark = [
-  'A',
-  'B',
-  'C',
-  'D',
-  'E',
-  'F',
-  'G',
-  'H',
-  'I',
-  'J',
-  'K',
-  'L',
-  'M',
-  'N',
-  'O',
-  'P',
-  'Q',
-  'R',
-  'S',
-  'T',
-  'U',
-  'V',
-  'W',
-  'X',
-  'Y',
-  'Z',
-]
-
-export const EditElemsProvider: FC<Props> = ({
+export const NoteItemsProvider: FC<Props> = ({
   name,
-  editElems,
+  noteItems,
   draggable,
   star,
   editable,
-  editting,
+  // editting,
   children,
 }) => {
-  const isCheckOn = editElems.some((x) => x.correct)
-  const [editElemsState, setEditElemsState] = useState<EditElem[]>(editElems)
-  const [enableEdit, setEnableEdit] = useState(editting || false)
+  const isCheckOn = noteItems.some((x) => x.correct)
+  const [editItems, setEditItems] = useState<NoteItem[]>(noteItems)
+  const [editting, setEditting] = useState(false)
   const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
   const [showAllQuestionCase, setShowAllQuestionCase] = useState(false)
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)
@@ -116,35 +89,35 @@ export const EditElemsProvider: FC<Props> = ({
 
   const add = (index: number, type: string) => {
     if (!star) {
-      const newEditElems = [...editElemsState]
-      const newEditElem: EditElem = { type: type }
-      if (newEditElem.type === EditElemType.TEXTAREA) {
+      const newEditElems = [...editItems]
+      const newEditElem: NoteItem = { type: type }
+      if (newEditElem.type === Prop.NoteItemType.TEXTAREA) {
         newEditElem.text = ''
-      } else if (newEditElem.type === EditElemType.LINK) {
+      } else if (newEditElem.type === Prop.NoteItemType.LINK) {
         newEditElem.link = ''
         newEditElem.url = ''
-      } else if (newEditElem.type === EditElemType.IMAGE) {
+      } else if (newEditElem.type === Prop.NoteItemType.IMAGE) {
         newEditElem.image_path = ''
         newEditElem.image_height = ''
-      } else if (newEditElem.type === EditElemType.OPTION) {
+      } else if (newEditElem.type === Prop.NoteItemType.OPTION) {
         newEditElem.text = ''
-        newEditElem.mark = mark[index + 1]
+        newEditElem.mark = Label.mark[index + 1]
       }
       newEditElems.splice(index + 1, 0, newEditElem)
-      setEditElemsState(newEditElems)
+      setEditItems(newEditElems)
       setSaveButtonToggle(false)
     }
   }
 
   const del = (index: number) => {
-    const newEditElems = [...editElemsState]
+    const newEditElems = [...editItems]
     newEditElems.splice(index, 1)
-    setEditElemsState(newEditElems)
+    setEditItems(newEditElems)
     setSaveButtonToggle(true)
   }
 
   const changeText = (index: number, attr: string, text: string) => {
-    const newEditElems = [...editElemsState]
+    const newEditElems = [...editItems]
     if (
       attr === 'text' ||
       attr === 'text_en' ||
@@ -158,19 +131,19 @@ export const EditElemsProvider: FC<Props> = ({
       newEditElem[attr] = text
       newEditElems.splice(index, 1, newEditElem)
     }
-    setEditElemsState(newEditElems)
+    setEditItems(newEditElems)
     validate(newEditElems)
   }
 
   const changeCheck = (index: number) => {
-    const newEditElems = [...editElemsState]
+    const newEditElems = [...editItems]
     newEditElems[index].correct = !newEditElems[index].correct
-    setEditElemsState(newEditElems)
+    setEditItems(newEditElems)
     setSaveButtonToggle(true)
   }
 
   const changeCheck2 = (index: number) => {
-    const newEditElems = [...editElemsState]
+    const newEditElems = [...editItems]
     if (!newEditElems[index].quest_ids) {
       const newEditElem = {
         ...newEditElems[index],
@@ -178,7 +151,7 @@ export const EditElemsProvider: FC<Props> = ({
       }
       newEditElems[index] = newEditElem
     } else {
-      const quest_ids = editElemsState[index].quest_ids
+      const quest_ids = editItems[index].quest_ids
       if (quest_ids) {
         if (quest_ids.includes(editContext.quest_id)) {
           const newEditElem = {
@@ -197,48 +170,32 @@ export const EditElemsProvider: FC<Props> = ({
         }
       }
     }
-    setEditElemsState(newEditElems)
+    setEditItems(newEditElems)
     setSaveButtonToggle(true)
   }
 
-  const validate = (newEditElems: EditElem[]) => {
+  const validate = (newEditElems: NoteItem[]) => {
     newEditElems.map((editElem) => {
       if (
-        editElem.type === EditElemType.TEXTAREA ||
-        editElem.type === EditElemType.OPTION
+        editElem.type === Prop.NoteItemType.TEXTAREA ||
+        editElem.type === Prop.NoteItemType.OPTION
       ) {
-        if (editElem.text === '') {
-          setSaveButtonToggle(false)
-        } else {
-          setSaveButtonToggle(true)
-        }
-      } else if (editElem.type === EditElemType.LINK) {
-        if (editElem.link === '' || editElem.url === '') {
-          setSaveButtonToggle(false)
-        } else {
-          setSaveButtonToggle(true)
-        }
-      } else if (editElem.type === EditElemType.IMAGE) {
-        if (editElem.image_path === '' || editElem.image_height === '') {
-          setSaveButtonToggle(false)
-        } else {
-          setSaveButtonToggle(true)
-        }
+        setSaveButtonToggle(editElem.text !== '')
+      } else if (editElem.type === Prop.NoteItemType.LINK) {
+        setSaveButtonToggle(editElem.link !== '' && editElem.url !== '')
+      } else if (editElem.type === Prop.NoteItemType.IMAGE) {
+        setSaveButtonToggle(
+          editElem.image_path !== '' && editElem.image_height !== ''
+        )
       } else {
         setSaveButtonToggle(false)
       }
     })
   }
 
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
-
   const save = (requestData: any, api: string, post?: any) => {
     axios
-      .put(`${process.env.REACT_APP_REST_URL}/${api}`, requestData, config)
+      .put(`${process.env.REACT_APP_REST_URL}/${api}`, requestData, Prop.config)
       .then((response) => {
         let result = response.data
         setSaveButtonToggle(false)
@@ -247,10 +204,8 @@ export const EditElemsProvider: FC<Props> = ({
       .catch((error) => log.debug(error))
   }
   return (
-    <EditElemsStateContext.Provider
-      value={{ editElemsState, setEditElemsState }}
-    >
-      <EnableEditContext.Provider value={{ enableEdit, setEnableEdit }}>
+    <EditItemsContext.Provider value={{ editItems, setEditItems }}>
+      <EdittingContext.Provider value={{ editting, setEditting }}>
         <ShowCheckboxContext.Provider value={{ showCheckbox, setShowCheckbox }}>
           <ShowAllQuestionCaseContext.Provider
             value={{ showAllQuestionCase, setShowAllQuestionCase }}
@@ -258,9 +213,9 @@ export const EditElemsProvider: FC<Props> = ({
             <SaveButtonToggleContext.Provider
               value={{ saveButtonToggle, setSaveButtonToggle }}
             >
-              <EditElemsContext.Provider
+              <NoteItemsContext.Provider
                 value={{
-                  editElems,
+                  noteItems: noteItems,
                   name,
                   add,
                   del,
@@ -274,11 +229,11 @@ export const EditElemsProvider: FC<Props> = ({
                 }}
               >
                 {children}
-              </EditElemsContext.Provider>
+              </NoteItemsContext.Provider>
             </SaveButtonToggleContext.Provider>
           </ShowAllQuestionCaseContext.Provider>
         </ShowCheckboxContext.Provider>
-      </EnableEditContext.Provider>
-    </EditElemsStateContext.Provider>
+      </EdittingContext.Provider>
+    </EditItemsContext.Provider>
   )
 }

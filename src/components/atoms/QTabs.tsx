@@ -10,8 +10,9 @@ import {
   selectTab,
   setShowContent,
   setTab,
-  tabs,
 } from '../../slices/editSlice'
+import Label from '../../consts/labels'
+import Colors from '../../consts/colors'
 
 export const QTabs: FC = memo(() => {
   const editedContext = useAppSelector(selectEditContext)
@@ -20,8 +21,8 @@ export const QTabs: FC = memo(() => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const onCllickTab = (index: number) => {
-    if (nowTab !== tabs[index]) {
-      dispatch(setTab(tabs[index]))
+    if (nowTab !== Label.tabs[index]) {
+      dispatch(setTab(Label.tabs[index]))
     }
     if (index === 0) {
       navigate('/editor')
@@ -41,19 +42,19 @@ export const QTabs: FC = memo(() => {
 
   return (
     <nav className="flex flex-col sm:flex-row">
-      {tabs.map((tab, index) => (
+      {Label.tabs.map((tab, index) => (
         <button
           className={
-            'flex-1 pt-4 pb-2 px-6 block hover:text-blue-500 focus:outline-none' +
+            `flex-1 pt-4 pb-2 px-6 block hover:${Colors.shining} focus:outline-none` +
             `${
               nowTab === tab
-                ? ' text-blue-500 border-b-2 font-medium border-blue-500'
+                ? ` ${Colors.shining} border-b-2 font-medium border-blue-500`
                 : ' text-gray-500'
             }`
           }
           onClick={() => onCllickTab(index)}
         >
-          {tabs[index]}
+          {Label.tabs[index]}
         </button>
       ))}
     </nav>

@@ -9,7 +9,8 @@ import {
   setEdittingTerms,
   setUpdateTerm,
 } from '../slices/editSlice'
-import { bgcolor, selectedBgcolor, Term } from '../types/types'
+import { Term } from '../types/types'
+import Colors from '../consts/colors'
 
 export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
   const terms = useAppSelector(selectEdittingTerms)
@@ -96,7 +97,9 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
   }
 
   const getBgColor = (lv: number) => {
-    return `${term.selected ? selectedBgcolor[lv - 1] : bgcolor[lv - 1]}`
+    return `${
+      term.selected ? Colors.selectedBgcolors[lv - 1] : Colors.bgcolors[lv - 1]
+    }`
   }
 
   return {

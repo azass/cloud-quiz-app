@@ -8,8 +8,9 @@ import {
   setEditContext,
   setShowContent,
   setTab,
-  tabs,
 } from '../../slices/editSlice'
+import Label from '../../consts/labels'
+import { searchKeyOff, searchKeyOn } from '../../styles/util'
 
 interface Props {
   tag: Tag
@@ -19,9 +20,7 @@ interface Props {
 export const SelectableTag: FC<Props> = memo(
   ({ tag, selected, onClickTag }) => {
     log.setLevel('info')
-    const bgcolor = selected
-      ? 'text-white bg-pink-600'
-      : 'text-gray-500 bg-gray-300'
+    const bgcolor = selected ? searchKeyOn : searchKeyOff
     const dispatch = useAppDispatch()
     const editContext = useAppSelector(selectEditContext)
     const tab = useAppSelector(selectTab)
@@ -34,7 +33,7 @@ export const SelectableTag: FC<Props> = memo(
         }
         onClick={() => onClickTag(tag, !selected)}
         onDoubleClick={() => {
-          if (tab === tabs[2]) {
+          if (tab === Label.tabs[2]) {
             dispatch(setShowContent('TermEdit'))
             dispatch(
               setEditContext({
@@ -43,7 +42,7 @@ export const SelectableTag: FC<Props> = memo(
                 forQuestion: false,
               })
             )
-            dispatch(setTab(tabs[2]))
+            dispatch(setTab(Label.tabs[2]))
           }
         }}
       >

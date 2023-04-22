@@ -1,10 +1,11 @@
-import { FC, memo, useContext } from 'react'
+import { FC, memo } from 'react'
 import { ExternalLinkIcon } from '@heroicons/react/solid'
 import { Question } from '../../../types/types'
 import { Link } from 'react-router-dom'
 import { QKeywords } from './QKeywords'
-import { ColorContext } from '../../../App'
 import log from 'loglevel'
+import Colors from '../../../consts/colors'
+import { strongText } from '../../../styles/util'
 
 interface Props {
   question: Question
@@ -12,14 +13,13 @@ interface Props {
 
 export const QItem: FC<Props> = memo(({ question }) => {
   log.setLevel('info')
-  const color = useContext(ColorContext)
   const linkColor = question.is_old
-    ? color.linkIconColorOld
+    ? Colors.linkIconOld
     : question.not_ready
-    ? color.linkIconColorNotReady
+    ? Colors.linkIconNotReady
     : question.is_bug
-    ? color.linkIconColorBug
-    : color.linkIconColor
+    ? Colors.linkIconBug
+    : Colors.linkIcon
   return (
     <div className="inline-flex mt-1 space-x-4" title="QItem">
       <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
@@ -27,7 +27,7 @@ export const QItem: FC<Props> = memo(({ question }) => {
           className={`h-5 w-5 mx-1 mt-1 cursor-pointer ${linkColor}`}
         />
       </Link>
-      <span className={`font-bold w-3 mt-2 ${color.baseText}`}>
+      <span className={`w-3 mt-2 ${strongText}`}>
         Q{question.quest_no}
       </span>
       <div className="pl-4">

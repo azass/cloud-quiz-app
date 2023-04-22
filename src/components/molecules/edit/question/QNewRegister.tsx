@@ -3,13 +3,13 @@ import { memo, FC } from 'react'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import log from 'loglevel'
 import { useQuestionContext } from './QuestionProvider'
+import { iconShine } from '../../../../styles/util'
 
 interface Props {
   setRegisterToggle: any
 }
 export const QNewRegister: FC<Props> = memo(({ setRegisterToggle }) => {
   log.setLevel('debug')
-  log.debug('QNewRegister')
   const { question } = useQuestionContext()
   const { createQuestion } = useMutateQuestion()
   const onClickRegister = () => {
@@ -20,7 +20,7 @@ export const QNewRegister: FC<Props> = memo(({ setRegisterToggle }) => {
     <>
       <span className="px-4 italic text-red-500">New!!</span>
       <CloudUploadIcon
-        className="h-5 w-5  text-blue-400 cursor-pointer "
+        className={`h-5 w-5 ${iconShine}`}
         onClick={() => onClickRegister()}
       />
     </>

@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useAppSelector } from '../app/hooks'
+import Colors from '../consts/colors'
 import { selectExam, selectQuestions } from '../slices/editSlice'
 
 export const useAppearanceTerm = () => {
@@ -28,9 +28,9 @@ export const useAppearanceTerm = () => {
   }
   const textColor = (questIds: string[]) => {
     if (isWeak(questIds)) {
-      return 'text-pink-400'
+      return Colors.weakness
     } else {
-      return 'text-green-300'
+      return Colors.document
     }
   }
   return {

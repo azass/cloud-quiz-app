@@ -3,10 +3,10 @@ export interface Question {
   quest_no?: number
   exam_id?: string
   exam_no?: number
-  question_items?: EditElem[]
+  question_items?: NoteItem[]
   correct_answer?: string[]
-  options?: EditElem[]
-  explanation?: EditElem[]
+  options?: NoteItem[]
+  explanation?: NoteItem[]
   keywords?: string
   tags?: string[]
   original_url?: string
@@ -20,7 +20,7 @@ export interface Question {
   learning_note?: string
   labels?: string[]
   case_id?: string
-  case_items?: EditElem[]
+  case_items?: NoteItem[]
   scoring?: number
   is_old?: boolean
   not_ready?: boolean
@@ -30,7 +30,7 @@ export interface TagTerms {
   [key: string]: Term[];
 }
 
-export interface EditElem {
+export interface NoteItem {
   type?: string
   text?: string
   text_en?: string
@@ -42,6 +42,22 @@ export interface EditElem {
   correct?: boolean
   quest_ids?: string[]
   lv?: string
+}
+
+export interface EditState {
+  idToken: string
+  tab: string
+  exam: Exam
+  showContent: string
+  editContext: EditContext
+  providerTags: Tag[]
+  examTags: Tag[]
+  updateTerm: boolean
+  edittingTerms: Term[]
+  scArgs: any
+  lang: number
+  suggestTerms: Term[]
+  questions: Question[]
 }
 
 export interface Bug {
@@ -88,7 +104,7 @@ export interface Term {
   selected?: boolean
   changed?: string
   draggableId?: string
-  description?: EditElem[]
+  description?: NoteItem[]
   quest_ids?: string[]
   ref?: Term
   fold?: boolean
@@ -119,42 +135,12 @@ export interface Comment {
 
 export interface Comments {
   comment_items: Comment[]
-  answer_items: EditElem[]
+  answer_items: NoteItem[]
 }
 
-export namespace EditElemType {
-  export const TEXTAREA = "textarea"
-  export const IMAGE = "image"
-  export const LINK = "link"
-  export const OPTION = "option"
-  export const TEXTBOX = "textbox"
-}
-
-export const bgcolor = [
-  'bg-indigo-600',
-  'bg-blue-500',
-  'bg-indigo-400',
-  'bg-blue-400',
-  'bg-indigo-300',
-  'bg-blue-300',
-]
-export const selectedBgcolor = [
-  'bg-red-500',
-  'bg-pink-400',
-  'bg-red-300',
-  'bg-pink-300',
-  'bg-red-200',
-  'bg-pink-200',
-]
 
 export const voidTag: Tag = {
   tag_no: 0,
   tag_name: '',
   provider: ''
-}
-
-export const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
 }

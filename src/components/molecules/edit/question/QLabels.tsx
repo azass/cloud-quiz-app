@@ -4,6 +4,7 @@ import { memo, useState, FC } from 'react'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import { QLabel } from './QLabel'
 import { useQuestionContext } from './QuestionProvider'
+import { iconBase } from '../../../../styles/util'
 
 interface Props {
   readonly: boolean
@@ -63,13 +64,13 @@ export const QLabels: FC<Props> = memo(({ readonly }) => {
       {editable &&
         labels.length === (question.labels ? question.labels.length : 0) && (
           <PlusCircleIcon
-            className="w-6 h-6 text-white ml-2 cursor-pointer"
+            className={`w-5 h-5 ml-2 ${iconBase}`}
             onClick={() => add()}
           />
         )}
       {!readonly && (
         <PencilAltIcon
-          className="w-6 h-6 text-white ml-2 cursor-pointer"
+          className={`w-5 h-5 ml-2 ${iconBase}`}
           onClick={() => seteEditable(!editable)}
         />
       )}

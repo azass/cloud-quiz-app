@@ -1,4 +1,4 @@
-import { FC, memo, useContext, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import {
   selectShowContent,
@@ -6,10 +6,10 @@ import {
   selectProviderTags,
 } from '../../slices/editSlice'
 import { SelectableTag } from '../atoms/SelectableTag'
-import { ColorContext } from '../../App'
 import { TagFilter } from '../atoms/TagFilter'
 import log from 'loglevel'
 import { Tag } from '../../types/types'
+import Colors from '../../consts/colors'
 
 interface Props {
   useExamTags: boolean
@@ -20,7 +20,6 @@ interface Props {
 export const TagSelectPanel: FC<Props> = memo(
   ({ useExamTags, selectTags, onClickTag }) => {
     log.setLevel('info')
-    const color = useContext(ColorContext)
     const tags = useAppSelector(
       useExamTags ? selectExamTags : selectProviderTags
     )
@@ -59,7 +58,7 @@ export const TagSelectPanel: FC<Props> = memo(
         <div className="flex justify-end pb-4">
           <TagFilter setSearchWord={setSearchWord} />
         </div>
-        <div id="navWrapper" className={color.bgColor}>
+        <div id="navWrapper" className={Colors.baseBg}>
           <nav className="px-6 overflow-y-auto text-base h-screen pb-60">
             <div className="grid grid-cols-3 gap-1 pb-32">
               {tags
@@ -67,13 +66,11 @@ export const TagSelectPanel: FC<Props> = memo(
                   return filter(tag)
                 })
                 .map((tag) => (
-                  <>
-                    <SelectableTag
-                      tag={tag}
-                      selected={selected(tag)}
-                      onClickTag={onClickTag}
-                    />
-                  </>
+                  <SelectableTag
+                    tag={tag}
+                    selected={selected(tag)}
+                    onClickTag={onClickTag}
+                  />
                 ))}
             </div>
           </nav>

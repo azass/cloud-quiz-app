@@ -1,13 +1,11 @@
 import axios from 'axios'
-import { memo, useContext, useState, FC } from 'react'
-import { ColorContext } from '../../../../App'
+import { memo, useState, FC } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import {
   selectIdToken,
   selectQuestions,
   setQuestions,
 } from '../../../../slices/editSlice'
-import { config } from '../../../../styles/util'
 import { Question } from '../../../../types/types'
 import { SelectLang } from '../../../atoms/SelectLang'
 import { QRArchiveToggle } from './QArchiveToggle'
@@ -15,9 +13,10 @@ import { QCaseButtonSet } from './QCaseButtonSet'
 import { QNewRegister } from './QNewRegister'
 import { QReadyButton } from './QReadyButton'
 import { useIsNewContext, useQuestionContext } from './QuestionProvider'
+import Prop from '../../../../consts/props'
+import { strongText } from '../../../../styles/util'
 
 export const EditQuestionHeader: FC = memo(() => {
-  const color = useContext(ColorContext)
   const dispatch = useAppDispatch()
   const { question, setQuestion } = useQuestionContext()
   const { isNew, setIsNew } = useIsNewContext()
@@ -33,7 +32,11 @@ export const EditQuestionHeader: FC = memo(() => {
   }
   const putQuestion = (requestData: any, question: Question, post?: any) => {
     axios
-      .put(`${process.env.REACT_APP_REST_URL}/question`, requestData, config)
+      .put(
+        `${process.env.REACT_APP_REST_URL}/question`,
+        requestData,
+        Prop.config
+      )
       .then(async (response) => {
         const headers = {
           headers: {
@@ -82,7 +85,7 @@ export const EditQuestionHeader: FC = memo(() => {
       <div className="flex justify-between items-center w-full pb-2 z-10">
         <div className="flex justify-start items-center">
           <div
-            className={`pt-1 w-40 text-base font-bold ${color.baseText} hover:text-sky-600 hover:bg-white`}
+            className={`pt-1 w-40 text-base ${strongText} hover:text-sky-600 hover:bg-white`}
           >
             {question.quest_id}
           </div>

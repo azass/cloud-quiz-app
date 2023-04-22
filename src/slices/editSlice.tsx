@@ -1,28 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
-import { Tag, Term, EditContext, voidTag, Question, Exam } from '../types/types'
-
-export interface EditState {
-  idToken: string
-  tab: string
-  exam: Exam
-  showContent: string
-  editContext: EditContext
-  providerTags: Tag[]
-  examTags: Tag[]
-  updateTerm: boolean
-  edittingTerms: Term[]
-  scArgs: any
-  lang: number
-  suggestTerms: Term[]
-  questions: Question[]
-}
-
-export const tabs = ['試験一覧', '問題一覧', 'ノート']
+import {
+  Tag,
+  Term,
+  EditContext,
+  voidTag,
+  Question,
+  EditState,
+  Exam,
+} from '../types/types'
+import Label from '../consts/labels'
 
 export const initialState: EditState = {
   idToken: '',
-  tab: tabs[0],
+  tab: Label.tabs[0],
   exam: {
     exam_id: '',
     exam_name: '',
@@ -39,7 +30,7 @@ export const initialState: EditState = {
     keywordsJson: '',
     chosenTag: voidTag,
     forQuestion: false,
-    chosenTerm: undefined
+    chosenTerm: undefined,
   },
   providerTags: [],
   examTags: [],
@@ -75,7 +66,7 @@ export const editSlice = createSlice({
       state.tab = action.payload
       console.log('setTab start')
     },
-    setExam: (state, action: PayloadAction<any>) => {
+    setExam: (state, action: PayloadAction<Exam>) => {
       state.exam = action.payload
     },
     setShowContent: (state, action: PayloadAction<string>) => {

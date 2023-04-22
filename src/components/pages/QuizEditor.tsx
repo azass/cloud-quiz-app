@@ -1,18 +1,19 @@
 import log from 'loglevel'
-import { createContext, memo, useContext, FC } from 'react'
+import { createContext, memo, FC } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectTab, setTab, tabs } from '../../slices/editSlice'
+import { selectTab, setTab } from '../../slices/editSlice'
 import { ExamSelectTab } from '../organisms/ExamSelectTab'
-import { ColorContext } from '../../App'
 import { QTabs } from '../atoms/QTabs'
-import { Header } from '../organisms/Header'
+import { QuizHeader } from '../organisms/QuizHeader'
 import { QuizSelectTab } from '../organisms/QuizSelectTab'
 import { TermNoteTab } from '../organisms/TermNoteTab'
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
 import { QListQuery } from '../molecules/list/QListQuery'
 import { TermNotePanel } from '../organisms/TermNotePanel'
 import { EditPanel } from '../organisms/EditPanel'
+import Label from '../../consts/labels'
+import Colors from '../../consts/colors'
 
 interface EditorContextValues {
   logout?: any
@@ -20,9 +21,9 @@ interface EditorContextValues {
 export const EditorContext = createContext<EditorContextValues>({})
 export const QuizEditor: FC = memo(() => {
   log.setLevel('info')
+  const tabs = Label.tabs
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
-  const color = useContext(ColorContext)
   const dispatch = useAppDispatch()
   const userPool = new CognitoUserPool({
     UserPoolId: process.env.REACT_APP_AUTH_USER_POOL_ID || '',
@@ -48,13 +49,13 @@ export const QuizEditor: FC = memo(() => {
   }
   return (
     <EditorContext.Provider value={{ logout }}>
-      <Header />
+      <QuizHeader />
       <div className="mt-30 h-full z-0">
         <div
           id="sidebar"
-          className={`fixed inset-0 w-1/2 z-0 border-b -mb-16 pt-12 ${color.bgColor}`}
+          className={`fixed inset-0 w-1/2 z-0 border-b -mb-16 pt-12 ${Colors.baseBg}`}
         >
-          <div className={`pl-8 ${color.bgColor}`}>
+          <div className={`pl-8 ${Colors.baseBg}`}>
             <QTabs />
           </div>
           {nowTab === tabs[0] && (
@@ -68,7 +69,7 @@ export const QuizEditor: FC = memo(() => {
         </div>
         <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
           <div className={`flex w-full `}>
-            <div className={`px-8 absolute pt-12 pb-12 w-1/2 ${color.bgColor}`}>
+            <div className={`px-8 absolute pt-12 pb-12 w-1/2 ${Colors.baseBg}`}>
               {isQuizEdit() && <EditPanel />}
               {isTermNote() && <TermNotePanel />}
             </div>

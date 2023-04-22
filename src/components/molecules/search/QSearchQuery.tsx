@@ -15,10 +15,10 @@ import { TagSelectPanel } from '../../organisms/TagSelectPanel'
 import { QSProgressButtonSet } from './QProgressButtonSet'
 import { QSearchButtonSet } from './QSearchButtonSet'
 import {
-  SearchProvider,
   useSelectOptionsContext,
   useSelectScoringsContext,
 } from './SearchProvider'
+import { iconBase, strongText } from '../../../styles/util'
 
 export const QSearchQuery: FC = memo(() => {
   const dispatch = useAppDispatch()
@@ -63,14 +63,14 @@ export const QSearchQuery: FC = memo(() => {
       </div>
       <div className="flex flex-row pt-6 pl-8">
         <span
-          className="rounded-full border w-48 py-1 my-1 mr-1 px-3 bg-blue-600 text-white font-bold cursor-pointer"
+          className={`rounded-full border w-48 py-1 my-1 mr-1 px-3 bg-blue-600 ${strongText} cursor-pointer`}
           onClick={() => search()}
         >
           SEARCH
         </span>
         {selectSearchTags.length > 0 && (
           <DocumentRemoveIcon
-            className={'w-8 h-8 ml-8 text-gray-200 cursor-pointer'}
+            className={`w-8 h-8 ml-8 ${iconBase}`}
             onClick={() => setSelectSearchTags([])}
           />
         )}

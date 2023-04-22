@@ -6,8 +6,9 @@ import { setEdittingTerms } from '../../../../slices/editSlice'
 import { Tag, Term } from '../../../../types/types'
 import { TermEditor } from './TermEditor'
 import { TermAddButton } from './TermAddButton'
-import { EditElemsProvider } from '../EditElemsProvider'
+import { NoteItemsProvider } from '../NoteItemsProvider'
 import { TermProvider } from './TermProvider'
+import { iconAccent } from '../../../../styles/util'
 interface Props {
   term: Term
   index: number
@@ -52,12 +53,12 @@ export const TermTreeNode: FC<Props> = memo(
                 <div className="flex-none mt-2 pt-1 w-6">
                   {fold ? (
                     <ChevronRightIcon
-                      className="w-4 h-4 text-white cursor-pointer"
+                      className={`w-4 h-4 ${iconAccent}`}
                       onClick={() => onClickFold(!fold)}
                     />
                   ) : (
                     <ChevronDownIcon
-                      className="w-4 h-4 text-white cursor-pointer"
+                      className={`w-4 h-4 ${iconAccent}`}
                       onClick={() => onClickFold(!fold)}
                     />
                   )}
@@ -68,18 +69,18 @@ export const TermTreeNode: FC<Props> = memo(
                     index={index}
                     forQuestion={forQuestion}
                   >
-                    <EditElemsProvider
+                    <NoteItemsProvider
                       name={
                         forQuestion ? 'description_for_question' : 'description'
                       }
-                      editElems={term.description || []}
+                      noteItems={term.description || []}
                       editable={true}
                       draggable={true}
                       star={star}
                       editting={term.changed ? term.changed === 'new' : false}
                     >
                       <TermEditor />
-                    </EditElemsProvider>
+                    </NoteItemsProvider>
                   </TermProvider>
                 </div>
                 {!star && (

@@ -1,17 +1,16 @@
 import log from 'loglevel'
-import { FC, memo, useContext, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import { QItem } from '../molecules/list/QItem'
 import { useParams } from 'react-router-dom'
-import { ColorContext } from '../../App'
 import { useAppSelector } from '../../app/hooks'
 import { selectQuestions, selectScArgs } from '../../slices/editSlice'
 import { TagFilter } from '../atoms/TagFilter'
 import { Question, Term } from '../../types/types'
 import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/outline'
+import Colors from '../../consts/colors'
 
 export const QuizListFrame: FC = memo(() => {
   log.setLevel('debug')
-  const color = useContext(ColorContext)
   const params = useParams()
   const [searchWord, setSearchWord] = useState('')
   const [asc, setAsc] = useState(true)
@@ -132,7 +131,7 @@ export const QuizListFrame: FC = memo(() => {
     }
   }
   return (
-    <div id="navWrapper" className={color.bgColor} title="QuizListFrame">
+    <div id="navWrapper" className={Colors.baseBg} title="QuizListFrame">
       <div className="flex justify-between">
         <div className="flex flex-row items-center ml-1">
           <div className="ml-7 mr-1 mb-1 text-sky-500">sort</div>
@@ -150,7 +149,9 @@ export const QuizListFrame: FC = memo(() => {
         </div>
         <div className="flex flex-row items-center -mt-8">
           <TagFilter setSearchWord={setSearchWord} />
-          <div className="rounded-full bg-gray-300 h-8 w-8 mt-3 mr-8 flex items-center justify-center font-bold text-blue-700">
+          <div
+            className={`flex items-center justify-center rounded-full bg-gray-300 h-8 w-8 mt-3 mr-8 font-bold text-blue-700`}
+          >
             {data ? data.filter((question) => show(question)).length : 0}
           </div>
         </div>

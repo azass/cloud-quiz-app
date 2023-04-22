@@ -1,12 +1,7 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
-import { Comments, Comment, EditElem } from '../types/types'
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-}
+import { Comments, Comment, NoteItem } from '../types/types'
+import Prop from '../consts/props'
 
 export const useMutateComments = () => {
   const queryClient = useQueryClient()
@@ -14,7 +9,7 @@ export const useMutateComments = () => {
   const putComments = (
     quest_id: string,
     comment_items: Comment[],
-    answer_items: EditElem[]
+    answer_items: NoteItem[]
   ) => {
     const requestData = {
       quest_id: quest_id,
@@ -26,7 +21,11 @@ export const useMutateComments = () => {
       answer_items,
     }
     axios
-      .put(`${process.env.REACT_APP_REST_URL}/comments`, requestData, config)
+      .put(
+        `${process.env.REACT_APP_REST_URL}/comments`,
+        requestData,
+        Prop.config
+      )
       .then((response) => {
         queryClient.setQueryData<Comments>('comments:' + quest_id, comments)
       })

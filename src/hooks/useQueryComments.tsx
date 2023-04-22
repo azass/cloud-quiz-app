@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { Comment, Comments } from '../types/types'
+import { Comments } from '../types/types'
 
 export const useQueryComments = (quest_id: string) => {
   const getComments = async () => {

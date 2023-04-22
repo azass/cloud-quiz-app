@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { FC, memo } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { useEditElemContext } from './EditElemProvider'
-import { useEditElemsContext, useEnableEditContext } from './EditElemsProvider'
+import { useNoteItemContext } from './NoteItemProvider'
+import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
+import Colors from '../../../consts/colors'
 
-export const EditElemImage: FC = memo(() => {
-  const { changeText, editable } = useEditElemsContext()
-  const { enableEdit } = useEnableEditContext()
-  const { editElem, index } = useEditElemContext()
+export const NoteImage: FC = memo(() => {
+  const { changeText, editable } = useNoteItemsContext()
+  const { editting } = useEdittingContext()
+  const { editElem, index } = useNoteItemContext()
   if (!editElem.image_height || editElem.image_height === '') {
     editElem.image_height = '100'
   }
@@ -22,10 +23,10 @@ export const EditElemImage: FC = memo(() => {
       <div className="py-8 bg-white">
         <img src={editElem.image_path} />
       </div>
-      {editable && enableEdit && (
+      {editable && editting && (
         <>
           <div>
-            <span className="mx-6 py-4 my-2 text-blue-700 font-bold text-xs">
+            <span className={`mx-6 py-4 my-2 ${Colors.shining} font-bold text-xs`}>
               画像パス
             </span>
             <TextareaAutosize
@@ -35,7 +36,7 @@ export const EditElemImage: FC = memo(() => {
             />
           </div>
           <div>
-            <span className="mx-6 py-4 my-2 text-blue-700 font-bold text-xs">
+            <span className={`mx-6 py-4 my-2 ${Colors.shining} font-bold text-xs`}>
               画像高さ
             </span>
             <TextareaAutosize

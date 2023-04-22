@@ -6,6 +6,7 @@ import {
   useChangeCaseNoContext,
   useEditCaseNoContext,
 } from './QuestionCaseProvider'
+import { iconHover, iconShine } from '../../../../styles/util'
 
 interface Props {
   putQuestion: any
@@ -29,12 +30,12 @@ export const QCaseButtonSet: VFC<Props> = memo(({ putQuestion }) => {
   return (
     <div>
       <DocumentTextIcon
-        className="w-5 h-5 mt-1 ml-8 cursor-pointer hover:text-blue-500"
+        className={`w-5 h-5 mt-1 ml-8 ${iconHover}`}
         onClick={() => setEditCaseNo(!editCaseNo)}
       />
       {changeCaseNo && (
         <CloudUploadIcon
-          className="h-5 w-5 ml-4 text-blue-400 cursor-pointer "
+          className={`h-5 w-5 ml-4 ${iconShine}`}
           onClick={() => onClickCaseNo()}
         />
       )}

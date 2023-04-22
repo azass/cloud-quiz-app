@@ -1,13 +1,12 @@
 import { PauseIcon, RssIcon } from '@heroicons/react/solid'
-import { memo, useContext, FC } from 'react'
-import { ColorContext } from '../../../../App'
+import { memo, FC } from 'react'
 import { useQuestionContext } from './QuestionProvider'
+import { iconShine } from '../../../../styles/util'
 interface Props {
   notReady: boolean
   putQuestion: any
 }
 export const QReadyButton: FC<Props> = memo(({ notReady, putQuestion }) => {
-  const color = useContext(ColorContext)
   const { question } = useQuestionContext()
   const onClickReady = (_notReady: boolean) => {
     putQuestion(
@@ -27,7 +26,7 @@ export const QReadyButton: FC<Props> = memo(({ notReady, putQuestion }) => {
         />
       ) : (
         <RssIcon
-          className={`h-7 w-8 mt-1 ml-5 cursor-pointer text-blue-500`}
+          className={`h-7 w-8 mt-1 ml-5 ${iconShine}`}
           onClick={() => onClickReady(!notReady)}
         />
       )}

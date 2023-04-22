@@ -1,9 +1,9 @@
 import { FC } from 'react'
 import { useQueryComments } from '../../../../hooks/useQueryComments'
 import { QComment } from '../../../atoms/QComment'
-import { EditBlockContent } from '../EditBlockContent'
+import { NoteBlockContent } from '../NoteBlockContent'
 import { useQuestionContext } from './QuestionProvider'
-import { EditElemProvider } from '../EditElemProvider'
+import { NoteItemProvider } from '../NoteItemProvider'
 
 export const QComments: FC = () => {
   const { question } = useQuestionContext()
@@ -16,9 +16,9 @@ export const QComments: FC = () => {
         <>
           {data.answer_items.map((editElem, index) => (
             <div className="pl-2">
-              <EditElemProvider editElem={editElem} index={index}>
-                <EditBlockContent />
-              </EditElemProvider>
+              <NoteItemProvider editElem={editElem} index={index}>
+                <NoteBlockContent />
+              </NoteItemProvider>
             </div>
           ))}
         </>

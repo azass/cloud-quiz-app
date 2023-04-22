@@ -12,13 +12,7 @@ import {
 import { useQueryClient } from 'react-query'
 import { Term } from '../types/types'
 import { useTags } from './useTags'
-
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  timeout: 200000,
-}
+import Prop from '../consts/props'
 
 export const useMutateTerms = () => {
   const terms = useAppSelector(selectEdittingTerms)
@@ -81,7 +75,11 @@ export const useMutateTerms = () => {
     }
     console.log(requestData)
     axios
-      .post(`${process.env.REACT_APP_REST_URL}/keywords`, requestData, config)
+      .post(
+        `${process.env.REACT_APP_REST_URL}/keywords`,
+        requestData,
+        Prop.config
+      )
       .then((response) => {
         let result = response.data
         console.log(result)
@@ -110,15 +108,6 @@ export const useMutateTerms = () => {
             )
           )
         )
-        // queryClient.setQueryData<Question[]>(
-        //   'Questions' + exam.exam_id,
-        //   questions.map((quest) =>
-        //     quest.quest_id === requestData.quest_id ? {
-        //       ...quest,
-        //       keywords: requestData.quest_keywords,
-        //     } : quest
-        //   )
-        // )
         dispatch(setEditContext(newEditContext))
         dispatch(resetUpdateTerm())
         setSaving(false)

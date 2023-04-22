@@ -1,22 +1,12 @@
 import { memo, FC } from 'react'
 import { useSelectMistakeDaysContext } from './SearchProvider'
+import Label from '../../../consts/labels'
+import { strongText } from '../../../styles/util'
 
 interface Props {
   index: number
   mistake_progress: string[][]
 }
-const conditionLetters = [
-  '今日',
-  '昨日',
-  '2日前',
-  '3日前',
-  '4日前',
-  '5日前',
-  '6日前',
-  '1週間以上前',
-  '2週間以上前',
-  '3週間以上前',
-]
 
 export const QMistakeButton: FC<Props> = memo(({ index, mistake_progress }) => {
   const { selectMistakeDays } = useSelectMistakeDaysContext()
@@ -58,13 +48,13 @@ export const QMistakeButton: FC<Props> = memo(({ index, mistake_progress }) => {
   return (
     <button
       className={
-        'place-items-center flex justify-between rounded-full w-full h-8 p-2 bg-blue-500 text-white font-bold ' +
+        `place-items-center flex justify-between rounded-full w-full h-8 p-2 bg-blue-500 ${strongText} ` +
         getBgColor(index)
       }
       onClick={() => onClick(index)}
     >
-      <span className="flex pl-2">{conditionLetters[index]}</span>
-      <span className="rounded-full bg-blue-500 h-6 w-6 text-xs flex items-center justify-center font-bold text-gray-300">
+      <span className="flex pl-2">{Label.mistakeLabels[index]}</span>
+      <span className="flex items-center justify-center rounded-full bg-blue-500 h-6 w-6 text-xs font-bold text-gray-300">
         {count()}
       </span>
     </button>

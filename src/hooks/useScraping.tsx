@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Question } from '../types/types'
 import { useMutateQuestion } from './useMutateQuestion'
 import { useMutateComments } from './useMutateComments'
+import Prop from '../consts/props'
 
 export const useScraping = (question: Question, setQuestion: any) => {
   const { updateQuestion } = useMutateQuestion()
@@ -12,17 +13,16 @@ export const useScraping = (question: Question, setQuestion: any) => {
   const onChange = (text: string) => {
     setHtml(text)
   }
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
   const onClick = (questId: string) => {
     const requestData = {
       data: html,
     }
     axios
-      .post(`${process.env.REACT_APP_REST_URL}/scraping`, requestData, config)
+      .post(
+        `${process.env.REACT_APP_REST_URL}/scraping`,
+        requestData,
+        Prop.config
+      )
       .then((response) => {
         let result = response.data
         console.log(result)

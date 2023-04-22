@@ -1,17 +1,16 @@
 /* eslint-disable no-useless-concat */
 import { PencilAltIcon } from '@heroicons/react/outline'
-import { FC, memo, useContext, useState } from 'react'
+import { FC, memo, useState } from 'react'
 import ReactTextareaAutosize from 'react-textarea-autosize'
-import { ColorContext } from '../../../../App'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import { SaveButton } from '../../../atoms/SaveButton'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { useQuestionContext } from './QuestionProvider'
+import { iconBase, strongText } from '../../../../styles/util'
 
 export const QLeaningProfiles: FC = memo(() => {
-  const color = useContext(ColorContext)
   const { question } = useQuestionContext()
   const [lastQuestId, setLastQuestId] = useState(question.quest_id)
   const [isEasy, setIsEasy] = useState(question.is_easy || false)
@@ -46,10 +45,9 @@ export const QLeaningProfiles: FC = memo(() => {
       <div className="flex items-center py-4" title="QLeaningProfiles">
         <button
           type="button"
-          className={
-            'flex-shrink-0 border p-1 text-white text-bold' +
-            `${isEasy && ` bg-purple-600`}`
-          }
+          className={`flex-shrink-0 border p-1 ${strongText} ${
+            isEasy && ` bg-purple-600`
+          }`}
           onClick={() => {
             setIsEasy(!isEasy)
             question.is_easy = !isEasy
@@ -67,7 +65,7 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            'flex-shrink-0 border p-1 text-white text-bold' +
+            `flex-shrink-0 border p-1 ${strongText}` +
             `${isDifficult && ` bg-red-600`}`
           }
           onClick={() => {
@@ -87,7 +85,7 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            'flex-shrink-0 border p-1 text-white text-bold' +
+            `flex-shrink-0 border p-1 ${strongText}` +
             `${isWeak && ` bg-pink-500`}`
           }
           onClick={() => {
@@ -107,7 +105,7 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            'flex-shrink-0 border-t border-r border-b p-1 text-white text-bold' +
+            `flex-shrink-0 border-t border-r border-b p-1 ${strongText}` +
             `${isMandatory && ` bg-green-600`}`
           }
           onClick={() => {
@@ -125,7 +123,7 @@ export const QLeaningProfiles: FC = memo(() => {
           <span className="px-8">必須</span>
         </button>
         <PencilAltIcon
-          className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
+          className={`h-5 w-5 ml-8 ${iconBase}`}
           onClick={() => setEditting(!editting)}
         />
       </div>
@@ -146,7 +144,7 @@ export const QLeaningProfiles: FC = memo(() => {
         </>
       ) : (
         <ReactMarkdown
-          className={'text-base w-full text-white' + ' whitespace-pre-wrap '}
+          className={`text-base w-full text-white whitespace-pre-wrap`}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
           children={learningNote || ''}

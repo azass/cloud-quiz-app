@@ -1,8 +1,5 @@
-import log from 'loglevel'
-import { FC } from 'react'
-import { memo, useContext } from 'react'
-import { ColorContext } from '../../../../App'
-import { EditBlock } from '../EditBlock'
+import { FC, memo } from 'react'
+import { NoteBlock } from '../NoteBlock'
 import { QScraping } from './QScraping'
 import { QBug } from './QBug'
 import { QKeywords } from '../../list/QKeywords'
@@ -12,55 +9,57 @@ import { QLabels } from './QLabels'
 import { EditQuestionHeader } from './EditQuestionHeader'
 import { EditQuestionCase } from './EditQuestionCase'
 import { useIsNewContext, useQuestionContext } from './QuestionProvider'
-import { EditElemsProvider } from '../EditElemsProvider'
+import { NoteItemsProvider } from '../NoteItemsProvider'
+import { strongText } from '../../../../styles/util'
 export const EditQuestion: FC = memo(() => {
-  const color = useContext(ColorContext)
   const { question } = useQuestionContext()
   const { isNew } = useIsNewContext()
-
   return (
     <div title="EditQuestion">
       <EditQuestionHeader />
       {!isNew && question && (
         <div className="pt-12">
           <EditQuestionCase />
-          <EditElemsProvider
+          <NoteItemsProvider
             name="question_items"
-            editElems={question.question_items || []}
+            noteItems={question.question_items || []}
             editable={true}
           >
-            <EditBlock title={'問題文'} />
-          </EditElemsProvider>
-          <EditElemsProvider
+            <NoteBlock title={'問題文'} />
+          </NoteItemsProvider>
+          <NoteItemsProvider
             name="options"
-            editElems={question.options || []}
+            noteItems={question.options || []}
             editable={true}
           >
-            <EditBlock title={'選択肢'} />
-          </EditElemsProvider>
+            <NoteBlock title={'選択肢'} />
+          </NoteItemsProvider>
           <QScraping />
           {'is_bug' in question && question.is_bug && question.bug_points && (
             <QBug />
           )}
           <div className="pt-4">
             <QKeywords question={question} withAdd={true} />
-            <div className={`flex gap-2 mt-6 font-bold ${color.baseText}`}>
-              リファレンス
-            </div>
+            <div className={`flex gap-2 mt-6 ${strongText}`}>リファレンス</div>
             <QTermDescriptions />
           </div>
-          <EditElemsProvider
+          <NoteItemsProvider
             name="explanation"
-            editElems={question.explanation || []}
+            noteItems={question.explanation || []}
             editable={true}
           >
-            <EditBlock title={'メモ'} />
-          </EditElemsProvider>
-          <div className={`flex gap-2 mt-12 mb-4 font-bold ${color.baseText}`}>
+            <NoteBlock title={'メモ'} />
+          </NoteItemsProvider>
+          <div className={`flex gap-2 mt-12 mb-4 ${strongText}`}>
             学習プロファイル
           </div>
           <QLeaningProfiles />
-          <QLabels readonly={false} />
+          <div className={`flex pt-2 ${strongText}`}>
+            <span className="pt-8">ラベル</span>
+            <div className="pl-4">
+              <QLabels readonly={false} />
+            </div>
+          </div>
         </div>
       )}
     </div>

@@ -1,12 +1,8 @@
 import axios from 'axios'
 import { Exam } from '../types/types'
+import Prop from '../consts/props'
 
 export const useMaintenance = () => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
   const onClick = (exam: Exam) => {
     const requestData = {
       Method: 'setupReportItem',
@@ -19,7 +15,7 @@ export const useMaintenance = () => {
       .post(
         `${process.env.REACT_APP_REST_URL}/maintenance`,
         requestData,
-        config
+        Prop.config
       )
       .then((response) => {
         let result = response.data

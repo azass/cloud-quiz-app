@@ -10,9 +10,9 @@ import {
   setProviderTags,
   setScArgs,
   setTab,
-  tabs,
 } from '../../slices/editSlice'
 import log from 'loglevel'
+import Label from '../../consts/labels'
 
 export const ExamSelectTab: FC = memo(() => {
   log.setLevel('debug')
@@ -62,7 +62,7 @@ export const ExamSelectTab: FC = memo(() => {
                 onClick={() => {
                   dispatch(resetShowContent())
                   dispatch(setProviderTags(nowProvider.tags))
-                  dispatch(setTab(tabs[1]))
+                  dispatch(setTab(Label.tabs[1]))
                   dispatch(setExam(exam))
                   setScArgs({
                     ...srcArgs,

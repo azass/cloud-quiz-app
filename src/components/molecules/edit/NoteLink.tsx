@@ -1,22 +1,22 @@
-import { FC, memo, useContext } from 'react'
+import { FC } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { ColorContext } from '../../../App'
 import { useAppearanceTerm } from '../../../hooks/useAppearanceTerm'
 import { QLinkPopup } from '../../atoms/QLinkPopup'
-import { useEditElemContext } from './EditElemProvider'
-import { useEditElemsContext, useEnableEditContext } from './EditElemsProvider'
+import { useNoteItemContext } from './NoteItemProvider'
+import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
+import Colors from '../../../consts/colors'
+import { strongText } from '../../../styles/util'
 
-const EditElemLink: FC = () => {
-  const { changeText, draggable, editable } = useEditElemsContext()
-  const { enableEdit } = useEnableEditContext()
-  const { editElem, index, on } = useEditElemContext()
+export const NoteLink: FC = () => {
+  const { changeText, draggable, editable } = useNoteItemsContext()
+  const { editting } = useEdittingContext()
+  const { editElem, index, on } = useNoteItemContext()
   const { textColor } = useAppearanceTerm()
-  const color = useContext(ColorContext)
   const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${
-    color.iconColor
+    Colors.icon
   } focus:text-white ${editElem.link === '' && 'bg-pink-50'}`
   const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${
-    color.iconColor
+    Colors.icon
   } focus:text-white ${editElem.url === '' && 'bg-pink-50'}`
   return (
     <>
@@ -26,9 +26,7 @@ const EditElemLink: FC = () => {
           target="_blank"
           rel="noreferrer"
           className={`underline text-base  ${
-            on() && editable
-              ? 'font-bold text-white'
-              : textColor(editElem.quest_ids || [])
+            on() && editable ? strongText : textColor(editElem.quest_ids || [])
           }`}
         >
           {editElem.link}
@@ -40,7 +38,7 @@ const EditElemLink: FC = () => {
             <QLinkPopup quest_ids={editElem.quest_ids} />
           )}
       </div>
-      {editable && enableEdit && (
+      {editable && editting && (
         <>
           <div className="flex flex-row items-center">
             <span className="w-12 mx-2 my-2 text-gray-500 font-bold text-xs">
@@ -67,4 +65,3 @@ const EditElemLink: FC = () => {
     </>
   )
 }
-export const EditElemLinkMemo = memo(EditElemLink)

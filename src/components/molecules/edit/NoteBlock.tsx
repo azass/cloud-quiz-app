@@ -1,36 +1,35 @@
 import log from 'loglevel'
-import { useState, useContext, FC } from 'react'
-import { EditBlockContent } from './EditBlockContent'
-import { Question, EditElem } from '../../../types/types'
+import { useState, FC } from 'react'
+import { NoteBlockContent } from './NoteBlockContent'
+import { Question, NoteItem } from '../../../types/types'
 import { SaveButton } from '../../atoms/SaveButton'
-import { EditElemAdds } from './EditElemAdds'
-import { ColorContext } from '../../../App'
-import { EditBlockHeader } from './EditBlockHeader'
+import { NoteItemAdds } from './NoteItemAdds'
+import { NoteBlockHeader } from './NoteBlockHeader'
 import { useQuestionContext } from './question/QuestionProvider'
-import { EditElemProvider } from './EditElemProvider'
+import { NoteItemProvider } from './NoteItemProvider'
 import {
-  useEditElemsContext,
-  useEditElemsStateContext,
-  useEnableEditContext,
+  useNoteItemsContext,
+  useEditItemsContext,
+  useEdittingContext,
   useSaveButtonToggleContext,
   useShowAllQuestionCaseContext,
-} from './EditElemsProvider'
+} from './NoteItemsProvider'
 import { useAppSelector } from '../../../app/hooks'
 import { selectExam } from '../../../slices/editSlice'
+import Colors from '../../../consts/colors'
 
 interface Props {
   title: string
 }
 
-export const EditBlock: FC<Props> = ({ title }) => {
-  const { editElems, name, editable } = useEditElemsContext()
+export const NoteBlock: FC<Props> = ({ title }) => {
+  const { noteItems: editElems, name, editable } = useNoteItemsContext()
   const { question } = useQuestionContext()
-  const { editElemsState, setEditElemsState } = useEditElemsStateContext()
-  const { enableEdit } = useEnableEditContext()
+  const { editItems: editElemsState, setEditItems: setEditElemsState } = useEditItemsContext()
+  const { editting } = useEdittingContext()
   const { showAllQuestionCase } = useShowAllQuestionCaseContext()
   const { saveButtonToggle, setSaveButtonToggle } = useSaveButtonToggleContext()
-  const { save, star } = useEditElemsContext()
-  const color = useContext(ColorContext)
+  const { save, star } = useNoteItemsContext()
   const exam = useAppSelector(selectExam)
   const questId = question.quest_id
 
@@ -75,7 +74,7 @@ export const EditBlock: FC<Props> = ({ title }) => {
     save(requestData, 'question')
   }
 
-  const isShow = (editElem: EditElem) => {
+  const isShow = (editElem: NoteItem) => {
     if (name === 'case_items') {
       if (showAllQuestionCase) {
         return true
@@ -95,17 +94,17 @@ export const EditBlock: FC<Props> = ({ title }) => {
     }
   }
   return (
-    <div className={`pb-2  ${color.bgColor}`} title="EditBlock">
-      {editable && <EditBlockHeader title={title} />}
-      {enableEdit && editElemsState.length === 0 ? (
-        <EditElemAdds index={-1} />
+    <div className={`pb-2  ${Colors.baseBg}`} title="EditBlock">
+      {editable && <NoteBlockHeader title={title} />}
+      {editting && editElemsState.length === 0 ? (
+        <NoteItemAdds index={-1} />
       ) : (
         editElemsState.map((editElem, index) => (
           <>
             {isShow(editElem) && (
-              <EditElemProvider editElem={editElem} index={index}>
-                <EditBlockContent />
-              </EditElemProvider>
+              <NoteItemProvider editElem={editElem} index={index}>
+                <NoteBlockContent />
+              </NoteItemProvider>
             )}
           </>
         ))
