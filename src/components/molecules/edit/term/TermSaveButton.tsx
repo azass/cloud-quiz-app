@@ -1,14 +1,14 @@
 /* eslint-disable array-callback-return */
 import { memo, useState, FC } from 'react'
-import { useAppSelector } from '../../../../app/hooks'
-import { selectUpdateTerm } from '../../../../slices/editSlice'
-import { ArrowCircleUpIcon } from '@heroicons/react/solid'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { resetEdittingTerms, resetUpdateTerm, selectUpdateTerm } from '../../../../slices/editSlice'
+import { ArrowCircleUpIcon, XCircleIcon } from '@heroicons/react/solid'
 import { useMutateTerms } from '../../../../hooks/useMutateTerms'
 import log from 'loglevel'
 
 export const TermSaveButton: FC = memo(() => {
   log.setLevel('info')
-  log.debug('TermSaveButton start')
+  const dispatch = useAppDispatch()
   const { save } = useMutateTerms()
 
   const update = useAppSelector(selectUpdateTerm)
@@ -17,14 +17,21 @@ export const TermSaveButton: FC = memo(() => {
     setSaving(true)
     save(setSaving)
   }
+  const cancel = () => {
+    dispatch(resetUpdateTerm())
+  }
   return (
     <>
       {update &&
         (!saving ? (
-          <div title="TermSaveButton => useMutateTerms.save()">
+          <div className={`flex justify-start items-center`} title="TermSaveButton => useMutateTerms.save()">
             <ArrowCircleUpIcon
               className="w-8 h-8 ml-8 text-pink-300 cursor-pointer"
               onClick={() => saveTerms()}
+            />
+            <XCircleIcon
+              className="w-8 h-8 ml-8 text-pink-300 cursor-pointer"
+              onClick={() => cancel()}
             />
           </div>
         ) : (

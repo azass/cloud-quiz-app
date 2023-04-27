@@ -21,6 +21,7 @@ export const TermTreeNode: FC<Props> = memo(
   ({ term, index, terms, forQuestion, tag, star }) => {
     const dispatch = useAppDispatch()
     const [fold, setFold] = useState(term.fold || false)
+    
     const onClickFold = (_fold: boolean) => {
       const newTerms = [...terms]
       newTerms[index] = { ...newTerms[index], fold: _fold }
@@ -49,7 +50,7 @@ export const TermTreeNode: FC<Props> = memo(
               {...provided.dragHandleProps}
               className="w-full"
             >
-              <div className="flex items-stretch w-full">
+              <div className={`flex items-stretch w-full pl-${term.level * 4}`}>
                 <div className="flex-none mt-2 pt-1 w-6">
                   {fold ? (
                     <ChevronRightIcon

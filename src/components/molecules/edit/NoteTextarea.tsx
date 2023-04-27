@@ -15,7 +15,7 @@ export const NoteTextarea: FC<Props> = memo(({ lang }) => {
   const { editting } = useEdittingContext()
   const { editElem, index, on } = useNoteItemContext()
   const [pre, setPre] = useState(true)
-  const { textColor, borderColor } = useAppearanceTerm()
+  const { textColor, borderColor, boadBgcolor } = useAppearanceTerm()
   const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${
     editElem.text === '' && 'bg-pink-50'
   }`
@@ -27,14 +27,15 @@ export const NoteTextarea: FC<Props> = memo(({ lang }) => {
   const text_color = () => {
     return on() ? 'text-white' : textColor(editElem.quest_ids || [])
   }
+  const docStyle =
+    !editting &&
+    `py-3 border-2 rounded-md ${boadBgcolor(
+      editElem.quest_ids || []
+    )} ${border_color()}`
   return (
     <div title="EditElemTextarea">
       {lang !== 2 && (
-        <div
-          className={`px-4 py-1 mt-1 ${
-            !editting && 'py-3 bg-black border-2 rounded-md ' + border_color()
-          }`}
-        >
+        <div className={`px-4 py-1 mt-1 ${docStyle}`}>
           {editable && editting ? (
             <div>
               <button

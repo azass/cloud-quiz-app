@@ -1,23 +1,35 @@
 namespace Colors {
   export const baseBg = 'bg-gray-900'
   export const strong = 'text-white'
-  export const document = 'text-green-300'
+  export const document = 'text-cyan-300'
+  export const documentBorder = 'border-cyan-900'
+  export const documentBgcolor = 'bg-black'
   export const weakness = 'text-pink-400'
+  export const weaknessBorder = 'border-pink-900'
+  export const weaknessBgcolor = 'bg-black'
   export const shining = 'text-blue-500'
   export const icon = 'text-gray-600'
   export const linkIcon = 'text-green-300'
   export const linkIconOld = 'text-gray-600'
   export const linkIconNotReady = 'text-pink-600'
   export const linkIconBug = 'text-orange-300'
-  export const bgcolors = [
-    'bg-indigo-600',
-    'bg-blue-500',
-    'bg-indigo-400',
+  // export const termNodeBgcolors = [
+  //   'bg-indigo-600',
+  //   'bg-blue-500',
+  //   'bg-indigo-400',
+  //   'bg-blue-400',
+  //   'bg-indigo-300',
+  //   'bg-blue-300',
+  // ]
+  export const termNodeBgcolors = [
+    'bg-cyan-500',
+    'bg-blue-600',
+    'bg-sky-400',
+    'bg-indigo-500',
     'bg-blue-400',
-    'bg-indigo-300',
-    'bg-blue-300',
+    'bg-teal-400',
   ]
-  export const selectedBgcolors = [
+  export const termNodeBgcolorsSelected = [
     'bg-red-500',
     'bg-pink-400',
     'bg-red-300',

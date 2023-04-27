@@ -17,12 +17,12 @@ import Colors from '../../../../consts/colors'
 import { iconStrong } from '../../../../styles/util'
 
 export const TermsEditor: FC = () => {
+  const params = useParams()
   const editedContext = useAppSelector(selectEditContext)
   const terms = useAppSelector(selectEdittingTerms)
+  const nowTab = useAppSelector(selectTab)
   const [draggable, setDraggable] = useState(true)
   const [star, setStar] = useState(false)
-  const nowTab = useAppSelector(selectTab)
-  const params = useParams()
 
   const toggle = () => {
     resetServerContext()

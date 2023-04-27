@@ -65,7 +65,7 @@ export const TermKeyword: FC = () => {
               )}
             </div>
             <select
-              className={`pl-1 ${Colors.bgcolors[level - 1]}`}
+              className={`pl-1 ${Colors.termNodeBgcolors[level - 1]}`}
               onChange={(e) => setLevel(Number(e.target.value))}
             >
               {[1, 2, 3, 4, 5, 6].map((i) => (

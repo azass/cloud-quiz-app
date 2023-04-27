@@ -23,7 +23,7 @@ export const useKeywords = (question: Question) => {
   }
   const getBgColor = (selected: boolean, lv: number) => {
     return `${
-      selected ? Colors.selectedBgcolors[lv - 1] : Colors.bgcolors[lv - 1]
+      selected ? Colors.termNodeBgcolorsSelected[lv - 1] : Colors.termNodeBgcolors[lv - 1]
     }`
   }
 

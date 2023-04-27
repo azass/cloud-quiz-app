@@ -1,130 +1,31 @@
-import log from 'loglevel'
 import { FC, memo, useState } from 'react'
 import { QItem } from '../molecules/list/QItem'
-import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
-import { selectQuestions, selectScArgs } from '../../slices/editSlice'
+import { selectQuestions } from '../../slices/editSlice'
 import { TagFilter } from '../atoms/TagFilter'
-import { Question, Term } from '../../types/types'
 import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/outline'
 import Colors from '../../consts/colors'
+import { useFilter } from '../../hooks/useFilter'
 
 export const QuizListFrame: FC = memo(() => {
-  log.setLevel('debug')
-  const params = useParams()
-  const [searchWord, setSearchWord] = useState('')
   const [asc, setAsc] = useState(true)
-  const scArgs = useAppSelector(selectScArgs)
-  const args = { ...scArgs, exam_ids: [params.exam_id], except_old: false }
-  log.debug(args)
+  const [active, setActive] = useState(true)
+  const [inactive, setInactivy] = useState(true)
+  const [terminate, setTerminate] = useState(false)
   const data = useAppSelector(selectQuestions)
-  const filterOtherOptions = (question: Question) => {
-    if (args.other_options.length > 0) {
-      if (args.other_options.includes(0)) {
-        if (question.more_study) {
-          return true
-        }
-      }
-      if (args.other_options.includes(1)) {
-        if (question.is_difficult) {
-          return true
-        }
-      }
-      if (args.other_options.includes(2)) {
-        if (question.is_weak) {
-          return true
-        }
-      }
-      if (args.other_options.includes(3)) {
-        if (question.is_mandatory) {
-          return true
-        }
-      }
-      if (args.other_options.includes(4)) {
-        if (question.is_bug) {
-          return true
-        }
-      }
-      return false
-    } else {
-      return true
-    }
-  }
-  const filterScorings = (question: Question) => {
-    if (args.scorings.length > 0) {
-      return args.scorings.includes(question.scoring)
-    } else {
-      return true
-    }
-  }
-  const filterTags = (question: Question) => {
-    if (args.category_ids.length > 0 && question.tags) {
-      for (const tagId of question.tags) {
-        if (args.category_ids.includes(tagId)) {
-          return true
-        }
-      }
-      return false
-    } else {
-      return true
-    }
-  }
-  const filter = (question: Question) => {
-    if (filterOtherOptions(question)) {
-      if (filterScorings(question)) {
-        if (filterTags(question)) {
-          return true
-        }
-      }
-    }
-    return false
-  }
-  const show = (question: Question) => {
-    if (filter(question)) {
-      if (searchWord !== '') {
-        if (question.keywords) {
-          const keywords = JSON.parse(question.keywords || '{}')
-          for (const tagName of Object.keys(keywords)) {
-            if (tagName.toLowerCase().includes(searchWord.toLowerCase())) {
-              return true
-            } else {
-              if (keywords[tagName].length > 0) {
-                if (
-                  keywords[tagName].filter((term: Term) => {
-                    return term.word
-                      .toLowerCase()
-                      .includes(searchWord.toLowerCase())
-                  }).length > 0
-                ) {
-                  return true
-                }
-              }
-            }
-          }
-        }
-        if (question.labels) {
-          if (
-            question.labels.filter((label) => {
-              return label.toLowerCase().includes(searchWord.toLowerCase())
-            }).length > 0
-          ) {
-            return true
-          }
-        }
-        return false
-      } else {
-        return true
-      }
-    } else {
-      return false
-    }
-  }
+  const {setSearchWord, show} = useFilter()
   const list = () => {
     if (data) {
+      const filtered = data.filter(
+        (quest) =>
+          (active && !quest.not_ready) ||
+          (inactive && quest.not_ready) ||
+          (terminate && quest.is_old)
+      )
       if (asc) {
-        return data
+        return filtered
       } else {
-        return data.slice().reverse()
+        return filtered.slice().reverse()
       }
     } else {
       return []
@@ -148,6 +49,41 @@ export const QuizListFrame: FC = memo(() => {
           )}
         </div>
         <div className="flex flex-row items-center -mt-8">
+          <div className="flex flex-row items-center mt-4 mr-4">
+            <div className="flex px-2">
+              <input
+                type="checkbox"
+                id="active"
+                checked={active}
+                onChange={(e) => setActive(!active)}
+              />
+              <label htmlFor="active" className="ml-1 text-white">
+                有効
+              </label>
+            </div>
+            <div className="flex px-2">
+              <input
+                type="checkbox"
+                id="inactive"
+                checked={inactive}
+                onChange={(e) => setInactivy(!inactive)}
+              />
+              <label htmlFor="inactive" className="ml-1 text-white">
+                無効
+              </label>
+            </div>
+            <div className="flex px-2">
+              <input
+                type="checkbox"
+                id="active"
+                checked={terminate}
+                onChange={(e) => setTerminate(!terminate)}
+              />
+              <label htmlFor="active" className="ml-1 text-white">
+                破棄
+              </label>
+            </div>
+          </div>
           <TagFilter setSearchWord={setSearchWord} />
           <div
             className={`flex items-center justify-center rounded-full bg-gray-300 h-8 w-8 mt-3 mr-8 font-bold text-blue-700`}

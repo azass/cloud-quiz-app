@@ -16,7 +16,7 @@ export const QTerms: FC<Props> = memo(({ terms }) => {
               key={term.term_id}
               className={
                 `rounded-full border my-1 mr-1 py-1 px-3 text-left ${strongText} ` +
-                `${Colors.bgcolors[term.level - 1]}`
+                `${Colors.termNodeBgcolors[term.level - 1]}`
               }
             >
               {term.word}

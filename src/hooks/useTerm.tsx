@@ -98,7 +98,7 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
 
   const getBgColor = (lv: number) => {
     return `${
-      term.selected ? Colors.selectedBgcolors[lv - 1] : Colors.bgcolors[lv - 1]
+      term.selected ? Colors.termNodeBgcolorsSelected[lv - 1] : Colors.termNodeBgcolors[lv - 1]
     }`
   }
 

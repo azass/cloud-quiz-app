@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
 import { useAppSelector } from '../../app/hooks'
-import { selectEdittingTerms } from '../../slices/editSlice'
+import { selectEditContext, selectEdittingTerms } from '../../slices/editSlice'
 import rehypeRaw from 'rehype-raw'
 import remarkGfm from 'remark-gfm'
 import Prop from '../../consts/props'
@@ -13,13 +13,16 @@ import {
 
 export const TermNotePanel: FC = () => {
   const terms = useAppSelector(selectEdittingTerms)
+  const editContext = useAppSelector(selectEditContext)
   const getNote = () => {
     var txt = ''
     terms.forEach((term) => {
       txt = txt
-        .concat('#'.repeat(term.level + 1))
+        .concat(term.word === 'is ?' ? '#' : '#'.repeat(term.level + 1))
         .concat(' ')
-        .concat(term.word)
+        .concat(
+          term.word === 'is ?' ? editContext.chosenTag.tag_name : term.word
+        )
         .concat('\n\n')
       term.description?.forEach((elem) => {
         if (elem.type === Prop.NoteItemType.TEXTAREA) {

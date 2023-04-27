@@ -48,7 +48,7 @@ export const QTermDescriptions: FC = memo(() => {
                     key={term.term_id}
                     className={
                       `rounded-full border mr-1 py-1 px-3 text-left text-xs ${strongText} ` +
-                      `${Colors.bgcolors[term.level - 1]}`
+                      `${Colors.termNodeBgcolors[term.level - 1]}`
                     }
                   >
                     {term.word}

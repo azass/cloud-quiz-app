@@ -65,7 +65,7 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            `flex-shrink-0 border p-1 ${strongText}` +
+            `flex-shrink-0 border p-1 ${strongText} ` +
             `${isDifficult && ` bg-red-600`}`
           }
           onClick={() => {
@@ -85,7 +85,7 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            `flex-shrink-0 border p-1 ${strongText}` +
+            `flex-shrink-0 border p-1 ${strongText} ` +
             `${isWeak && ` bg-pink-500`}`
           }
           onClick={() => {
@@ -105,7 +105,7 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            `flex-shrink-0 border-t border-r border-b p-1 ${strongText}` +
+            `flex-shrink-0 border-t border-r border-b p-1 ${strongText} ` +
             `${isMandatory && ` bg-green-600`}`
           }
           onClick={() => {

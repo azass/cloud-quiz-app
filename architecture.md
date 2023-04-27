@@ -1,79 +1,90 @@
-
-TermsLoader
-    TermsEditor
+QuizEditor
+  QuizHeader
+  QTabs
+  ExamSelectTab
+  QuizSelectTab
+    QListHeader
+    QuizSelectFrame
+    TagSelectPanel
+    TermsLoader
+      TermsEditor
         TermSaveButton
         TermAddButton
         TermTree
-            TermTreeNode
-                TermProvider
+          TermTreeNode
+            TermProvider
+              EditElemsProvider
+                TermEditor
+                  TermDescriptionIcon TermKeyword TermOperateIconSet
+                    TermDescription
+                      EditElemAdds
+                      EditElemProvider
+                        EditBlockContent
+                          EditElemAdds
+                          EditBlockContentBar
+                          EditBlockContentBody
+                            EditElemOption
+                            EditElemTextarea
+                            EditElemLinkMemo
+                            EditElemImage
+                            EditElemTextbox
+                          EditElemAdds
+                    SaveButton
+                  TermHeader
                   EditElemsProvider
-                      TermEditor
-                          TermDescriptionIcon TermKeyword TermOperateIconSet
-                              TermDescription
-                                  EditElemAdds
-                                  EditElemProvider
-                                      EditBlockContent
-                                          EditElemAdds
-                                          EditBlockContentBar
-                                          EditBlockContentBody
-                                              EditElemOption
-                                              EditElemTextarea
-                                              EditElemLinkMemo
-                                              EditElemImage
-                                              EditElemTextbox
-                                          EditElemAdds
-                              SaveButton
-                          TermHeader
-                          EditElemsProvider
-                              TermDescription
-                TermAddButton
+                    TermDescription
+              TermAddButton
         SelectTerm
-
-EditPanel
+     SearchProvider
+      QSearchQuery
+  QListQuery
+  TermNoteTab
+  EditPanel
     QuestionProvider
-        QuestionCaseProvider
-            EditQuestion
-                EditQuestionHeader
-                EditQuestionCase
-                    EditElemsProvider
-                        EditBlock
-                EditElemsProvider(name,editElems,editable,draggable,star)=>editElemsState,enableEdit,showCheckbox,showAllQuestionCase,saveButtonToggle
-                    EditBlock(title)
-                        EditBlockHeader(title)
-                        EditElemAdds(index)
-                        EditElemProvider(editElem,index)
-                            EditBlockContent
-                                EditElemAdds
-                                EditBlockContentBar
-                                EditBlockContentBody
-                                    EditElemOption
-                                    EditElemTextarea
-                                    EditElemLinkMemo
-                                    EditElemImage
-                                    EditElemTextbox
-                                EditElemAdds
-                EditElemsProvider
-                    EditBlock
-                QScraping
-                    QComments
-                        EditContext.Provider
-                            EditElemProvider
-                                EditBlockContent
-                        QComment
-                QBug
-                QKeywords
-                QTermDescriptions
-                    EditElemsProvider
-                        EditBlock
-                            EditElemProvider(editElem,name,index,editable,enableEdit)
-                                EditBlockContent
-                EditElemsProvider
-                    EditBlock
-                QLeaningProfiles
-                QLabels
+      QuestionCaseProvider
+        EditQuestion
+          EditQuestionHeader
+          EditQuestionCase
+            EditElemsProvider
+              EditBlock
+          EditElemsProvider(name,editElems,editable,draggable,star)=>editElemsState,enableEdit,showCheckbox,showAllQuestionCase,saveButtonToggle
+            EditBlock(title)
+              EditBlockHeader(title)
+              EditElemAdds(index)
+              EditElemProvider(editElem,index)
+                EditBlockContent
+                  EditElemAdds
+                  EditBlockContentBar
+                  EditBlockContentBody
+                    EditElemOption
+                    EditElemTextarea
+                    EditElemLinkMemo
+                    EditElemImage
+                    EditElemTextbox
+                  EditElemAdds
+          EditElemsProvider
+            EditBlock
+          QScraping
+            QComments
+              EditContext.Provider
+                EditElemProvider
+                  EditBlockContent
+                QComment
+          QBug
+          QKeywords
+          QTermDescriptions
+            EditElemsProvider
+              EditBlock
+                EditElemProvider(editElem,name,index,editable,enableEdit)
+                  EditBlockContent
+          EditElemsProvider
+            EditBlock
+          QLeaningProfiles
+          QLabels
     TermProvider
-        EditTermProvider
-            EditTerm
+      EditTermProvider
+        EditTerm
+  TermNotePanel
             
 editable
 追加、編集等できる

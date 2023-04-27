@@ -1,6 +1,7 @@
 import { useAppSelector } from '../app/hooks'
 import Colors from '../consts/colors'
 import { selectExam, selectQuestions } from '../slices/editSlice'
+import { normalDocument, weaknessDocument } from '../styles/util'
 
 export const useAppearanceTerm = () => {
   const exam = useAppSelector(selectExam)
@@ -21,9 +22,9 @@ export const useAppearanceTerm = () => {
   }
   const borderColor = (questIds: string[]) => {
     if (isWeak(questIds)) {
-      return 'border-pink-900'
+      return Colors.weaknessBorder
     } else {
-      return 'border-green-900'
+      return Colors.documentBorder
     }
   }
   const textColor = (questIds: string[]) => {
@@ -33,9 +34,17 @@ export const useAppearanceTerm = () => {
       return Colors.document
     }
   }
+  const boadBgcolor = (questIds: string[]) => {
+    if (isWeak(questIds)) {
+      return Colors.weaknessBgcolor
+    } else {
+      return Colors.documentBgcolor
+    }
+  }
   return {
     show,
     borderColor,
     textColor,
+    boadBgcolor,
   }
 }

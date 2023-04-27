@@ -41,7 +41,7 @@ export const TermEditor: FC = memo(() => {
             }
           >
             <div className="flex justify-start items-center px-2">
-              <div className={`flex items-center pl-${term.level * 4}`}>
+              <div className={`flex items-center`}>
                 <TermDescriptionIcon />
                 <TermKeyword />
               </div>

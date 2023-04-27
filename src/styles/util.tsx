@@ -71,3 +71,5 @@ export const iconAccent = `${Colors.strong} cursor-pointer`
 export const iconStrong = `${strongText} cursor-pointer`
 export const searchKeyOn = `text-white bg-pink-500`
 export const searchKeyOff = `text-gray-500 bg-gray-300`
+export const normalDocument = `${Colors.document} ${Colors.documentBgcolor}`
+export const weaknessDocument = `${Colors.weakness} ${Colors.weaknessBgcolor}`

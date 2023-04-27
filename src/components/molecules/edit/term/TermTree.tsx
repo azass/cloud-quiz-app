@@ -18,10 +18,19 @@ export const TermTree: FC<Props> = memo(({ star }) => {
   const editedContext = useAppSelector(selectEditContext)
   const terms = useAppSelector(selectEdittingTerms)
   const { show } = useAppearanceTerm()
+
   const handleDragEnd = (result: any) => {
+    let count = 1
+    for (let i = result.source.index + 1; i < terms.length; i++) {
+      if (terms[i].level > terms[result.source.index].level) {
+        count++
+      } else {
+        break
+      }
+    }
     const newTerms = [...terms]
-    const remove = newTerms.splice(result.source.index, 1)
-    newTerms.splice(result.destination.index, 0, remove[0])
+    const remove = newTerms.splice(result.source.index, count)
+    newTerms.splice(result.destination.index, 0, ...remove)
     dispatch(setEdittingTerms(newTerms))
     dispatch(setUpdateTerm(true))
   }
