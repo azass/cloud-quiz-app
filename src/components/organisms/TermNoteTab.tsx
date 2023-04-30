@@ -3,7 +3,7 @@ import { useAppSelector } from '../../app/hooks'
 import { useSearch } from '../../hooks/useSearch'
 import { selectShowContent } from '../../slices/editSlice'
 import { TagSelectPanel } from './TagSelectPanel'
-import { TermsLoader } from '../molecules/edit/term/TermsLoader'
+import { TermsProvider } from '../molecules/edit/term/TermsProvider'
 
 export const TermNoteTab: FC = memo(() => {
   const editedContent = useAppSelector(selectShowContent)
@@ -19,7 +19,7 @@ export const TermNoteTab: FC = memo(() => {
           setSelectSearchTags={setSelectSearchTags}
         />
       )}
-      {editedContent === 'TermEdit' && <TermsLoader />}
+      {editedContent === 'TermEdit' && <TermsProvider />}
     </>
   )
 })

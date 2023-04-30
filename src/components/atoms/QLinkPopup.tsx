@@ -16,7 +16,12 @@ export const QLinkPopup: FC<Props> = memo(({ quest_ids }) => {
       <TagIcon className={`w-5 h-5 mr-1 ${iconAccent}`} />
       <div className="absolute invisible group-hover:visible bg-blue-800 w-32 -ml-20 z-100">
         {quest_ids.map((quest_id) => (
-          <div className="px-1 py-1 text-pink-200 cursor-pointer bg-blue-800 hover:text-pink-400 text-center">
+          <div
+            className={
+              `px-1 py-1 text-pink-200 cursor-pointer bg-blue-800` +
+              ` hover:text-pink-400 text-center`
+            }
+          >
             <Link
               to={`/editor/${quest_id.slice(
                 0,

@@ -55,7 +55,6 @@ export interface EditState {
   updateTerm: boolean
   edittingTerms: Term[]
   scArgs: any
-  lang: number
   suggestTerms: Term[]
   questions: Question[]
 }

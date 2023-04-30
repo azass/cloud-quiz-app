@@ -37,7 +37,10 @@ export const QKeywords: FC<Props> = memo(({ question, withAdd }) => {
           <>
             <span
               key={question.quest_id + '_' + index++}
-              className={`flex items-center rounded-full border py-1 my-1 mr-1 px-3 bg-pink-600 ${strongText}`}
+              className={
+                `flex items-center rounded-full border` +
+                ` py-1 my-1 mr-1 px-3 bg-pink-600 ${strongText}`
+              }
             >
               {getTagName(key)}
             </span>
@@ -46,18 +49,22 @@ export const QKeywords: FC<Props> = memo(({ question, withAdd }) => {
         ))}
         {!withAdd &&
           question.labels &&
-          question.labels.map((label, index) => (
+          question.labels.map((label) => (
             <span
-              className={`flex items-center rounded-full border my-1 mr-1 py-1 px-3 bg-pink-300 text-xs ${strongText}`}
+              className={
+                `flex items-center rounded-full border` +
+                ` my-1 mr-1 py-1 px-3 bg-pink-300 text-xs ${strongText}`
+              }
             >
               {label}
             </span>
           ))}
         <PlusCircleIcon
           onClick={() => addTag()}
-          className={`h-5 w-5 mt-2 ml-8 text-pink-500 cursor-pointer ${
-            withAdd ? '' : 'hidden'
-          }`}
+          className={
+            `h-5 w-5 mt-2 ml-8 text-pink-500 cursor-pointer` +
+            ` ${withAdd ? '' : 'hidden'}`
+          }
         />
       </div>
     </>

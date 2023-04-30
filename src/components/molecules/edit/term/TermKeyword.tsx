@@ -12,30 +12,24 @@ import {
   useTermEdittingContext,
 } from './TermProvider'
 import Colors from '../../../../consts/colors'
+import { useAppSelector } from '../../../../app/hooks'
+import { selectEditContext } from '../../../../slices/editSlice'
 
 export const TermKeyword: FC = () => {
-  const { term, forQuestion } = useTermContext()
-  const { termEditting } = useTermEdittingContext()
+  const editContext = useAppSelector(selectEditContext)
+  const { term } = useTermContext()
+  const { termEditting, setTermEditting } = useTermEdittingContext()
   const { word, setWord } = useWordContext()
   const { level, setLevel } = useLevelContext()
   const { refTag } = useRefTagContext()
   const { update, select, getBgColor } = useEditTermContext()
   const [ref, setRef] = useState('ref' in term)
+  if (word ==='') {
+    setTermEditting(true)
+  }
   return (
     <>
-      {!termEditting ? (
-        <span
-          key={term.term_id}
-          className={
-            'rounded-full px-6 py-1 text-left text-white text-sm font-black ' +
-            `${forQuestion && 'cursor-pointer '}` +
-            getBgColor(level)
-          }
-          onClick={() => select()}
-        >
-          {word}
-        </span>
-      ) : (
+      {termEditting ? (
         <form
           className="bg-opacity-0 pl-6"
           onSubmit={(e) => {
@@ -44,9 +38,10 @@ export const TermKeyword: FC = () => {
           }}
         >
           <div
-            className={`place-items-center flex border-0 bg-opacity-0 ${getBgColor(
-              level
-            )}`}
+            className={
+              `place-items-center flex border-0 bg-opacity-0` +
+              ` ${getBgColor(level)}`
+            }
           >
             <div className="text-black text-sm">
               {ref && refTag ? (
@@ -84,6 +79,18 @@ export const TermKeyword: FC = () => {
             <div className="text-black text-xs">{ref && <TermRefTags />}</div>
           </div>
         </form>
+      ) : (
+        <span
+          key={term.term_id}
+          className={
+            `rounded-full px-6 py-1 text-left text-white text-sm font-black` +
+            ` ${editContext.forQuestion && 'cursor-pointer '}` +
+            getBgColor(level)
+          }
+          onClick={() => select()}
+        >
+          {word}
+        </span>
       )}
     </>
   )

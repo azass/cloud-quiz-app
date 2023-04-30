@@ -203,7 +203,10 @@ export const QScraping: FC = memo(() => {
           ></textarea>
           <button
             type="submit"
-            className={`flex justify-center mx-auto px-4 py-2 mt-4 rounded-lg bg-blue-500 ${strongText}`}
+            className={
+              `flex justify-center mx-auto px-4 py-2 mt-4` +
+              ` rounded-lg bg-blue-500 ${strongText}`
+            }
             onClick={() => onClick(question.quest_id)}
           >
             取り込み
@@ -262,7 +265,12 @@ export const QScraping: FC = memo(() => {
       )}
       {isLoading && (
         <div className="flex justify-center">
-          <div className="animate-spin h-10 w-10 border-4 border-blue-500 rounded-full border-t-transparent"></div>
+          <div
+            className={
+              `animate-spin h-10 w-10 rounded-full` +
+              ` border-4 border-blue-500 border-t-transparent`
+            }
+          ></div>
         </div>
       )}
       <div className="py-2 underline text-blue-700 text-base text-xs">

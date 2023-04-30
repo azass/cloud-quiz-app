@@ -12,10 +12,7 @@ import {
 import Colors from '../../../consts/colors'
 import { iconBase } from '../../../styles/util'
 
-interface Props {
-  lang: number
-}
-export const NoteOption: FC<Props> = memo(({ lang }) => {
+export const NoteOption: FC = memo(() => {
   log.setLevel('info')
   const { showCheckbox } = useShowCheckboxContext()
   const { add, changeCheck } = useNoteItemsContext()
@@ -28,9 +25,7 @@ export const NoteOption: FC<Props> = memo(({ lang }) => {
     <>
       <div className="flex">
         {showCheckbox && (
-          <div
-            className={`flex w-14 ${editting ? '-mt-3' : 'pt-2'} space-x-1`}
-          >
+          <div className={`flex w-14 ${editting ? '-mt-3' : 'pt-2'} space-x-1`}>
             <input
               type="checkbox"
               checked={editElem.correct}
@@ -46,7 +41,7 @@ export const NoteOption: FC<Props> = memo(({ lang }) => {
           </div>
         )}
         <div className="w-full">
-          {textareaToggle && <NoteTextarea lang={lang} />}
+          {textareaToggle && <NoteTextarea />}
           {imageToggle && <NoteImage />}
         </div>
       </div>

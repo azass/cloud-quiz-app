@@ -1,10 +1,9 @@
 import { memo, FC } from 'react'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectLang, setLangs } from '../../slices/editSlice'
+import { useLangContext } from './LangProvider'
 
 export const SelectLang: FC = memo(() => {
-  const nowLang = useAppSelector(selectLang)
-  const dispatch = useAppDispatch()
+  const { lang, setLang } = useLangContext()
+  const nowLang = lang
   const bgcolor = (lang: number) => {
     if (nowLang === 0 || nowLang === lang) {
       return 'bg-green-500'
@@ -12,12 +11,12 @@ export const SelectLang: FC = memo(() => {
       return ''
     }
   }
-  const setLang = (lang: number) => {
+  const clickLang = (lang: number) => {
     if (nowLang === 0 || nowLang === lang) {
       const newLang = lang + (-1) ** (lang - 1)
-      dispatch(setLangs(newLang))
+      setLang(newLang)
     } else {
-      dispatch(setLangs(0))
+      setLang(0)
     }
   }
   return (
@@ -25,16 +24,17 @@ export const SelectLang: FC = memo(() => {
       <button
         type="button"
         className={`flex-shrink-0 w-20 border p-1 text-white ${bgcolor(1)}`}
-        onClick={() => setLang(1)}
+        onClick={() => clickLang(1)}
       >
         日本語
       </button>
       <button
         type="button"
-        className={`flex-shrink-0 w-20 border-t border-r border-b p-1 text-white ${bgcolor(
-          2
-        )}`}
-        onClick={() => setLang(2)}
+        className={
+          `flex-shrink-0 w-20 border-t border-r border-b` +
+          ` p-1 text-white ${bgcolor(2)}`
+        }
+        onClick={() => clickLang(2)}
       >
         English
       </button>

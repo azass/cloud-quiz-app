@@ -26,10 +26,7 @@ export const QSearchButtonSet: FC = memo(() => {
       <div className="flex justify-around pr-4">
         <div className="w-1/6 px-1">
           <button
-            className={
-              `rounded-full w-full p-2 bg-blue-500 ${strongText} ` +
-              getBgColor()
-            }
+            className={`rounded-full w-full p-2 bg-blue-500 ${strongText} ${getBgColor()}`}
             onClick={() => onClick0()}
           >
             {selectOptions?.includes(-2) ? '対象外' : 'すべて'}

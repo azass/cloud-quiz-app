@@ -64,7 +64,10 @@ export const TermNotePanel: FC = () => {
             />
           </div>
           <textarea
-            className="form-textarea m-1 block p-2.5 w-full border-blue-500 border-opacity-100"
+            className={
+              `form-textarea m-1 block p-2.5 w-full` +
+              ` border-blue-500 border-opacity-100`
+            }
             rows={13}
             onChange={(e) => setNote(e.target.value)}
           >
@@ -72,7 +75,10 @@ export const TermNotePanel: FC = () => {
           </textarea>
           <button
             type="submit"
-            className={`flex justify-center mx-auto px-4 py-2 mt-4 rounded-lg bg-blue-500 ${strongText}`}
+            className={
+              `flex justify-center mx-auto px-4 py-2 mt-4 rounded-lg` +
+              ` bg-blue-500 ${strongText}`
+            }
             onClick={() => {
               // onClick(question.quest_id)
             }}
@@ -91,7 +97,7 @@ export const TermNotePanel: FC = () => {
       )}
       <div className="markdown">
         <ReactMarkdown
-          className={'text-base w-full text-white' + ' whitespace-pre-wrap '}
+          className={'text-base w-full text-white whitespace-pre-wrap '}
           rehypePlugins={[rehypeRaw]}
           remarkPlugins={[remarkGfm]}
           children={note}

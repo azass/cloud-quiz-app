@@ -27,9 +27,7 @@ export const QItem: FC<Props> = memo(({ question }) => {
           className={`h-5 w-5 mx-1 mt-1 cursor-pointer ${linkColor}`}
         />
       </Link>
-      <span className={`w-3 mt-2 ${strongText}`}>
-        Q{question.quest_no}
-      </span>
+      <span className={`w-3 mt-2 ${strongText}`}>Q{question.quest_no}</span>
       <div className="pl-4">
         <QKeywords question={question} withAdd={false} />
       </div>

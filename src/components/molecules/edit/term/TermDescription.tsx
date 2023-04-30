@@ -16,14 +16,17 @@ import {
 import { useEditTermContext, useTermContext } from './TermProvider'
 import { NoteBlockHeader } from '../NoteBlockHeader'
 import Colors from '../../../../consts/colors'
+import { useStarContext } from './TermsProvider'
 
 export const TermDescription: FC = memo(() => {
   const dispatch = useAppDispatch()
   const { term } = useTermContext()
-  const { star, draggable, editable } = useNoteItemsContext()
+  const { star } = useStarContext()
+  const { draggable, editable } = useNoteItemsContext()
   const { editting } = useEdittingContext()
   const { updateCacheTerm } = useEditTermContext()
-  const { editItems: editElemsState, setEditItems: setEditElemsState } = useEditItemsContext()
+  const { editItems: editElemsState, setEditItems: setEditElemsState } =
+    useEditItemsContext()
   const { saveButtonToggle } = useSaveButtonToggleContext()
   const { save } = useNoteItemsContext()
   const updateTem = useAppSelector(selectUpdateTerm)
@@ -64,9 +67,7 @@ export const TermDescription: FC = memo(() => {
           ))
         )}
         <div className="flex justify-center mx-auto">
-          {saveButtonToggle && editting && (
-            <SaveButton onClick={onClickSave} />
-          )}
+          {saveButtonToggle && editting && <SaveButton onClick={onClickSave} />}
         </div>
       </div>
     </>

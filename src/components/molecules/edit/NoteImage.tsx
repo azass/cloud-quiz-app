@@ -26,7 +26,9 @@ export const NoteImage: FC = memo(() => {
       {editable && editting && (
         <>
           <div>
-            <span className={`mx-6 py-4 my-2 ${Colors.shining} font-bold text-xs`}>
+            <span
+              className={`mx-6 py-4 my-2 ${Colors.shining} font-bold text-xs`}
+            >
               画像パス
             </span>
             <TextareaAutosize
@@ -36,7 +38,9 @@ export const NoteImage: FC = memo(() => {
             />
           </div>
           <div>
-            <span className={`mx-6 py-4 my-2 ${Colors.shining} font-bold text-xs`}>
+            <span
+              className={`mx-6 py-4 my-2 ${Colors.shining} font-bold text-xs`}
+            >
               画像高さ
             </span>
             <TextareaAutosize

@@ -1,5 +1,4 @@
 import { memo, FC } from 'react'
-import { useQueryClient } from 'react-query'
 import { useQueryProgressState } from '../../../hooks/useQueryProgressState'
 import { QExcludeButton } from './QExcludeButton'
 import { QMistakeButton } from './QMistakeButton'
@@ -8,7 +7,6 @@ interface Props {
   exam_id: string
 }
 export const QSProgressButtonSet: FC<Props> = memo(({ exam_id }) => {
-  const queryClient = useQueryClient()
   const { status, data } = useQueryProgressState(exam_id)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>

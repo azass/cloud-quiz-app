@@ -6,8 +6,8 @@ import { QListHeader } from '../molecules/list/QListHeader'
 import { QSearchQuery } from '../molecules/search/QSearchQuery'
 import { QuizSelectFrame } from './QuizSelectFrame'
 import { TagSelectPanel } from './TagSelectPanel'
-import { TermsLoader } from '../molecules/edit/term/TermsLoader'
 import { SearchProvider } from '../molecules/search/SearchProvider'
+import { TermsProvider } from '../molecules/edit/term/TermsProvider'
 
 export const QuizSelectTab: FC = memo(() => {
   const editedContent = useAppSelector(selectShowContent)
@@ -27,7 +27,7 @@ export const QuizSelectTab: FC = memo(() => {
         />
       </div>
       <div className={`${editedContent === 'TermEdit' ? '' : 'hidden'}`}>
-        <TermsLoader />
+        <TermsProvider />
       </div>
       {editedContent === 'Search' && (
         <div className={`${editedContent === 'Search' ? '' : 'hidden'}`}>

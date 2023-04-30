@@ -2,19 +2,17 @@ import { CloudUploadIcon } from '@heroicons/react/outline'
 import { memo, FC } from 'react'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import log from 'loglevel'
-import { useQuestionContext } from './QuestionProvider'
+import { useIsNewContext, useQuestionContext } from './QuestionProvider'
 import { iconShine } from '../../../../styles/util'
 
-interface Props {
-  setRegisterToggle: any
-}
-export const QNewRegister: FC<Props> = memo(({ setRegisterToggle }) => {
+export const QNewRegister: FC = memo(() => {
   log.setLevel('debug')
   const { question } = useQuestionContext()
   const { createQuestion } = useMutateQuestion()
+  const { setIsNew } = useIsNewContext()
   const onClickRegister = () => {
     createQuestion(question)
-    setRegisterToggle(false)
+    setIsNew(false)
   }
   return (
     <>

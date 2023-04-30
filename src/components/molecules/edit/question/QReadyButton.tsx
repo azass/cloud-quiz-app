@@ -2,19 +2,21 @@ import { PauseIcon, RssIcon } from '@heroicons/react/solid'
 import { memo, FC } from 'react'
 import { useQuestionContext } from './QuestionProvider'
 import { iconShine } from '../../../../styles/util'
-interface Props {
-  notReady: boolean
-  putQuestion: any
-}
-export const QReadyButton: FC<Props> = memo(({ notReady, putQuestion }) => {
+import { useEditQuestionContext, useNotReadyContext } from './EditQuestionHeader'
+import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
+export const QReadyButton: FC = memo(() => {
   const { question } = useQuestionContext()
+  const { notReady } = useNotReadyContext()
+  const { postPut } = useEditQuestionContext()
+  const { putQuestionSync } = useMutateQuestion()
   const onClickReady = (_notReady: boolean) => {
-    putQuestion(
+    putQuestionSync(
       {
         quest_id: question.quest_id,
         not_ready: _notReady,
       },
-      question
+      question,
+      postPut
     )
   }
   return (

@@ -57,14 +57,17 @@ export const QConditionButton: FC<Props> = memo(({ index }) => {
   return (
     <button
       className={
-        `place-items-center flex justify-between rounded-full w-full h-8 p-2 bg-blue-500 ${strongText} ` +
-        getBgColor(index)
+        `place-items-center flex justify-between rounded-full w-full` +
+        ` h-8 p-2 bg-blue-500 ${strongText} ${getBgColor(index)}`
       }
       onClick={() => onClick(index)}
     >
       <span className="flex pl-2">{Label.conditionLabels[index]}</span>
       <span
-        className={`flex items-center justify-center rounded-full bg-blue-500 h-6 w-6 text-xs font-bold text-gray-300`}
+        className={
+          `flex items-center justify-center rounded-full` +
+          ` bg-blue-500 h-6 w-6 text-xs font-bold text-gray-300`
+        }
       >
         {questions.filter((question) => filter(question)).length}
       </span>

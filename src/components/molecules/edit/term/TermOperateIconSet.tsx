@@ -4,10 +4,7 @@ import { XCircleIcon } from '@heroicons/react/solid'
 import {
   PencilAltIcon,
   CheckCircleIcon,
-  ExternalLinkIcon,
 } from '@heroicons/react/outline'
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
-import { selectEditContext, setEditContext } from '../../../../slices/editSlice'
 import {
   useEditTermContext,
   useTermContext,
@@ -15,17 +12,13 @@ import {
 } from './TermProvider'
 import { useNoteItemsContext } from '../NoteItemsProvider'
 import { iconAccent } from '../../../../styles/util'
+import { TermNoteLink } from './TermNoteLink'
 
 export const TermOperateIconSet: FC = () => {
-  const dispatch = useAppDispatch()
-  const editContext = useAppSelector(selectEditContext)
   const { draggable } = useNoteItemsContext()
   const { term } = useTermContext()
   const { termEditting, setTermEditting } = useTermEdittingContext()
   const { update, del } = useEditTermContext()
-  const setChosenTerm = () => {
-    dispatch(setEditContext({ ...editContext, chosenTerm: term }))
-  }
   return (
     <div className="flex">
       <div className="flex items-center">
@@ -49,12 +42,7 @@ export const TermOperateIconSet: FC = () => {
         {draggable && term.quest_ids && term.quest_ids.length > 0 && (
           <QLinkPopup quest_ids={term.quest_ids || []} />
         )}
-        <ExternalLinkIcon
-          className={
-            `h-2 w-2 my-1 ml-1 mr-1 ${iconAccent} hover:h-4 hover:w-4`
-          }
-          onClick={() => setChosenTerm()}
-        />
+        <TermNoteLink />
       </div>
     </div>
   )

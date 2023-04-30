@@ -1,11 +1,6 @@
-import axios from 'axios'
-import { memo, useState, FC } from 'react'
+import { memo, useState, FC, createContext, useContext } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
-import {
-  selectIdToken,
-  selectQuestions,
-  setQuestions,
-} from '../../../../slices/editSlice'
+import { selectQuestions, setQuestions } from '../../../../slices/editSlice'
 import { Question } from '../../../../types/types'
 import { SelectLang } from '../../../atoms/SelectLang'
 import { QRArchiveToggle } from './QArchiveToggle'
@@ -13,14 +8,33 @@ import { QCaseButtonSet } from './QCaseButtonSet'
 import { QNewRegister } from './QNewRegister'
 import { QReadyButton } from './QReadyButton'
 import { useIsNewContext, useQuestionContext } from './QuestionProvider'
-import Prop from '../../../../consts/props'
 import { strongText } from '../../../../styles/util'
-
+import { QScreenTime } from './QScreenTime'
+const IsOldContext = createContext(
+  {} as {
+    isOld: boolean
+    setIsOld: any
+  }
+)
+const NotReadyContext = createContext(
+  {} as {
+    notReady: boolean
+    setNotReady: any
+  }
+)
+const EditQuestionContext = createContext(
+  {} as {
+    questId: string
+    postPut: any
+  }
+)
+export const useIsOldContext = () => useContext(IsOldContext)
+export const useNotReadyContext = () => useContext(NotReadyContext)
+export const useEditQuestionContext = () => useContext(EditQuestionContext)
 export const EditQuestionHeader: FC = memo(() => {
   const dispatch = useAppDispatch()
   const { question, setQuestion } = useQuestionContext()
-  const { isNew, setIsNew } = useIsNewContext()
-  const idToken = useAppSelector(selectIdToken)
+  const { isNew } = useIsNewContext()
   const questions = useAppSelector(selectQuestions)
   const [questId, setQuestId] = useState(question.quest_id)
   const [isOld, setIsOld] = useState(question.is_old || false)
@@ -30,71 +44,49 @@ export const EditQuestionHeader: FC = memo(() => {
     setIsOld(question.is_old || false)
     setNotReady(question.not_ready || false)
   }
-  const putQuestion = (requestData: any, question: Question, post?: any) => {
-    axios
-      .put(
-        `${process.env.REACT_APP_REST_URL}/question`,
-        requestData,
-        Prop.config
-      )
-      .then(async (response) => {
-        const headers = {
-          headers: {
-            Authorization: idToken,
-          },
-        }
-        const { data } = await axios.get(
-          `${process.env.REACT_APP_REST_URL}/question?quest_id=${question.quest_id}`,
-          headers
+  const postPut = (newQuestion: Question) => {
+    setQuestion(newQuestion)
+    setIsOld(newQuestion.is_old || false)
+    setNotReady(newQuestion.not_ready || false)
+    dispatch(
+      setQuestions(
+        questions.map((quest) =>
+          quest.quest_id === newQuestion.quest_id
+            ? {
+                ...quest,
+                is_old: newQuestion.is_old || false,
+                not_ready: newQuestion.not_ready || false,
+              }
+            : quest
         )
-        const newQuestion: Question = data.body
-        if (newQuestion) {
-          newQuestion.options?.map((option) => {
-            if (!('mark' in option)) {
-              // 連想配列キーの存在チェック
-              const mark = option.text?.slice(0, 1) || ''
-              option.mark = mark
-            }
-            option.correct = question.correct_answer?.includes(
-              option.mark || '_'
-            )
-          })
-          newQuestion.keywords = JSON.stringify(newQuestion.keywords)
-          setQuestion(newQuestion)
-          setIsOld(newQuestion.is_old || false)
-          setNotReady(newQuestion.not_ready || false)
-          dispatch(
-            setQuestions(
-              questions.map((quest) =>
-                quest.quest_id === newQuestion.quest_id
-                  ? {
-                      ...quest,
-                      is_old: newQuestion.is_old || false,
-                      not_ready: newQuestion.not_ready || false,
-                    }
-                  : quest
-              )
-            )
-          )
-        }
-      })
-      .catch((error) => console.log(error))
+      )
+    )
   }
   return (
     <div className="fixed w-1/2 pr-8 -mt-1" title="EditQuestionHeader">
       <div className="flex justify-between items-center w-full pb-2 z-10">
         <div className="flex justify-start items-center">
           <div
-            className={`pt-1 w-40 text-base ${strongText} hover:text-sky-600 hover:bg-white`}
+            className={
+              `pt-1 w-28 text-base ${strongText}` +
+              ` hover:text-sky-600 hover:bg-white`
+            }
           >
             {question.quest_id}
           </div>
-          <QRArchiveToggle isOld={isOld} putQuestion={putQuestion} />
-          <QReadyButton notReady={notReady} putQuestion={putQuestion} />
-          <QCaseButtonSet putQuestion={putQuestion} />
+          <EditQuestionContext.Provider value={{ questId, postPut }}>
+            <QScreenTime />
+            <IsOldContext.Provider value={{ isOld, setIsOld }}>
+              <QRArchiveToggle />
+            </IsOldContext.Provider>
+            <NotReadyContext.Provider value={{ notReady, setNotReady }}>
+              <QReadyButton />
+            </NotReadyContext.Provider>
+            <QCaseButtonSet />
+          </EditQuestionContext.Provider>
         </div>
-        {isNew && question && <QNewRegister setRegisterToggle={setIsNew} />}
-        <div className="ml-8 mr-32">
+        {isNew && question && <QNewRegister />}
+        <div className="ml-8 mr-12">
           <SelectLang />
         </div>
       </div>

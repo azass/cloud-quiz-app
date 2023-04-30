@@ -1,7 +1,6 @@
 import { useAppSelector } from '../app/hooks'
 import Colors from '../consts/colors'
 import { selectExam, selectQuestions } from '../slices/editSlice'
-import { normalDocument, weaknessDocument } from '../styles/util'
 
 export const useAppearanceTerm = () => {
   const exam = useAppSelector(selectExam)

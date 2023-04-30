@@ -17,6 +17,7 @@ import {
 import { useAppSelector } from '../../../app/hooks'
 import { selectExam } from '../../../slices/editSlice'
 import Colors from '../../../consts/colors'
+import { useStarContext } from './term/TermsProvider'
 
 interface Props {
   title: string
@@ -25,11 +26,12 @@ interface Props {
 export const NoteBlock: FC<Props> = ({ title }) => {
   const { noteItems: editElems, name, editable } = useNoteItemsContext()
   const { question } = useQuestionContext()
-  const { editItems: editElemsState, setEditItems: setEditElemsState } = useEditItemsContext()
+  const { editItems, setEditItems } = useEditItemsContext()
   const { editting } = useEdittingContext()
   const { showAllQuestionCase } = useShowAllQuestionCaseContext()
   const { saveButtonToggle, setSaveButtonToggle } = useSaveButtonToggleContext()
-  const { save, star } = useNoteItemsContext()
+  const { save } = useNoteItemsContext()
+  const { star } = useStarContext()
   const exam = useAppSelector(selectExam)
   const questId = question.quest_id
 
@@ -37,7 +39,7 @@ export const NoteBlock: FC<Props> = ({ title }) => {
   if (questIdState !== questId) {
     log.debug(`${questIdState} => ${questId}`)
     setQuestIdState(questId)
-    setEditElemsState(editElems)
+    setEditItems(editElems)
     setSaveButtonToggle(false)
   }
   /**
@@ -45,12 +47,12 @@ export const NoteBlock: FC<Props> = ({ title }) => {
    * if no content; set new content
    */
   if (
-    editElemsState.length === 0 &&
-    editElemsState !== editElems &&
+    editItems.length === 0 &&
+    editItems !== editElems &&
     name !== 'explanation'
   ) {
     log.debug('EditBlock new!!!')
-    setEditElemsState(editElems)
+    setEditItems(editElems)
   }
 
   const onClickSave = () => {
@@ -58,36 +60,35 @@ export const NoteBlock: FC<Props> = ({ title }) => {
       quest_id: questId,
     }
     if (name === 'question_items') {
-      requestData.question_items = editElemsState
+      requestData.question_items = editItems
     } else if (name === 'options') {
-      requestData.options = editElemsState
+      requestData.options = editItems
       requestData.correct_answer = []
-      editElemsState.forEach((option) => {
+      editItems.forEach((option) => {
         if (option.correct) requestData.correct_answer?.push(option.mark || '')
       })
     } else if (name === 'explanation') {
-      requestData.explanation = editElemsState
+      requestData.explanation = editItems
     } else if (name === 'case_items') {
       requestData.case_id = question.case_id
-      requestData.case_items = editElemsState
+      requestData.case_items = editItems
     }
     save(requestData, 'question')
   }
 
   const isShow = (editElem: NoteItem) => {
+    const questIds = editElem.quest_ids || []
     if (name === 'case_items') {
       if (showAllQuestionCase) {
         return true
       } else {
-        return editElem.quest_ids?.includes(questId)
+        return questIds.includes(questId)
       }
     } else if (name === 'description') {
-      return editElem.quest_ids?.includes(questId)
+      return questIds.includes(questId)
     } else if (name === 'description_for_question') {
       return (
-        !star ||
-        (editElem.quest_ids || []).filter((id) => id.startsWith(exam.exam_id))
-          .length > 0
+        !star || questIds.filter((id) => id.startsWith(exam.exam_id)).length > 0
       )
     } else {
       return true
@@ -96,10 +97,10 @@ export const NoteBlock: FC<Props> = ({ title }) => {
   return (
     <div className={`pb-2  ${Colors.baseBg}`} title="EditBlock">
       {editable && <NoteBlockHeader title={title} />}
-      {editting && editElemsState.length === 0 ? (
+      {editting && editItems.length === 0 ? (
         <NoteItemAdds index={-1} />
       ) : (
-        editElemsState.map((editElem, index) => (
+        editItems.map((editElem, index) => (
           <>
             {isShow(editElem) && (
               <NoteItemProvider editElem={editElem} index={index}>

@@ -1,7 +1,6 @@
 import { PlusCircleIcon } from '@heroicons/react/outline'
 import { PencilAltIcon } from '@heroicons/react/solid'
-import { memo, useState, FC } from 'react'
-import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
+import { memo, useState, FC, createContext, useContext } from 'react'
 import { QLabel } from './QLabel'
 import { useQuestionContext } from './QuestionProvider'
 import { iconBase } from '../../../../styles/util'
@@ -9,36 +8,27 @@ import { iconBase } from '../../../../styles/util'
 interface Props {
   readonly: boolean
 }
+const LabelsContext = createContext(
+  {} as {
+    labels: string[]
+    setLabels: any
+  }
+)
+const LabelEditableContext = createContext(
+  {} as {
+    editable: boolean
+    seteEditable: any
+  }
+)
+export const useLabelsContext = () => useContext(LabelsContext)
+export const useLabelEditableContext = () => useContext(LabelEditableContext)
 export const QLabels: FC<Props> = memo(({ readonly }) => {
   const { question } = useQuestionContext()
   const [lastQuestId, setLastQuestId] = useState('')
   const [labels, setLabels] = useState<string[]>([])
   const [editable, seteEditable] = useState(false)
-  const { putQuestion } = useMutateQuestion()
-  const save = () => {
-    putQuestion(
-      {
-        quest_id: question.quest_id,
-        labels: question.labels,
-      },
-      question
-    )
-  }
   const add = () => {
     setLabels([...labels, ''])
-  }
-  const update = (index: number, value: string) => {
-    const newLabels = labels.map((label, i) => (i === index ? value : label))
-    question.labels = newLabels
-    setLabels(newLabels)
-    save()
-  }
-  const remove = (index: number) => {
-    question.labels?.splice(index, 1)
-    const newLabels = [...labels]
-    newLabels.splice(index, 1)
-    setLabels(newLabels)
-    save()
   }
   if (lastQuestId !== question.quest_id) {
     setLastQuestId(question.quest_id)
@@ -52,13 +42,11 @@ export const QLabels: FC<Props> = memo(({ readonly }) => {
       {labels.map(
         (label, index) =>
           !(!editable && label === '') && (
-            <QLabel
-              index={index}
-              label={label}
-              editable={editable}
-              update={update}
-              remove={remove}
-            />
+            <LabelEditableContext.Provider value={{ editable, seteEditable }}>
+              <LabelsContext.Provider value={{ labels, setLabels }}>
+                <QLabel index={index} label={label} />
+              </LabelsContext.Provider>
+            </LabelEditableContext.Provider>
           )
       )}
       {editable &&

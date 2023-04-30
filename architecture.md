@@ -5,80 +5,102 @@ QuizEditor
   QuizSelectTab
     QListHeader
     QuizSelectFrame
+      QInputItem
+      QuizListFrame
+        QListFilter
+        QItem
+          QKeywords
+            QTerms
     TagSelectPanel
+      TagFilter
+      SelectableTag
     TermsLoader
-      TermsEditor
-        TermSaveButton
-        TermAddButton
-        TermTree
-          TermTreeNode
-            TermProvider
-              EditElemsProvider
-                TermEditor
-                  TermDescriptionIcon TermKeyword TermOperateIconSet
+      TermsProvider
+        TermsEditor
+          TermSaveButton
+          TermAddButton
+          TermTree
+            TermTreeNode
+              TermProvider
+                NoteItemsProvider
+                  TermEditor
+                    TermDraggableSelect
+                      TermDescriptionIcon 
+                      TermKeyword 
+                      TermOperateIconSet
                     TermDescription
-                      EditElemAdds
-                      EditElemProvider
-                        EditBlockContent
-                          EditElemAdds
-                          EditBlockContentBar
-                          EditBlockContentBody
-                            EditElemOption
-                            EditElemTextarea
-                            EditElemLinkMemo
-                            EditElemImage
-                            EditElemTextbox
-                          EditElemAdds
+                      NoteItemAdds
+                      NoteItemProvider
+                        NoteBlockContent
+                          NoteItemAdds
+                          NoteBlockContentBar
+                          NoteBlockContentBody
+                            NoteOption
+                            NoteTextarea
+                            NoteLink
+                            NoteImage
+                            NoteTextbox
+                          NoteItemAdds
                     SaveButton
                   TermHeader
-                  EditElemsProvider
+                  NoteItemsProvider
                     TermDescription
-              TermAddButton
-        SelectTerm
+                TermAddButton
+          TermsVis
+            TermSelect
      SearchProvider
       QSearchQuery
   QListQuery
+    QuizSelectTab
   TermNoteTab
+    TagSelectPanel
+    TermsLoader
+
   EditPanel
     QuestionProvider
       QuestionCaseProvider
         EditQuestion
           EditQuestionHeader
+            QRArchiveToggle
+            QReadyButton
+            QCaseButtonSet
+            QNewRegister
+            SelectLang
           EditQuestionCase
-            EditElemsProvider
-              EditBlock
-          EditElemsProvider(name,editElems,editable,draggable,star)=>editElemsState,enableEdit,showCheckbox,showAllQuestionCase,saveButtonToggle
-            EditBlock(title)
-              EditBlockHeader(title)
-              EditElemAdds(index)
-              EditElemProvider(editElem,index)
-                EditBlockContent
-                  EditElemAdds
-                  EditBlockContentBar
-                  EditBlockContentBody
-                    EditElemOption
-                    EditElemTextarea
-                    EditElemLinkMemo
-                    EditElemImage
-                    EditElemTextbox
-                  EditElemAdds
-          EditElemsProvider
-            EditBlock
+            NoteItemsProvider
+              NoteBlock
+          NoteItemsProvider(name,editElems,editable,draggable,star)=>editElemsState,enableEdit,showCheckbox,showAllQuestionCase,saveButtonToggle
+            NoteBlock(title)
+              NoteBlockHeader(title)
+              NoteItemAdds(index)
+              NoteItemProvider(editElem,index)
+                NoteBlockContent
+                  NoteItemAdds
+                  NoteBlockContentBar
+                  NoteBlockContentBody
+                    NoteOption
+                    NoteTextarea
+                    NoteLink
+                    NoteImage
+                    NoteTextbox
+                  NoteItemAdds
+          NoteItemsProvider
+            NoteBlock
           QScraping
             QComments
               EditContext.Provider
-                EditElemProvider
-                  EditBlockContent
+                NoteItemProvider
+                  NoteBlockContent
                 QComment
           QBug
           QKeywords
           QTermDescriptions
-            EditElemsProvider
-              EditBlock
-                EditElemProvider(editElem,name,index,editable,enableEdit)
-                  EditBlockContent
-          EditElemsProvider
-            EditBlock
+            NoteItemsProvider
+              NoteBlock
+                NoteItemProvider(editElem,name,index,editable,enableEdit)
+                  NoteBlockContent
+          NoteItemsProvider
+            NoteBlock
           QLeaningProfiles
           QLabels
     TermProvider
@@ -90,17 +112,17 @@ editable
 追加、編集等できる
 
 enableEdit
-EditElemsProvider
+NoteItemsProvider
       <EnableEditContext.Provider value={{ enableEdit, setEnableEdit }}>
-EditBlock
+NoteBlock
       {enableEdit && editElemsState.length === 0 ? (
-        <EditElemAdds index={-1} />
-EditBlockContent
+        <NoteItemAdds index={-1} />
+NoteBlockContent
       if (editting !== enableEdit) {
         setEditting(enableEdit)
       }
-        {enableEdit && <EditBlockContentBar />}
-EditBlockHeader
+        {enableEdit && <NoteBlockContentBar />}
+NoteBlockHeader
         {enableEdit ? (
           <CheckCircleIcon
             className={`h-6 w-6 ml-8 ${color.iconColor} cursor-pointer text-blue-500`}
@@ -110,7 +132,7 @@ EditBlockHeader
             className={`h-5 w-5 ml-8 ${color.iconColor} cursor-pointer hover:text-blue-500`}
             onClick={() => setEnableEdit(!enableEdit)}
           />
-EditElemImage
+NoteImage
       {editable && enableEdit && (
         <>
           <div>
@@ -124,14 +146,14 @@ EditElemLink
             <span className="w-12 mx-2 my-2 text-gray-500 font-bold text-xs">
               表示名
             </span>
-EditElemOption
+NoteOption
       {enableEdit && (
         <div className="flex flex-row-reverse pr-8 py-2 space-x-8 ">
           <PhotographIcon
             className={getBgColor()}
             onClick={() => add(index, 'image')}
           />
-EditElemTextarea
+NoteTextarea
           {editable && enableEdit ? (
             <div>
               <button

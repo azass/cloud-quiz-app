@@ -50,7 +50,6 @@ export const initialState: EditState = {
     target_days_agos: [],
     order: 0,
   },
-  lang: 1,
   suggestTerms: [],
   questions: [],
 }
@@ -111,9 +110,6 @@ export const editSlice = createSlice({
     resetScArgs: (state) => {
       state.scArgs = initialState.scArgs
     },
-    setLangs: (state, action: PayloadAction<number>) => {
-      state.lang = action.payload
-    },
     setSuggestTerms: (state, action: PayloadAction<Term[]>) => {
       state.suggestTerms = action.payload
     },
@@ -147,7 +143,6 @@ export const {
   resetEdittingTerms,
   setScArgs,
   resetScArgs,
-  setLangs,
   setSuggestTerms,
   resetSuggestTerms,
   setQuestions,
@@ -165,7 +160,6 @@ export const selectUpdateTerm = (state: RootState) => state.edit.updateTerm
 export const selectEdittingTerms = (state: RootState) =>
   state.edit.edittingTerms
 export const selectScArgs = (state: RootState) => state.edit.scArgs
-export const selectLang = (state: RootState) => state.edit.lang
 export const selectSuggestTerms = (state: RootState) => state.edit.suggestTerms
 export const selectQuestions = (state: RootState) => state.edit.questions
 export default editSlice.reducer

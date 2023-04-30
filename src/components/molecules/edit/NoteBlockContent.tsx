@@ -23,7 +23,6 @@ export const NoteBlockContent: FC = memo(() => {
     }
     return false
   }
-  // const [editting, setEditting] = useState(shouldEdit())
   const id = name + '_' + index
   if (!editElem.type || editElem.type === '') {
     if (name === 'options') {
@@ -39,10 +38,6 @@ export const NoteBlockContent: FC = memo(() => {
   if (editable) {
     if (!editting && shouldEdit()) {
       setEditting(true)
-    // } else {
-    //   if (editting !== editting) {
-    //     setEditting(editting)
-    //   }
     }
   }
   return (

@@ -6,13 +6,14 @@ import { useAppSelector } from '../../../app/hooks'
 import { selectEditContext } from '../../../slices/editSlice'
 import Label from '../../../consts/labels'
 import Prop from '../../../consts/props'
+import { useStarContext } from './term/TermsProvider'
+import { useEditItems } from '../../../hooks/useEditItems'
 
 interface Props {
   name: string
   noteItems: NoteItem[]
   editable: boolean
   draggable?: boolean
-  star?: boolean
   editting?: boolean
   children: ReactNode
 }
@@ -58,7 +59,6 @@ const NoteItemsContext = createContext(
     save: any
     editable: boolean
     draggable?: boolean
-    star?: boolean
   }
 )
 export const useEditItemsContext = () => useContext(EditItemsContext)
@@ -74,103 +74,54 @@ export const NoteItemsProvider: FC<Props> = ({
   name,
   noteItems,
   draggable,
-  star,
   editable,
   // editting,
   children,
 }) => {
   const isCheckOn = noteItems.some((x) => x.correct)
+  const { star } = useStarContext()
   const [editItems, setEditItems] = useState<NoteItem[]>(noteItems)
   const [editting, setEditting] = useState(false)
   const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
   const [showAllQuestionCase, setShowAllQuestionCase] = useState(false)
   const [saveButtonToggle, setSaveButtonToggle] = useState(false)
-  const editContext = useAppSelector(selectEditContext)
+  const {
+    addItem,
+    delItem,
+    changeTextItem,
+    changeCheckItem,
+    changeCheckItem2,
+  } = useEditItems(editItems)
 
   const add = (index: number, type: string) => {
     if (!star) {
-      const newEditElems = [...editItems]
-      const newEditElem: NoteItem = { type: type }
-      if (newEditElem.type === Prop.NoteItemType.TEXTAREA) {
-        newEditElem.text = ''
-      } else if (newEditElem.type === Prop.NoteItemType.LINK) {
-        newEditElem.link = ''
-        newEditElem.url = ''
-      } else if (newEditElem.type === Prop.NoteItemType.IMAGE) {
-        newEditElem.image_path = ''
-        newEditElem.image_height = ''
-      } else if (newEditElem.type === Prop.NoteItemType.OPTION) {
-        newEditElem.text = ''
-        newEditElem.mark = Label.mark[index + 1]
-      }
-      newEditElems.splice(index + 1, 0, newEditElem)
-      setEditItems(newEditElems)
+      const newEditItems = addItem(index, type)
+      setEditItems(newEditItems)
       setSaveButtonToggle(false)
     }
   }
 
   const del = (index: number) => {
-    const newEditElems = [...editItems]
-    newEditElems.splice(index, 1)
-    setEditItems(newEditElems)
+    const newEditItems = delItem(index)
+    setEditItems(newEditItems)
     setSaveButtonToggle(true)
   }
 
   const changeText = (index: number, attr: string, text: string) => {
-    const newEditElems = [...editItems]
-    if (
-      attr === 'text' ||
-      attr === 'text_en' ||
-      attr === 'link' ||
-      attr === 'url' ||
-      attr === 'image_path' ||
-      attr === 'image_height' ||
-      attr === 'lv'
-    ) {
-      const newEditElem = { ...newEditElems[index] }
-      newEditElem[attr] = text
-      newEditElems.splice(index, 1, newEditElem)
-    }
-    setEditItems(newEditElems)
-    validate(newEditElems)
+    const newEditItems = changeTextItem(index, attr, text)
+    setEditItems(newEditItems)
+    validate(newEditItems)
   }
 
   const changeCheck = (index: number) => {
-    const newEditElems = [...editItems]
-    newEditElems[index].correct = !newEditElems[index].correct
-    setEditItems(newEditElems)
+    const newEditItems = changeCheckItem(index)
+    setEditItems(newEditItems)
     setSaveButtonToggle(true)
   }
 
   const changeCheck2 = (index: number) => {
-    const newEditElems = [...editItems]
-    if (!newEditElems[index].quest_ids) {
-      const newEditElem = {
-        ...newEditElems[index],
-        quest_ids: [editContext.quest_id],
-      }
-      newEditElems[index] = newEditElem
-    } else {
-      const quest_ids = editItems[index].quest_ids
-      if (quest_ids) {
-        if (quest_ids.includes(editContext.quest_id)) {
-          const newEditElem = {
-            ...newEditElems[index],
-            quest_ids: quest_ids.filter((quest_id) => {
-              return quest_id !== editContext.quest_id
-            }),
-          }
-          newEditElems[index] = newEditElem
-        } else {
-          const newEditElem = {
-            ...newEditElems[index],
-            quest_ids: [...quest_ids, editContext.quest_id],
-          }
-          newEditElems[index] = newEditElem
-        }
-      }
-    }
-    setEditItems(newEditElems)
+    const newEditItems = changeCheckItem2(index)
+    setEditItems(newEditItems)
     setSaveButtonToggle(true)
   }
 
@@ -225,7 +176,6 @@ export const NoteItemsProvider: FC<Props> = ({
                   save,
                   editable,
                   draggable,
-                  star,
                 }}
               >
                 {children}

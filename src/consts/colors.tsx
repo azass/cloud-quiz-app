@@ -22,10 +22,10 @@ namespace Colors {
   //   'bg-blue-300',
   // ]
   export const termNodeBgcolors = [
-    'bg-cyan-500',
+    'bg-blue-800',
+    'bg-sky-500',
     'bg-blue-600',
-    'bg-sky-400',
-    'bg-indigo-500',
+    'bg-cyan-500',
     'bg-blue-400',
     'bg-teal-400',
   ]

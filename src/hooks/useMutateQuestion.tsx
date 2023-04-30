@@ -2,9 +2,12 @@ import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import { Question } from '../types/types'
 import Prop from '../consts/props'
+import { selectIdToken } from '../slices/editSlice'
+import { useAppSelector } from '../app/hooks'
 
 export const useMutateQuestion = () => {
   const queryClient = useQueryClient()
+  const idToken = useAppSelector(selectIdToken)
   const createQuestion = (question: Question) => {
     axios
       .post(`${process.env.REACT_APP_REST_URL}/question`, question, Prop.config)
@@ -50,6 +53,46 @@ export const useMutateQuestion = () => {
       })
       .catch((error) => console.log(error))
   }
+  
+  const putQuestionSync = (
+    requestData: any,
+    question: Question,
+    post?: any
+  ) => {
+    axios
+      .put(
+        `${process.env.REACT_APP_REST_URL}/question`,
+        requestData,
+        Prop.config
+      )
+      .then(async (response) => {
+        const headers = {
+          headers: {
+            Authorization: idToken,
+          },
+        }
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_REST_URL}/question?quest_id=${question.quest_id}`,
+          headers
+        )
+        const newQuestion: Question = data.body
+        if (newQuestion) {
+          newQuestion.options?.map((option) => {
+            if (!('mark' in option)) {
+              // 連想配列キーの存在チェック
+              const mark = option.text?.slice(0, 1) || ''
+              option.mark = mark
+            }
+            option.correct = question.correct_answer?.includes(
+              option.mark || '_'
+            )
+          })
+          newQuestion.keywords = JSON.stringify(newQuestion.keywords)
+          post(newQuestion)
+        }
+      })
+      .catch((error) => console.log(error))
+  }
 
   const deleteBug = (question: Question) => {
     const requestData: Question = {
@@ -71,6 +114,7 @@ export const useMutateQuestion = () => {
   return {
     createQuestion,
     updateQuestion,
+    putQuestionSync,
     putQuestion,
     deleteBug,
   }

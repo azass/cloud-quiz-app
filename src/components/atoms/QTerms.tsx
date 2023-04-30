@@ -1,9 +1,10 @@
 import { memo, FC } from 'react'
 import Colors from '../../consts/colors'
 import { strongText } from '../../styles/util'
+import { Term } from '../../types/types'
 
 interface Props {
-  terms: any[]
+  terms: Term[]
 }
 export const QTerms: FC<Props> = memo(({ terms }) => {
   return (

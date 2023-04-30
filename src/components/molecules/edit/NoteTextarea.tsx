@@ -7,31 +7,27 @@ import { QLinkPopup } from '../../atoms/QLinkPopup'
 import { useAppearanceTerm } from '../../../hooks/useAppearanceTerm'
 import { useNoteItemContext } from './NoteItemProvider'
 import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
-interface Props {
-  lang: number
-}
-export const NoteTextarea: FC<Props> = memo(({ lang }) => {
+import { useLangContext } from '../../atoms/LangProvider'
+
+export const NoteTextarea: FC = memo(() => {
   const { changeText, draggable, editable } = useNoteItemsContext()
   const { editting } = useEdittingContext()
   const { editElem, index, on } = useNoteItemContext()
+  const { lang } = useLangContext()
   const [pre, setPre] = useState(true)
   const { textColor, borderColor, boadBgcolor } = useAppearanceTerm()
-  const textareaStyle = `bg-gradient-to-b from-white via-white to-white px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base font-sans	antialiased ${
-    editElem.text === '' && 'bg-pink-50'
-  }`
-  const border_color = () => {
-    return editable && on()
-      ? 'border-white'
-      : borderColor(editElem.quest_ids || [])
-  }
-  const text_color = () => {
-    return on() ? 'text-white' : textColor(editElem.quest_ids || [])
-  }
+  const textareaStyle =
+    `bg-gradient-to-b from-white via-white to-white` +
+    ` px-4 py-3 mt-1 w-full block rounded-md border border-gray-300` +
+    ` focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50` +
+    ` text-black text-base font-sans antialiased` +
+    ` ${editElem.text === '' && 'bg-pink-50'}`
+  const questIds = editElem.quest_ids || []
+  const border_color = editable && on() ? 'border-white' : borderColor(questIds)
+  const text_color = on() ? 'text-white' : textColor(questIds)
   const docStyle =
     !editting &&
-    `py-3 border-2 rounded-md ${boadBgcolor(
-      editElem.quest_ids || []
-    )} ${border_color()}`
+    `py-3 border-2 rounded-md ${boadBgcolor(questIds)} ${border_color}`
   return (
     <div title="EditElemTextarea">
       {lang !== 2 && (
@@ -57,19 +53,15 @@ export const NoteTextarea: FC<Props> = memo(({ lang }) => {
           ) : (
             <>
               <div className="flex flex-row-reverse">
-                {draggable &&
-                  editable &&
-                  editElem.quest_ids &&
-                  editElem.quest_ids.length > 0 && (
-                    <div className="w-5 h-5 -mt-2 -mr-3 text-pink-500 cursor-pointer">
-                      <QLinkPopup quest_ids={editElem.quest_ids} />
-                    </div>
-                  )}
+                {draggable && editable && questIds.length > 0 && (
+                  <div className="w-5 h-5 -mt-2 -mr-3 text-pink-500 cursor-pointer">
+                    <QLinkPopup quest_ids={questIds} />
+                  </div>
+                )}
               </div>
               <ReactMarkdown
                 className={
-                  'text-base w-full ' +
-                  text_color() +
+                  `text-base w-full ${text_color}` +
                   `${pre === true ? ' whitespace-pre-wrap ' : ''}`
                 }
                 rehypePlugins={[rehypeRaw]}

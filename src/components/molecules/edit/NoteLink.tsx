@@ -12,12 +12,13 @@ export const NoteLink: FC = () => {
   const { editting } = useEdittingContext()
   const { editElem, index, on } = useNoteItemContext()
   const { textColor } = useAppearanceTerm()
-  const linkStyle = `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs ${
-    Colors.icon
-  } focus:text-white ${editElem.link === '' && 'bg-pink-50'}`
-  const urlStyle = `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs ${
-    Colors.icon
-  } focus:text-white ${editElem.url === '' && 'bg-pink-50'}`
+  const linkStyle =
+    `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs` +
+    ` ${Colors.icon} focus:text-white ${editElem.link === '' && 'bg-pink-50'}`
+  const urlStyle =
+    `px-2 py-0 w-full border-gray-300 bg-gray-800 text-xs` +
+    ` ${Colors.icon} focus:text-white ${editElem.url === '' && 'bg-pink-50'}`
+  const questIds = editElem.quest_ids || []
   return (
     <>
       <div className={`flex justify-between items-center pl-4 py-1`}>
@@ -25,18 +26,16 @@ export const NoteLink: FC = () => {
           href={editElem.url}
           target="_blank"
           rel="noreferrer"
-          className={`underline text-base  ${
-            on() && editable ? strongText : textColor(editElem.quest_ids || [])
-          }`}
+          className={
+            `underline text-base` +
+            ` ${on() && editable ? strongText : textColor(questIds)}`
+          }
         >
           {editElem.link}
         </a>
-        {draggable &&
-          editable &&
-          editElem.quest_ids &&
-          editElem.quest_ids.length > 0 && (
-            <QLinkPopup quest_ids={editElem.quest_ids} />
-          )}
+        {draggable && editable && questIds.length > 0 && (
+          <QLinkPopup quest_ids={questIds} />
+        )}
       </div>
       {editable && editting && (
         <>

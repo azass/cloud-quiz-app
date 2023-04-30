@@ -1,13 +1,12 @@
 import { FC } from 'react'
 import { Comment } from '../../types/types'
-import { useAppSelector } from '../../app/hooks'
-import { selectLang } from '../../slices/editSlice'
 import Colors from '../../consts/colors'
+import { useLangContext } from './LangProvider'
 interface Props {
   comment: Comment
 }
 export const QComment: FC<Props> = ({ comment }) => {
-  const nowLang = useAppSelector(selectLang)
+  const {lang} = useLangContext()
   return (
     <li className="py-2">
       <ul>
@@ -17,7 +16,7 @@ export const QComment: FC<Props> = ({ comment }) => {
           <div>{comment.comment_jp}</div>
         </div>
       </ul>
-      {nowLang !== 1 && (
+      {lang !== 1 && (
         <div className="mt-2">
           <span className="text-sky-400">{comment.comment_en}</span>
         </div>

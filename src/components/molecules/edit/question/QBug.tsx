@@ -13,7 +13,7 @@ export const QBug: FC = memo(() => {
   const { deleteBug } = useMutateQuestion()
   const questions = useAppSelector(selectQuestions)
   const bug = question.bug_points
-  const onClickDeleteBug = () => {
+  const clickDeleteBug = () => {
     if (question) {
       const newQuestion = { ...question, is_bug: false }
       deleteBug(newQuestion)
@@ -32,12 +32,10 @@ export const QBug: FC = memo(() => {
   return (
     <>
       <div className="flex items-center py-4">
-        <div className={`flex gap-2 my-2 mr-2 ${strongText}`}>
-          バグ
-        </div>
+        <div className={`flex gap-2 my-2 mr-2 ${strongText}`}>バグ</div>
         <TrashIcon
           className={`h-5 w-5 mr-4 ${iconBase}`}
-          onClick={() => onClickDeleteBug()}
+          onClick={() => clickDeleteBug()}
         />
         {bug && 'more_study' in bug && bug.more_study && (
           <div
@@ -76,9 +74,7 @@ export const QBug: FC = memo(() => {
         )}
       </div>
       {bug && 'memo' in bug && (
-        <div
-          className={`flex-shrink-0 border p-1 pl-2 ml-14 ${Colors.strong}`}
-        >
+        <div className={`flex-shrink-0 border p-1 pl-2 ml-14 ${Colors.strong}`}>
           {bug.memo}
         </div>
       )}

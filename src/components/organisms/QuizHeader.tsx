@@ -1,13 +1,13 @@
-import { memo, useContext, FC } from 'react'
+import { memo, FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import log from 'loglevel'
-import { EditorContext } from '../pages/QuizEditor'
 import { strongText } from '../../styles/util'
+import { useAuthentication } from '../../hooks/useAuthentication'
 
 export const QuizHeader: FC = memo(() => {
   log.setLevel('info')
   const navigate = useNavigate()
-  const { logout } = useContext(EditorContext)
+  const { logout } = useAuthentication()
   return (
     <div className="flex top-0 inset-x-0 fixed z-50 h-16 items-center">
       <div className="flex justify-between w-screen z-50">

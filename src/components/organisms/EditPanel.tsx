@@ -19,20 +19,15 @@ export const EditPanel: FC = () => {
         </QuestionProvider>
       ) : (
         <div className="flex grow w-full">
-            <TermProvider
-              term={editContext.chosenTerm}
-              index={-1}
-              forQuestion={false}
+          <TermProvider term={editContext.chosenTerm} index={-1}>
+            <NoteItemsProvider
+              name={'description'}
+              noteItems={editContext.chosenTerm.description || []}
+              editable={true}
+              draggable={false}
             >
-          <NoteItemsProvider
-            name={'description'}
-            noteItems={editContext.chosenTerm.description || []}
-            editable={true}
-            draggable={false}
-            star={false}
-          >
               <TermEditor />
-          </NoteItemsProvider>
+            </NoteItemsProvider>
           </TermProvider>
         </div>
       )}

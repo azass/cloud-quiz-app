@@ -12,7 +12,7 @@ import {
 import { Term } from '../types/types'
 import Colors from '../consts/colors'
 
-export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
+export const useTerm = (term: Term, index: number) => {
   const terms = useAppSelector(selectEdittingTerms)
   const updateTem = useAppSelector(selectUpdateTerm)
   const editContext = useAppSelector(selectEditContext)
@@ -46,7 +46,7 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
   }
 
   const select = () => {
-    if (forQuestion) {
+    if (editContext.forQuestion) {
       const newTerms = [...terms]
       const newTerm = { ...newTerms[index] }
       newTerm.selected = !term.selected
@@ -98,7 +98,9 @@ export const useTerm = (term: Term, index: number, forQuestion: boolean) => {
 
   const getBgColor = (lv: number) => {
     return `${
-      term.selected ? Colors.termNodeBgcolorsSelected[lv - 1] : Colors.termNodeBgcolors[lv - 1]
+      term.selected
+        ? Colors.termNodeBgcolorsSelected[lv - 1]
+        : Colors.termNodeBgcolors[lv - 1]
     }`
   }
 

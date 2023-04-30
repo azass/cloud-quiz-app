@@ -6,14 +6,12 @@ import { useTerm } from '../../../../hooks/useTerm'
 interface Props {
   term: Term
   index: number
-  forQuestion: boolean
   children: ReactNode
 }
 const TermContext = createContext(
   {} as {
     term: Term
     index: number
-    forQuestion: boolean
   }
 )
 const TermEdittingContext = createContext(
@@ -70,12 +68,7 @@ export const useRefTagContext = () => useContext(RefTagContext)
 export const useRefTermContext = () => useContext(RefTermContext)
 export const useEditTermContext = () => useContext(EditTermContext)
 
-export const TermProvider: FC<Props> = ({
-  term,
-  index,
-  forQuestion,
-  children,
-}) => {
+export const TermProvider: FC<Props> = ({ term, index, children }) => {
   const { getTagOfNo } = useTags()
   const [termEditting, setTermEditting] = useState(false)
   const [word, setWord] = useState(term.word)
@@ -87,9 +80,14 @@ export const TermProvider: FC<Props> = ({
   const [refTerm, setRefTerm] = useState<Term | undefined>(term.ref)
   const { enter, remove, select, getBgColor, updateCacheTerm } = useTerm(
     term,
-    index,
-    forQuestion
+    index
   )
+  const [termId, setTermId] = useState(term.term_id)
+  if (termId !== term.term_id) {
+    setTermId(term.term_id)
+    if (word !== term.word) setWord(term.word)
+    if (level !== term.level) setLevel(term.level)
+  }
   const update = () => {
     setTermEditting(false)
     if (refTerm) {
@@ -104,7 +102,7 @@ export const TermProvider: FC<Props> = ({
     remove()
   }
   return (
-    <TermContext.Provider value={{ term, index, forQuestion }}>
+    <TermContext.Provider value={{ term, index }}>
       <EditTermContext.Provider
         value={{ update, del, select, getBgColor, updateCacheTerm }}
       >

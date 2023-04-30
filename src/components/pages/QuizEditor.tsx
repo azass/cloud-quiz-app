@@ -1,46 +1,23 @@
 import log from 'loglevel'
-import { createContext, memo, FC } from 'react'
+import { memo, FC } from 'react'
 import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectTab, setTab } from '../../slices/editSlice'
+import { useAppSelector } from '../../app/hooks'
+import { selectTab } from '../../slices/editSlice'
 import { ExamSelectTab } from '../organisms/ExamSelectTab'
 import { QTabs } from '../atoms/QTabs'
 import { QuizHeader } from '../organisms/QuizHeader'
 import { QuizSelectTab } from '../organisms/QuizSelectTab'
 import { TermNoteTab } from '../organisms/TermNoteTab'
-import { CognitoUserPool } from 'amazon-cognito-identity-js'
 import { QListQuery } from '../molecules/list/QListQuery'
 import { TermNotePanel } from '../organisms/TermNotePanel'
 import { EditPanel } from '../organisms/EditPanel'
 import Label from '../../consts/labels'
 import Colors from '../../consts/colors'
-
-interface EditorContextValues {
-  logout?: any
-}
-export const EditorContext = createContext<EditorContextValues>({})
 export const QuizEditor: FC = memo(() => {
   log.setLevel('info')
   const tabs = Label.tabs
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
-  const dispatch = useAppDispatch()
-  const userPool = new CognitoUserPool({
-    UserPoolId: process.env.REACT_APP_AUTH_USER_POOL_ID || '',
-    ClientId: process.env.REACT_APP_AUTH_USER_POOL_WEB_CLIENT_ID || '',
-  })
-  const logout = () => {
-    const cognitoUser = userPool.getCurrentUser()
-    if (cognitoUser) {
-      cognitoUser.signOut()
-      localStorage.clear()
-      dispatch(setTab(tabs[0]))
-      log.debug('signed out')
-    } else {
-      localStorage.clear()
-      log.debug('no user signing in')
-    }
-  }
   const isQuizEdit = () => {
     return nowTab !== tabs[0] && params.quest_id
   }
@@ -48,7 +25,7 @@ export const QuizEditor: FC = memo(() => {
     return nowTab === tabs[2] && !params.quest_id
   }
   return (
-    <EditorContext.Provider value={{ logout }}>
+    <>
       <QuizHeader />
       <div className="mt-30 h-full z-0">
         <div
@@ -63,8 +40,9 @@ export const QuizEditor: FC = memo(() => {
               <ExamSelectTab />
             </div>
           )}
-          {nowTab === tabs[1] && params.quest_id && <QuizSelectTab />}
-          {nowTab === tabs[1] && !params.quest_id && <QListQuery />}
+          {nowTab === tabs[1] && (
+            <>{params.quest_id ? <QuizSelectTab /> : <QListQuery />}</>
+          )}
           {nowTab === tabs[2] && <TermNoteTab />}
         </div>
         <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
@@ -76,6 +54,6 @@ export const QuizEditor: FC = memo(() => {
           </div>
         </div>
       </div>
-    </EditorContext.Provider>
+    </>
   )
 })

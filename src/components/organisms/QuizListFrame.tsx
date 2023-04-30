@@ -2,18 +2,23 @@ import { FC, memo, useState } from 'react'
 import { QItem } from '../molecules/list/QItem'
 import { useAppSelector } from '../../app/hooks'
 import { selectQuestions } from '../../slices/editSlice'
-import { TagFilter } from '../atoms/TagFilter'
 import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/outline'
 import Colors from '../../consts/colors'
 import { useFilter } from '../../hooks/useFilter'
+import {
+  useActiveContext,
+  useInactiveContext,
+  useTerminateContext,
+} from '../molecules/list/QListProvider'
+import { QListFilter } from '../molecules/list/QListFilter'
 
 export const QuizListFrame: FC = memo(() => {
   const [asc, setAsc] = useState(true)
-  const [active, setActive] = useState(true)
-  const [inactive, setInactivy] = useState(true)
-  const [terminate, setTerminate] = useState(false)
+  const { active } = useActiveContext()
+  const { inactive } = useInactiveContext()
+  const { terminate } = useTerminateContext()
   const data = useAppSelector(selectQuestions)
-  const {setSearchWord, show} = useFilter()
+  const { show } = useFilter()
   const list = () => {
     if (data) {
       const filtered = data.filter(
@@ -48,49 +53,7 @@ export const QuizListFrame: FC = memo(() => {
             />
           )}
         </div>
-        <div className="flex flex-row items-center -mt-8">
-          <div className="flex flex-row items-center mt-4 mr-4">
-            <div className="flex px-2">
-              <input
-                type="checkbox"
-                id="active"
-                checked={active}
-                onChange={(e) => setActive(!active)}
-              />
-              <label htmlFor="active" className="ml-1 text-white">
-                有効
-              </label>
-            </div>
-            <div className="flex px-2">
-              <input
-                type="checkbox"
-                id="inactive"
-                checked={inactive}
-                onChange={(e) => setInactivy(!inactive)}
-              />
-              <label htmlFor="inactive" className="ml-1 text-white">
-                無効
-              </label>
-            </div>
-            <div className="flex px-2">
-              <input
-                type="checkbox"
-                id="active"
-                checked={terminate}
-                onChange={(e) => setTerminate(!terminate)}
-              />
-              <label htmlFor="active" className="ml-1 text-white">
-                破棄
-              </label>
-            </div>
-          </div>
-          <TagFilter setSearchWord={setSearchWord} />
-          <div
-            className={`flex items-center justify-center rounded-full bg-gray-300 h-8 w-8 mt-3 mr-8 font-bold text-blue-700`}
-          >
-            {data ? data.filter((question) => show(question)).length : 0}
-          </div>
-        </div>
+        <QListFilter />
       </div>
       <nav className="px-6 pt-2 overflow-y-auto text-xs h-screen pb-60">
         {list().map((question) => (

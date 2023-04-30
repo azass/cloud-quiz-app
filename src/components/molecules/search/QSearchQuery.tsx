@@ -63,7 +63,10 @@ export const QSearchQuery: FC = memo(() => {
       </div>
       <div className="flex flex-row pt-6 pl-8">
         <span
-          className={`rounded-full border w-48 py-1 my-1 mr-1 px-3 bg-blue-600 ${strongText} cursor-pointer`}
+          className={
+            `rounded-full border w-48 py-1 my-1 mr-1 px-3` +
+            ` bg-blue-600 ${strongText} cursor-pointer`
+          }
           onClick={() => search()}
         >
           SEARCH

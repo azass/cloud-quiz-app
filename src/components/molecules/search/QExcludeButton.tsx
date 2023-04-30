@@ -50,13 +50,18 @@ export const QExcludeButton: FC<Props> = memo(({ index, execute_progress }) => {
   return (
     <button
       className={
-        `place-items-center flex justify-between rounded-full w-full h-8 p-2 bg-blue-500 ${strongText} ` +
-        getBgColor(index)
+        `place-items-center flex justify-between rounded-full w-full` +
+        ` h-8 p-2 bg-blue-500 ${strongText} ${getBgColor(index)}`
       }
       onClick={() => onClick(index)}
     >
       <span className="flex pl-2">{Label.excludeLabels[index]}</span>
-      <span className="flex items-center justify-center rounded-full bg-blue-500 h-6 w-6 text-xs font-bold text-gray-300">
+      <span
+        className={
+          `flex items-center justify-center rounded-full` +
+          ` bg-blue-500 h-6 w-6 text-xs font-bold text-gray-300`
+        }
+      >
         {count()}
       </span>
     </button>

@@ -7,8 +7,8 @@ import { NoteBlockContent } from '../NoteBlockContent'
 import { useQuestionContext } from './QuestionProvider'
 import { NoteItemProvider } from '../NoteItemProvider'
 import { NoteItemsProvider } from '../NoteItemsProvider'
-import Colors from '../../../../consts/colors'
 import { strongText } from '../../../../styles/util'
+import Colors from '../../../../consts/colors'
 
 export const QTermDescriptions: FC = memo(() => {
   const dispatch = useAppDispatch()
@@ -34,7 +34,10 @@ export const QTermDescriptions: FC = memo(() => {
         <>
           <div className="pt-4">
             <span
-              className={`rounded-full border mr-1 py-1 px-3 bg-pink-600 text-xs ${strongText} cursor-pointer`}
+              className={
+                `rounded-full border mr-1 py-1 px-3` +
+                ` bg-pink-600 text-xs ${strongText} cursor-pointer`
+              }
               onClick={() => callTermEdit(key)}
             >
               {getTagName(key)}
@@ -47,7 +50,8 @@ export const QTermDescriptions: FC = memo(() => {
                   <span
                     key={term.term_id}
                     className={
-                      `rounded-full border mr-1 py-1 px-3 text-left text-xs ${strongText} ` +
+                      `rounded-full border mr-1 py-1 px-3` +
+                      ` text-left text-xs ${strongText} ` +
                       `${Colors.termNodeBgcolors[term.level - 1]}`
                     }
                   >

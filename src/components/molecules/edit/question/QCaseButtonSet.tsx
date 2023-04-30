@@ -7,24 +7,26 @@ import {
   useEditCaseNoContext,
 } from './QuestionCaseProvider'
 import { iconHover, iconShine } from '../../../../styles/util'
+import { useEditQuestionContext } from './EditQuestionHeader'
+import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 
-interface Props {
-  putQuestion: any
-}
-export const QCaseButtonSet: VFC<Props> = memo(({ putQuestion }) => {
+export const QCaseButtonSet: VFC = memo(() => {
   const { question } = useQuestionContext()
   const { editCaseNo, setEditCaseNo } = useEditCaseNoContext()
   const { changeCaseNo } = useChangeCaseNoContext()
+  const { postPut } = useEditQuestionContext()
+  const { putQuestionSync } = useMutateQuestion()
   const queryClient = useQueryClient()
   const onClickCaseNo = () => {
     setEditCaseNo(false)
     queryClient.resetQueries([question.quest_id])
-    putQuestion(
+    putQuestionSync(
       {
         quest_id: question.quest_id,
         case_id: question.case_id,
       },
-      question
+      question,
+      postPut
     )
   }
   return (
