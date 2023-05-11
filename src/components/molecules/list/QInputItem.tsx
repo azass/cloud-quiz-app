@@ -1,18 +1,21 @@
 import { memo, useState, FC } from 'react'
 import { Link } from 'react-router-dom'
-import { ExternalLinkIcon } from '@heroicons/react/solid'
-import { iconShine } from '../../../styles/util'
+import { ExternalLinkIcon, FastForwardIcon } from '@heroicons/react/solid'
+import { iconHover } from '../../../styles/util'
 
 interface Props {
   examId: String
 }
-
 export const QInputItem: FC<Props> = memo(({ examId }) => {
   const [selectNo, setSelectNo] = useState('')
+
+  const nextNo = () => {
+    return ('0000' + (Number(selectNo) + 1)).slice(-4)
+  }
   return (
     <div className="inline-flex pl-6 pb-6 space-x-4" title="QInputItem">
       <Link to={`/editor/${examId}/${examId}-${selectNo}`}>
-        <ExternalLinkIcon className={`h-5 w-5 mx-1 ${iconShine}`} />
+        <ExternalLinkIcon className={`h-5 w-5 mx-1 ${iconHover}`} />
       </Link>
       <div className="flex justify-start">
         <div className="pl-2 text-white">
@@ -33,8 +36,14 @@ export const QInputItem: FC<Props> = memo(({ examId }) => {
               }
             }
           }}
-        ></input>
+        />
       </div>
+      <Link to={`/editor/${examId}/${examId}-${nextNo()}`}>
+        <FastForwardIcon
+          className={`h-6 w-6 mx-1 ${iconHover}`}
+          onClick={() => setSelectNo(nextNo())}
+        />
+      </Link>
     </div>
   )
 })

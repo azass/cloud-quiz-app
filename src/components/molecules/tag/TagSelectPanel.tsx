@@ -1,15 +1,11 @@
 import { FC, memo, useState } from 'react'
-import { useAppSelector } from '../../app/hooks'
-import {
-  selectShowContent,
-  selectExamTags,
-  selectProviderTags,
-} from '../../slices/editSlice'
-import { SelectableTag } from '../atoms/SelectableTag'
-import { TagFilter } from '../atoms/TagFilter'
+import { useAppSelector } from '../../../app/hooks'
+import { selectExamTags, selectProviderTags } from '../../../slices/editSlice'
+import { TagTile } from './TagTile'
+import { TagFilter } from '../../atoms/TagFilter'
 import log from 'loglevel'
-import { Tag } from '../../types/types'
-import Colors from '../../consts/colors'
+import { Tag } from '../../../types/types'
+import Colors from '../../../consts/colors'
 
 interface Props {
   useExamTags: boolean
@@ -24,10 +20,6 @@ export const TagSelectPanel: FC<Props> = memo(
       useExamTags ? selectExamTags : selectProviderTags
     )
     const [searchWord, setSearchWord] = useState('')
-    const editedContent = useAppSelector(selectShowContent)
-    if (searchWord !== '' && editedContent !== 'TagSelect') {
-      setSearchWord('')
-    }
     const filter = (tag: Tag) => {
       if ('tag_no' in tag) {
         if (tag.tag_name.match(/^[^\x01-\x7E\uFF61-\uFF9F]+$/)) {
@@ -66,7 +58,7 @@ export const TagSelectPanel: FC<Props> = memo(
                   return filter(tag)
                 })
                 .map((tag) => (
-                  <SelectableTag
+                  <TagTile
                     tag={tag}
                     selected={selected(tag)}
                     onClickTag={onClickTag}

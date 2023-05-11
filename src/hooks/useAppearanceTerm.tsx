@@ -1,10 +1,12 @@
 import { useAppSelector } from '../app/hooks'
 import Colors from '../consts/colors'
-import { selectExam, selectQuestions } from '../slices/editSlice'
+import { selectEditContext, selectExam, selectQuestions } from '../slices/editSlice'
+import { strongText } from '../styles/util'
 
 export const useAppearanceTerm = () => {
   const exam = useAppSelector(selectExam)
   const questions = useAppSelector(selectQuestions)
+  const editContext = useAppSelector(selectEditContext)
 
   const show = (selfie: boolean, questIds: string[]) => {
     return (
@@ -30,7 +32,11 @@ export const useAppearanceTerm = () => {
     if (isWeak(questIds)) {
       return Colors.weakness
     } else {
-      return Colors.document
+      if (questIds.includes(editContext.quest_id)) {
+        return strongText
+      } else {
+        return Colors.document
+      }
     }
   }
   const boadBgcolor = (questIds: string[]) => {

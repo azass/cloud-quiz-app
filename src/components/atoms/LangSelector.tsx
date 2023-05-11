@@ -1,7 +1,7 @@
 import { memo, FC } from 'react'
 import { useLangContext } from './LangProvider'
 
-export const SelectLang: FC = memo(() => {
+export const LangSelector: FC = memo(() => {
   const { lang, setLang } = useLangContext()
   const nowLang = lang
   const bgcolor = (lang: number) => {

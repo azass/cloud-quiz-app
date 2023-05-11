@@ -25,6 +25,9 @@ export const EditPanel: FC = () => {
               noteItems={editContext.chosenTerm.description || []}
               editable={true}
               draggable={false}
+              hasAddTextarea={true}
+              hasAddLink={true}
+              hasAddImage={true}
             >
               <TermEditor />
             </NoteItemsProvider>

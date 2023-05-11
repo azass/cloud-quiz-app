@@ -8,13 +8,15 @@ import {
   useInactiveContext,
   useTerminateContext,
 } from './QListProvider'
+import { useFilterWordContext } from '../../atoms/FilterWordProvider'
 
 export const QListFilter: FC = () => {
   const data = useAppSelector(selectQuestions)
   const { active, setActive } = useActiveContext()
   const { inactive, setInactivy } = useInactiveContext()
   const { terminate, setTerminate } = useTerminateContext()
-  const { setSearchWord, show } = useFilter()
+  const { show } = useFilter()
+  const { filterWord, setFilterWord } = useFilterWordContext()
   return (
     <div className="flex flex-row items-center -mt-8">
       <div className="flex flex-row items-center mt-4 mr-4">
@@ -52,14 +54,16 @@ export const QListFilter: FC = () => {
           </label>
         </div>
       </div>
-      <TagFilter setSearchWord={setSearchWord} />
+      <TagFilter setSearchWord={setFilterWord} />
       <div
         className={
           `flex items-center justify-center rounded-full` +
           ` bg-gray-300 h-8 w-8 mt-3 mr-8 font-bold text-blue-700`
         }
       >
-        {data ? data.filter((question) => show(question)).length : 0}
+        {data
+          ? data.filter((question) => show(question, filterWord)).length
+          : 0}
       </div>
     </div>
   )

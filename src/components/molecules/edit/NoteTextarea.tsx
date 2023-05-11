@@ -12,7 +12,7 @@ import { useLangContext } from '../../atoms/LangProvider'
 export const NoteTextarea: FC = memo(() => {
   const { changeText, draggable, editable } = useNoteItemsContext()
   const { editting } = useEdittingContext()
-  const { editElem, index, on } = useNoteItemContext()
+  const { noteItem: editElem, index, on } = useNoteItemContext()
   const { lang } = useLangContext()
   const [pre, setPre] = useState(true)
   const { textColor, borderColor, boadBgcolor } = useAppearanceTerm()
@@ -24,17 +24,16 @@ export const NoteTextarea: FC = memo(() => {
     ` ${editElem.text === '' && 'bg-pink-50'}`
   const questIds = editElem.quest_ids || []
   const border_color = editable && on() ? 'border-white' : borderColor(questIds)
-  const text_color = on() ? 'text-white' : textColor(questIds)
   const docStyle =
     !editting &&
     `py-3 border-2 rounded-md ${boadBgcolor(questIds)} ${border_color}`
   return (
     <div title="EditElemTextarea">
       {lang !== 2 && (
-        <div className={`px-4 py-1 mt-1 ${docStyle}`}>
+        <div className={`px-4 mt-1 ${docStyle}`}>
           {editable && editting ? (
             <div>
-              <button
+              {/* <button
                 type="button"
                 className={
                   'flex-shrink-0 border text-white text-xs h-4 mb-1' +
@@ -43,7 +42,7 @@ export const NoteTextarea: FC = memo(() => {
                 onClick={() => setPre(!pre)}
               >
                 <span className="px-1 h-4 text-xs">pre</span>
-              </button>
+              </button> */}
               <TextareaAutosize
                 value={editElem.text || ''}
                 className={textareaStyle}
@@ -52,16 +51,16 @@ export const NoteTextarea: FC = memo(() => {
             </div>
           ) : (
             <>
-              <div className="flex flex-row-reverse">
-                {draggable && editable && questIds.length > 0 && (
-                  <div className="w-5 h-5 -mt-2 -mr-3 text-pink-500 cursor-pointer">
+              {draggable && editable && questIds.length > 0 && (
+                <div className="flex flex-row-reverse -mb-4">
+                  <div className="w-5 h-5 -mr-4 text-pink-500 cursor-pointer">
                     <QLinkPopup quest_ids={questIds} />
                   </div>
-                )}
-              </div>
+                </div>
+              )}
               <ReactMarkdown
                 className={
-                  `text-base w-full ${text_color}` +
+                  `text-base w-full ${textColor(questIds)}` +
                   `${pre === true ? ' whitespace-pre-wrap ' : ''}`
                 }
                 rehypePlugins={[rehypeRaw]}

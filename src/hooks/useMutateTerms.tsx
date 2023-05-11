@@ -8,6 +8,7 @@ import {
   resetUpdateTerm,
   selectQuestions,
   setQuestions,
+  setEdittingTerms,
 } from '../slices/editSlice'
 import { useQueryClient } from 'react-query'
 import { Term } from '../types/types'
@@ -52,6 +53,7 @@ export const useMutateTerms = () => {
         term_id: term.term_id,
         word: term.word,
         level: term.level,
+        explain: term.explain,
         sort: term.sort,
         description: term.description,
       }))
@@ -73,7 +75,6 @@ export const useMutateTerms = () => {
       quest_id: editContext.quest_id,
       quest_keywords: JSON.stringify(keywords),
     }
-    console.log(requestData)
     axios
       .post(
         `${process.env.REACT_APP_REST_URL}/keywords`,
@@ -82,7 +83,7 @@ export const useMutateTerms = () => {
       )
       .then((response) => {
         let result = response.data
-        console.log(result)
+        console.log(`result=${result}`)
         const newTerms3 = newTerms.filter((term) => term.changed !== 'delete')
         queryClient.setQueryData<Term[]>(
           tag?.provider + '_' + tag?.tag_no,
@@ -90,6 +91,7 @@ export const useMutateTerms = () => {
             term_id: term.term_id,
             word: term.word,
             level: term.level,
+            explain: term.explain,
             sort: term.sort,
             provider: term.provider,
             tag_no: term.tag_no,
@@ -121,12 +123,14 @@ export const useMutateTerms = () => {
             term_id: term.term_id,
             word: term.word,
             level: term.level,
+            explain: term.explain,
             sort: term.sort,
             provider: term.provider,
             tag_no: term.tag_no,
             description: term.description,
           }))
         )
+        dispatch(setEdittingTerms(newTerms3))
         dispatch(setEditContext(newEditContext))
         dispatch(resetUpdateTerm())
         setSaving(false)

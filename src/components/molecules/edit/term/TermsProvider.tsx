@@ -1,4 +1,4 @@
-import { FC, createContext, useContext, useState } from 'react'
+import { FC, ReactNode, createContext, useContext, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import {
   selectEditContext,
@@ -6,9 +6,11 @@ import {
 } from '../../../../slices/editSlice'
 import { useQueryTerms } from '../../../../hooks/useQueryTerms'
 import { Term } from '../../../../types/types'
-import { TermsEditor } from './TermsEditor'
 import { LangProvider } from '../../../atoms/LangProvider'
 
+interface Props {
+  children: ReactNode
+}
 const StarContext = createContext(
   {} as {
     star: boolean
@@ -30,24 +32,24 @@ const LockDragContext = createContext(
 export const useStarContext = () => useContext(StarContext)
 export const useDraggableContext = () => useContext(DraggableContext)
 export const useLockDragContext = () => useContext(LockDragContext)
-export const TermsProvider: FC = () => {
+export const TermsProvider: FC<Props> = ({ children }) => {
   const [draggable, setDraggable] = useState(true)
   const [star, setStar] = useState(false)
   const [lockDrag, setLockDrag] = useState(false)
   const dispatch = useAppDispatch()
-  const editedContext = useAppSelector(selectEditContext)
-  const { status, data } = useQueryTerms(editedContext.chosenTag)
+  const editContext = useAppSelector(selectEditContext)
+  const { status, data } = useQueryTerms(editContext.chosenTag)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>
   if (status === 'error') return <div>{'Error'}</div>
 
   if (data) {
-    if (editedContext.forQuestion) {
-      const keywords = JSON.parse(editedContext.keywordsJson || '{}')
+    if (editContext.forQuestion) {
+      const keywords = JSON.parse(editContext.keywordsJson || '{}')
       const selectedTerms: Term[] =
-        editedContext.chosenTag.tag_name in keywords
-          ? keywords[editedContext.chosenTag.tag_name]
-          : keywords[editedContext.chosenTag.tag_no.toString()]
+        editContext.chosenTag.tag_name in keywords
+          ? keywords[editContext.chosenTag.tag_name]
+          : keywords[editContext.chosenTag.tag_no.toString()]
       const selectedTermIds = selectedTerms?.map((term) => term.term_id)
       const newTerms: Term[] = []
       for (var term of data) {
@@ -66,9 +68,7 @@ export const TermsProvider: FC = () => {
       <DraggableContext.Provider value={{ draggable, setDraggable }}>
         <StarContext.Provider value={{ star, setStar }}>
           <LockDragContext.Provider value={{ lockDrag, setLockDrag }}>
-            <LangProvider>
-              <TermsEditor />
-            </LangProvider>
+            <LangProvider>{children}</LangProvider>
           </LockDragContext.Provider>
         </StarContext.Provider>
       </DraggableContext.Provider>

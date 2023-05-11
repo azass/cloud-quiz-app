@@ -1,4 +1,4 @@
-import { memo, VFC } from 'react'
+import { FC, memo } from 'react'
 import { CloudUploadIcon, DocumentTextIcon } from '@heroicons/react/outline'
 import { useQueryClient } from 'react-query'
 import { useQuestionContext } from './QuestionProvider'
@@ -10,11 +10,11 @@ import { iconHover, iconShine } from '../../../../styles/util'
 import { useEditQuestionContext } from './EditQuestionHeader'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 
-export const QCaseButtonSet: VFC = memo(() => {
+export const QCaseButtonSet: FC = memo(() => {
   const { question } = useQuestionContext()
   const { editCaseNo, setEditCaseNo } = useEditCaseNoContext()
   const { changeCaseNo } = useChangeCaseNoContext()
-  const { postPut } = useEditQuestionContext()
+  const { postPutQuestion } = useEditQuestionContext()
   const { putQuestionSync } = useMutateQuestion()
   const queryClient = useQueryClient()
   const onClickCaseNo = () => {
@@ -26,7 +26,7 @@ export const QCaseButtonSet: VFC = memo(() => {
         case_id: question.case_id,
       },
       question,
-      postPut
+      postPutQuestion
     )
   }
   return (

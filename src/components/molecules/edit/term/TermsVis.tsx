@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { useAppSelector } from '../../../../app/hooks'
 import { selectEdittingTerms } from '../../../../slices/editSlice'
-import { TermSelect } from './TermSelect'
+import { TermTile } from './TermTile'
 import { Term } from '../../../../types/types'
 
 export const TermsVis: FC = () => {
@@ -23,12 +23,12 @@ export const TermsVis: FC = () => {
       {divideTerms.map((divterms) => (
         <>
           <div>
-            <TermSelect term={divterms.shift() || divterms[0]} index={i++} />
+            <TermTile term={divterms.shift() || divterms[0]} index={i++} />
           </div>
           {divterms.length > 0 && (
             <div className="flex flex-wrap justify-start items-center pl-4">
               {divterms.map((term) => (
-                <TermSelect term={term} index={i++} />
+                <TermTile term={term} index={i++} />
               ))}
             </div>
           )}

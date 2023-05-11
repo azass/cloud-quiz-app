@@ -32,6 +32,12 @@ const LevelContext = createContext(
     setLevel: any
   }
 )
+const ExplainContext = createContext(
+  {} as {
+    explain: string
+    setExplain: any
+  }
+)
 const DescribeContext = createContext(
   {} as {
     describe: boolean
@@ -63,6 +69,7 @@ export const useTermContext = () => useContext(TermContext)
 export const useTermEdittingContext = () => useContext(TermEdittingContext)
 export const useWordContext = () => useContext(WordContext)
 export const useLevelContext = () => useContext(LevelContext)
+export const useExplainContext = () => useContext(ExplainContext)
 export const useDescribeContext = () => useContext(DescribeContext)
 export const useRefTagContext = () => useContext(RefTagContext)
 export const useRefTermContext = () => useContext(RefTermContext)
@@ -73,6 +80,7 @@ export const TermProvider: FC<Props> = ({ term, index, children }) => {
   const [termEditting, setTermEditting] = useState(false)
   const [word, setWord] = useState(term.word)
   const [level, setLevel] = useState(term.level)
+  const [explain, setExplain] = useState(term.explain || '')
   const [describe, setDescribe] = useState(false)
   const [refTag, setRefTag] = useState<Tag | undefined>(
     term.ref?.tag_no ? getTagOfNo(term.ref?.tag_no) : undefined
@@ -92,9 +100,9 @@ export const TermProvider: FC<Props> = ({ term, index, children }) => {
     setTermEditting(false)
     if (refTerm) {
       setWord(refTerm.word)
-      enter(refTerm.word, level, refTerm)
+      enter(refTerm.word, level, explain, refTerm)
     } else {
-      enter(word, level)
+      enter(word, level, explain)
     }
   }
   const del = () => {
@@ -109,13 +117,15 @@ export const TermProvider: FC<Props> = ({ term, index, children }) => {
         <TermEdittingContext.Provider value={{ termEditting, setTermEditting }}>
           <WordContext.Provider value={{ word, setWord }}>
             <LevelContext.Provider value={{ level, setLevel }}>
-              <DescribeContext.Provider value={{ describe, setDescribe }}>
-                <RefTagContext.Provider value={{ refTag, setRefTag }}>
-                  <RefTermContext.Provider value={{ refTerm, setRefTerm }}>
-                    {children}
-                  </RefTermContext.Provider>
-                </RefTagContext.Provider>
-              </DescribeContext.Provider>
+              <ExplainContext.Provider value={{ explain, setExplain }}>
+                <DescribeContext.Provider value={{ describe, setDescribe }}>
+                  <RefTagContext.Provider value={{ refTag, setRefTag }}>
+                    <RefTermContext.Provider value={{ refTerm, setRefTerm }}>
+                      {children}
+                    </RefTermContext.Provider>
+                  </RefTagContext.Provider>
+                </DescribeContext.Provider>
+              </ExplainContext.Provider>
             </LevelContext.Provider>
           </WordContext.Provider>
         </TermEdittingContext.Provider>

@@ -6,7 +6,6 @@ import log from 'loglevel'
 export const useQueryQuestions = (args: any) => {
   log.setLevel('debug')
   const getQuestions = async () => {
-    log.debug('>>>>getQuestions')
     const condition = {
       Method: 'SEARCH_QUESTIONS',
       Args: args,

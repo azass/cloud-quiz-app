@@ -1,7 +1,7 @@
 import { FC } from 'react'
-import { Comment } from '../../types/types'
-import Colors from '../../consts/colors'
-import { useLangContext } from './LangProvider'
+import { Comment } from '../../../../types/types'
+import Colors from '../../../../consts/colors'
+import { useLangContext } from '../../../atoms/LangProvider'
 interface Props {
   comment: Comment
 }

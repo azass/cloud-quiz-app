@@ -12,3 +12,23 @@
       }
 
         <div className="flex justify-between items-center w-full pb-2 z-10">
+
+  const autoTag = () => {
+    question.options
+      ?.filter((option) => option.correct)
+      .flatMap((option) => {
+        const tags = findTags(option.text || '', exam.provider)
+        return [...tags]
+      })
+      .reduce(
+        (newTags, tagNo) =>
+          newTags.includes(tagNo) ? newTags : [...newTags, tagNo],
+        [] as string[]
+      )
+      .forEach((tagNo) => {
+        if (!question.tags?.includes(tagNo)) {
+          keywords[tagNo] = []
+        }
+      })
+    putKeywords(getTags(keywords), keywords)
+  }

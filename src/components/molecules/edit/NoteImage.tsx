@@ -8,7 +8,7 @@ import Colors from '../../../consts/colors'
 export const NoteImage: FC = memo(() => {
   const { changeText, editable } = useNoteItemsContext()
   const { editting } = useEdittingContext()
-  const { editElem, index } = useNoteItemContext()
+  const { noteItem: editElem, index } = useNoteItemContext()
   if (!editElem.image_height || editElem.image_height === '') {
     editElem.image_height = '100'
   }

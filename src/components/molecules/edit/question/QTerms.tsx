@@ -1,7 +1,7 @@
 import { memo, FC } from 'react'
-import Colors from '../../consts/colors'
-import { strongText } from '../../styles/util'
-import { Term } from '../../types/types'
+import Colors from '../../../../consts/colors'
+import { strongText } from '../../../../styles/util'
+import { Term } from '../../../../types/types'
 
 interface Props {
   terms: Term[]

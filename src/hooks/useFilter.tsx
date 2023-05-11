@@ -6,9 +6,9 @@ import { Question, Term } from '../types/types'
 
 export const useFilter = () => {
   const params = useParams()
-  const [searchWord, setSearchWord] = useState('')
   const scArgs = useAppSelector(selectScArgs)
   const args = { ...scArgs, exam_ids: [params.exam_id], except_old: false }
+
   const filterOtherOptions = (question: Question) => {
     if (args.other_options.length > 0) {
       if (args.other_options.includes(0)) {
@@ -41,6 +41,7 @@ export const useFilter = () => {
       return true
     }
   }
+
   const filterScorings = (question: Question) => {
     if (args.scorings.length > 0) {
       return args.scorings.includes(question.scoring)
@@ -48,6 +49,7 @@ export const useFilter = () => {
       return true
     }
   }
+
   const filterTags = (question: Question) => {
     if (args.category_ids.length > 0 && question.tags) {
       for (const tagId of question.tags) {
@@ -60,6 +62,7 @@ export const useFilter = () => {
       return true
     }
   }
+
   const filter = (question: Question) => {
     if (filterOtherOptions(question)) {
       if (filterScorings(question)) {
@@ -70,7 +73,8 @@ export const useFilter = () => {
     }
     return false
   }
-  const show = (question: Question) => {
+
+  const show = (question: Question, searchWord: string) => {
     if (filter(question)) {
       if (searchWord !== '') {
         if (question.keywords) {
@@ -111,7 +115,6 @@ export const useFilter = () => {
     }
   }
   return {
-    setSearchWord,
-    show
+    show,
   }
 }

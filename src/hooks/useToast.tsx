@@ -42,7 +42,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const ToastProvider: React.VFC<Props> = (props) => {
+export const ToastProvider: React.FC<Props> = (props) => {
   const [state, update] = React.useState({
     show: false,
     message: '1',

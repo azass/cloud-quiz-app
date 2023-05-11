@@ -1,13 +1,16 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
-import { Question } from '../types/types'
+import { Question, voidTag } from '../types/types'
 import Prop from '../consts/props'
-import { selectIdToken } from '../slices/editSlice'
-import { useAppSelector } from '../app/hooks'
+import { selectIdToken, selectQuestions, setEditContext, setQuestions } from '../slices/editSlice'
+import { useAppDispatch, useAppSelector } from '../app/hooks'
 
 export const useMutateQuestion = () => {
+  const dispatch = useAppDispatch()
   const queryClient = useQueryClient()
   const idToken = useAppSelector(selectIdToken)
+  const questions = useAppSelector<Question[]>(selectQuestions)
+
   const createQuestion = (question: Question) => {
     axios
       .post(`${process.env.REACT_APP_REST_URL}/question`, question, Prop.config)
@@ -16,16 +19,24 @@ export const useMutateQuestion = () => {
         console.log(result)
         if (question.exam_id) {
           const previousQuestions = queryClient.getQueryData<Question[]>(
-            question.exam_id
+            'Questions' + question.exam_id
           )
+          dispatch(setQuestions([...questions, question]))
           if (previousQuestions) {
+            const newQuestions = [...previousQuestions, question]
             queryClient.setQueryData<Question[]>(
               'Questions' + question.exam_id,
-              previousQuestions.map((quest) =>
-                quest.quest_id === question.quest_id ? question : quest
-              )
+              newQuestions
             )
           }
+          dispatch(
+            setEditContext({
+              quest_id: question.quest_id,
+              keywordsJson: question.keywords || '',
+              chosenTag: voidTag,
+              forQuestion: true,
+            })
+          )
         }
       })
       .catch((error) => console.log(error))
@@ -53,7 +64,7 @@ export const useMutateQuestion = () => {
       })
       .catch((error) => console.log(error))
   }
-  
+
   const putQuestionSync = (
     requestData: any,
     question: Question,

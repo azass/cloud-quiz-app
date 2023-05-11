@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { Exam } from '../types/types'
 import Prop from '../consts/props'
+import { useState } from 'react'
 
 export const useMaintenance = () => {
-  const onClick = (exam: Exam) => {
+  const [doing, setDoing] = useState(false)
+  const setupReportItem = (exam: Exam) => {
+    setDoing(true)
     const requestData = {
       Method: 'setupReportItem',
       Args: {
@@ -20,11 +23,16 @@ export const useMaintenance = () => {
       .then((response) => {
         let result = response.data
         console.log(result)
+        setDoing(false)
       })
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        setDoing(false)
+      })
   }
 
   return {
-    onClick,
+    setupReportItem,
+    doing,
   }
 }

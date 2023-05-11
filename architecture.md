@@ -14,40 +14,40 @@ QuizEditor
     TagSelectPanel
       TagFilter
       SelectableTag
-    TermsLoader
-      TermsProvider
-        TermsEditor
-          TermSaveButton
-          TermAddButton
-          TermTree
-            TermTreeNode
-              TermProvider
+    TermsProvider
+      TermsEditor
+        TermSaveButton
+        TermAddButton
+        TermTree
+          TermTreeNode
+            TermProvider
+              NoteItemsProvider
+                TermEditor
+                  TermDraggableSelect
+                    TermDescriptionIcon 
+                    TermKeyword 
+                    TermOperateIconSet
+                  TermNoteBlock
+                    NoteBlockHeader
+                    NoteItemAdds
+                    NoteItemProvider
+                      NoteBlockContent
+                        NoteItemAdds
+                        NoteBlockContentBar
+                        NoteBlockContentBody
+                          NoteOption
+                          NoteTextarea
+                          NoteLink
+                          NoteImage
+                          NoteTextbox
+                        NoteItemAdds
+                  SaveButton
+                TermHeader
                 NoteItemsProvider
-                  TermEditor
-                    TermDraggableSelect
-                      TermDescriptionIcon 
-                      TermKeyword 
-                      TermOperateIconSet
-                    TermDescription
-                      NoteItemAdds
-                      NoteItemProvider
-                        NoteBlockContent
-                          NoteItemAdds
-                          NoteBlockContentBar
-                          NoteBlockContentBody
-                            NoteOption
-                            NoteTextarea
-                            NoteLink
-                            NoteImage
-                            NoteTextbox
-                          NoteItemAdds
-                    SaveButton
-                  TermHeader
-                  NoteItemsProvider
-                    TermDescription
-                TermAddButton
-          TermsVis
-            TermSelect
+                  TermDescription
+              TermAddButton
+        TermsVis
+          TermSelect
      SearchProvider
       QSearchQuery
   QListQuery
@@ -68,9 +68,10 @@ QuizEditor
             SelectLang
           EditQuestionCase
             NoteItemsProvider
-              NoteBlock
-          NoteItemsProvider(name,editElems,editable,draggable,star)=>editElemsState,enableEdit,showCheckbox,showAllQuestionCase,saveButtonToggle
-            NoteBlock(title)
+              QNoteBlock
+          NoteItemsProvider
+            QNoteBlock(title)
+              useQuestion
               NoteBlockHeader(title)
               NoteItemAdds(index)
               NoteItemProvider(editElem,index)
@@ -85,7 +86,7 @@ QuizEditor
                     NoteTextbox
                   NoteItemAdds
           NoteItemsProvider
-            NoteBlock
+            QNoteBlock
           QScraping
             QComments
               EditContext.Provider
@@ -96,11 +97,11 @@ QuizEditor
           QKeywords
           QTermDescriptions
             NoteItemsProvider
-              NoteBlock
+              QNoteBlock
                 NoteItemProvider(editElem,name,index,editable,enableEdit)
                   NoteBlockContent
           NoteItemsProvider
-            NoteBlock
+            QNoteBlock
           QLeaningProfiles
           QLabels
     TermProvider
@@ -114,7 +115,7 @@ editable
 enableEdit
 NoteItemsProvider
       <EnableEditContext.Provider value={{ enableEdit, setEnableEdit }}>
-NoteBlock
+QNoteBlock
       {enableEdit && editElemsState.length === 0 ? (
         <NoteItemAdds index={-1} />
 NoteBlockContent
@@ -171,42 +172,12 @@ NoteTextarea
               onChange={(e) => changeText(index, 'text_en', e.target.value)}
 
 
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-}
+QuizSelectTab
+  useTagSelect
 
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  timeout: 200000,
-}
+QKeywords
+  useKeywords
+  useTagAuto
 
-const config = {
-  headers: {
-    'Content-Type': 'application/json',
-  },
-}
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    timeout: 200000,
-  }
-
-
+QTermDescriptions
+  useKeywords

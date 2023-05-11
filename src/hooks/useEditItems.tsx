@@ -1,8 +1,10 @@
+import axios from 'axios'
 import { useAppSelector } from '../app/hooks'
 import Label from '../consts/labels'
 import Prop from '../consts/props'
 import { selectEditContext } from '../slices/editSlice'
 import { NoteItem } from '../types/types'
+import log from 'loglevel'
 
 export const useEditItems = (editItems: NoteItem[]) => {
   const editContext = useAppSelector(selectEditContext)
@@ -86,11 +88,49 @@ export const useEditItems = (editItems: NoteItem[]) => {
     }
     return newEditElems
   }
+
+  const putOptionImageItem = (index: number, path: string, height: string) => {
+    const newEditElems = [...editItems]
+    newEditElems[index].image_path = path
+    newEditElems[index].image_height = height
+    return newEditElems
+  }
+
+  const validate = (newEditElems: NoteItem[]) => {
+    return (
+      newEditElems.filter((editElem) => {
+        if (
+          editElem.type === Prop.NoteItemType.TEXTAREA ||
+          editElem.type === Prop.NoteItemType.OPTION
+        ) {
+          return editElem.text === ''
+        } else if (editElem.type === Prop.NoteItemType.LINK) {
+          return editElem.link === '' || editElem.url === ''
+        } else if (editElem.type === Prop.NoteItemType.IMAGE) {
+          return editElem.image_path === '' || editElem.image_height === ''
+        } else {
+          return true
+        }
+      }).length === 0
+    )
+  }
+
+  const save = (requestData: any, api: string, postSave?: any) => {
+    axios
+      .put(`${process.env.REACT_APP_REST_URL}/${api}`, requestData, Prop.config)
+      .then((response) => {
+        if (postSave) postSave(requestData)
+      })
+      .catch((error) => log.debug(error))
+  }
   return {
     addItem,
     delItem,
     changeTextItem,
     changeCheckItem,
-    changeCheckItem2
+    changeCheckItem2,
+    putOptionImageItem,
+    validate,
+    save,
   }
 }

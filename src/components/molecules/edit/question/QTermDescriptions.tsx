@@ -2,22 +2,24 @@ import { FC, memo } from 'react'
 import { useAppDispatch } from '../../../../app/hooks'
 import { useKeywords } from '../../../../hooks/useKeywords'
 import { useTags } from '../../../../hooks/useTags'
-import { setEditContext, setShowContent } from '../../../../slices/editSlice'
-import { NoteBlockContent } from '../NoteBlockContent'
+import { setEditContext, setShowContent, setTab } from '../../../../slices/editSlice'
+import { NoteItemTile } from '../NoteItemTile'
 import { useQuestionContext } from './QuestionProvider'
 import { NoteItemProvider } from '../NoteItemProvider'
 import { NoteItemsProvider } from '../NoteItemsProvider'
 import { strongText } from '../../../../styles/util'
 import Colors from '../../../../consts/colors'
+import Label from '../../../../consts/labels'
 
 export const QTermDescriptions: FC = memo(() => {
   const dispatch = useAppDispatch()
   const { question } = useQuestionContext()
   const { getTag, getTagName } = useTags()
-  const { getKeywordsJson } = useKeywords(question)
-  const keywords = getKeywordsJson()
+  const { getKeywordsJson } = useKeywords()
+  const keywords = getKeywordsJson(question)
 
   const callTermEdit = (key: string) => {
+    dispatch(setTab(Label.tabs[2]))
     dispatch(setShowContent('TermEdit'))
     dispatch(
       setEditContext({
@@ -32,7 +34,7 @@ export const QTermDescriptions: FC = memo(() => {
     <div className="pb-4" title="QTermDescriptions">
       {Object.keys(keywords).map((key, index) => (
         <>
-          <div className="pt-4">
+          <div className="py-2">
             <span
               className={
                 `rounded-full border mr-1 py-1 px-3` +
@@ -46,7 +48,7 @@ export const QTermDescriptions: FC = memo(() => {
           {keywords[key].map((term) => (
             <>
               {term.word !== 'is ?' && (
-                <div className="pl-2 pt-4">
+                <div className={`pl-${2 * (term.level - 1)} py-1`}>
                   <span
                     key={term.term_id}
                     className={
@@ -59,22 +61,32 @@ export const QTermDescriptions: FC = memo(() => {
                   </span>
                 </div>
               )}
-              <NoteItemsProvider
-                name="description"
-                noteItems={term.description || []}
-                editable={false}
-              >
-                {term.description?.map(
-                  (editElem, index) =>
-                    editElem.quest_ids?.includes(question.quest_id) && (
-                      <div className="pl-2">
-                        <NoteItemProvider editElem={editElem} index={index}>
-                          <NoteBlockContent />
-                        </NoteItemProvider>
-                      </div>
-                    )
+              {term.description &&
+                term.description.filter((item) =>
+                  item.quest_ids?.includes(question.quest_id)
+                ).length > 0 && (
+                  <div className={`pb-2 pl-${2 * (term.level - 1)}`}>
+                    <NoteItemsProvider
+                      name="description"
+                      noteItems={term.description || []}
+                      editable={false}
+                    >
+                      {term.description?.map(
+                        (editElem, index) =>
+                          editElem.quest_ids?.includes(question.quest_id) && (
+                            <div className="pl-0">
+                              <NoteItemProvider
+                                noteItem={editElem}
+                                index={index}
+                              >
+                                <NoteItemTile />
+                              </NoteItemProvider>
+                            </div>
+                          )
+                      )}
+                    </NoteItemsProvider>
+                  </div>
                 )}
-              </NoteItemsProvider>
             </>
           ))}
         </>

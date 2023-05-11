@@ -9,16 +9,15 @@ interface Props {
   term: Term
   index: number
 }
-export const TermSelect: FC<Props> = memo(({ term, index }) => {
+export const TermTile: FC<Props> = memo(({ term, index }) => {
   const { select, getBgColor } = useTerm(term, index)
   const editContext = useAppSelector(selectEditContext)
 
   return (
     <div
       className={
-        `place-items-center flex justify-between border rounded-full` +
-        ` my-1 mx-1 pr-2 ${strongText} text-sm text-center ` +
-        getBgColor(term.level)
+        `place-items-center flex justify-between border rounded-full my-1 mx-1 pr-2` +
+        ` ${strongText} text-sm text-center ${getBgColor(term.level)}`
       }
     >
       <span
@@ -28,9 +27,8 @@ export const TermSelect: FC<Props> = memo(({ term, index }) => {
             term.level === 1
               ? 'my-1 text-orange-100 font-bold text-sm'
               : 'py-1 text-white text-sm'
-          }` +
-          `${editContext.forQuestion && ' cursor-pointer '}` +
-          getBgColor(term.level)
+          } ${getBgColor(term.level)}` +
+          `${editContext.forQuestion && ' cursor-pointer'}`
         }
         onClick={() => select()}
       >

@@ -1,12 +1,7 @@
 import { EyeIcon } from '@heroicons/react/outline'
 import { CheckCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
 import { memo, FC } from 'react'
-import {
-  useNoteItemsContext,
-  useEdittingContext,
-  useShowAllQuestionCaseContext,
-  useShowCheckboxContext,
-} from './NoteItemsProvider'
+import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
 import {
   iconBase,
   iconHover,
@@ -17,26 +12,15 @@ interface Props {
   title: string
 }
 export const NoteBlockHeader: FC<Props> = memo(({ title }) => {
-  const { name } = useNoteItemsContext()
+  const { clickEye } = useNoteItemsContext()
   const { editting, setEditting } = useEdittingContext()
-  const { showCheckbox, setShowCheckbox } = useShowCheckboxContext()
-  const { showAllQuestionCase, setShowAllQuestionCase } =
-    useShowAllQuestionCaseContext()
-
-  const onClickEye = () => {
-    if (name === 'options') {
-      setShowCheckbox(!showCheckbox)
-    } else if (name === 'case_items') {
-      setShowAllQuestionCase(!showAllQuestionCase)
-    }
-  }
   return (
-    <div className={`flex items-center gap-2 my-4 ${strongText}`}>
+    <div className={`flex items-center gap-2 mt-2 mb-1 ${strongText}`}>
       {title}
-      {(name === 'options' || name === 'case_items') && (
+      {clickEye && (
         <EyeIcon
           className={`w-4 h-4 ml-4 ${iconHover}`}
-          onClick={() => onClickEye()}
+          onClick={() => clickEye()}
         />
       )}
       <div>

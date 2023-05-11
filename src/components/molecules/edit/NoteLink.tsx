@@ -5,12 +5,11 @@ import { QLinkPopup } from '../../atoms/QLinkPopup'
 import { useNoteItemContext } from './NoteItemProvider'
 import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
 import Colors from '../../../consts/colors'
-import { strongText } from '../../../styles/util'
 
 export const NoteLink: FC = () => {
   const { changeText, draggable, editable } = useNoteItemsContext()
   const { editting } = useEdittingContext()
-  const { editElem, index, on } = useNoteItemContext()
+  const { noteItem: editElem, index } = useNoteItemContext()
   const { textColor } = useAppearanceTerm()
   const linkStyle =
     `px-2 py-1 w-full border-gray-300 bg-gray-800 text-xs` +
@@ -26,10 +25,7 @@ export const NoteLink: FC = () => {
           href={editElem.url}
           target="_blank"
           rel="noreferrer"
-          className={
-            `underline text-base` +
-            ` ${on() && editable ? strongText : textColor(questIds)}`
-          }
+          className={`underline text-base ${textColor(questIds)}`}
         >
           {editElem.link}
         </a>

@@ -21,8 +21,16 @@ const IsNewContext = createContext(
     setIsNew: any
   }
 )
+const ShowCheckboxContext = createContext(
+  {} as {
+    showCheckbox: boolean
+    setShowCheckbox: any
+  }
+)
 export const useQuestionContext = () => useContext(QuestionContext)
 export const useIsNewContext = () => useContext(IsNewContext)
+export const useShowCheckboxContext = () => useContext(ShowCheckboxContext)
+
 export const QuestionProvider: FC<Props> = memo(({ children }) => {
   const { logout } = useAuthentication()
   const params = useParams()
@@ -33,20 +41,32 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
   const [questId, setQuestId] = useState(quest_id)
   const [question, setQuestion] = useState<Question>()
   const [isNew, setIsNew] = useState(false)
-  const [err, setErr] = useState(false)
+  const isCheckOn = (question?.question_items || []).some((x) => x.correct)
+  const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
+
   const { status, data, error } = useQueryQuestion(quest_id)
   if (status === 'loading') return <div>{'Loading...'}</div>
   if (status === 'error') {
-    if (!err) {
-      setErr(true)
-      logout()
-      alert(error?.message)
-      navigate('/login')
-    }
+    logout()
+    alert(error?.message)
+    navigate('/login')
   }
   if (!question || questId !== quest_id) {
-    if (data === undefined || data === null) {
-      setQuestId(quest_id)
+    setQuestId(quest_id)
+    if (data) {
+      setIsNew(false)
+      setQuestion(data)
+      if (data.quest_id !== editContext.quest_id) {
+        dispatch(
+          setEditContext({
+            quest_id: data.quest_id,
+            keywordsJson: data.keywords || '',
+            chosenTag: voidTag,
+            forQuestion: true,
+          })
+        )
+      }
+    } else {
       setIsNew(true)
       const exam_id = params.exam_id || ''
       setQuestion({
@@ -55,22 +75,6 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
         exam_id: exam_id,
         not_ready: true,
       })
-    } else {
-      setQuestId(quest_id)
-      if (data) {
-        setQuestion(data)
-        setIsNew(false)
-        if (data.quest_id !== editContext.quest_id) {
-          dispatch(
-            setEditContext({
-              quest_id: data.quest_id,
-              keywordsJson: data.keywords || '',
-              chosenTag: voidTag,
-              forQuestion: true,
-            })
-          )
-        }
-      }
     }
   }
   return (
@@ -78,7 +82,11 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
       {question && (
         <QuestionContext.Provider value={{ question, setQuestion }}>
           <IsNewContext.Provider value={{ isNew, setIsNew }}>
-            <LangProvider>{children}</LangProvider>
+            <ShowCheckboxContext.Provider
+              value={{ showCheckbox, setShowCheckbox }}
+            >
+              <LangProvider>{children}</LangProvider>
+            </ShowCheckboxContext.Provider>
           </IsNewContext.Provider>
         </QuestionContext.Provider>
       )}

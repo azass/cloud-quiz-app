@@ -3,16 +3,22 @@ import { memo, FC } from 'react'
 import { useNoteItemContext } from './NoteItemProvider'
 import { useNoteItemsContext } from './NoteItemsProvider'
 import { iconBase } from '../../../styles/util'
-export const NoteBlockContentBar: FC = memo(() => {
-  const { name, del, changeText, changeCheck2 } = useNoteItemsContext()
-  const { editElem, index, on } = useNoteItemContext()
+import { PhotographIcon } from '@heroicons/react/solid'
+export const NoteItemBar: FC = memo(() => {
+  const { del, changeText, changeCheck2, putOptionImage } =
+    useNoteItemsContext()
+  const {
+    noteItem,
+    index,
+    on,
+    hasSelectCheck,
+    hasSelectLevel,
+    hasPutOptionImage,
+  } = useNoteItemContext()
   return (
-    <div
-      className="flex justify-between items-center"
-      title="EditBlockContentBar"
-    >
+    <div className="flex justify-between items-center" title="NoteItemBar">
       <div className="flex">
-        {(name === 'description_for_question' || name === 'case_items') && (
+        {hasSelectCheck && (
           <input
             type="checkbox"
             className="w-5 h-5 text-black"
@@ -21,29 +27,25 @@ export const NoteBlockContentBar: FC = memo(() => {
             title="related"
           />
         )}
-        {/* {name === 'case_items' && (
-          <input
-            type="checkbox"
-            className="w-5 h-5"
-            checked={on()}
-            onChange={(e) => changeCheck2(index)}
-            title="related"
-          />
-        )} */}
-        {name !== 'explanation' && name !== 'options' && (
+        {hasSelectLevel && (
           <select
             className={`ml-8 w-10 h-5`}
             onChange={(e) => changeText(index, 'lv', e.target.value)}
-            value={editElem?.lv}
-            title={name}
+            value={noteItem?.lv?.toString()}
           >
-            {['1', '2', '3', '4'].map((i) => (
+            {['1', '2', '3', '4', '5', '6'].map((i) => (
               <option value={`${i}`}>{`${i}`}</option>
             ))}
           </select>
         )}
       </div>
       <div className="flex flex-row pr-3 gap-4">
+        {hasPutOptionImage && !('image_path' in noteItem) && (
+          <PhotographIcon
+            className={`h-5 w-5 mx-4 my-1 ${iconBase}`}
+            onClick={() => putOptionImage(index, '', '100')}
+          />
+        )}
         <TrashIcon
           className={`h-6 w-6 ${iconBase}`}
           onClick={() => del(index)}

@@ -4,28 +4,49 @@ import { useAppSelector } from '../../../app/hooks'
 import { selectEditContext } from '../../../slices/editSlice'
 
 interface Props {
-  editElem: NoteItem
+  noteItem: NoteItem
   index: number
+  hasSelectCheck?: boolean
+  hasSelectLevel?: boolean
+  hasPutOptionImage?: boolean
   children: ReactNode
 }
 
 const NoteItemContext = createContext(
   {} as {
-    editElem: NoteItem
+    noteItem: NoteItem
     index: number
     on: any
+    hasSelectCheck?: boolean
+    hasSelectLevel?: boolean
+    hasPutOptionImage?: boolean
   }
 )
-
 export const useNoteItemContext = () => useContext(NoteItemContext)
 
-export const NoteItemProvider: FC<Props> = ({ editElem, index, children }) => {
+export const NoteItemProvider: FC<Props> = ({
+  noteItem,
+  index,
+  hasSelectCheck,
+  hasSelectLevel,
+  hasPutOptionImage,
+  children,
+}) => {
   const editContext = useAppSelector(selectEditContext)
   const on = () => {
-    return editElem.quest_ids?.includes(editContext.quest_id) || false
+    return noteItem.quest_ids?.includes(editContext.quest_id) || false
   }
   return (
-    <NoteItemContext.Provider value={{ editElem, index, on }}>
+    <NoteItemContext.Provider
+      value={{
+        noteItem,
+        index,
+        on,
+        hasSelectCheck,
+        hasSelectLevel,
+        hasPutOptionImage
+      }}
+    >
       {children}
     </NoteItemContext.Provider>
   )

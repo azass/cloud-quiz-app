@@ -1,5 +1,5 @@
 namespace Label {
-  export const tabs = ['試験一覧', '問題一覧', 'ノート']
+  export const tabs = ['試験一覧', '問題一覧', '用語一覧', 'エディタ']
   export const mark = [
     'A',
     'B',

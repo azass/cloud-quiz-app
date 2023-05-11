@@ -7,8 +7,8 @@ import { useNoteItemContext } from './NoteItemProvider'
 import { NoteLink } from './NoteLink'
 import Prop from '../../../consts/props'
 
-export const NoteBlockContentBody: FC = memo(() => {
-  const { editElem } = useNoteItemContext()
+export const NoteItemContent: FC = memo(() => {
+  const { noteItem: editElem } = useNoteItemContext()
   const lv = editElem?.lv
   return (
     <div className={`${lv && `pl-${(Number(lv) - 1) * 4}`}`}>

@@ -13,48 +13,42 @@ interface Props {
   index: number
 }
 export const NoteItemAdds: FC<Props> = memo(({ index }) => {
-  const { name, add } = useNoteItemsContext()
-  const getBgColor = () => {
-    return `h-5 w-5 mx-2 ${iconHover}`
-  }
+  const { add } = useNoteItemsContext()
+  const { hasAddTextarea, hasAddLink, hasAddImage, isOptions } =
+    useNoteItemsContext()
+  const style = `h-5 w-5 mx-2 ${iconHover}`
   return (
     <div
-      className={`flex justify-between ${name !== 'options' && 'pt-4'}`}
-      title="EditElemAdds"
+      className={`flex justify-between ${!isOptions && 'py-2'}`}
+      title="NoteItemAdds"
     >
       <div className="flex justify-start">
-        {name !== 'options' && (
+        {hasAddTextarea && (
           <DocumentAddIcon
-            className={getBgColor()}
+            className={style}
             onClick={() => add(index, 'textarea')}
           />
         )}
-        {name === 'explanation' && (
+        {hasAddLink && (
           <ExternalLinkIcon
-            className={getBgColor()}
+            className={style}
             onClick={() => add(index, 'link')}
           />
         )}
-        {name.startsWith('description') && (
-          <ExternalLinkIcon
-            className={getBgColor()}
-            onClick={() => add(index, 'link')}
-          />
-        )}
-        {name !== 'options' && (
+        {hasAddImage && (
           <PhotographIcon
-            className={getBgColor()}
+            className={style}
             onClick={() => add(index, 'image')}
           />
         )}
-        {name === 'options' && (
+        {isOptions && (
           <>
             <PlusCircleIcon
-              className={getBgColor()}
+              className={style}
               onClick={() => add(index, 'option')}
             />
             <AnnotationIcon
-              className={getBgColor()}
+              className={style}
               onClick={() => add(index, 'textbox')}
             />
           </>

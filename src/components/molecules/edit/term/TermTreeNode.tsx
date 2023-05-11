@@ -72,6 +72,9 @@ export const TermTreeNode: FC = memo(() => {
                   editable={true}
                   draggable={true}
                   editting={term.changed ? term.changed === 'new' : false}
+                  hasAddTextarea={true}
+                  hasAddLink={true}
+                  hasAddImage={true}
                 >
                   <TermEditor />
                 </NoteItemsProvider>

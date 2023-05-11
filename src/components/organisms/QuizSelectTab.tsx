@@ -1,40 +1,41 @@
 import { memo, FC } from 'react'
 import { useAppSelector } from '../../app/hooks'
-import { useEditElem } from '../../hooks/useEditElem'
+import { useTagSelect } from '../../hooks/useTagSelect'
 import { selectShowContent } from '../../slices/editSlice'
-import { QListHeader } from '../molecules/list/QListHeader'
+import { QuizSelectHeader } from './QuizSelectHeader'
 import { QSearchQuery } from '../molecules/search/QSearchQuery'
-import { QuizSelectFrame } from './QuizSelectFrame'
-import { TagSelectPanel } from './TagSelectPanel'
+import { QSelectPanel } from '../molecules/list/QSelectPanel'
+import { TagSelectPanel } from '../molecules/tag/TagSelectPanel'
 import { SearchProvider } from '../molecules/search/SearchProvider'
 import { TermsProvider } from '../molecules/edit/term/TermsProvider'
+import { TermsEditor } from '../molecules/edit/term/TermsEditor'
 
 export const QuizSelectTab: FC = memo(() => {
   const editedContent = useAppSelector(selectShowContent)
-  const { keywords, onClickTag } = useEditElem()
+  const { getSelectTags, onClickTag } = useTagSelect()
 
   return (
     <div className={``} title="QuizSelectTab">
-      <QListHeader />
+      <QuizSelectHeader />
       <div className={`${editedContent === 'QuizList' ? '' : 'hidden'}`}>
-        <QuizSelectFrame />
+        <QSelectPanel />
       </div>
-      <div className={`${editedContent === 'TagSelect' ? '' : 'hidden'}`}>
+      {editedContent === 'TagSelect' && (
         <TagSelectPanel
           useExamTags={false}
-          selectTags={Object.keys(keywords)}
+          selectTags={getSelectTags()}
           onClickTag={onClickTag}
         />
-      </div>
-      <div className={`${editedContent === 'TermEdit' ? '' : 'hidden'}`}>
-        <TermsProvider />
-      </div>
+      )}
+      {editedContent === 'TermEdit' && (
+        <TermsProvider>
+          <TermsEditor />
+        </TermsProvider>
+      )}
       {editedContent === 'Search' && (
-        <div className={`${editedContent === 'Search' ? '' : 'hidden'}`}>
-          <SearchProvider>
-            <QSearchQuery />
-          </SearchProvider>
-        </div>
+        <SearchProvider>
+          <QSearchQuery />
+        </SearchProvider>
       )}
     </div>
   )

@@ -1,7 +1,7 @@
 namespace Colors {
   export const baseBg = 'bg-gray-900'
   export const strong = 'text-white'
-  export const document = 'text-cyan-300'
+  export const document = 'text-cyan-200'
   export const documentBorder = 'border-cyan-900'
   export const documentBgcolor = 'bg-black'
   export const weakness = 'text-pink-400'

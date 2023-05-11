@@ -64,7 +64,6 @@ export const TermSuggest: FC = () => {
       tag_no: term.tag_no,
     }
     setRefTerm(term2)
-    console.log('ping... ', suggestion.suggestion)
   }
 
   return (

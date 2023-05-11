@@ -63,7 +63,6 @@ export const editSlice = createSlice({
     },
     setTab: (state, action: PayloadAction<string>) => {
       state.tab = action.payload
-      console.log('setTab start')
     },
     setExam: (state, action: PayloadAction<Exam>) => {
       state.exam = action.payload

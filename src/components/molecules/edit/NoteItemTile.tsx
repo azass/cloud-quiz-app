@@ -1,18 +1,18 @@
 import log from 'loglevel'
 import { FC, memo } from 'react'
-import { NoteBlockContentBar } from './NoteBlockContentBar'
-import { NoteBlockContentBody } from './NoteBlockContentBody'
+import { NoteItemBar } from './NoteItemBar'
+import { NoteItemContent } from './NoteItemContent'
 import { NoteItemAdds } from './NoteItemAdds'
 import { useNoteItemContext } from './NoteItemProvider'
 import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
 import Colors from '../../../consts/colors'
 import Prop from '../../../consts/props'
 
-export const NoteBlockContent: FC = memo(() => {
+export const NoteItemTile: FC = memo(() => {
   log.setLevel('debug')
-  const { name, editable } = useNoteItemsContext()
+  const { name, editable, isOptions } = useNoteItemsContext()
   const { editting, setEditting } = useEdittingContext()
-  const { editElem, index } = useNoteItemContext()
+  const { noteItem: editElem, index } = useNoteItemContext()
   const shouldEdit = () => {
     if (editElem.type === 'link' && editElem.link === '') {
       return true
@@ -25,7 +25,7 @@ export const NoteBlockContent: FC = memo(() => {
   }
   const id = name + '_' + index
   if (!editElem.type || editElem.type === '') {
-    if (name === 'options') {
+    if (isOptions) {
       editElem.type = Prop.NoteItemType.OPTION
     } else if ('text' in editElem) {
       editElem.type = Prop.NoteItemType.TEXTAREA
@@ -41,11 +41,11 @@ export const NoteBlockContent: FC = memo(() => {
     }
   }
   return (
-    <div key={id} className={Colors.baseBg} title="EditBlockContent">
+    <div key={id} className={Colors.baseBg} title="NoteBlockContent">
       {editable && editting && index === 0 && <NoteItemAdds index={-1} />}
-      <div className="border-gray-600 pt-2">
-        {editting && <NoteBlockContentBar />}
-        <NoteBlockContentBody />
+      <div className="border-gray-600 pt-0">
+        {editting && <NoteItemBar />}
+        <NoteItemContent />
       </div>
       {editable && editting && <NoteItemAdds index={index} />}
     </div>

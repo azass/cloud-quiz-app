@@ -1,9 +1,9 @@
-import { memo, VFC } from 'react'
+import { memo, FC } from 'react'
 import log from 'loglevel'
 import { strongText } from '../../styles/util'
 import { useAuthentication } from '../../hooks/useAuthentication'
 
-export const Login: VFC = memo(() => {
+export const Login: FC = memo(() => {
   log.setLevel('info')
   const { signIn, changedEmailHaldler, changedPasswordHandler } =
     useAuthentication()

@@ -11,7 +11,7 @@ import {
   setExamTags,
   setScArgs,
 } from '../../../slices/editSlice'
-import { TagSelectPanel } from '../../organisms/TagSelectPanel'
+import { TagSelectPanel } from '../tag/TagSelectPanel'
 import { QSProgressButtonSet } from './QProgressButtonSet'
 import { QSearchButtonSet } from './QSearchButtonSet'
 import {
@@ -38,7 +38,6 @@ export const QSearchQuery: FC = memo(() => {
     dispatch(setExamTags(data))
   }
   const search = () => {
-    console.log('QSearchButtonSet search() execute')
     const argTags = tags
       .filter((tag) => selectSearchTags.includes(tag.tag_name))
       .map((tag) => tag.tag_no.toString())
@@ -51,7 +50,6 @@ export const QSearchQuery: FC = memo(() => {
     }
     dispatch(setScArgs(newScArgs))
     dispatch(resetShowContent())
-    console.log("editedContent: 'QuizList'")
   }
   return (
     <>

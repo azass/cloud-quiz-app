@@ -30,16 +30,6 @@ export const QLeaningProfiles: FC = memo(() => {
     setIsMandatory(question.is_mandatory || false)
     setRegisterToggle(false)
   }
-  const onClickSave = () => {
-    putQuestion(
-      {
-        quest_id: question.quest_id,
-        learning_note: learningNote,
-      },
-      question
-    )
-    setRegisterToggle(false)
-  }
   return (
     <>
       <div className="flex items-center py-4" title="QLeaningProfiles">
@@ -49,7 +39,6 @@ export const QLeaningProfiles: FC = memo(() => {
             isEasy && ` bg-purple-600`
           }`}
           onClick={() => {
-            setIsEasy(!isEasy)
             question.is_easy = !isEasy
             putQuestion(
               {
@@ -58,6 +47,7 @@ export const QLeaningProfiles: FC = memo(() => {
               },
               question
             )
+            setIsEasy(!isEasy)
           }}
         >
           <span className="px-8">簡単</span>
@@ -69,7 +59,6 @@ export const QLeaningProfiles: FC = memo(() => {
             `${isDifficult && ` bg-red-600`}`
           }
           onClick={() => {
-            setIsDifficult(!isDifficult)
             question.is_difficult = !isDifficult
             putQuestion(
               {
@@ -78,6 +67,7 @@ export const QLeaningProfiles: FC = memo(() => {
               },
               question
             )
+            setIsDifficult(!isDifficult)
           }}
         >
           <span className="px-8">難問</span>
@@ -89,7 +79,6 @@ export const QLeaningProfiles: FC = memo(() => {
             `${isWeak && ` bg-pink-500`}`
           }
           onClick={() => {
-            setIsWeak(!isWeak)
             question.is_weak = !isWeak
             putQuestion(
               {
@@ -98,6 +87,7 @@ export const QLeaningProfiles: FC = memo(() => {
               },
               question
             )
+            setIsWeak(!isWeak)
           }}
         >
           <span className="px-8">弱点</span>
@@ -105,11 +95,10 @@ export const QLeaningProfiles: FC = memo(() => {
         <button
           type="button"
           className={
-            `flex-shrink-0 border-t border-r border-b p-1 ${strongText} ` +
-            `${isMandatory && ` bg-green-600`}`
+            `flex-shrink-0 border-t border-r border-b p-1` +
+            ` ${strongText} ${isMandatory && ` bg-green-600`}`
           }
           onClick={() => {
-            setIsMandatory(!isMandatory)
             question.is_mandatory = !isMandatory
             putQuestion(
               {
@@ -118,6 +107,7 @@ export const QLeaningProfiles: FC = memo(() => {
               },
               question
             )
+            setIsMandatory(!isMandatory)
           }}
         >
           <span className="px-8">必須</span>
@@ -131,7 +121,11 @@ export const QLeaningProfiles: FC = memo(() => {
         <>
           <ReactTextareaAutosize
             value={learningNote || ''}
-            className="px-4 py-3 mt-1 w-full block rounded-md border border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-black text-base"
+            className={
+              `px-4 py-3 mt-1 w-full block rounded-md border border-gray-300` +
+              ` focus:border-indigo-300 focus:ring focus:ring-indigo-200` +
+              ` focus:ring-opacity-50 text-black text-base`
+            }
             onChange={(e) => {
               setLearningNote(e.target.value)
               question.learning_note = e.target.value
@@ -139,7 +133,20 @@ export const QLeaningProfiles: FC = memo(() => {
             }}
           ></ReactTextareaAutosize>
           <div className="flex justify-center mx-auto">
-            {registerToggle && <SaveButton onClick={onClickSave} />}
+            {registerToggle && (
+              <SaveButton
+                onClick={() => {
+                  putQuestion(
+                    {
+                      quest_id: question.quest_id,
+                      learning_note: learningNote,
+                    },
+                    question
+                  )
+                  setRegisterToggle(false)
+                }}
+              />
+            )}
           </div>
         </>
       ) : (

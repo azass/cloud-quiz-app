@@ -100,6 +100,7 @@ export interface Term {
   sort: number
   provider: string
   tag_no: number
+  explain?: string
   selected?: boolean
   changed?: string
   draggableId?: string

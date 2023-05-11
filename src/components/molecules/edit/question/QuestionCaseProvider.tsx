@@ -14,16 +14,29 @@ const ChangeCaseNoContext = createContext(
     setChangeCaseNo: any
   }
 )
+const ShowAllQuestionCaseContext = createContext(
+  {} as {
+    showAllQuestionCase: boolean
+    setShowAllQuestionCase: any
+  }
+)
 export const useEditCaseNoContext = () => useContext(EditCaseNoContext)
 export const useChangeCaseNoContext = () => useContext(ChangeCaseNoContext)
+export const useShowAllQuestionCaseContext = () =>
+  useContext(ShowAllQuestionCaseContext)
 
 export const QuestionCaseProvider: FC<Props> = ({ children }) => {
   const [editCaseNo, setEditCaseNo] = useState(false)
   const [changeCaseNo, setChangeCaseNo] = useState(false)
+  const [showAllQuestionCase, setShowAllQuestionCase] = useState(false)
   return (
     <EditCaseNoContext.Provider value={{ editCaseNo, setEditCaseNo }}>
       <ChangeCaseNoContext.Provider value={{ changeCaseNo, setChangeCaseNo }}>
-        {children}
+        <ShowAllQuestionCaseContext.Provider
+          value={{ showAllQuestionCase, setShowAllQuestionCase }}
+        >
+          {children}
+        </ShowAllQuestionCaseContext.Provider>
       </ChangeCaseNoContext.Provider>
     </EditCaseNoContext.Provider>
   )
