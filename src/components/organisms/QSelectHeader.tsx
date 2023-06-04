@@ -5,7 +5,7 @@ import { useMaintenance } from '../../hooks/useMaintenance'
 import { selectExam, setShowContent } from '../../slices/editSlice'
 import { iconBase, strongText } from '../../styles/util'
 
-export const QuizSelectHeader: FC = memo(() => {
+export const QSelectHeader: FC = memo(() => {
   const dispatch = useAppDispatch()
   const { setupReportItem, doing } = useMaintenance()
   const exam = useAppSelector(selectExam)

@@ -31,7 +31,7 @@ export const TermEditKeyword: FC = () => {
     setTermEditting(true)
   }
   const chat = () => {
-    const q = `${editContext.chosenTag.tag_name} の「${word}」を平易かつシンプルに40文字くらいで説明してください`
+    const q = `${editContext.chosenTag.tag_name} の「${word}」を平易かつシンプルに60文字くらいで説明してください`
     prompt("",q)
   }
   return (
@@ -100,8 +100,8 @@ export const TermEditKeyword: FC = () => {
           <span
             key={term.term_id}
             className={
-              `px-6 py-1 text-left ${term.selected ? 'text-white':'text-white'} text-sm font-black ` +
-              `${getBgColor(level)} ${
+              `px-1 py-1 text-left ${term.selected ? 'text-white':'text-white'} text-sm font-black ` +
+              `${
                 editContext.forQuestion && 'cursor-pointer'
               }`
             }
@@ -111,8 +111,8 @@ export const TermEditKeyword: FC = () => {
           </span>
           <span
             className={
-              `px-1 py-1 mt-2 text-left ${term.selected ? 'text-violet-600':'text-gray-300'} text-xs ` +
-              `${getBgColor(level)} ${
+              `px-1 py-1 mt-2 ml-4 text-left ${term.selected ? 'text-white':'text-gray-100'} text-xs ` +
+              ` ${
                 editContext.forQuestion && 'cursor-pointer'
               }`
             }

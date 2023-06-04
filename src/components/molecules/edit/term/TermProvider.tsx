@@ -95,6 +95,7 @@ export const TermProvider: FC<Props> = ({ term, index, children }) => {
     setTermId(term.term_id)
     if (word !== term.word) setWord(term.word)
     if (level !== term.level) setLevel(term.level)
+    if (explain !== term.explain) setExplain(term.explain || '')
   }
   const update = () => {
     setTermEditting(false)

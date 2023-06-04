@@ -64,6 +64,7 @@ export const media = {
 }
 
 export const strongText = `font-bold ${Colors.strong}`
+export const shineText = `font-bold text-sky-300`
 export const iconHover = `cursor-pointer hover:${Colors.shining}`
 export const iconBase = `${Colors.icon} ${iconHover}`
 export const iconShine = `${Colors.shining} cursor-pointer`

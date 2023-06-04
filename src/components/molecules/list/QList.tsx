@@ -26,8 +26,8 @@ export const QList: FC = memo(() => {
     if (data) {
       const filtered = data.filter(
         (quest) =>
-          (active && !quest.not_ready) ||
-          (inactive && quest.not_ready) ||
+          (!quest.is_old &&
+            ((active && !quest.not_ready) || (inactive && quest.not_ready))) ||
           (terminate && quest.is_old)
       )
       if (asc) {
@@ -61,7 +61,7 @@ export const QList: FC = memo(() => {
       <nav className="px-6 pt-2 overflow-y-auto text-xs h-screen pb-60">
         {list().map((question) => (
           <>
-            {show(question,filterWord) && (
+            {show(question, filterWord) && (
               <div key={question.quest_id}>
                 <QItem question={question} />
               </div>

@@ -8,7 +8,7 @@ import { QCaseButtonSet } from './QCaseButtonSet'
 import { QNewRegister } from './QNewRegister'
 import { QReadyButton } from './QReadyButton'
 import { useIsNewContext, useQuestionContext } from './QuestionProvider'
-import { strongText } from '../../../../styles/util'
+import { shineText } from '../../../../styles/util'
 import { QScreenTime } from './QScreenTime'
 import { useOpenBookContext } from '../../../pages/QuizEditor'
 const IsOldContext = createContext(
@@ -72,7 +72,7 @@ export const EditQuestionHeader: FC = memo(() => {
         <div className="flex justify-start items-center">
           <div
             className={
-              `pt-1 w-32 text-base ${strongText}` +
+              `pt-1 w-32 text-lg text-orange-400 font-bold` +
               ` hover:text-sky-600 hover:bg-white`
             }
           >

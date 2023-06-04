@@ -45,11 +45,11 @@ export const QListFilter: FC = () => {
         <div className="flex px-2">
           <input
             type="checkbox"
-            id="active"
+            id="terminate"
             checked={terminate}
             onChange={(e) => setTerminate(!terminate)}
           />
-          <label htmlFor="active" className="ml-1 text-white">
+          <label htmlFor="terminate" className="ml-1 text-white">
             破棄
           </label>
         </div>
@@ -62,7 +62,15 @@ export const QListFilter: FC = () => {
         }
       >
         {data
-          ? data.filter((question) => show(question, filterWord)).length
+          ? data
+              .filter((question) => show(question, filterWord))
+              .filter(
+                (quest) =>
+                  (!quest.is_old &&
+                    ((active && !quest.not_ready) ||
+                      (inactive && quest.not_ready))) ||
+                  (terminate && quest.is_old)
+              ).length
           : 0}
       </div>
     </div>

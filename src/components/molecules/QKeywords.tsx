@@ -4,6 +4,7 @@ import {
   setShowContent,
   setEditContext,
   selectExam,
+  setTab,
 } from '../../slices/editSlice'
 import { QTerms } from './edit/question/QTerms'
 import { Question, voidTag } from '../../types/types'
@@ -12,6 +13,7 @@ import { useKeywords } from '../../hooks/useKeywords'
 import { useTags } from '../../hooks/useTags'
 import { strongText } from '../../styles/util'
 import { useAuto } from '../../hooks/useAuto'
+import Label from '../../consts/labels'
 
 interface Props {
   question: Question
@@ -25,7 +27,8 @@ export const QKeywords: FC<Props> = memo(({ question, withAdd }) => {
   const { getKeywordsJson } = useKeywords()
   const keywords = getKeywordsJson(question)
   const addTag = () => {
-    dispatch(setShowContent('TagSelect'))
+    dispatch(setTab(Label.tabs[2]))
+    dispatch(setShowContent('questTagSelect'))
     dispatch(
       setEditContext({
         quest_id: question.quest_id,

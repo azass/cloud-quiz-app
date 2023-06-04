@@ -1,12 +1,12 @@
 import log from 'loglevel'
-import { memo, FC, useState, useContext, createContext } from 'react'
+import { memo, FC, useState, useContext, createContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { selectTab } from '../../slices/editSlice'
 import { ExamSelectTab } from '../organisms/ExamSelectTab'
 import { QuizTabs } from '../organisms/QuizTabs'
 import { QuizHeader } from './QuizHeader'
-import { QuizSelectTab } from '../organisms/QuizSelectTab'
+import { QSelectTab } from '../organisms/QSelectTab'
 import { TermNoteTab } from '../organisms/TermNoteTab'
 import { QListQuery } from '../molecules/list/QListQuery'
 import Label from '../../consts/labels'
@@ -26,7 +26,26 @@ export const QuizEditor: FC = memo(() => {
   const tabs = Label.tabs
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
-  const [open, setOpen] = useState(true)
+  const [open, setOpen] = useState(window.innerWidth > 1200)
+  const getWindowDimensions = () => {
+    const { innerWidth: width, innerHeight: height } = window
+    return {
+      width,
+      height,
+    }
+  }
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions()
+  )
+  useEffect(() => {
+    const onResize = () => {
+      const windowSize = getWindowDimensions()
+      setWindowDimensions(windowSize)
+      setOpen(windowSize.width > 1800)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
   return (
     <OpenBookContext.Provider value={{ open, setOpen }}>
       <QuizHeader />
@@ -46,7 +65,7 @@ export const QuizEditor: FC = memo(() => {
             </div>
           )}
           <div className={`${nowTab === tabs[1] ? '' : 'hidden'}`}>
-            {params.quest_id ? <QuizSelectTab /> : <QListQuery />}
+            {params.quest_id ? <QSelectTab /> : <QListQuery />}
           </div>
           <div className={`${nowTab === tabs[2] ? '' : 'hidden'}`}>
             <TermNoteTab />

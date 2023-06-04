@@ -4,6 +4,7 @@ namespace Prop {
     export const IMAGE = 'image'
     export const LINK = 'link'
     export const OPTION = 'option'
+    export const SELECT = 'select'
     export const TEXTBOX = 'textbox'
   }
 

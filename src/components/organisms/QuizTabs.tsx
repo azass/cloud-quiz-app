@@ -19,7 +19,7 @@ import Colors from '../../consts/colors'
 import { useOpenBookContext } from '../pages/QuizEditor'
 
 export const QuizTabs: FC = memo(() => {
-  const editedContext = useAppSelector(selectEditContext)
+  const editContext = useAppSelector(selectEditContext)
   const exam = useAppSelector(selectExam)
   const nowTab = useAppSelector(selectTab)
   const dispatch = useAppDispatch()
@@ -42,13 +42,17 @@ export const QuizTabs: FC = memo(() => {
       dispatch(resetShowContent())
       dispatch(resetUpdateTerm())
       dispatch(resetEdittingTerms())
-      if (editedContext.quest_id) {
+      if (editContext.quest_id) {
         // navigate(`/editor/${exam.examId}/${editedContext.quest_id}`)
       } else {
         navigate(`/editor/${exam.exam_id}`)
       }
     } else if (index === 2) {
-      dispatch(setShowContent('TermEdit'))
+      if (editContext.chosenTag.tag_name === '') {
+        dispatch(setShowContent('TaermNoteSelect'))
+      } else {
+        dispatch(setShowContent('TermEdit'))
+      }
     }
   }
 

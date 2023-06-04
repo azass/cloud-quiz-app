@@ -7,6 +7,7 @@ import {
 import { useQueryTerms } from '../../../../hooks/useQueryTerms'
 import { Term } from '../../../../types/types'
 import { LangProvider } from '../../../atoms/LangProvider'
+import { useOpenBookContext } from '../../../pages/QuizEditor'
 
 interface Props {
   children: ReactNode
@@ -33,9 +34,10 @@ export const useStarContext = () => useContext(StarContext)
 export const useDraggableContext = () => useContext(DraggableContext)
 export const useLockDragContext = () => useContext(LockDragContext)
 export const TermsProvider: FC<Props> = ({ children }) => {
+  const { open } = useOpenBookContext()
   const [draggable, setDraggable] = useState(true)
   const [star, setStar] = useState(false)
-  const [lockDrag, setLockDrag] = useState(false)
+  const [lockDrag, setLockDrag] = useState(!open)
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
   const { status, data } = useQueryTerms(editContext.chosenTag)

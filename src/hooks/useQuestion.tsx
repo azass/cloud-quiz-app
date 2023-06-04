@@ -49,6 +49,8 @@ export const useQuestion = () => {
       requestData.correct_answer = []
       editItems.forEach((option) => {
         if (option.correct) requestData.correct_answer?.push(option.mark || '')
+        if (option.correctValue)
+          requestData.correct_answer?.push(option.correctValue || '')
       })
     } else if (name === 'breakdown') {
       const learningNote = editItems.length === 0 ? '' : editItems[0].text

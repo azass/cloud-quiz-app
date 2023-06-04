@@ -125,6 +125,8 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('SSD', ' SSD ')
     str = str?.replaceAll('Docker', ' Docker ')
     str = str?.replaceAll('Git', ' Git ')
+    str = str?.replaceAll('メイビン', 'Maven')
+    str = str?.replaceAll('竹', 'Bamboo')
     str = str?.replaceAll('GCP', ' GCP ')
     str = str?.replaceAll('クラウドストレージ', ' Cloud Storage ')
     str = str?.replaceAll(

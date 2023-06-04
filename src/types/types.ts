@@ -42,6 +42,14 @@ export interface NoteItem {
   correct?: boolean
   quest_ids?: string[]
   lv?: string
+  selectOptions?: SelectOption[]
+  correctValue?: string
+}
+
+export interface SelectOption {
+  label: string
+  label_en?: string
+  value: string
 }
 
 export interface EditState {

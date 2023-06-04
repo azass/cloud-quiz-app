@@ -6,6 +6,7 @@ import { NoteTextbox } from './NoteTextbox'
 import { useNoteItemContext } from './NoteItemProvider'
 import { NoteLink } from './NoteLink'
 import Prop from '../../../consts/props'
+import { NoteSelect } from './NoteSelect'
 
 export const NoteItemContent: FC = memo(() => {
   const { noteItem: editElem } = useNoteItemContext()
@@ -14,6 +15,9 @@ export const NoteItemContent: FC = memo(() => {
     <div className={`${lv && `pl-${(Number(lv) - 1) * 4}`}`}>
       {editElem?.type === Prop.NoteItemType.OPTION && (
         <NoteOption />
+      )}
+      {editElem?.type === Prop.NoteItemType.SELECT && (
+        <NoteSelect />
       )}
       {editElem?.type === Prop.NoteItemType.TEXTAREA && (
         <NoteTextarea />

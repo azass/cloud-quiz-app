@@ -4,6 +4,7 @@ import {
   ExternalLinkIcon,
   PhotographIcon,
   PlusCircleIcon,
+  PlusIcon,
 } from '@heroicons/react/solid'
 import { AnnotationIcon } from '@heroicons/react/outline'
 import { useNoteItemsContext } from './NoteItemsProvider'
@@ -46,6 +47,10 @@ export const NoteItemAdds: FC<Props> = memo(({ index }) => {
             <PlusCircleIcon
               className={style}
               onClick={() => add(index, 'option')}
+            />
+            <PlusIcon
+              className={style}
+              onClick={() => add(index, 'select')}
             />
             <AnnotationIcon
               className={style}

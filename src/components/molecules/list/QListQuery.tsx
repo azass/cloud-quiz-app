@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useAppDispatch } from '../../../app/hooks'
 import { useQueryQuestions } from '../../../hooks/useQueryQuestions'
 import { setQuestions } from '../../../slices/editSlice'
-import { QuizSelectTab } from '../../organisms/QuizSelectTab'
+import { QSelectTab } from '../../organisms/QSelectTab'
 
 export const QListQuery: FC = memo(() => {
   log.setLevel('debug')
@@ -33,5 +33,5 @@ export const QListQuery: FC = memo(() => {
     dispatch(setQuestions(data))
   }
 
-  return <QuizSelectTab />
+  return <QSelectTab />
 })

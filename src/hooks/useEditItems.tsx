@@ -23,6 +23,9 @@ export const useEditItems = (editItems: NoteItem[]) => {
     } else if (newEditElem.type === Prop.NoteItemType.OPTION) {
       newEditElem.text = Label.mark[index + 1] + '.\n'
       newEditElem.mark = Label.mark[index + 1]
+    } else if (newEditElem.type === Prop.NoteItemType.SELECT) {
+      newEditElem.text = ''
+      newEditElem.selectOptions = []
     }
     newEditElems.splice(index + 1, 0, newEditElem)
     return newEditElems
@@ -101,7 +104,8 @@ export const useEditItems = (editItems: NoteItem[]) => {
       newEditElems.filter((editElem) => {
         if (
           editElem.type === Prop.NoteItemType.TEXTAREA ||
-          editElem.type === Prop.NoteItemType.OPTION
+          editElem.type === Prop.NoteItemType.OPTION ||
+          editElem.type === Prop.NoteItemType.SELECT
         ) {
           return editElem.text === ''
         } else if (editElem.type === Prop.NoteItemType.LINK) {

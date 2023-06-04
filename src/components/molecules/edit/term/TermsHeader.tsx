@@ -35,7 +35,7 @@ export const TermsHeader: FC = () => {
       <div className="flex">
         <ViewListIcon
           className={`h-8 w-6 mr-3 ${iconHover}`}
-          onClick={() => dispatch(setShowContent('TagSelect'))}
+          onClick={() => dispatch(setShowContent('TaermNoteSelect'))}
         />
         <span
           className={`rounded-full px-6 py-1 bg-pink-600 ${iconStrong} ${Colors.baseBg}`}
