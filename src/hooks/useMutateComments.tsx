@@ -9,12 +9,14 @@ export const useMutateComments = () => {
   const putComments = (
     quest_id: string,
     comment_items: Comment[],
-    answer_items: NoteItem[]
+    answer_items: NoteItem[],
+    title: string
   ) => {
     const requestData = {
       quest_id: quest_id,
       comment_items: comment_items,
       answer_items: answer_items,
+      title: title
     }
     const comments: Comments = {
       comment_items,

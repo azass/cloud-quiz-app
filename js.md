@@ -32,3 +32,13 @@
       })
     putKeywords(getTags(keywords), keywords)
   }
+
+
+## 
+queryClient.setQueryData<Question>(question.quest_id, question)
+
+queryClient.setQueryData<Question>(questId, {
+  ...question,
+  keywords: keywords,
+  tags: tags,
+})

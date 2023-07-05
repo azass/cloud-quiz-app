@@ -181,3 +181,41 @@ QKeywords
 
 QTermDescriptions
   useKeywords
+
+
+setEditContext
+
+QKeywords
+  addTag
+
+QTermDescriptions
+  callTermEdit
+
+QuestionProvider
+
+
+TermEditTile
+  setChosenTerm
+
+TermNoteHeader
+  onClick
+
+TermNoteLink
+  setChosenTerm
+
+TagTile
+  openNote
+
+useKeywords
+  putKeywords
+
+useMutateQuestion
+  createQuestion
+
+useMutateTerms
+  save
+
+useTerm
+  updateCacheTerm
+
+

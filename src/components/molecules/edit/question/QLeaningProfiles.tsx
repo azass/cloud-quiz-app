@@ -17,6 +17,7 @@ export const QLeaningProfiles: FC = memo(() => {
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
   const [isWeak, setIsWeak] = useState(question.is_weak || false)
   const [isMandatory, setIsMandatory] = useState(question.is_mandatory || false)
+  const [isIndefinite, setIsIndefinite] = useState(question.is_indefinite || false)
   const [learningNote, setLearningNote] = useState(question.learning_note)
   const [editting, setEditting] = useState(false)
   const { putQuestion } = useMutateQuestion()
@@ -28,6 +29,7 @@ export const QLeaningProfiles: FC = memo(() => {
     setIsDifficult(question.is_difficult || false)
     setIsWeak(question.is_weak || false)
     setIsMandatory(question.is_mandatory || false)
+    setIsIndefinite(question.is_indefinite || false)
     setRegisterToggle(false)
   }
   return (
@@ -111,6 +113,26 @@ export const QLeaningProfiles: FC = memo(() => {
           }}
         >
           <span className="px-8">必須</span>
+        </button>
+        <button
+          type="button"
+          className={
+            `flex-shrink-0 border-t border-r border-b p-1` +
+            ` ${strongText} ${isIndefinite && ` bg-yellow-500`}`
+          }
+          onClick={() => {
+            question.is_indefinite = !isIndefinite
+            putQuestion(
+              {
+                quest_id: question.quest_id,
+                is_indefinite: question.is_indefinite,
+              },
+              question
+            )
+            setIsIndefinite(!isIndefinite)
+          }}
+        >
+          <span className="px-8">不定</span>
         </button>
         <PencilAltIcon
           className={`h-5 w-5 ml-8 ${iconBase}`}

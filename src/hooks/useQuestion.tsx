@@ -1,3 +1,4 @@
+import { useQueryClient } from 'react-query'
 import { useAppSelector } from '../app/hooks'
 import {
   useEditItemsContext,
@@ -18,6 +19,7 @@ export const useQuestion = () => {
   const { star } = useStarContext()
   const exam = useAppSelector(selectExam)
   const { editItems } = useEditItemsContext()
+  const queryClient = useQueryClient()
 
   const isShow = (editItem: NoteItem) => {
     const questIds = editItem.quest_ids || []
@@ -65,6 +67,34 @@ export const useQuestion = () => {
   }
 
   const postSave = (requestData: Question) => {
+    if (name === 'question_items') {
+      queryClient.setQueryData<Question>(question.quest_id, {
+        ...question,
+        question_items: requestData.question_items,
+      })
+    } else if (name === 'options') {
+      queryClient.setQueryData<Question>(question.quest_id, {
+        ...question,
+        options: requestData.options,
+        correct_answer: requestData.correct_answer,
+      })
+    } else if (name === 'breakdown') {
+      queryClient.setQueryData<Question>(question.quest_id, {
+        ...question,
+        learning_note: requestData.learning_note,
+      })
+    } else if (name === 'explanation') {
+      queryClient.setQueryData<Question>(question.quest_id, {
+        ...question,
+        explanation: requestData.explanation,
+      })
+    } else if (name === 'case_items') {
+      queryClient.setQueryData<Question>(question.quest_id, {
+        ...question,
+        case_id: requestData.case_id,
+        case_items: requestData.case_items,
+      })
+    }
     setShowSaveBtn(false)
   }
   return {

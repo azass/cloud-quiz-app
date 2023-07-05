@@ -28,7 +28,7 @@ namespace Label {
     'Y',
     'Z',
   ]
-  export const conditionLabels = ['復習', '難問', '苦手', '必須', 'バグ']
+  export const conditionLabels = ['復習', '難問', '苦手', '必須', 'バグ', '不定']
   export const excludeLabels = [
     '今日',
     '昨日',
@@ -62,9 +62,9 @@ namespace Label {
     '注意不足',
     '山勘',
     '残像',
-    'ぼんやり',
-    'ほぼ実力',
-    '実力',
+    '半自力',
+    'ほぼ自力',
+    '自力',
   ]
 }
 export default Label

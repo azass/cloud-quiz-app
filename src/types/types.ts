@@ -17,6 +17,7 @@ export interface Question {
   is_difficult?: boolean
   is_weak?: boolean
   is_mandatory?: boolean
+  is_indefinite?: boolean
   learning_note?: string
   labels?: string[]
   case_id?: string

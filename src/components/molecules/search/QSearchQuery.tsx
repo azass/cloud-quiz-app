@@ -52,7 +52,7 @@ export const QSearchQuery: FC = memo(() => {
     dispatch(resetShowContent())
   }
   return (
-    <>
+    <div className="overflow-y-auto h-screen">
       <div className="px-6">
         <QSearchButtonSet />
       </div>
@@ -84,6 +84,6 @@ export const QSearchQuery: FC = memo(() => {
           setSelectSearchTags={setSelectSearchTags}
         />
       </div>
-    </>
+    </div>
   )
 })

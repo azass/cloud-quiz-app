@@ -36,7 +36,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
         }
         // if (questId === 'new') {
         updateQuestion(newQuestion)
-        putComments(question.quest_id, result['comments'], result['answers'])
+        putComments(question.quest_id, result['comments'], result['answers'], result['title'])
         setQuestion(newQuestion)
         // }
       })
@@ -83,7 +83,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
         ) {
           updateQuestion(newQuest)
         }
-        putComments(question.quest_id, result['comments'], result['answers'])
+        putComments(question.quest_id, result['comments'], result['answers'], result['title'])
         setQuestion(newQuest)
         setIsLoading(false)
       })
