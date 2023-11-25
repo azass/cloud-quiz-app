@@ -18,6 +18,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
   }
   const onClick = (questId: string) => {
     const requestData = {
+      quest_id: questId,
       data: html,
     }
     axios
@@ -36,7 +37,13 @@ export const useScraping = (question: Question, setQuestion: any) => {
         }
         // if (questId === 'new') {
         updateQuestion(newQuestion)
-        putComments(question.quest_id, result['comments'], result['answers'], result['title'])
+        // putComments(
+        //   question.quest_id,
+        //   result['comments'],
+        //   result['answers'],
+        //   result['title'],
+        //   result['source']
+        // )
         setQuestion(newQuestion)
         // }
       })
@@ -47,7 +54,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
     setIsLoading(true)
     axios
       .get(
-        `${process.env.REACT_APP_REST_URL}/scraping?url=${question.original_url}`,
+        `${process.env.REACT_APP_REST_URL}/scraping?quest_id=${question.quest_id}&url=${question.original_url}`,
         Prop.config
       )
       .then((response) => {
@@ -83,7 +90,13 @@ export const useScraping = (question: Question, setQuestion: any) => {
         ) {
           updateQuestion(newQuest)
         }
-        putComments(question.quest_id, result['comments'], result['answers'], result['title'])
+        // putComments(
+        //   question.quest_id,
+        //   result['comments'],
+        //   result['answers'],
+        //   result['title'],
+        //   result['source']
+        // )
         setQuestion(newQuest)
         setIsLoading(false)
       })

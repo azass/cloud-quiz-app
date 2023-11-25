@@ -26,7 +26,7 @@ export const QuizEditor: FC = memo(() => {
   const tabs = Label.tabs
   const params = useParams()
   const nowTab = useAppSelector(selectTab)
-  const [open, setOpen] = useState(window.innerWidth > 1200)
+  const [open, setOpen] = useState(window.innerWidth > window.innerHeight)
   const getWindowDimensions = () => {
     const { innerWidth: width, innerHeight: height } = window
     return {
@@ -41,7 +41,7 @@ export const QuizEditor: FC = memo(() => {
     const onResize = () => {
       const windowSize = getWindowDimensions()
       setWindowDimensions(windowSize)
-      setOpen(windowSize.width > 1800)
+      setOpen(windowSize.width > windowSize.height)
     }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)

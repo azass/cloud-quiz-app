@@ -28,7 +28,7 @@ export const NoteTextarea: FC = memo(() => {
     !editting &&
     `py-3 border-2 rounded-md ${boadBgcolor(questIds)} ${border_color}`
   return (
-    <div title="EditElemTextarea">
+    <div title="NoteTextarea">
       {lang !== 2 && (
         <div className={`px-4 mt-1 ${docStyle}`}>
           {editable && editting ? (

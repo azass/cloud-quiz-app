@@ -12,7 +12,7 @@ namespace Prop {
     headers: {
       'Content-Type': 'application/json',
     },
-    timeout: 200000,
+    timeout: 300000,
   }
 }
 export default Prop

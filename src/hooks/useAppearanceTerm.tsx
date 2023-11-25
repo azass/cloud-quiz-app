@@ -33,7 +33,7 @@ export const useAppearanceTerm = () => {
       return Colors.weakness
     } else {
       if (questIds.includes(editContext.quest_id)) {
-        return strongText
+        return Colors.strong
       } else {
         return Colors.document
       }
