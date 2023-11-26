@@ -136,7 +136,7 @@ export const QScraping: FC = memo(() => {
           ></div>
         </div>
       )}
-      <div className="py-2 underline text-blue-700 text-base text-xs">
+      <div className="py-2 underline text-blue-700 text-base text-[12px]">
         <a href={question.original_url} target="_blank">
           {question.original_url}
         </a>
