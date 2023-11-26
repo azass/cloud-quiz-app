@@ -35,10 +35,10 @@ export const TermEditKeyword: FC = () => {
     prompt("",q)
   }
   return (
-    <div title="TermEditKeyword">
+    <>
       {termEditting ? (
         <form
-          className="bg-opacity-0 pl-6 w-full"
+          className="bg-opacity-0 pl-6 w-full" title="TermEditKeyword"
           onSubmit={(e) => {
             e.preventDefault()
             update()
@@ -120,6 +120,6 @@ export const TermEditKeyword: FC = () => {
           </span>
         </>
       )}
-    </div>
+    </>
   )
 }
