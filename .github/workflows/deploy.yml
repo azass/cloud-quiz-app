@@ -9,6 +9,7 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     env:
+      process.env.CI : false
       REACT_APP_REST_URL: ${{ secrets.REACT_APP_REST_URL }}
       REACT_APP_AUTH_USER_POOL_ID: ${{ secrets.REACT_APP_AUTH_USER_POOL_ID }}
       REACT_APP_AUTH_USER_POOL_WEB_CLIENT_ID: ${{ secrets.REACT_APP_AUTH_USER_POOL_WEB_CLIENT_ID }}
