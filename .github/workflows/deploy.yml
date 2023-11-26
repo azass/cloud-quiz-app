@@ -23,10 +23,10 @@ jobs:
           node-version: '18.12.1'
           
       - name: Install dependencies
-        run: yarn build
+        run: npm install --legacy-peer-deps
         
       - name: Build
-        run: npm run build --loglevel silly
+        run: yarn build
         
       - name: Deploy to S3
         run: |
