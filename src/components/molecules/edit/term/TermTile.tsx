@@ -22,7 +22,7 @@ export const TermTile: FC<Props> = memo(({ term, index }) => {
             ? 'mt-3 bg-gradient-to-r from-blue-700 via-black to-black'
             : getBgColor(term.level)
         }`
-      }
+      } title="TermTile"
     >
       <span
         key={term.term_id}

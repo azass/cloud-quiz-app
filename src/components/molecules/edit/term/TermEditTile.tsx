@@ -81,7 +81,7 @@ export const TermEditTile: FC = () => {
         `my-1 mx-1 pr-2 text-sm ${strongText} bg-gradient-to-r ${getFromColor(
           level
         )} from-10% ${getViaColor(level)} via-20% to-black to-90%`
-      }
+      } title="TermEditTile"
     >
       <div className="flex justify-start items-center w-full">
         <div className={`flex items-center w-full`}>

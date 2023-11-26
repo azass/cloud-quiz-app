@@ -59,7 +59,6 @@ export const TermEditKeyword: FC = () => {
               ) : (
                 <ReactTextareaAutosize
                   className="text-black px-2 py-1 my-1 w-80 border-0 resize"
-                  autoFocus
                   value={word}
                   onChange={(e) => setWord(e.target.value)}
                 />
@@ -88,7 +87,6 @@ export const TermEditKeyword: FC = () => {
           <div className={`flex justify-start items-center w-full`}>
             <ReactTextareaAutosize
               className="text-black px-0 py-1 my-1 w-full border-0 resize"
-              autoFocus
               value={explain}
               onChange={(e) => setExplain(e.target.value)}
             />
