@@ -38,7 +38,7 @@ export const TermEditKeyword: FC = () => {
     <>
       {termEditting ? (
         <form
-          className="bg-opacity-0 pl-6 w-full" title="TermEditKeyword"
+          className="bg-opacity-0 pl-4 w-full" title="TermEditKeyword"
           onSubmit={(e) => {
             e.preventDefault()
             update()
