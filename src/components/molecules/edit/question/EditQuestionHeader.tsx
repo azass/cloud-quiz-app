@@ -8,7 +8,6 @@ import { QCaseButtonSet } from './QCaseButtonSet'
 import { QNewRegister } from './QNewRegister'
 import { QReadyButton } from './QReadyButton'
 import { useIsNewContext, useQuestionContext } from './QuestionProvider'
-import { shineText } from '../../../../styles/util'
 import { QScreenTime } from './QScreenTime'
 import { useOpenBookContext } from '../../../pages/QuizEditor'
 const IsOldContext = createContext(

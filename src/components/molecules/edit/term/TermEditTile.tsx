@@ -28,7 +28,7 @@ export const TermEditTile: FC = () => {
   const { level } = useLevelContext()
   const { term } = useTermContext()
   const { termEditting, setTermEditting } = useTermEdittingContext()
-  const { update, del, getBgColor } = useEditTermContext()
+  const { update, del } = useEditTermContext()
   const { describe, setDescribe } = useDescribeContext()
   const { draggable } = useNoteItemsContext()
   const iconStyle = `w-4 h-4 ${iconAccent}`

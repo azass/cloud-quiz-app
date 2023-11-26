@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../app/hooks'
 import { selectScArgs } from '../slices/editSlice'

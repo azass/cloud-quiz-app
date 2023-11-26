@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useState } from 'react'
 import { NoteItem, Question } from '../types/types'
 import { useMutateQuestion } from './useMutateQuestion'
-import { useMutateComments } from './useMutateComments'
 import Prop from '../consts/props'
 import log from 'loglevel'
 
@@ -10,7 +9,6 @@ export const useScraping = (question: Question, setQuestion: any) => {
   const { updateQuestion } = useMutateQuestion()
   const [showFlg, setShowFlg] = useState(false)
   const [html, setHtml] = useState('')
-  const { putComments } = useMutateComments()
   const [isLoading, setIsLoading] = useState(false)
 
   const onChange = (text: string) => {

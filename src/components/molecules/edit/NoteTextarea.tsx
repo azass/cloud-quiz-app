@@ -14,7 +14,7 @@ export const NoteTextarea: FC = memo(() => {
   const { editting } = useEdittingContext()
   const { noteItem: editElem, index, on } = useNoteItemContext()
   const { lang } = useLangContext()
-  const [pre, setPre] = useState(true)
+  const [pre] = useState(true)
   const { textColor, borderColor, boadBgcolor } = useAppearanceTerm()
   const textareaStyle =
     `bg-gradient-to-b from-white via-white to-white` +

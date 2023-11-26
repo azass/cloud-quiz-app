@@ -31,7 +31,7 @@ export const TermTile: FC<Props> = memo(({ term, index }) => {
             term.level === 1
               ? 'py-1 text-white font-bold text-sm bg-blue-800'
               : 'py-1 text-white text-sm ' + getBgColor(term.level)
-          }` + `${editContext.forQuestion && ' cursor-pointer'}`
+          }${editContext.forQuestion && ' cursor-pointer'}`
         }
         onClick={() => select()}
       >

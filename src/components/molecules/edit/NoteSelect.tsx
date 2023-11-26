@@ -11,7 +11,7 @@ import { PlusCircleIcon } from '@heroicons/react/solid'
 import { v4 as uuidv4 } from 'uuid'
 import { useLangContext } from '../../atoms/LangProvider'
 import Colors from '../../../consts/colors'
-import { normalDocument, strongText } from '../../../styles/util'
+import { normalDocument } from '../../../styles/util'
 
 export const NoteSelect: FC = () => {
   const { lang } = useLangContext()

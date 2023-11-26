@@ -34,13 +34,13 @@ export const QuizEditor: FC = memo(() => {
       height,
     }
   }
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions()
-  )
+  // const [windowDimensions, setWindowDimensions] = useState(
+  //   getWindowDimensions()
+  // )
   useEffect(() => {
     const onResize = () => {
       const windowSize = getWindowDimensions()
-      setWindowDimensions(windowSize)
+      // setWindowDimensions(windowSize)
       setOpen(windowSize.width > windowSize.height)
     }
     window.addEventListener('resize', onResize)

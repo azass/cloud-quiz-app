@@ -2,7 +2,6 @@ import { FC, memo, useState } from 'react'
 import { QItem } from './QItem'
 import { useAppSelector } from '../../../app/hooks'
 import { selectQuestions } from '../../../slices/editSlice'
-import { ArrowSmDownIcon, ArrowSmUpIcon } from '@heroicons/react/outline'
 import Colors from '../../../consts/colors'
 import { useFilter } from '../../../hooks/useFilter'
 import {
