@@ -35,7 +35,7 @@ export const TermEditKeyword: FC = () => {
     prompt("",q)
   }
   return (
-    <>
+    <div title="TermEditKeyword">
       {termEditting ? (
         <form
           className="bg-opacity-0 pl-6 w-full"
@@ -120,6 +120,6 @@ export const TermEditKeyword: FC = () => {
           </span>
         </>
       )}
-    </>
+    </div>
   )
 }
