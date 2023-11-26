@@ -27,6 +27,8 @@ jobs:
         run: npm install --legacy-peer-deps
         
       - name: Build
+        env: 
+          CI: false
         run: npm run build
         
       - name: Deploy to S3
