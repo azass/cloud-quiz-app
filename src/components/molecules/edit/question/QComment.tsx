@@ -13,7 +13,9 @@ export const QComment: FC<Props> = ({ comment }) => {
         <div className={`-mt-5 ${Colors.strong}`}>
           {comment.date && <div>{comment.date}</div>}
           {comment.badge && <div>{comment.badge}</div>}
-          <div>{comment.comment_jp}</div>
+          <div className="text-base w-full text-white whitespace-pre-wrap">
+            <p>{comment.comment_jp}</p>
+          </div>
         </div>
       </ul>
       {lang !== 1 && (
