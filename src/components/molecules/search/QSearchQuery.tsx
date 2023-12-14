@@ -1,14 +1,14 @@
 import { DocumentRemoveIcon } from '@heroicons/react/outline'
 import { memo, FC } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { useQueryExamTags } from '../../../hooks/useQueryExamTags'
+// import { useQueryExamTags } from '../../../hooks/useQueryExamTags'
 import { useSearch } from '../../../hooks/useSearch'
 import {
   resetShowContent,
   selectExam,
   selectExamTags,
   selectScArgs,
-  setExamTags,
+  // setExamTags,
   setScArgs,
 } from '../../../slices/editSlice'
 import { TagSelectPanel } from '../tag/TagSelectPanel'
@@ -30,13 +30,13 @@ export const QSearchQuery: FC = memo(() => {
   const { selectSearchTags, setSelectSearchTags, onClickSearchTag } =
     useSearch()
 
-  const { status, data } = useQueryExamTags(exam)
-  if (status === 'loading')
-    return <div className="pl-8 pt-8">{'Loading...'}</div>
-  if (status === 'error') return <div>{'Error'}</div>
-  if (data) {
-    dispatch(setExamTags(data))
-  }
+  // const { status, data } = useQueryExamTags(exam)
+  // if (status === 'loading')
+  //   return <div className="pl-8 pt-8">{'Loading...'}</div>
+  // if (status === 'error') return <div>{'Error'}</div>
+  // if (data) {
+  //   dispatch(setExamTags(data))
+  // }
   const search = () => {
     const argTags = tags
       .filter((tag) => selectSearchTags.includes(tag.tag_name))
@@ -56,9 +56,9 @@ export const QSearchQuery: FC = memo(() => {
       <div className="px-6">
         <QSearchButtonSet />
       </div>
-      <div className="px-6">
+      {/* <div className="px-6">
         <QSProgressButtonSet exam_id={exam.exam_id} />
-      </div>
+      </div> */}
       <div className="flex flex-row pt-6 pl-8">
         <span
           className={

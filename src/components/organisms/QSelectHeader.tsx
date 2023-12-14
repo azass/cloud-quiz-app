@@ -10,7 +10,7 @@ export const QSelectHeader: FC = memo(() => {
   const { setupReportItem, doing } = useMaintenance()
   const exam = useAppSelector(selectExam)
   return (
-    <div className="flex justify-between items-center" title="QListHeader">
+    <div className="flex justify-between items-center" title="QSelectHeader">
       <div className="flex items-center">
         <p className={`pt-8 pb-4 pl-8 text-lg ${strongText}`}>
           {exam.exam_name}

@@ -47,7 +47,7 @@ export const QNoteBlock: FC<Props> = ({ title }) => {
   }
 
   return (
-    <div className={`pb-2  ${Colors.baseBg}`} title="EditBlock">
+    <div className={`pb-2  ${Colors.baseBg}`} title="QNoteBlock">
       {editable && <NoteBlockHeader title={title} />}
       {editting && editItems.length === 0 ? (
         <NoteItemAdds index={-1} />

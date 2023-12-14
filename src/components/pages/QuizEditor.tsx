@@ -8,10 +8,10 @@ import { QuizTabs } from '../organisms/QuizTabs'
 import { QuizHeader } from './QuizHeader'
 import { QSelectTab } from '../organisms/QSelectTab'
 import { TermNoteTab } from '../organisms/TermNoteTab'
-import { QListQuery } from '../molecules/list/QListQuery'
 import Label from '../../consts/labels'
 import Colors from '../../consts/colors'
 import { EditorTab } from '../organisms/EditorTab'
+import { QSelectInitTab } from '../organisms/QSelectInitTab'
 
 const OpenBookContext = createContext(
   {} as {
@@ -65,7 +65,7 @@ export const QuizEditor: FC = memo(() => {
             </div>
           )}
           <div className={`${nowTab === tabs[1] ? '' : 'hidden'}`}>
-            {params.quest_id ? <QSelectTab /> : <QListQuery />}
+            {params.quest_id ? <QSelectTab /> : <QSelectInitTab />}
           </div>
           <div className={`${nowTab === tabs[2] ? '' : 'hidden'}`}>
             <TermNoteTab />

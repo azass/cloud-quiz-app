@@ -14,7 +14,10 @@ export const QSelectTab: FC = memo(() => {
   return (
     <div className={``} title="QuizSelectTab">
       <QSelectHeader />
-      <div className={`${editedContent === 'QuizList' ? '' : 'hidden'}`}>
+      <div
+        className={`${editedContent === 'QuizList' ? '' : 'hidden'}`}
+        title="QSelectPanel"
+      >
         <QSelectPanel />
       </div>
       {editedContent === 'TermEdit' && (
