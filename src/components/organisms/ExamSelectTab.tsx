@@ -53,9 +53,10 @@ export const ExamSelectTab: FC = memo(() => {
             <div className="pb-1">
               <button
                 className={
-                  'inline-flex items-center justify-center w-full ' +
+                  'inline-flex items-center w-full ' +
                   'space-x-2 px-4 py-1 border border-transparent ' +
-                  'text-base font-medium rounded text-blue-100 ' +
+                  'text-base font-medium rounded text-blue-100 text-left ' +
+                  'bg-gradient-to-r from-blue-500 from-10% via-blue-900 via-20% to-black to-90% ' +
                   'hover:text-sky-100 hover:bg-sky-500 ' +
                   'bg-blue-600 transition-colors'
                 }
