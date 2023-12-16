@@ -57,7 +57,7 @@ export const QuizTabs: FC = memo(() => {
   }
 
   return (
-    <nav className="flex flex-col sm:flex-row">
+    <nav className="flex flex-row sm:flex-row">
       {Label.tabs.map((tab, index) => (
         <>
           {(!open || index < 3) && (

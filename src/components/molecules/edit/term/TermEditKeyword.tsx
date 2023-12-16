@@ -32,13 +32,14 @@ export const TermEditKeyword: FC = () => {
   }
   const chat = () => {
     const q = `${editContext.chosenTag.tag_name} の「${word}」を平易かつシンプルに60文字くらいで説明してください`
-    prompt("",q)
+    prompt('', q)
   }
   return (
     <>
       {termEditting ? (
         <form
-          className="bg-opacity-0 pl-0 w-full" title="TermEditKeyword"
+          className="bg-opacity-0 pl-0 w-full"
+          title="TermEditKeyword"
           onSubmit={(e) => {
             e.preventDefault()
             update()
@@ -90,35 +91,37 @@ export const TermEditKeyword: FC = () => {
               value={explain}
               onChange={(e) => setExplain(e.target.value)}
             />
-            <CubeIcon className={`w-6 h-6 ml-4`} onClick={() => chat()}/>
+            <CubeIcon className={`w-6 h-6 ml-4`} onClick={() => chat()} />
           </div>
         </form>
       ) : (
-        <>
-          <span
+        <div>
+          <div
             key={term.term_id}
             className={
-              `px-1 py-1 text-left ${term.selected ? 'text-white':'text-white'} text-sm font-black ` +
-              `${
-                editContext.forQuestion && 'cursor-pointer'
-              }`
+              `px-1 py-1 text-left ${
+                term.selected ? 'text-white' : 'text-white'
+              } text-sm font-black ` +
+              `${editContext.forQuestion && 'cursor-pointer'}`
             }
             onClick={() => select()}
           >
             {word}
-          </span>
-          <span
-            className={
-              `px-1 py-1 mt-2 ml-4 text-left ${term.selected ? 'text-white':'text-gray-100'} text-xs ` +
-              ` ${
-                editContext.forQuestion && 'cursor-pointer'
-              }`
-            }
-            onClick={() => select()}
-          >
-            {explain}
-          </span>
-        </>
+          </div>
+          {explain && (
+            <div
+              className={
+                `px-1 pb-0 mt-0 ml-2 text-left ${
+                  term.selected ? 'text-white' : 'text-gray-100'
+                } text-[11px] ` +
+                ` ${editContext.forQuestion && 'cursor-pointer'}`
+              }
+              onClick={() => select()}
+            >
+              {explain}
+            </div>
+          )}
+        </div>
       )}
     </>
   )
