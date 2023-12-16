@@ -1,45 +1,54 @@
-import { memo, FC } from 'react'
+import { memo, FC, useState } from 'react'
 import { useQuestionContext } from './QuestionProvider'
-import { useEditQuestionContext, useIsOldContext } from './EditQuestionHeader'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
+import {
+  useIsOldContext,
+  useQuestionHeaderContext,
+} from './QuestionHeaderProvider'
+import { Question } from '../../../../types/types'
 
 export const QArchiveToggle: FC = memo(() => {
   const { question } = useQuestionContext()
   const { isOld } = useIsOldContext()
-  const { postPutQuestion } = useEditQuestionContext()
+  const { postPutQuestion } = useQuestionHeaderContext()
   const { putQuestionSync } = useMutateQuestion()
+  const [saving, setSaving] = useState(false)
 
+  const bgcolor = () => {
+    return isOld ? 'bg-rose-700' : ''
+  }
   const updateOld = () => {
+    setSaving(true)
     putQuestionSync(
       {
         quest_id: question.quest_id,
         is_old: !isOld,
       },
       question,
-      postPutQuestion
+      postSave
     )
   }
+  const postSave = (newQuestion: Question) => {
+    setSaving(false)
+    postPutQuestion(newQuestion)
+  }
   return (
-    <label className="inline-flex relative items-center cursor-pointer">
-      <input
-        type="checkbox"
-        className="sr-only peer"
-        checked={!isOld}
-        readOnly
-      />
-      <div
-        onClick={() => {
-          updateOld()
-        }}
-        className={
-          `w-7 h-4 bg-gray-200 rounded-full` +
-          ` peer peer-focus:ring-green-300 peer-checked:after:translate-x-full` +
-          ` peer-checked:after:border-white after:content-[''] after:absolute` +
-          ` after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300` +
-          ` after:border after:rounded-full after:h-3 after:w-3` +
-          ` after:transition-all peer-checked:bg-green-600`
-        }
-      ></div>
-    </label>
+    <div className="flex items-center w-20">
+      <button
+        type="button"
+        className={`flex-shrink-0 w-20 border p-1 text-white ${bgcolor()}`}
+      >
+        {saving ? (
+          <svg
+            className={
+              `animate-spin h-5 w-5 mx-6 border-4` +
+              ` border-blue-500 rounded-full border-t-transparent`
+            }
+          ></svg>
+        ) : (
+          <span onClick={() => updateOld()}>アーカイブ</span>
+        )}
+      </button>
+    </div>
   )
 })

@@ -41,7 +41,8 @@ export const TagTile: FC<Props> = memo(({ tag, selected, onClickTag }) => {
       key={tag.tag_no}
       className={
         `place-items-center flex justify-between rounded-md border` +
-        ` my-1 py-1 mx-1 px-3 font-extrabold text-sm cursor-pointer ${bgcolor}`
+        ` my-1 py-1 mx-1 px-3 font-extrabold text-sm cursor-pointer` +
+        ` ${bgcolor}`
       }
       onClick={() => onClickTag(tag, !selected)}
       onDoubleClick={() => openNote()}

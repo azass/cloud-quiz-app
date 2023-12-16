@@ -1,13 +1,12 @@
 import { FC, useEffect, useState } from 'react'
-import { useEditQuestionContext } from './EditQuestionHeader'
 import { useQuestionContext } from './QuestionProvider'
-import { strongText } from '../../../../styles/util'
+import { useQuestionHeaderContext } from './QuestionHeaderProvider'
 
 export const QScreenTime: FC = () => {
   const [time, setTime] = useState(0)
   // const [isRunning, setIsRunning] = useState(false)
   const { question } = useQuestionContext()
-  const { questId } = useEditQuestionContext()
+  const { questId } = useQuestionHeaderContext()
   if (questId !== question.quest_id) {
     setTime(0)
   }
@@ -25,10 +24,8 @@ export const QScreenTime: FC = () => {
     return num.toString().padStart(2, '0')
   }
   return (
-    <div className={`flex mt-2 mx-2 px-4 ${strongText}`}>
-      <span>
-        {zero(hours)}:{zero(minutes)}:{zero(seconds)}
-      </span>
-    </div>
+    <span className="w-14">
+      {zero(hours)}:{zero(minutes)}:{zero(seconds)}
+    </span>
   )
 }

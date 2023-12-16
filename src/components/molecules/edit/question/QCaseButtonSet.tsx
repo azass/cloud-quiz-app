@@ -7,14 +7,14 @@ import {
   useEditCaseNoContext,
 } from './QuestionCaseProvider'
 import { iconHover, iconShine } from '../../../../styles/util'
-import { useEditQuestionContext } from './EditQuestionHeader'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
+import { useQuestionHeaderContext } from './QuestionHeaderProvider'
 
 export const QCaseButtonSet: FC = memo(() => {
   const { question } = useQuestionContext()
   const { editCaseNo, setEditCaseNo } = useEditCaseNoContext()
   const { changeCaseNo } = useChangeCaseNoContext()
-  const { postPutQuestion } = useEditQuestionContext()
+  const { postPutQuestion } = useQuestionHeaderContext()
   const { putQuestionSync } = useMutateQuestion()
   const queryClient = useQueryClient()
   const onClickCaseNo = () => {
@@ -30,9 +30,9 @@ export const QCaseButtonSet: FC = memo(() => {
     )
   }
   return (
-    <div title="QCaseButtonSet">
+    <>
       <DocumentTextIcon
-        className={`w-5 h-5 mt-1 ml-8 ${iconHover}`}
+        className={`w-5 h-5 ${iconHover}`}
         onClick={() => setEditCaseNo(!editCaseNo)}
       />
       {changeCaseNo && (
@@ -41,6 +41,6 @@ export const QCaseButtonSet: FC = memo(() => {
           onClick={() => onClickCaseNo()}
         />
       )}
-    </div>
+    </>
   )
 })

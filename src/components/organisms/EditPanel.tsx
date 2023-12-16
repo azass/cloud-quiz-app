@@ -8,6 +8,7 @@ import { NoteItemsProvider } from '../molecules/edit/NoteItemsProvider'
 import { TermProvider } from '../molecules/edit/term/TermProvider'
 import { TermNoteHeader } from '../molecules/edit/term/TermNoteHeader'
 import { TermNoteBlock } from '../molecules/edit/term/TermNoteBlock'
+
 export const EditPanel: FC = () => {
   const editContext = useAppSelector(selectEditContext)
   return (

@@ -53,9 +53,14 @@ export const TermTree: FC = memo(() => {
                 {term.changed !== 'delete' &&
                   isVisibleTag(star, fire, term.quest_ids || []) &&
                   !term.hide && (
-                    <TermProvider term={term} index={index}>
-                      <TermTreeNode />
-                    </TermProvider>
+                    <div
+                      key={term.term_id}
+                      className="flex items-stretch w-full"
+                    >
+                      <TermProvider term={term} index={index}>
+                        <TermTreeNode />
+                      </TermProvider>
+                    </div>
                   )}
               </>
             ))}

@@ -12,6 +12,7 @@ export const TermNoteTab: FC = memo(() => {
   const { getSelectTags, onClickTag } = useTagSelect()
   const { selectSearchTags, setSelectSearchTags, onClickSearchTag } =
     useSearch()
+  const onDisableClick = () => {}
   return (
     <>
       {editedContent === 'questTagSelect' && (
@@ -24,8 +25,8 @@ export const TermNoteTab: FC = memo(() => {
       {editedContent === 'TaermNoteSelect' && (
         <TagSelectPanel
           useExamTags={false}
-          selectTags={selectSearchTags}
-          onClickTag={onClickSearchTag}
+          selectTags={[]}
+          onClickTag={onDisableClick}
           setSelectSearchTags={setSelectSearchTags}
         />
       )}

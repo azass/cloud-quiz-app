@@ -1,7 +1,4 @@
-import { memo, useState, FC, createContext, useContext } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
-import { selectQuestions, setQuestions } from '../../../../slices/editSlice'
-import { Question } from '../../../../types/types'
+import { memo, FC } from 'react'
 import { LangSelector } from '../../../atoms/LangSelector'
 import { QArchiveToggle } from './QArchiveToggle'
 import { QCaseButtonSet } from './QCaseButtonSet'
@@ -10,60 +7,25 @@ import { QReadyButton } from './QReadyButton'
 import { useIsNewContext, useQuestionContext } from './QuestionProvider'
 import { QScreenTime } from './QScreenTime'
 import { useOpenBookContext } from '../../../pages/QuizEditor'
-const IsOldContext = createContext(
-  {} as {
-    isOld: boolean
-    setIsOld: any
-  }
-)
-const NotReadyContext = createContext(
-  {} as {
-    notReady: boolean
-    setNotReady: any
-  }
-)
-const EditQuestionContext = createContext(
-  {} as {
-    questId: string
-    postPutQuestion: any
-  }
-)
-export const useIsOldContext = () => useContext(IsOldContext)
-export const useNotReadyContext = () => useContext(NotReadyContext)
-export const useEditQuestionContext = () => useContext(EditQuestionContext)
+import {
+  useIsOldContext,
+  useNotReadyContext,
+  useQuestionHeaderContext,
+} from './QuestionHeaderProvider'
+import { strongText } from '../../../../styles/util'
 
 export const EditQuestionHeader: FC = memo(() => {
-  const dispatch = useAppDispatch()
-  const { question, setQuestion } = useQuestionContext()
+  const { question } = useQuestionContext()
   const { isNew } = useIsNewContext()
-  const questions: Question[] = useAppSelector(selectQuestions)
-  const [questId, setQuestId] = useState(question.quest_id)
-  const [isOld, setIsOld] = useState(question.is_old || false)
-  const [notReady, setNotReady] = useState(question.not_ready || false)
   const { open } = useOpenBookContext()
+  const { questId, setQuestId } = useQuestionHeaderContext()
+  const { setIsOld } = useIsOldContext()
+  const { setNotReady } = useNotReadyContext()
 
   if (questId !== question.quest_id) {
     setQuestId(question.quest_id)
     setIsOld(question.is_old || false)
     setNotReady(question.not_ready || false)
-  }
-  const postPutQuestion = (newQuestion: Question) => {
-    setQuestion(newQuestion)
-    setIsOld(newQuestion.is_old || false)
-    setNotReady(newQuestion.not_ready || false)
-    dispatch(
-      setQuestions(
-        questions.map((quest) =>
-          quest.quest_id === newQuestion.quest_id
-            ? {
-                ...quest,
-                is_old: newQuestion.is_old || false,
-                not_ready: newQuestion.not_ready || false,
-              }
-            : quest
-        )
-      )
-    )
   }
   return (
     <div
@@ -72,27 +34,25 @@ export const EditQuestionHeader: FC = memo(() => {
     >
       <div className="flex items-center w-full pb-2 z-10">
         <div className="flex justify-start items-center">
-          <div className="pt-1 w-32 text-lg text-orange-400 font-bold">
+          <div className="pt-1 w-30 text-lg text-orange-400 font-bold">
             {question.quest_id}
           </div>
-          <EditQuestionContext.Provider value={{ questId, postPutQuestion }}>
-            <QScreenTime />
-            <div className="flex mt-1 mr-4" title="QArchiveToggle">
-              <IsOldContext.Provider value={{ isOld, setIsOld }}>
-                <QArchiveToggle />
-              </IsOldContext.Provider>
-            </div>
-            <div className="ml-2" title="QReadyButton">
-              <NotReadyContext.Provider value={{ notReady, setNotReady }}>
-                <QReadyButton />
-              </NotReadyContext.Provider>
-            </div>
+          {isNew && question && <QNewRegister />}
+          <div className="mt-1 ml-4" title="QCaseButtonSet">
             <QCaseButtonSet />
-          </EditQuestionContext.Provider>
-        </div>
-        {isNew && question && <QNewRegister />}
-        <div className="ml-8 mr-12">
-          <LangSelector />
+          </div>
+          <div className={`flex mt-2 mx-2 px-4 ${strongText}`}>
+            <QScreenTime />
+          </div>
+          <div className="flex mt-0 mr-0" title="QArchiveToggle">
+            <QArchiveToggle />
+          </div>
+          <div className="ml-0" title="QReadyButton">
+            <QReadyButton />
+          </div>
+          <div className="py-4">
+            <LangSelector />
+          </div>
         </div>
       </div>
     </div>

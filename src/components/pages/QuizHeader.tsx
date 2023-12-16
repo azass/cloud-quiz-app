@@ -12,14 +12,14 @@ export const QuizHeader: FC = memo(() => {
   const { logout } = useAuthentication()
   const { open, setOpen } = useOpenBookContext()
   return (
-    <div className="flex top-0 inset-x-0 fixed z-50 h-16 items-center">
+    <div className="flex top-0 inset-x-0 fixed z-50 h-10 items-center">
       <div className="flex justify-between w-screen z-50">
         <div className="z-50">
-          <p className={`z-50 w-auto pl-8 text-xl ${strongText}`}>
+          <p className={`z-50 w-auto pl-8 pt-4 text-xl ${strongText}`}>
             Quiz Editor
           </p>
         </div>
-        <div className="">
+        <div className="pt-1">
           <BookOpenIcon
             className={
               'h-8 w-8 mr-8 cursor-pointer ' +
@@ -28,7 +28,7 @@ export const QuizHeader: FC = memo(() => {
             onClick={() => setOpen(!open)}
           />
         </div>
-        <div className="pr-8">
+        <div className="pr-8 pt-2">
           <button
             className={`rounded p-2 bg-blue-500 ${strongText}`}
             onClick={() => {

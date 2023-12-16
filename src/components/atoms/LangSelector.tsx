@@ -6,7 +6,7 @@ export const LangSelector: FC = memo(() => {
   const nowLang = lang
   const bgcolor = (lang: number) => {
     if (nowLang === 0 || nowLang === lang) {
-      return 'bg-green-500'
+      return 'bg-orange-500'
     } else {
       return ''
     }
@@ -20,7 +20,7 @@ export const LangSelector: FC = memo(() => {
     }
   }
   return (
-    <div className="flex items-center py-4">
+    <div className="flex items-center">
       <button
         type="button"
         className={`flex-shrink-0 w-20 border p-1 text-white ${bgcolor(1)}`}

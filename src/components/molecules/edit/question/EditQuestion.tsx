@@ -15,6 +15,7 @@ import {
 import { NoteItemsProvider } from '../NoteItemsProvider'
 import { strongText } from '../../../../styles/util'
 import { QKeywords } from '../../QKeywords'
+import { QuestionHeaderProvider } from './QuestionHeaderProvider'
 
 export const EditQuestion: FC = memo(() => {
   const { question } = useQuestionContext()
@@ -25,7 +26,9 @@ export const EditQuestion: FC = memo(() => {
   }
   return (
     <div title="EditQuestion">
-      <EditQuestionHeader />
+      <QuestionHeaderProvider>
+        <EditQuestionHeader />
+      </QuestionHeaderProvider>
       {!isNew && question && (
         <div className="pt-8">
           <EditQuestionCase />

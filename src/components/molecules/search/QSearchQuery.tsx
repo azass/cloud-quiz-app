@@ -1,18 +1,15 @@
 import { DocumentRemoveIcon } from '@heroicons/react/outline'
 import { memo, FC } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-// import { useQueryExamTags } from '../../../hooks/useQueryExamTags'
 import { useSearch } from '../../../hooks/useSearch'
 import {
   resetShowContent,
   selectExam,
   selectExamTags,
   selectScArgs,
-  // setExamTags,
   setScArgs,
 } from '../../../slices/editSlice'
 import { TagSelectPanel } from '../tag/TagSelectPanel'
-import { QSProgressButtonSet } from './QProgressButtonSet'
 import { QSearchButtonSet } from './QSearchButtonSet'
 import {
   useSelectOptionsContext,

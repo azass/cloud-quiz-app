@@ -2,7 +2,7 @@ import { FC, memo } from 'react'
 import { NoteItemsProvider } from '../NoteItemsProvider'
 import { NoteItemProvider } from '../NoteItemProvider'
 import { NoteItemTile } from '../NoteItemTile'
-import { NoteItem, Term } from '../../../../types/types'
+import { NoteItem } from '../../../../types/types'
 
 interface Props {
   description: NoteItem[]
