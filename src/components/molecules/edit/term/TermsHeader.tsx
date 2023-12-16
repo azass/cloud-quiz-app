@@ -5,6 +5,7 @@ import {
   LockClosedIcon,
   LockOpenIcon,
   StarIcon,
+  FireIcon,
 } from '@heroicons/react/solid'
 import { Link, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
@@ -14,6 +15,7 @@ import { iconHover, iconStrong } from '../../../../styles/util'
 import { resetServerContext } from 'react-beautiful-dnd'
 import {
   useDraggableContext,
+  useFireContext,
   useLockDragContext,
   useStarContext,
 } from './TermsProvider'
@@ -23,6 +25,7 @@ export const TermsHeader: FC = () => {
   const dispatch = useAppDispatch()
   const params = useParams()
   const editedContext = useAppSelector(selectEditContext)
+  const { fire, setFire } = useFireContext()
   const { star, setStar } = useStarContext()
   const { lockDrag, setLockDrag } = useLockDragContext()
   const { draggable, setDraggable } = useDraggableContext()
@@ -47,6 +50,13 @@ export const TermsHeader: FC = () => {
         <TermSaveButton />
       </div>
       <div className="flex">
+        <FireIcon
+          className={
+            'h-9 w-8 mr-8 cursor-pointer ' +
+            `${fire ? Colors.shining : 'text-gray-700'}`
+          }
+          onClick={() => setFire(!fire)}
+        />
         <StarIcon
           className={
             'h-9 w-8 mr-8 cursor-pointer ' +

@@ -67,7 +67,10 @@ export const QuizEditor: FC = memo(() => {
           <div className={`${nowTab === tabs[1] ? '' : 'hidden'}`}>
             {params.quest_id ? <QSelectTab /> : <QSelectInitTab />}
           </div>
-          <div className={`${nowTab === tabs[2] ? '' : 'hidden'}`}>
+          <div
+            title="TermNoteTab"
+            className={`${nowTab === tabs[2] ? '' : 'hidden'}`}
+          >
             <TermNoteTab />
           </div>
           {nowTab === tabs[3] && (
@@ -80,7 +83,7 @@ export const QuizEditor: FC = memo(() => {
           <div id="content-wrapper" className={`flex min-h-screen w-1/2`}>
             <div className={`flex w-full `}>
               <div
-                className={`px-8 absolute pt-12 pb-12 w-1/2 ${Colors.baseBg}`}
+                className={`px-4 absolute pt-12 pb-12 w-1/2 ${Colors.baseBg}`}
               >
                 <EditorTab />
               </div>

@@ -21,7 +21,7 @@ export const TermEditor: FC = memo(() => {
       ) : (
         <>
           <TermNoteHeader />
-          <div className="w-full pr-16 pl-4 mt-24">
+          <div className="w-full pr-4 pl-4 mt-24">
             <TermNoteBlock />
           </div>
         </>

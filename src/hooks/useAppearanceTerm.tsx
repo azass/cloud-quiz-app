@@ -1,16 +1,28 @@
 import { useAppSelector } from '../app/hooks'
 import Colors from '../consts/colors'
-import { selectEditContext, selectExam, selectQuestions } from '../slices/editSlice'
+import {
+  selectEditContext,
+  selectExam,
+  selectQuestions,
+} from '../slices/editSlice'
 
 export const useAppearanceTerm = () => {
   const exam = useAppSelector(selectExam)
   const questions = useAppSelector(selectQuestions)
   const editContext = useAppSelector(selectEditContext)
 
-  const show = (selfie: boolean, questIds: string[]) => {
-    return (
-      selfie || questIds.filter((id) => id.startsWith(exam.exam_id)).length > 0
-    )
+  const isVisibleTag = (
+    onlySelfowned: boolean,
+    onlyWeaknesses: boolean,
+    questIds: string[]
+  ) => {
+    if (onlyWeaknesses) {
+      return isWeak(questIds)
+    } else if (onlySelfowned) {
+      return questIds.filter((id) => id.startsWith(exam.exam_id)).length > 0
+    } else {
+      return true
+    }
   }
   const isWeak = (questIds: string[]) => {
     return (
@@ -46,7 +58,7 @@ export const useAppearanceTerm = () => {
     }
   }
   return {
-    show,
+    isVisibleTag,
     borderColor,
     textColor,
     boadBgcolor,

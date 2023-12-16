@@ -2,11 +2,12 @@ import { FC } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import { selectEditContext } from '../../slices/editSlice'
 import { QuestionProvider } from '../molecules/edit/question/QuestionProvider'
-import { TermEditor } from '../molecules/edit/term/TermEditor'
 import { EditQuestion } from '../molecules/edit/question/EditQuestion'
 import { QuestionCaseProvider } from '../molecules/edit/question/QuestionCaseProvider'
 import { NoteItemsProvider } from '../molecules/edit/NoteItemsProvider'
 import { TermProvider } from '../molecules/edit/term/TermProvider'
+import { TermNoteHeader } from '../molecules/edit/term/TermNoteHeader'
+import { TermNoteBlock } from '../molecules/edit/term/TermNoteBlock'
 export const EditPanel: FC = () => {
   const editContext = useAppSelector(selectEditContext)
   return (
@@ -29,7 +30,10 @@ export const EditPanel: FC = () => {
               hasAddLink={true}
               hasAddImage={true}
             >
-              <TermEditor />
+              <TermNoteHeader />
+              <div className="w-full pr-4 pl-4 mt-24">
+                <TermNoteBlock />
+              </div>
             </NoteItemsProvider>
           </TermProvider>
         </div>

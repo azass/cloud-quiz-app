@@ -33,16 +33,6 @@ export const NoteTextarea: FC = memo(() => {
         <div className={`px-4 mt-1 ${docStyle}`}>
           {editable && editting ? (
             <div>
-              {/* <button
-                type="button"
-                className={
-                  'flex-shrink-0 border text-white text-xs h-4 mb-1' +
-                  `${pre && ' bg-pink-500'}`
-                }
-                onClick={() => setPre(!pre)}
-              >
-                <span className="px-1 h-4 text-xs">pre</span>
-              </button> */}
               <TextareaAutosize
                 value={editElem.text || ''}
                 className={textareaStyle}
@@ -71,7 +61,7 @@ export const NoteTextarea: FC = memo(() => {
           )}
         </div>
       )}
-      {lang !== 1 && (
+      {(lang === 0 || lang === 2) && (
         <div className="px-4 py-3 mt-1">
           {editable && editting ? (
             <TextareaAutosize

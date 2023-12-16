@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { selectQuestions, setQuestions } from '../../../../slices/editSlice'
 import { Question } from '../../../../types/types'
 import { LangSelector } from '../../../atoms/LangSelector'
-import { QRArchiveToggle } from './QArchiveToggle'
+import { QArchiveToggle } from './QArchiveToggle'
 import { QCaseButtonSet } from './QCaseButtonSet'
 import { QNewRegister } from './QNewRegister'
 import { QReadyButton } from './QReadyButton'
@@ -66,25 +66,23 @@ export const EditQuestionHeader: FC = memo(() => {
     )
   }
   return (
-    <div className={`fixed ${open ? 'w-1/2' : 'w-full'} pr-8 -mt-1`}>
-      <div className="flex justify-between items-center w-full pb-2 z-10">
+    <div
+      className={`fixed ${open ? 'w-1/2' : 'w-full'} pr-8 -mt-8 pt-1`}
+      title="EditQuestionHeader"
+    >
+      <div className="flex items-center w-full pb-2 z-10">
         <div className="flex justify-start items-center">
-          <div
-            className={
-              `pt-1 w-32 text-lg text-orange-400 font-bold` +
-              ` hover:text-sky-600 hover:bg-white`
-            }
-          >
+          <div className="pt-1 w-32 text-lg text-orange-400 font-bold">
             {question.quest_id}
           </div>
           <EditQuestionContext.Provider value={{ questId, postPutQuestion }}>
             <QScreenTime />
-            <div className="flex mt-1 mr-4">
+            <div className="flex mt-1 mr-4" title="QArchiveToggle">
               <IsOldContext.Provider value={{ isOld, setIsOld }}>
-                <QRArchiveToggle />
+                <QArchiveToggle />
               </IsOldContext.Provider>
             </div>
-            <div className="ml-2">
+            <div className="ml-2" title="QReadyButton">
               <NotReadyContext.Provider value={{ notReady, setNotReady }}>
                 <QReadyButton />
               </NotReadyContext.Provider>

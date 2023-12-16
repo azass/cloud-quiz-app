@@ -12,6 +12,12 @@ import { useOpenBookContext } from '../../../pages/QuizEditor'
 interface Props {
   children: ReactNode
 }
+const FireContext = createContext(
+  {} as {
+    fire: boolean
+    setFire: any
+  }
+)
 const StarContext = createContext(
   {} as {
     star: boolean
@@ -30,12 +36,15 @@ const LockDragContext = createContext(
     setLockDrag: any
   }
 )
+export const useFireContext = () => useContext(FireContext)
 export const useStarContext = () => useContext(StarContext)
 export const useDraggableContext = () => useContext(DraggableContext)
 export const useLockDragContext = () => useContext(LockDragContext)
+
 export const TermsProvider: FC<Props> = ({ children }) => {
   const { open } = useOpenBookContext()
   const [draggable, setDraggable] = useState(true)
+  const [fire, setFire] = useState(false)
   const [star, setStar] = useState(false)
   const [lockDrag, setLockDrag] = useState(!open)
   const dispatch = useAppDispatch()
@@ -66,13 +75,15 @@ export const TermsProvider: FC<Props> = ({ children }) => {
     }
   }
   return (
-    <div className="mx-6 my-6" title="TermEditFrame">
+    <div className="mx-6 my-6" title="TermsProvider">
       <DraggableContext.Provider value={{ draggable, setDraggable }}>
-        <StarContext.Provider value={{ star, setStar }}>
-          <LockDragContext.Provider value={{ lockDrag, setLockDrag }}>
-            <LangProvider>{children}</LangProvider>
-          </LockDragContext.Provider>
-        </StarContext.Provider>
+        <FireContext.Provider value={{ fire, setFire }}>
+          <StarContext.Provider value={{ star, setStar }}>
+            <LockDragContext.Provider value={{ lockDrag, setLockDrag }}>
+              <LangProvider>{children}</LangProvider>
+            </LockDragContext.Provider>
+          </StarContext.Provider>
+        </FireContext.Provider>
       </DraggableContext.Provider>
     </div>
   )

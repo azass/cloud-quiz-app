@@ -9,12 +9,17 @@ import {
 } from '../../../../slices/editSlice'
 import { TermTreeNode } from './TermTreeNode'
 import { TermProvider } from './TermProvider'
-import { useLockDragContext, useStarContext } from './TermsProvider'
+import {
+  useFireContext,
+  useLockDragContext,
+  useStarContext,
+} from './TermsProvider'
 
 export const TermTree: FC = memo(() => {
   const dispatch = useAppDispatch()
   const terms = useAppSelector(selectEdittingTerms)
-  const { show } = useAppearanceTerm()
+  const { isVisibleTag } = useAppearanceTerm()
+  const { fire } = useFireContext()
   const { star } = useStarContext()
   const { lockDrag } = useLockDragContext()
   const handleDragEnd = (result: any) => {
@@ -46,7 +51,7 @@ export const TermTree: FC = memo(() => {
             {terms.map((term, index) => (
               <>
                 {term.changed !== 'delete' &&
-                  show(!star, term.quest_ids || []) &&
+                  isVisibleTag(star, fire, term.quest_ids || []) &&
                   !term.hide && (
                     <TermProvider term={term} index={index}>
                       <TermTreeNode />

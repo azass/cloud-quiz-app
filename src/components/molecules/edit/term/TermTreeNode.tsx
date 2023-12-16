@@ -7,20 +7,23 @@ import {
   selectEdittingTerms,
   setEdittingTerms,
 } from '../../../../slices/editSlice'
-import { TermEditor } from './TermEditor'
 import { TermAddButton } from './TermAddButton'
 import { NoteItemsProvider } from '../NoteItemsProvider'
 import { iconAccent } from '../../../../styles/util'
-import { useStarContext } from './TermsProvider'
-import { useTermContext } from './TermProvider'
+import { useFireContext, useStarContext } from './TermsProvider'
+import { useDescribeContext, useTermContext } from './TermProvider'
+import { TermEditTile } from './TermEditTile'
+import { TermNoteBlock } from './TermNoteBlock'
 
 export const TermTreeNode: FC = memo(() => {
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
   const terms = useAppSelector(selectEdittingTerms)
   const { term, index } = useTermContext()
+  const { fire } = useFireContext()
   const { star } = useStarContext()
   const [fold, setFold] = useState(term.fold || false)
+  const { describe } = useDescribeContext()
 
   const clickFold = (isFold: boolean) => {
     const newTerms = [...terms]
@@ -76,10 +79,11 @@ export const TermTreeNode: FC = memo(() => {
                   hasAddLink={true}
                   hasAddImage={true}
                 >
-                  <TermEditor />
+                  <TermEditTile />
+                  {describe && <TermNoteBlock />}
                 </NoteItemsProvider>
               </div>
-              {!star && (
+              {!star && !fire && (
                 <div className="flex-none mt-2 pt-1 w-6">
                   <TermAddButton index={index} />
                 </div>

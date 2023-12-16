@@ -1,6 +1,6 @@
 import { FC, ReactNode, createContext, useContext, useState } from 'react'
 import { NoteItem } from '../../../types/types'
-import { useStarContext } from './term/TermsProvider'
+import { useFireContext, useStarContext } from './term/TermsProvider'
 import { useEditItems } from '../../../hooks/useEditItems'
 
 interface Props {
@@ -73,6 +73,7 @@ export const NoteItemsProvider: FC<Props> = ({
   clickEye,
   children,
 }) => {
+  const { fire } = useFireContext()
   const { star } = useStarContext()
   const [editItems, setEditItems] = useState<NoteItem[]>(noteItems)
   const [editting, setEditting] = useState(false)
@@ -89,7 +90,7 @@ export const NoteItemsProvider: FC<Props> = ({
   } = useEditItems(editItems)
 
   const add = (index: number, type: string) => {
-    if (!star) {
+    if (!star && !fire) {
       const newEditItems = addItem(index, type)
       setEditItems(newEditItems)
       setShowSaveBtn(validate(newEditItems))

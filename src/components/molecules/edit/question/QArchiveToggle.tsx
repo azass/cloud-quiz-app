@@ -3,7 +3,7 @@ import { useQuestionContext } from './QuestionProvider'
 import { useEditQuestionContext, useIsOldContext } from './EditQuestionHeader'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 
-export const QRArchiveToggle: FC = memo(() => {
+export const QArchiveToggle: FC = memo(() => {
   const { question } = useQuestionContext()
   const { isOld } = useIsOldContext()
   const { postPutQuestion } = useEditQuestionContext()

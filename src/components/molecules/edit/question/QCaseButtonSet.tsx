@@ -30,7 +30,7 @@ export const QCaseButtonSet: FC = memo(() => {
     )
   }
   return (
-    <div>
+    <div title="QCaseButtonSet">
       <DocumentTextIcon
         className={`w-5 h-5 mt-1 ml-8 ${iconHover}`}
         onClick={() => setEditCaseNo(!editCaseNo)}

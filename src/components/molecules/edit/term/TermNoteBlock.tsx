@@ -12,23 +12,25 @@ import {
   useShowSaveBtnContext,
 } from '../NoteItemsProvider'
 import { useEditTermContext, useTermContext } from './TermProvider'
-import { NoteBlockHeader } from '../NoteBlockHeader'
 import Colors from '../../../../consts/colors'
-import { useStarContext } from './TermsProvider'
+import { useFireContext, useStarContext } from './TermsProvider'
 import { useEditItems } from '../../../../hooks/useEditItems'
 import { TermItemTile } from './TermItemTile'
+import { CheckCircleIcon, PencilAltIcon } from '@heroicons/react/solid'
+import { iconBase, iconShine } from '../../../../styles/util'
 
 export const TermNoteBlock: FC = memo(() => {
   const dispatch = useAppDispatch()
   const updateTem = useAppSelector(selectUpdateTerm)
   const { term } = useTermContext()
+  const { fire } = useFireContext()
   const { star } = useStarContext()
   const { draggable, editable, validate, save } = useNoteItemsContext()
   const { showSaveBtn, setShowSaveBtn } = useShowSaveBtnContext()
-  const { editting } = useEdittingContext()
+  const { editting, setEditting } = useEdittingContext()
   const { updateCacheTerm } = useEditTermContext()
   const { editItems, setEditItems } = useEditItemsContext()
-  const { show } = useAppearanceTerm()
+  const { isVisibleTag } = useAppearanceTerm()
   const { changeCheckItem2 } = useEditItems(editItems)
   const [termId, setTermId] = useState(term.term_id)
 
@@ -58,21 +60,27 @@ export const TermNoteBlock: FC = memo(() => {
   return (
     <>
       {editable && (
-        <div
-          className={`-ml-14 ${
-            (editting || (!editting && editItems.length !== 0)) && '-mb-8'
-          }`}
-        >
-          <NoteBlockHeader title="" />
+        <div className="ml-0">
+          {editting ? (
+            <CheckCircleIcon
+              className={`h-5 w-5 ${iconShine}`}
+              onClick={() => setEditting(!editting)}
+            />
+          ) : (
+            <PencilAltIcon
+              className={`h-4 w-8 ${iconBase}`}
+              onClick={() => setEditting(!editting)}
+            />
+          )}
         </div>
       )}
-      <div className={`px-2 py-2 ${Colors.baseBg}`} title="TermNoteBlock">
+      <div className={`px-2 pb-2 ${Colors.baseBg}`} title="TermNoteBlock">
         {editItems.length === 0 && editting ? (
           <NoteItemAdds index={0} />
         ) : (
           editItems.map((editItem, index) => (
             <>
-              {show(!star, editItem.quest_ids || []) && (
+              {isVisibleTag(star, fire, editItem.quest_ids || []) && (
                 <TermItemTile
                   editItem={editItem}
                   index={index}

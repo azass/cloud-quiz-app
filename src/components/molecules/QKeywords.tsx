@@ -14,6 +14,7 @@ import { useTags } from '../../hooks/useTags'
 import { strongText } from '../../styles/util'
 import { useAuto } from '../../hooks/useAuto'
 import Label from '../../consts/labels'
+import { ServiceTag } from '../atoms/ServiceTag'
 
 interface Props {
   question: Question
@@ -21,7 +22,6 @@ interface Props {
 }
 export const QKeywords: FC<Props> = memo(({ question, withAdd }) => {
   const exam = useAppSelector(selectExam)
-  const { getTagName } = useTags()
   const { suggestTags } = useAuto()
   const dispatch = useAppDispatch()
   const { getKeywordsJson } = useKeywords()
@@ -45,15 +45,7 @@ export const QKeywords: FC<Props> = memo(({ question, withAdd }) => {
     <div className="flex flex-wrap justify-start " title="QKeywords">
       {Object.keys(keywords).map((key, index) => (
         <>
-          <span
-            key={question.quest_id + '_' + index++}
-            className={
-              `flex items-center rounded-full border` +
-              ` py-1 my-1 mr-1 px-3 bg-pink-600 ${strongText}`
-            }
-          >
-            {getTagName(key)}
-          </span>
+          <ServiceTag tagkey={key} question={question} />
           {keywords[key].length > 0 && <QTerms terms={keywords[key]} />}
         </>
       ))}

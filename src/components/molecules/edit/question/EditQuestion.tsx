@@ -27,7 +27,7 @@ export const EditQuestion: FC = memo(() => {
     <div title="EditQuestion">
       <EditQuestionHeader />
       {!isNew && question && (
-        <div className="pt-16">
+        <div className="pt-8">
           <EditQuestionCase />
           <NoteItemsProvider
             name="question_items"

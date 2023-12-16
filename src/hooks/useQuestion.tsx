@@ -7,7 +7,10 @@ import {
 } from '../components/molecules/edit/NoteItemsProvider'
 import { useShowAllQuestionCaseContext } from '../components/molecules/edit/question/QuestionCaseProvider'
 import { useQuestionContext } from '../components/molecules/edit/question/QuestionProvider'
-import { useStarContext } from '../components/molecules/edit/term/TermsProvider'
+import {
+  useFireContext,
+  useStarContext,
+} from '../components/molecules/edit/term/TermsProvider'
 import { selectExam } from '../slices/editSlice'
 import { NoteItem, Question } from '../types/types'
 
@@ -16,6 +19,7 @@ export const useQuestion = () => {
   const { name, save } = useNoteItemsContext()
   const { showAllQuestionCase } = useShowAllQuestionCaseContext()
   const { setShowSaveBtn } = useShowSaveBtnContext()
+  const { fire } = useFireContext()
   const { star } = useStarContext()
   const exam = useAppSelector(selectExam)
   const { editItems } = useEditItemsContext()
@@ -33,7 +37,8 @@ export const useQuestion = () => {
       return questIds.includes(question.quest_id)
     } else if (name === 'description_for_question') {
       return (
-        !star || questIds.filter((id) => id.startsWith(exam.exam_id)).length > 0
+        (!star && !fire) ||
+        questIds.filter((id) => id.startsWith(exam.exam_id)).length > 0
       )
     } else {
       return true
