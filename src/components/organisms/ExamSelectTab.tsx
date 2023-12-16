@@ -53,7 +53,7 @@ export const ExamSelectTab: FC = memo(() => {
             <div className="pb-1">
               <button
                 className={
-                  'inline-flex items-center justify-center w-2/5 ' +
+                  'inline-flex items-center justify-center w-full ' +
                   'space-x-2 px-4 py-1 border border-transparent ' +
                   'text-base font-medium rounded text-blue-100 ' +
                   'hover:text-sky-100 hover:bg-sky-500 ' +
