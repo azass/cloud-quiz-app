@@ -37,7 +37,7 @@ export const QCaseButtonSet: FC = memo(() => {
       />
       {changeCaseNo && (
         <CloudUploadIcon
-          className={`h-5 w-5 ml-4 ${iconShine}`}
+          className={`h-5 w-5 ${iconShine}`}
           onClick={() => onClickCaseNo()}
         />
       )}

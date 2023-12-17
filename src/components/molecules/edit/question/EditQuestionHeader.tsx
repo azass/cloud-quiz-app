@@ -31,19 +31,19 @@ export const EditQuestionHeader: FC = memo(() => {
     return open ? 'w-20' : ''
   }
   const text_size = () => {
-    return open ? '' : 'text-xs'
+    return open ? '' : 'text-[10px]'
   }
   return (
     <div
       className={`fixed ${open ? 'w-1/2 -mt-8' : 'w-full'} pr-8 pt-1`}
       title="EditQuestionHeader"
     >
-      <div className="flex flex-wrap items-center w-full pb-2 z-10">
+      <div className="flex items-center w-full pb-2 z-10">
         <div className="flex justify-start items-center">
           <div
             className={
               `pt-1 w-30 text-orange-400 font-bold` +
-              ` ${open ? 'text-lg' : 'text-base'}`
+              ` ${open ? 'text-lg' : 'text-sm'}`
             }
           >
             {question.quest_id}
