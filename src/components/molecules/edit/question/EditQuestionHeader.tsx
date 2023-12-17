@@ -31,7 +31,7 @@ export const EditQuestionHeader: FC = memo(() => {
     return open ? 'w-20' : ''
   }
   const text_size = () => {
-    return open ? '' : 'text-[9px]'
+    return open ? '' : 'text-[8px]'
   }
   return (
     <div
@@ -43,7 +43,7 @@ export const EditQuestionHeader: FC = memo(() => {
           <div
             className={
               `pt-1 w-30 text-orange-400 font-bold` +
-              ` ${open ? 'text-lg' : 'text-xs'}`
+              ` ${open ? 'text-lg' : 'text-xsms'}`
             }
           >
             {question.quest_id}
