@@ -1,7 +1,5 @@
-import { PauseIcon, RssIcon } from '@heroicons/react/solid'
 import { memo, FC, useState } from 'react'
 import { useQuestionContext } from './QuestionProvider'
-import { iconShine } from '../../../../styles/util'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
 import { Question } from '../../../../types/types'
 import {
@@ -10,7 +8,11 @@ import {
   useQuestionHeaderContext,
 } from './QuestionHeaderProvider'
 
-export const QReadyButton: FC = memo(() => {
+interface Props {
+  w: string
+  text_size: string
+}
+export const QReadyButton: FC<Props> = memo(({ w, text_size }) => {
   const { question } = useQuestionContext()
   const { notReady } = useNotReadyContext()
   const { postPutQuestion } = useQuestionHeaderContext()
@@ -41,10 +43,13 @@ export const QReadyButton: FC = memo(() => {
     postPutQuestion(newQuestion)
   }
   return (
-    <div className="flex items-center w-20">
+    <div className="flex items-center">
       <button
         type="button"
-        className={`flex-shrink-0 w-20 border p-1 text-white ${bgcolor()}`}
+        className={
+          `flex-shrink-0 border p-1 text-white` +
+          ` ${w} ${text_size} ${bgcolor()}`
+        }
       >
         {saving ? (
           <svg

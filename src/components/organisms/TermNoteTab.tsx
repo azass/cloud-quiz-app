@@ -10,8 +10,7 @@ import { TermsEditor } from '../molecules/edit/term/TermsEditor'
 export const TermNoteTab: FC = memo(() => {
   const editedContent = useAppSelector(selectShowContent)
   const { getSelectTags, onClickTag } = useTagSelect()
-  const { selectSearchTags, setSelectSearchTags, onClickSearchTag } =
-    useSearch()
+  const { setSelectSearchTags } = useSearch()
   const onDisableClick = () => {}
   return (
     <>

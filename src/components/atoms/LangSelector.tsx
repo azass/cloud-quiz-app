@@ -1,7 +1,10 @@
 import { memo, FC } from 'react'
 import { useLangContext } from './LangProvider'
-
-export const LangSelector: FC = memo(() => {
+interface Props {
+  w: string
+  text_size: string
+}
+export const LangSelector: FC<Props> = memo(({ w, text_size }) => {
   const { lang, setLang } = useLangContext()
   const nowLang = lang
   const bgcolor = (lang: number) => {
@@ -23,7 +26,10 @@ export const LangSelector: FC = memo(() => {
     <div className="flex items-center">
       <button
         type="button"
-        className={`flex-shrink-0 w-20 border p-1 text-white ${bgcolor(1)}`}
+        className={
+          `flex-shrink-0 border p-1 text-white` +
+          ` ${w} ${text_size} ${bgcolor(1)}`
+        }
         onClick={() => clickLang(1)}
       >
         日本語
@@ -31,8 +37,8 @@ export const LangSelector: FC = memo(() => {
       <button
         type="button"
         className={
-          `flex-shrink-0 w-20 border-t border-r border-b` +
-          ` p-1 text-white ${bgcolor(2)}`
+          `flex-shrink-0 border-t border-r border-b p-1 text-white` +
+          ` ${w} ${text_size} ${bgcolor(2)}`
         }
         onClick={() => clickLang(2)}
       >
