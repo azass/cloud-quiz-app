@@ -43,7 +43,7 @@ export const EditQuestionHeader: FC = memo(() => {
           <div
             className={
               `pt-1 w-30 text-orange-400 font-bold` +
-              ` ${open ? 'text-lg' : 'text-sm'}`
+              ` ${open ? 'text-lg' : 'text-xs'}`
             }
           >
             {question.quest_id}
