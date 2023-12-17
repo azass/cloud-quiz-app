@@ -31,7 +31,7 @@ export const EditQuestionHeader: FC = memo(() => {
     return open ? 'w-20' : ''
   }
   const text_size = () => {
-    return open ? '' : 'text-[8px]'
+    return open ? '' : 'text-[12px]'
   }
   return (
     <div
@@ -39,11 +39,11 @@ export const EditQuestionHeader: FC = memo(() => {
       title="EditQuestionHeader"
     >
       <div className="flex items-center w-full pb-2 z-10">
-        <div className="flex justify-start items-center">
+        <div className="flex flex-row items-center w-full">
           <div
             className={
-              `pt-1 w-30 text-orange-400 font-bold` +
-              ` ${open ? 'text-lg' : 'text-xsms'}`
+              `flex flex-none pt-1 w-30 text-orange-400 font-bold` +
+              ` ${open ? 'text-lg' : 'text-sm'}`
             }
           >
             {question.quest_id}
@@ -52,7 +52,11 @@ export const EditQuestionHeader: FC = memo(() => {
           <div className="mt-1 ml-4" title="QCaseButtonSet">
             <QCaseButtonSet />
           </div>
-          <div className={`flex mt-2 mx-2 ${open ? 'px-4' : ''} ${strongText}`}>
+          <div
+            className={`flex-auto mt-2 mx-2 ${
+              open ? 'px-4' : ''
+            } ${strongText}`}
+          >
             <QScreenTime />
           </div>
           <div className="flex items-center">
