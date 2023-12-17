@@ -24,7 +24,7 @@ export const QReadyButton: FC<Props> = memo(({ w, text_size }) => {
     return notReady ? 'bg-pink-500' : isOld ? '' : 'bg-green-500'
   }
   const title = () => {
-    return notReady ? '準備中' : 'アクティブ'
+    return notReady ? '準備中' : 'Active'
   }
   const onClickReady = (_notReady: boolean) => {
     if (isOld) return

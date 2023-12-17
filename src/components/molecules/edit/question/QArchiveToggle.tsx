@@ -53,7 +53,7 @@ export const QArchiveToggle: FC<Props> = memo(({ w, text_size }) => {
             }
           ></svg>
         ) : (
-          <span onClick={() => updateOld()}>アーカイブ</span>
+          <span onClick={() => updateOld()}>Archive</span>
         )}
       </button>
     </div>

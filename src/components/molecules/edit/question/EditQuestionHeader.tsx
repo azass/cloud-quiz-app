@@ -49,7 +49,7 @@ export const EditQuestionHeader: FC = memo(() => {
             {question.quest_id}
           </div>
           {isNew && question && <QNewRegister />}
-          <div className="mt-1 ml-4" title="QCaseButtonSet">
+          <div className="mt-1 ml-2" title="QCaseButtonSet">
             <QCaseButtonSet />
           </div>
           <div
