@@ -16,7 +16,7 @@ const queryClient = new QueryClient({
 const App: React.FC = () => {
   return (
     <div
-      className={`flex items-center flex-col h-screen text-gray-600 text-sm py-4 ${Colors.baseBg}`}
+      className={`flex items-center flex-col h-screen overscroll-y-contain text-gray-600 text-sm py-4 ${Colors.baseBg}`}
     >
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
