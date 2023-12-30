@@ -58,9 +58,9 @@ export const TermNoteBlock: FC = memo(() => {
     }
   }
   return (
-    <div className={`flex items-stretch w-full pl-2`}>
+    <div className={`flex items-stretch w-full`}>
       {editable && (
-        <div className="pt-2">
+        <div className="pt-2 pl-4 pr-2">
           {editting ? (
             <CheckCircleIcon
               className={`h-5 w-5 ${iconShine}`}

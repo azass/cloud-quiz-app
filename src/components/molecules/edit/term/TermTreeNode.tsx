@@ -45,17 +45,16 @@ export const TermTreeNode: FC = memo(() => {
               <div className="grow w-full">
                 <TermEditTile />
               </div>
-            </div>
-            <div
-              className={`flex items-stretch w-full pl-${term.level * 4 - 2}`}
-            >
-              {describe && <TermNoteBlock />}
-
               {!star && !fire && (
                 <div className="flex-none mt-2 pt-1 w-6">
                   <TermAddButton index={index} />
                 </div>
               )}
+            </div>
+            <div
+              className={`flex items-stretch w-full pl-${term.level * 4 - 4}`}
+            >
+              {describe && <TermNoteBlock />}
             </div>
           </NoteItemsProvider>
         </div>
