@@ -58,9 +58,9 @@ export const TermNoteBlock: FC = memo(() => {
     }
   }
   return (
-    <>
+    <div className={`flex items-stretch w-full pl-2`}>
       {editable && (
-        <div className="ml-0">
+        <div className="pt-2">
           {editting ? (
             <CheckCircleIcon
               className={`h-5 w-5 ${iconShine}`}
@@ -68,13 +68,16 @@ export const TermNoteBlock: FC = memo(() => {
             />
           ) : (
             <PencilAltIcon
-              className={`h-4 w-8 ${iconBase}`}
+              className={`h-4 w-5 ${iconBase}`}
               onClick={() => setEditting(!editting)}
             />
           )}
         </div>
       )}
-      <div className={`px-0 pb-2 ${Colors.baseBg}`} title="TermNoteBlock">
+      <div
+        className={`w-full px-0 pb-2 ${Colors.baseBg}`}
+        title="TermNoteBlock"
+      >
         {editItems.length === 0 && editting ? (
           <NoteItemAdds index={0} />
         ) : (
@@ -96,6 +99,6 @@ export const TermNoteBlock: FC = memo(() => {
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 })

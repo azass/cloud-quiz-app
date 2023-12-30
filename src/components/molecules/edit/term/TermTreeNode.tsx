@@ -26,33 +26,38 @@ export const TermTreeNode: FC = memo(() => {
           {...provided.dragHandleProps}
           className="w-full"
         >
-          <div className={`flex items-stretch w-full pl-${term.level * 4}`}>
-            <TermTreeButton />
-            <div className="grow w-full">
-              <NoteItemsProvider
-                name={
-                  editContext.forQuestion
-                    ? 'description_for_question'
-                    : 'description'
-                }
-                noteItems={term.description || []}
-                editable={true}
-                draggable={true}
-                editting={term.changed ? term.changed === 'new' : false}
-                hasAddTextarea={true}
-                hasAddLink={true}
-                hasAddImage={true}
-              >
+          <NoteItemsProvider
+            name={
+              editContext.forQuestion
+                ? 'description_for_question'
+                : 'description'
+            }
+            noteItems={term.description || []}
+            editable={true}
+            draggable={true}
+            editting={term.changed ? term.changed === 'new' : false}
+            hasAddTextarea={true}
+            hasAddLink={true}
+            hasAddImage={true}
+          >
+            <div className={`flex items-stretch w-full pl-${term.level * 4}`}>
+              <TermTreeButton />
+              <div className="grow w-full">
                 <TermEditTile />
-                {describe && <TermNoteBlock />}
-              </NoteItemsProvider>
-            </div>
-            {!star && !fire && (
-              <div className="flex-none mt-2 pt-1 w-6">
-                <TermAddButton index={index} />
               </div>
-            )}
-          </div>
+            </div>
+            <div
+              className={`flex items-stretch w-full pl-${term.level * 4 - 2}`}
+            >
+              {describe && <TermNoteBlock />}
+
+              {!star && !fire && (
+                <div className="flex-none mt-2 pt-1 w-6">
+                  <TermAddButton index={index} />
+                </div>
+              )}
+            </div>
+          </NoteItemsProvider>
         </div>
       )}
     </Draggable>

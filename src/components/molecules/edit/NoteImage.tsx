@@ -6,7 +6,7 @@ import { useNoteItemsContext, useEdittingContext } from './NoteItemsProvider'
 import Colors from '../../../consts/colors'
 
 export const NoteImage: FC = memo(() => {
-  const { changeText, editable } = useNoteItemsContext()
+  const { changeText } = useNoteItemsContext()
   const { editting } = useEdittingContext()
   const { noteItem: editElem, index } = useNoteItemContext()
   if (!editElem.image_height || editElem.image_height === '') {

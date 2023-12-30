@@ -9,22 +9,16 @@ import Prop from '../../../consts/props'
 import { NoteSelect } from './NoteSelect'
 
 export const NoteItemContent: FC = memo(() => {
-  const { noteItem: editElem } = useNoteItemContext()
-  const lv = editElem?.lv
+  const { noteItem } = useNoteItemContext()
+  const lv = noteItem?.lv
   return (
     <div className={`${lv && `pl-${(Number(lv) - 1) * 4}`}`}>
-      {editElem?.type === Prop.NoteItemType.OPTION && (
-        <NoteOption />
-      )}
-      {editElem?.type === Prop.NoteItemType.SELECT && (
-        <NoteSelect />
-      )}
-      {editElem?.type === Prop.NoteItemType.TEXTAREA && (
-        <NoteTextarea />
-      )}
-      {editElem?.type === Prop.NoteItemType.LINK && <NoteLink />}
-      {editElem?.type === Prop.NoteItemType.IMAGE && <NoteImage />}
-      {editElem?.type === Prop.NoteItemType.TEXTBOX && <NoteTextbox />}
+      {noteItem?.type === Prop.NoteItemType.OPTION && <NoteOption />}
+      {noteItem?.type === Prop.NoteItemType.SELECT && <NoteSelect />}
+      {noteItem?.type === Prop.NoteItemType.TEXTAREA && <NoteTextarea />}
+      {noteItem?.type === Prop.NoteItemType.LINK && <NoteLink />}
+      {noteItem?.type === Prop.NoteItemType.IMAGE && <NoteImage />}
+      {noteItem?.type === Prop.NoteItemType.TEXTBOX && <NoteTextbox />}
     </div>
   )
 })

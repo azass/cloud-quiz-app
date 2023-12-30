@@ -1,6 +1,5 @@
 import { memo, FC } from 'react'
 import { useTerm } from '../../../../hooks/useTerm'
-import { Term } from '../../../../types/types'
 import { strongText } from '../../../../styles/util'
 import { useAppSelector } from '../../../../app/hooks'
 import { selectEditContext } from '../../../../slices/editSlice'

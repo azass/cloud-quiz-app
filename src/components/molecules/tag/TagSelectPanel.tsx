@@ -3,9 +3,9 @@ import { useAppSelector } from '../../../app/hooks'
 import { selectExamTags, selectProviderTags } from '../../../slices/editSlice'
 import { TagTile } from './TagTile'
 import { TagFilter } from '../../atoms/TagFilter'
-import log from 'loglevel'
 import { Tag } from '../../../types/types'
 import Colors from '../../../consts/colors'
+import log from 'loglevel'
 
 interface Props {
   useExamTags: boolean

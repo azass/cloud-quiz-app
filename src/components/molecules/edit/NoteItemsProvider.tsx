@@ -132,7 +132,7 @@ export const NoteItemsProvider: FC<Props> = ({
         <EdittingContext.Provider value={{ editting, setEditting }}>
           <NoteItemsContext.Provider
             value={{
-              noteItems: noteItems,
+              noteItems,
               name,
               add,
               del,
