@@ -22,8 +22,8 @@ export const QTermDescriptions: FC = memo(() => {
           {keywords[key].map((term) => (
             <>
               {term.word !== 'is ?' && (
-                <div className={`${indent(term.level)} py-2 text-xs`}>
-                  <TermTag term={term} />
+                <div className={`${indent(term.level)} py-0 text-xs`}>
+                  <TermTag term={term} withSub={true} />
                 </div>
               )}
               {term.description &&

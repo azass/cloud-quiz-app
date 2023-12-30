@@ -1,42 +1,50 @@
 import { FC } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import { selectEditContext } from '../../slices/editSlice'
-import { QuestionProvider } from '../molecules/edit/question/QuestionProvider'
-import { EditQuestion } from '../molecules/edit/question/EditQuestion'
-import { QuestionCaseProvider } from '../molecules/edit/question/QuestionCaseProvider'
-import { NoteItemsProvider } from '../molecules/edit/NoteItemsProvider'
-import { TermProvider } from '../molecules/edit/term/TermProvider'
+import { QuestionEdit } from '../molecules/edit/question/QuestionEdit'
 import { TermNoteHeader } from '../molecules/edit/term/TermNoteHeader'
 import { TermNoteBlock } from '../molecules/edit/term/TermNoteBlock'
+import { QuestionEditHeader } from '../molecules/edit/question/QuestionEditHeader'
+import { QuestionEditPanel } from '../molecules/edit/question/QuestionEditPanel'
+import { useOpenBookContext } from '../pages/QuizEditor'
+import { TermEditPanel } from '../molecules/edit/term/TermEditPanel'
 
 export const EditPanel: FC = () => {
+  const { open } = useOpenBookContext()
   const editContext = useAppSelector(selectEditContext)
   return (
     <>
       {!editContext.chosenTerm ? (
-        <QuestionProvider>
-          <QuestionCaseProvider>
-            <EditQuestion />
-          </QuestionCaseProvider>
-        </QuestionProvider>
+        <div>
+          <QuestionEditPanel>
+            <div
+              className={
+                `fixed pr-8 pt-1 pb-2 z-10 ` +
+                `${open ? 'w-1/2 -mt-6' : 'w-full'}`
+              }
+              title="EditQuestionHeader"
+            >
+              <QuestionEditHeader />
+            </div>
+            <div className="pt-8" title="EditQuestion">
+              <QuestionEdit />
+            </div>
+          </QuestionEditPanel>
+        </div>
       ) : (
-        <div className="flex grow w-full">
-          <TermProvider term={editContext.chosenTerm} index={-1}>
-            <NoteItemsProvider
-              name={'description'}
-              noteItems={editContext.chosenTerm.description || []}
-              editable={true}
-              draggable={false}
-              hasAddTextarea={true}
-              hasAddLink={true}
-              hasAddImage={true}
+        <div className="flex w-full">
+          <TermEditPanel term={editContext.chosenTerm}>
+            <div
+              className={
+                `fixed pr-8 mt-14 pb-2 z-10 ` + `${open ? 'w-1/2' : 'w-full'}`
+              }
             >
               <TermNoteHeader />
-              <div className="w-full pr-4 pl-4 mt-24">
-                <TermNoteBlock />
-              </div>
-            </NoteItemsProvider>
-          </TermProvider>
+            </div>
+            <div className="w-full pr-4 pl-2 mt-24">
+              <TermNoteBlock />
+            </div>
+          </TermEditPanel>
         </div>
       )}
     </>

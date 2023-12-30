@@ -34,7 +34,7 @@ export const TermsHeader: FC = () => {
     setDraggable(!draggable)
   }
   return (
-    <div className="flex justify-between items-center w-full pb-4 h-12">
+    <div className="flex justify-between items-center">
       <div className="flex">
         <ViewListIcon
           className={`h-8 w-6 mr-3 ${iconHover}`}

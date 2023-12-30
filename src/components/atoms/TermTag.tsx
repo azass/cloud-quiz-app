@@ -2,24 +2,32 @@ import { FC, memo } from 'react'
 import { Term } from '../../types/types'
 import Colors from '../../consts/colors'
 import { strongText } from '../../styles/util'
+import { useTermTag } from '../../hooks/useTermTag'
 interface Props {
   term: Term
+  withSub: boolean
 }
-export const TermTag: FC<Props> = memo(({ term }) => {
+export const TermTag: FC<Props> = memo(({ term, withSub }) => {
+  const { getTagColor } = useTermTag(term.level)
   return (
-    <>
-      {term.word !== 'is ?' && (
-        <span
-          title="QTerms"
-          key={term.term_id}
-          className={
-            `rounded-full border my-1 mr-1 py-1 px-3 text-left ${strongText} ` +
-            `${Colors.termNodeBgcolors[term.level - 1]}`
-          }
+    <div
+      key={term.term_id}
+      className={
+        `rounded-full border my-1 mr-1 py-1 px-5 text-left ${strongText} ` +
+        `${withSub ? 'text-sm' : ''} ` +
+        `${withSub ? getTagColor() : Colors.termNodeBgcolors[term.level - 1]}`
+      }
+    >
+      <div title="TermTag">{term.word}</div>
+      {withSub && term.explain && (
+        <div
+          className={`px-1 pb-0 mt-0 ml-2 text-left ${
+            term.selected ? 'text-white' : 'text-gray-100'
+          } text-[10px] `}
         >
-          {term.word}
-        </span>
+          {term.explain}
+        </div>
       )}
-    </>
+    </div>
   )
 })

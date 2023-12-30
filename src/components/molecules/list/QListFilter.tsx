@@ -19,7 +19,7 @@ export const QListFilter: FC = () => {
   const { filterWord, setFilterWord } = useFilterWordContext()
   return (
     <div className="flex flex-row items-center -mt-8">
-      <div className="flex flex-row items-center mt-4 mr-4">
+      <div className="flex flex-row items-center mt-4">
         <div className="flex px-2">
           <input
             type="checkbox"
@@ -54,10 +54,10 @@ export const QListFilter: FC = () => {
           </label>
         </div>
       </div>
-      <TagFilter setSearchWord={setFilterWord} />
+      <TagFilter filterWord={filterWord} setSearchWord={setFilterWord} />
       <div
         className={
-          `flex items-center justify-center rounded-full` +
+          `flex items-center justify-center rounded-full px-2` +
           ` bg-gray-300 h-8 w-8 mt-3 mr-8 font-bold text-blue-700`
         }
       >

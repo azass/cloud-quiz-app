@@ -95,28 +95,24 @@ export const TermEditKeyword: FC = () => {
           </div>
         </form>
       ) : (
-        <div>
+        <div className="w-full" onClick={() => select()}>
           <div
             key={term.term_id}
             className={
-              `px-1 py-1 text-left ${
-                term.selected ? 'text-white' : 'text-white'
-              } text-sm font-black ` +
+              `px-1 py-1 text-left text-sm font-black ` +
+              `${term.selected ? 'text-white' : 'text-white'} ` +
               `${editContext.forQuestion && 'cursor-pointer'}`
             }
-            onClick={() => select()}
           >
             {word}
           </div>
           {explain && (
             <div
               className={
-                `px-1 pb-0 mt-0 ml-2 text-left ${
-                  term.selected ? 'text-white' : 'text-gray-100'
-                } text-[11px] ` +
-                ` ${editContext.forQuestion && 'cursor-pointer'}`
+                `px-1 pb-0 mt-0 ml-2 text-left text-[11px] ` +
+                `${term.selected ? 'text-white' : 'text-gray-100'} ` +
+                `${editContext.forQuestion && 'cursor-pointer'}`
               }
-              onClick={() => select()}
             >
               {explain}
             </div>

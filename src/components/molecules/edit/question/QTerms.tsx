@@ -8,9 +8,10 @@ interface Props {
 export const QTerms: FC<Props> = memo(({ terms }) => {
   return (
     <>
-      {terms.map((term) => (
-        <TermTag term={term} />
-      ))}
+      {terms.map(
+        (term) =>
+          term.word !== 'is ?' && <TermTag term={term} withSub={false} />
+      )}
     </>
   )
 })

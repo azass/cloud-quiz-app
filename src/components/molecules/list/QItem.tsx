@@ -4,7 +4,7 @@ import { Question } from '../../../types/types'
 import { Link } from 'react-router-dom'
 import log from 'loglevel'
 import Colors from '../../../consts/colors'
-import { strongText } from '../../../styles/util'
+import { strongText, weaknessText } from '../../../styles/util'
 import { QKeywords } from '../QKeywords'
 import { useAppDispatch } from '../../../app/hooks'
 import { setTab } from '../../../slices/editSlice'
@@ -37,10 +37,16 @@ export const QItem: FC<Props> = memo(({ question }) => {
       <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
         <ExternalLinkIcon
           className={`h-5 w-5 mx-1 mt-1 cursor-pointer ${linkColor}`}
-          onClick={() => {click()}}
+          onClick={() => {
+            click()
+          }}
         />
       </Link>
-      <span className={`w-3 mt-2 ${strongText}`}>Q{question.quest_no}</span>
+      <span
+        className={`w-3 mt-2 ${question.is_weak ? weaknessText : strongText}`}
+      >
+        Q{question.quest_no}
+      </span>
       <div className="pl-4">
         <QKeywords question={question} withAdd={false} />
       </div>

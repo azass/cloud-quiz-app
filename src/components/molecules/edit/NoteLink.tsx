@@ -33,7 +33,7 @@ export const NoteLink: FC = () => {
           <QLinkPopup quest_ids={questIds} />
         )}
       </div>
-      {editable && editting && (
+      {editting && (
         <>
           <div className="flex flex-row items-center">
             <span className="w-12 mx-2 my-2 text-gray-500 font-bold text-xs">

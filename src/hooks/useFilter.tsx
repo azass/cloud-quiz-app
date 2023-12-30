@@ -2,12 +2,13 @@ import { useParams } from 'react-router-dom'
 import { useAppSelector } from '../app/hooks'
 import { selectScArgs } from '../slices/editSlice'
 import { Question, Term } from '../types/types'
+import { useTags } from './useTags'
 
 export const useFilter = () => {
   const params = useParams()
   const scArgs = useAppSelector(selectScArgs)
   const args = { ...scArgs, exam_ids: [params.exam_id], except_old: false }
-
+  const { getTagName } = useTags()
   const filterOtherOptions = (question: Question) => {
     if (args.other_options.length > 0) {
       if (args.other_options.includes(0)) {
@@ -78,13 +79,15 @@ export const useFilter = () => {
       if (searchWord !== '') {
         if (question.keywords) {
           const keywords = JSON.parse(question.keywords || '{}')
-          for (const tagName of Object.keys(keywords)) {
-            if (tagName.toLowerCase().includes(searchWord.toLowerCase())) {
+          for (const tagNo of Object.keys(keywords)) {
+            if (
+              getTagName(tagNo).toLowerCase().includes(searchWord.toLowerCase())
+            ) {
               return true
             } else {
-              if (keywords[tagName].length > 0) {
+              if (keywords[tagNo].length > 0) {
                 if (
-                  keywords[tagName].filter((term: Term) => {
+                  keywords[tagNo].filter((term: Term) => {
                     return term.word
                       .toLowerCase()
                       .includes(searchWord.toLowerCase())

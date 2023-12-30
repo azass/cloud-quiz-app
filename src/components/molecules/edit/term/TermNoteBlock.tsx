@@ -74,7 +74,7 @@ export const TermNoteBlock: FC = memo(() => {
           )}
         </div>
       )}
-      <div className={`px-2 pb-2 ${Colors.baseBg}`} title="TermNoteBlock">
+      <div className={`px-0 pb-2 ${Colors.baseBg}`} title="TermNoteBlock">
         {editItems.length === 0 && editting ? (
           <NoteItemAdds index={0} />
         ) : (

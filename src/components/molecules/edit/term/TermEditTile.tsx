@@ -21,6 +21,7 @@ import { TermNoteLink } from './TermNoteLink'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { selectEditContext, setEditContext } from '../../../../slices/editSlice'
 import { iconAccent, strongText } from '../../../../styles/util'
+import { useTermTag } from '../../../../hooks/useTermTag'
 
 export const TermEditTile: FC = () => {
   const dispatch = useAppDispatch()
@@ -35,53 +36,15 @@ export const TermEditTile: FC = () => {
   const setChosenTerm = () => {
     dispatch(setEditContext({ ...editContext, chosenTerm: term }))
   }
-  const fromcolors = [
-    'from-blue-800',
-    'from-sky-500',
-    'from-blue-600',
-    'from-cyan-500',
-    'from-blue-400',
-    'from-teal-400',
-  ]
-  const viacolors = [
-    'via-blue-900',
-    'via-blue-900',
-    'via-blue-900',
-    'via-blue-900',
-    'via-blue-900',
-    'via-blue-900',
-  ]
-  const fromcolorsSelected = [
-    'from-red-500',
-    'from-pink-400',
-    'from-red-300',
-    'from-pink-300',
-    'from-red-200',
-    'from-pink-200',
-  ]
-  const viacolorsSelected = [
-    'via-pink-500',
-    'via-pink-500',
-    'via-pink-500',
-    'via-pink-500',
-    'via-pink-500',
-    'via-pink-500',
-  ]
-  const getFromColor = (lv: number) => {
-    return `${term.selected ? fromcolorsSelected[lv - 1] : fromcolors[lv - 1]}`
-  }
-  const getViaColor = (lv: number) => {
-    return `${term.selected ? viacolorsSelected[lv - 1] : viacolors[lv - 1]}`
-  }
+  const { getTagColor } = useTermTag(level, term.selected)
 
   return (
     <div
       className={
         'place-items-center flex justify-between border rounded-full ' +
-        `my-1 mx-1 pr-2 text-sm ${strongText} bg-gradient-to-r ${getFromColor(
-          level
-        )} from-10% ${getViaColor(level)} via-20% to-black to-90%`
-      } title="TermEditTile"
+        `my-1 mx-1 pr-2 text-sm ${strongText} ${getTagColor()}`
+      }
+      title="TermEditTile"
     >
       <div className="flex justify-start items-center w-full">
         <div className={`flex items-center w-full`}>

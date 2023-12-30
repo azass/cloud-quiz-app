@@ -5,8 +5,7 @@ import { QBug } from './QBug'
 import { QTermDescriptions } from './QTermDescriptions'
 import { QLeaningProfiles } from './QLeaningProfiles'
 import { QLabels } from './QLabels'
-import { EditQuestionHeader } from './EditQuestionHeader'
-import { EditQuestionCase } from './EditQuestionCase'
+import { QuestionCaseEdit } from './QuestionCaseEdit'
 import {
   useIsNewContext,
   useQuestionContext,
@@ -15,9 +14,8 @@ import {
 import { NoteItemsProvider } from '../NoteItemsProvider'
 import { strongText } from '../../../../styles/util'
 import { QKeywords } from '../../QKeywords'
-import { QuestionHeaderProvider } from './QuestionHeaderProvider'
 
-export const EditQuestion: FC = memo(() => {
+export const QuestionEdit: FC = memo(() => {
   const { question } = useQuestionContext()
   const { isNew } = useIsNewContext()
   const { showCheckbox, setShowCheckbox } = useShowCheckboxContext()
@@ -25,13 +23,10 @@ export const EditQuestion: FC = memo(() => {
     setShowCheckbox(!showCheckbox)
   }
   return (
-    <div title="EditQuestion">
-      <QuestionHeaderProvider>
-        <EditQuestionHeader />
-      </QuestionHeaderProvider>
+    <>
       {!isNew && question && (
-        <div className="pt-8">
-          <EditQuestionCase />
+        <>
+          <QuestionCaseEdit />
           <NoteItemsProvider
             name="question_items"
             noteItems={question.question_items || []}
@@ -57,31 +52,35 @@ export const EditQuestion: FC = memo(() => {
           )}
           <div className="pt-4">
             <QKeywords question={question} withAdd={true} />
-            <div className={`flex gap-2 mt-6 ${strongText}`}>リファレンス</div>
-            <QTermDescriptions />
-          </div>
-          <NoteItemsProvider
-            name="explanation"
-            noteItems={question.explanation || []}
-            editable={true}
-            hasAddTextarea={true}
-            hasAddLink={true}
-            hasAddImage={true}
-          >
-            <QNoteBlock title={'メモ'} />
-          </NoteItemsProvider>
-          <div className={`flex gap-2 mt-12 mb-4 ${strongText}`}>
-            学習プロファイル
-          </div>
-          <QLeaningProfiles />
-          <div className={`flex pt-2 ${strongText}`}>
-            <span className="pt-8">ラベル</span>
-            <div className="pl-4">
-              <QLabels readonly={false} />
+            <div className={`flex gap-2 mt-6 py-2 ${strongText}`}>
+              リファレンス
+            </div>
+            <div className="px-2">
+              <QTermDescriptions />
+            </div>
+            <NoteItemsProvider
+              name="explanation"
+              noteItems={question.explanation || []}
+              editable={true}
+              hasAddTextarea={true}
+              hasAddLink={true}
+              hasAddImage={true}
+            >
+              <QNoteBlock title={'メモ'} />
+            </NoteItemsProvider>
+            <div className={`flex gap-2 mt-12 mb-4 ${strongText}`}>
+              学習プロファイル
+            </div>
+            <QLeaningProfiles />
+            <div className={`flex pt-2 ${strongText}`}>
+              <span className="pt-8">ラベル</span>
+              <div className="pl-4">
+                <QLabels readonly={false} />
+              </div>
             </div>
           </div>
-        </div>
+        </>
       )}
-    </div>
+    </>
   )
 })

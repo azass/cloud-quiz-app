@@ -20,7 +20,11 @@ export const useTerm = (term: Term, index: number) => {
   const dispatch = useAppDispatch()
 
   const enter = (word: string, level: number, explain?: string, ref?: Term) => {
-    if (word !== term.word || level !== term.level || explain !== term.explain) {
+    if (
+      word !== term.word ||
+      level !== term.level ||
+      explain !== term.explain
+    ) {
       const newTerms = [...terms]
       const term = {
         ...newTerms[index],

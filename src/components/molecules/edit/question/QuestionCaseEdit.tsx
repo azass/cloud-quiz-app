@@ -8,7 +8,7 @@ import {
 import { useQuestionContext } from './QuestionProvider'
 import { NoteItemsProvider } from '../NoteItemsProvider'
 
-export const EditQuestionCase: FC = memo(() => {
+export const QuestionCaseEdit: FC = memo(() => {
   const { question } = useQuestionContext()
   const { editCaseNo } = useEditCaseNoContext()
   const { setChangeCaseNo } = useChangeCaseNoContext()

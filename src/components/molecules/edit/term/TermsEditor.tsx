@@ -13,7 +13,9 @@ export const TermsEditor: FC = () => {
   const { draggable } = useDraggableContext()
   return (
     <>
-      <TermsHeader />
+      <div className="pb-4 h-12 w-full">
+        <TermsHeader />
+      </div>
       <div id="navWrapper" className={Colors.baseBg}>
         <nav id="nav" className="pr-2 overflow-y-auto text-base h-screen pb-60">
           {draggable ? (

@@ -3,6 +3,7 @@ import { useAppSelector } from '../../../../app/hooks'
 import { selectEdittingTerms } from '../../../../slices/editSlice'
 import { TermTile } from './TermTile'
 import { Term } from '../../../../types/types'
+import { TermProvider } from './TermProvider'
 
 export const TermsVis: FC = () => {
   const terms = useAppSelector(selectEdittingTerms)
@@ -23,12 +24,16 @@ export const TermsVis: FC = () => {
       {divideTerms.map((divterms) => (
         <>
           <div>
-            <TermTile term={divterms.shift() || divterms[0]} index={i++} />
+            <TermProvider term={divterms.shift() || divterms[0]} index={i++}>
+              <TermTile />
+            </TermProvider>
           </div>
           {divterms.length > 0 && (
             <div className="flex flex-wrap justify-start items-center pl-4">
               {divterms.map((term) => (
-                <TermTile term={term} index={i++} />
+                <TermProvider term={term} index={i++}>
+                  <TermTile />
+                </TermProvider>
               ))}
             </div>
           )}

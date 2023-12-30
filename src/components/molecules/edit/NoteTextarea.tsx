@@ -31,7 +31,7 @@ export const NoteTextarea: FC = memo(() => {
     <div title="NoteTextarea">
       {lang !== 2 && (
         <div className={`px-4 mt-1 ${docStyle}`}>
-          {editable && editting ? (
+          {editting ? (
             <div>
               <TextareaAutosize
                 value={editElem.text || ''}
@@ -63,7 +63,7 @@ export const NoteTextarea: FC = memo(() => {
       )}
       {(lang === 0 || lang === 2) && (
         <div className="px-4 py-3 mt-1">
-          {editable && editting ? (
+          {editting ? (
             <TextareaAutosize
               value={editElem.text_en || ''}
               className={textareaStyle}

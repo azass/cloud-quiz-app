@@ -2,7 +2,7 @@ import { memo, FC } from 'react'
 import { useAppSelector } from '../../app/hooks'
 import { selectShowContent } from '../../slices/editSlice'
 import { QSelectHeader } from './QSelectHeader'
-import { QSearchQuery } from '../molecules/search/QSearchQuery'
+import { QSearchPanel } from '../molecules/search/QSearchPanel'
 import { QSelectPanel } from '../molecules/list/QSelectPanel'
 import { SearchProvider } from '../molecules/search/SearchProvider'
 import { TermsProvider } from '../molecules/edit/term/TermsProvider'
@@ -20,16 +20,12 @@ export const QSelectTab: FC = memo(() => {
       >
         <QSelectPanel />
       </div>
-      {editedContent === 'TermEdit' && (
+      {/* {editedContent === 'TermEdit' && (
         <TermsProvider>
           <TermsEditor />
         </TermsProvider>
-      )}
-      {editedContent === 'Search' && (
-        <SearchProvider>
-          <QSearchQuery />
-        </SearchProvider>
-      )}
+      )} */}
+      {editedContent === 'Search' && <QSearchPanel />}
     </div>
   )
 })

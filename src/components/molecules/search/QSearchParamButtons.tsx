@@ -4,7 +4,7 @@ import { QScoreButton } from './QScoreButton'
 import { useSelectOptionsContext } from './SearchProvider'
 import { strongText } from '../../../styles/util'
 
-export const QSearchButtonSet: FC = memo(() => {
+export const QSearchParamButtons: FC = memo(() => {
   const { selectOptions, setSelectOptions } = useSelectOptionsContext()
   const getBgColor = () => {
     return selectOptions?.length === 0

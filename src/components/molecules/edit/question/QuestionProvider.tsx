@@ -1,11 +1,12 @@
 import { useState, memo, useContext, createContext, ReactNode, FC } from 'react'
 import { Question, voidTag } from '../../../../types/types'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../../../hooks/useQueryQuestion'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { selectEditContext, setEditContext } from '../../../../slices/editSlice'
 import { useAuthentication } from '../../../../hooks/useAuthentication'
 import { LangProvider } from '../../../atoms/LangProvider'
+import { useTags } from '../../../../hooks/useTags'
 interface Props {
   children: ReactNode
 }
@@ -34,6 +35,7 @@ export const useShowCheckboxContext = () => useContext(ShowCheckboxContext)
 export const QuestionProvider: FC<Props> = memo(({ children }) => {
   const { logout } = useAuthentication()
   const params = useParams()
+  const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const editContext = useAppSelector(selectEditContext)
@@ -43,6 +45,7 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
   const [isNew, setIsNew] = useState(false)
   const isCheckOn = (question?.question_items || []).some((x) => x.correct)
   const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
+  const { getTag } = useTags()
 
   const { status, data, error } = useQueryQuestion(quest_id)
   if (status === 'loading') return <div>{'Loading...'}</div>
@@ -57,11 +60,12 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
       setIsNew(false)
       setQuestion(data)
       if (data.quest_id !== editContext.quest_id) {
+        const tag_no = searchParams.get('fromTermEditor')
         dispatch(
           setEditContext({
             quest_id: data.quest_id,
             keywordsJson: data.keywords || '',
-            chosenTag: voidTag,
+            chosenTag: getTag(tag_no),
             forQuestion: true,
           })
         )

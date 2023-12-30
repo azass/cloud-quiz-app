@@ -14,12 +14,12 @@ export const QLinkPopup: FC<Props> = memo(({ quest_ids }) => {
   return (
     <div className="relative group">
       <TagIcon className={`w-4 h-4 mr-1 font-black ${iconAccent}`} />
-      <div className="absolute invisible group-hover:visible bg-blue-800 w-32 -ml-20 z-100">
+      <div className="absolute invisible group-hover:visible bg-blue-800 w-32 -ml-20">
         {quest_ids.map((quest_id) => (
           <div
             className={
-              `px-1 py-1 text-pink-200 cursor-pointer bg-blue-800` +
-              ` hover:text-pink-400 text-center`
+              `mx-1 my-1 text-pink-200 cursor-pointer bg-blue-800` +
+              ` hover:text-pink-400 text-center z-10`
             }
           >
             <Link

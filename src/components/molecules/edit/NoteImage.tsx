@@ -23,7 +23,7 @@ export const NoteImage: FC = memo(() => {
       <div className="py-8 bg-white">
         <img src={editElem.image_path} />
       </div>
-      {editable && editting && (
+      {editting && (
         <>
           <div>
             <span

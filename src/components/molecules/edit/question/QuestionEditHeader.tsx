@@ -14,7 +14,7 @@ import {
 } from './QuestionHeaderProvider'
 import { strongText } from '../../../../styles/util'
 
-export const EditQuestionHeader: FC = memo(() => {
+export const QuestionEditHeader: FC = memo(() => {
   const { question } = useQuestionContext()
   const { isNew } = useIsNewContext()
   const { open } = useOpenBookContext()
@@ -34,41 +34,34 @@ export const EditQuestionHeader: FC = memo(() => {
     return open ? '' : 'text-[12px]'
   }
   return (
-    <div
-      className={`fixed ${open ? 'w-1/2 -mt-8' : 'w-full'} pr-8 pt-1`}
-      title="EditQuestionHeader"
-    >
-      <div className="flex items-center w-full pb-2 z-10">
-        <div className="flex flex-row items-center w-full">
-          <div
-            className={
-              `flex flex-none pt-1 w-30 text-orange-400 font-bold` +
-              ` ${open ? 'text-lg' : 'text-sm'}`
-            }
-          >
-            {question.quest_id}
+    <div className="flex items-center">
+      <div className="flex flex-row items-center w-full">
+        <div
+          className={
+            `flex flex-none pt-1 w-30 text-orange-400 font-bold` +
+            ` ${open ? 'text-lg' : 'text-sm'}`
+          }
+        >
+          {question.quest_id}
+        </div>
+        {isNew && question && <QNewRegister />}
+        <div className="mt-1 ml-2" title="QCaseButtonSet">
+          <QCaseButtonSet />
+        </div>
+        <div
+          className={`flex-auto mt-2 mx-2 ${open ? 'px-4' : ''} ${strongText}`}
+        >
+          <QScreenTime />
+        </div>
+        <div className="flex items-center">
+          <div className="" title="QArchiveToggle">
+            <QArchiveToggle w={w()} text_size={text_size()} />
           </div>
-          {isNew && question && <QNewRegister />}
-          <div className="mt-1 ml-2" title="QCaseButtonSet">
-            <QCaseButtonSet />
+          <div className="" title="QReadyButton">
+            <QReadyButton w={w()} text_size={text_size()} />
           </div>
-          <div
-            className={`flex-auto mt-2 mx-2 ${
-              open ? 'px-4' : ''
-            } ${strongText}`}
-          >
-            <QScreenTime />
-          </div>
-          <div className="flex items-center">
-            <div className="" title="QArchiveToggle">
-              <QArchiveToggle w={w()} text_size={text_size()} />
-            </div>
-            <div className="" title="QReadyButton">
-              <QReadyButton w={w()} text_size={text_size()} />
-            </div>
-            <div className={``}>
-              <LangSelector w={w()} text_size={text_size()} />
-            </div>
+          <div className={``}>
+            <LangSelector w={w()} text_size={text_size()} />
           </div>
         </div>
       </div>
