@@ -6,7 +6,7 @@ interface Props {
 }
 export const TagFilter: FC<Props> = memo(({ filterWord, setSearchWord }) => {
   return (
-    <div className="flex flex-row items-center pt-4 px-2" title="TagFilter">
+    <div className="flex items-center" title="TagFilter">
       <div className="bg-gray-100 border-gray-300">
         <FilterIcon className={`w-5 h-5 mx-1 text-gray-400`} />
       </div>

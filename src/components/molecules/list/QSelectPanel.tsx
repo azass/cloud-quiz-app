@@ -23,10 +23,12 @@ export const QSelectPanel: FC = memo(() => {
             title="QList"
           >
             <div className="flex justify-between">
-              <div className="ml-7">
+              <div className="ml-5">
                 <QListSort />
               </div>
-              <QListFilter />
+              <div className="-mt-4">
+                <QListFilter />
+              </div>
             </div>
             <div className="px-6 pb-60">
               <QList />

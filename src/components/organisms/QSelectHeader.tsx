@@ -12,7 +12,7 @@ export const QSelectHeader: FC = memo(() => {
   return (
     <div className="flex justify-between items-center" title="QSelectHeader">
       <div className="flex items-center">
-        <p className={`py-4 pl-8 text-lg ${strongText}`}>{exam.exam_name}</p>
+        <p className={`py-3 pl-8 text-lg ${strongText}`}>{exam.exam_name}</p>
         <div className="mt-3 pl-8">
           <SearchCircleIcon
             className={`h-8 w-8 ${iconBase}`}

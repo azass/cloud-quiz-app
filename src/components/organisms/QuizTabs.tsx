@@ -63,7 +63,7 @@ export const QuizTabs: FC = memo(() => {
           {(!open || index < 3) && (
             <button
               className={
-                `flex-1 pt-4 pb-2 px-2 block hover:${Colors.shining} focus:outline-none` +
+                `flex-1 py-2 px-2 block hover:${Colors.shining} focus:outline-none` +
                 `${
                   nowTab === tab
                     ? ` ${Colors.shining} border-b-2 font-medium border-blue-500`

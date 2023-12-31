@@ -33,7 +33,7 @@ export const QItem: FC<Props> = memo(({ question }) => {
     }
   }
   return (
-    <div className="inline-flex items-start mt-1 space-x-2" title="QItem">
+    <div className="inline-flex items-start mt-1 space-x-1" title="QItem">
       <div className="flex items-center mt-1.5">
         <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
           <ExternalLinkIcon
