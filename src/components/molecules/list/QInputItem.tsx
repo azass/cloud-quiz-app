@@ -13,7 +13,7 @@ export const QInputItem: FC<Props> = memo(({ examId }) => {
     return ('0000' + (Number(selectNo) + 1)).slice(-4)
   }
   return (
-    <div className="inline-flex space-x-4" title="QInputItem">
+    <div className="inline-flex items-center space-x-4" title="QInputItem">
       <Link to={`/editor/${examId}/${examId}-${selectNo}`}>
         <ExternalLinkIcon className={`h-5 w-5 mx-1 ${iconHover}`} />
       </Link>
