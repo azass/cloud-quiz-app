@@ -52,7 +52,7 @@ export const QListFilter: FC = () => {
           <span>破棄</span>
         </button>
       </div>
-      <div className="flex px-2">
+      <div className="px-2">
         <TagFilter filterWord={filterWord} setSearchWord={setFilterWord} />
       </div>
       <div
