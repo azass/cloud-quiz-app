@@ -12,7 +12,9 @@ export const QSelectPanel: FC = memo(() => {
   const params = useParams()
   return (
     <>
-      <QInputItem examId={params.exam_id || ''} />
+      <div className="pl-6 pb-2">
+        <QInputItem examId={params.exam_id || ''} />
+      </div>
       <QListProvider>
         <FilterWordProvider>
           <div
@@ -21,10 +23,14 @@ export const QSelectPanel: FC = memo(() => {
             title="QList"
           >
             <div className="flex justify-between">
-              <QListSort />
+              <div className="ml-7">
+                <QListSort />
+              </div>
               <QListFilter />
             </div>
-            <QList />
+            <div className="px-6 pb-60">
+              <QList />
+            </div>
           </div>
         </FilterWordProvider>
       </QListProvider>

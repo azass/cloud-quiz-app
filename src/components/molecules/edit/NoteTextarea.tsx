@@ -28,9 +28,9 @@ export const NoteTextarea: FC = memo(() => {
     !editting &&
     `py-3 border-2 rounded-md ${boadBgcolor(questIds)} ${border_color}`
   return (
-    <div title="NoteTextarea" className="flex w-full">
+    <div title="NoteTextarea">
       {lang !== 2 && (
-        <>
+        <div className="flex w-full">
           <div className={`px-4 mt-1 ${docStyle} w-full`}>
             {editting ? (
               <div>
@@ -61,7 +61,7 @@ export const NoteTextarea: FC = memo(() => {
               </div>
             </div>
           )}
-        </>
+        </div>
       )}
       {(lang === 0 || lang === 2) && (
         <div className="px-4 py-3 mt-1">

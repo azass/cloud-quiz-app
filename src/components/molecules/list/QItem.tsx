@@ -33,20 +33,20 @@ export const QItem: FC<Props> = memo(({ question }) => {
     }
   }
   return (
-    <div className="inline-flex mt-1 space-x-4" title="QItem">
-      <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
-        <ExternalLinkIcon
-          className={`h-5 w-5 mx-1 mt-1 cursor-pointer ${linkColor}`}
-          onClick={() => {
-            click()
-          }}
-        />
-      </Link>
-      <span
-        className={`w-3 mt-2 ${question.is_weak ? weaknessText : strongText}`}
-      >
-        Q{question.quest_no}
-      </span>
+    <div className="inline-flex items-start mt-1 space-x-2" title="QItem">
+      <div className="flex items-center mt-1.5">
+        <Link to={`/editor/${question.exam_id}/${question.quest_id}`}>
+          <ExternalLinkIcon
+            className={`h-5 w-5 mx-1 cursor-pointer ${linkColor}`}
+            onClick={() => {
+              click()
+            }}
+          />
+        </Link>
+        <span className={`w-3 ${question.is_weak ? weaknessText : strongText}`}>
+          Q{question.quest_no}
+        </span>
+      </div>
       <div className="pl-4">
         <QKeywords question={question} withAdd={false} />
       </div>
