@@ -8,7 +8,7 @@ interface Props {
 export const TagFilter: FC<Props> = memo(({ filterWord, setSearchWord }) => {
   const { open } = useOpenBookContext()
   const w = () => {
-    return open ? 'w-30' : 'w-10'
+    return open ? 'w-30' : 'w-20'
   }
   return (
     <div className="flex items-center" title="TagFilter">
