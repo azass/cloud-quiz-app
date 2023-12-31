@@ -13,28 +13,30 @@ export const QSelectHeader: FC = memo(() => {
     <div className="flex justify-between items-center" title="QSelectHeader">
       <div className="flex items-center">
         <p className={`py-3 pl-8 text-lg ${strongText}`}>{exam.exam_name}</p>
+      </div>
+      <div className="flex items-center mt-4">
         <div className="mt-3 pl-8">
           <SearchCircleIcon
             className={`h-8 w-8 ${iconBase}`}
             onClick={() => dispatch(setShowContent('Search'))}
           />
         </div>
+        {doing ? (
+          <div
+            className={
+              `animate-spin h-7 w-7 mr-8 border-4` +
+              ` border-blue-500 rounded-full border-t-transparent`
+            }
+          ></div>
+        ) : (
+          <div className="mt-4 pl-8 pr-8">
+            <ServerIcon
+              className={`h-8 w-8 ${iconBase}`}
+              onClick={() => setupReportItem(exam)}
+            />
+          </div>
+        )}
       </div>
-      {doing ? (
-        <div
-          className={
-            `animate-spin h-7 w-7 mr-8 border-4` +
-            ` border-blue-500 rounded-full border-t-transparent`
-          }
-        ></div>
-      ) : (
-        <div className="mt-4 pl-8 pr-8">
-          <ServerIcon
-            className={`h-8 w-8 ${iconBase}`}
-            onClick={() => setupReportItem(exam)}
-          />
-        </div>
-      )}
     </div>
   )
 })
