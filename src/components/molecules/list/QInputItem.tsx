@@ -21,22 +21,26 @@ export const QInputItem: FC<Props> = memo(({ examId }) => {
         <div className="pl-2 text-white">
           <i>{examId}-</i>
         </div>
-        <input
-          type="text"
-          className="w-20 ml-1 px-1"
-          value={selectNo}
-          onChange={(e) => {
-            if (Number.isInteger(e.target.value)) {
-              alert('')
-            } else {
-              if (examId !== 'PM-551') {
-                setSelectNo(('0000' + e.target.value).slice(-4))
+        <form className="bg-opacity-0">
+          <input
+            type="text"
+            className="w-10 ml-1 px-1"
+            value={selectNo}
+            onChange={(e) => {
+              if (Number.isInteger(e.target.value)) {
+                alert('')
               } else {
-                setSelectNo(e.target.value)
+                if (examId !== 'PM-551') {
+                  setSelectNo(
+                    ('0000' + e.target.value.replace(/[^0-9]/g, '')).slice(-4)
+                  )
+                } else {
+                  setSelectNo(e.target.value)
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
+        </form>
       </div>
       <Link to={`/editor/${examId}/${examId}-${nextNo()}`}>
         <FastForwardIcon
