@@ -25,10 +25,10 @@ export const Login: FC = memo(() => {
           Cloud Quiz
         </span>
       </a>
-      <div className="flex mx-auto my-12">
-        <div className="list-none text-center mr-2">
+      <div className="grid grid-cols-2 gap-1 mx-auto my-12">
+        <div className="list-none text-center">
           <a
-            className={`bg-blue-600 hover:opacity-75 py-3 px-16 rounded ${strongText}`}
+            className={`bg-blue-600 hover:opacity-75 py-3 px-4 rounded ${strongText}`}
             href="{{ route('login') }}"
           >
             ログイン
@@ -38,7 +38,7 @@ export const Login: FC = memo(() => {
           <a
             className={
               `border-solid border border-gray-400 text-gray-600 font-bold` +
-              ` py-3 px-16 rounded hover:bg-gray-200`
+              ` py-3 px-4 rounded hover:bg-gray-200`
             }
             href="{{ route('register') }}"
           >
