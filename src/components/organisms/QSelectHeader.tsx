@@ -27,7 +27,7 @@ export const QSelectHeader: FC = memo(() => {
         {doing ? (
           <div
             className={
-              `animate-spin h-7 w-7 mr-8 border-4` +
+              `animate-spin h-7 w-7 mr-4 border-4` +
               ` border-blue-500 rounded-full border-t-transparent`
             }
           ></div>

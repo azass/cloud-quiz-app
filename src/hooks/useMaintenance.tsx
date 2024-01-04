@@ -8,7 +8,7 @@ export const useMaintenance = () => {
   const setupReportItem = (exam: Exam) => {
     setDoing(true)
     const requestData = {
-      Method: 'setupReportItem',
+      Method: 'setupReportItemBatch',
       Args: {
         provider: exam.provider,
         exam_id: exam.exam_id,
