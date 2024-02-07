@@ -24,7 +24,8 @@ export interface Question {
   case_items?: NoteItem[]
   scoring?: number
   is_old?: boolean
-  not_ready?: boolean
+  not_ready?: boolean,
+  priority?: number
 }
 
 export interface TagTerms {

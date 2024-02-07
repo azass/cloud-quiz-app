@@ -17,7 +17,10 @@ export const QLeaningProfiles: FC = memo(() => {
   const [isDifficult, setIsDifficult] = useState(question.is_difficult || false)
   const [isWeak, setIsWeak] = useState(question.is_weak || false)
   const [isMandatory, setIsMandatory] = useState(question.is_mandatory || false)
-  const [isIndefinite, setIsIndefinite] = useState(question.is_indefinite || false)
+  const [isIndefinite, setIsIndefinite] = useState(
+    question.is_indefinite || false
+  )
+  const [priority, setPriority] = useState(question.priority || 2)
   const [learningNote, setLearningNote] = useState(question.learning_note)
   const [editting, setEditting] = useState(false)
   const { putQuestion } = useMutateQuestion()
@@ -32,6 +35,66 @@ export const QLeaningProfiles: FC = memo(() => {
     setIsIndefinite(question.is_indefinite || false)
     setRegisterToggle(false)
   }
+
+  const onEasy = () => {
+    question.is_easy = !isEasy
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        is_easy: question.is_easy,
+      },
+      question
+    )
+    setIsEasy(!isEasy)
+  }
+
+  const onDifficult = () => {
+    question.is_difficult = !isDifficult
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        is_difficult: question.is_difficult,
+      },
+      question
+    )
+    setIsDifficult(!isDifficult)
+  }
+
+  const onWeak = () => {
+    question.is_weak = !isWeak
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        is_weak: question.is_weak,
+      },
+      question
+    )
+    setIsWeak(!isWeak)
+  }
+
+  const onIndefinite = () => {
+    question.is_indefinite = !isIndefinite
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        is_indefinite: question.is_indefinite,
+      },
+      question
+    )
+    setIsIndefinite(!isIndefinite)
+  }
+
+  const onPriority = (value: number) => {
+    question.priority = value
+    putQuestion(
+      {
+        quest_id: question.quest_id,
+        priority: question.priority,
+      },
+      question
+    )
+    setPriority(value)
+  }
   return (
     <>
       <div className="flex items-center py-4" title="QLeaningProfiles">
@@ -40,19 +103,9 @@ export const QLeaningProfiles: FC = memo(() => {
           className={`flex-shrink-0 border p-1 ${strongText} ${
             isEasy && ` bg-purple-600`
           }`}
-          onClick={() => {
-            question.is_easy = !isEasy
-            putQuestion(
-              {
-                quest_id: question.quest_id,
-                is_easy: question.is_easy,
-              },
-              question
-            )
-            setIsEasy(!isEasy)
-          }}
+          onClick={() => onEasy()}
         >
-          <span className="px-8">簡単</span>
+          <span className="px-4">簡単</span>
         </button>
         <button
           type="button"
@@ -60,19 +113,9 @@ export const QLeaningProfiles: FC = memo(() => {
             `flex-shrink-0 border p-1 ${strongText} ` +
             `${isDifficult && ` bg-red-600`}`
           }
-          onClick={() => {
-            question.is_difficult = !isDifficult
-            putQuestion(
-              {
-                quest_id: question.quest_id,
-                is_difficult: question.is_difficult,
-              },
-              question
-            )
-            setIsDifficult(!isDifficult)
-          }}
+          onClick={() => onDifficult()}
         >
-          <span className="px-8">難問</span>
+          <span className="px-4">難問</span>
         </button>
         <button
           type="button"
@@ -80,39 +123,9 @@ export const QLeaningProfiles: FC = memo(() => {
             `flex-shrink-0 border p-1 ${strongText} ` +
             `${isWeak && ` bg-pink-500`}`
           }
-          onClick={() => {
-            question.is_weak = !isWeak
-            putQuestion(
-              {
-                quest_id: question.quest_id,
-                is_weak: question.is_weak,
-              },
-              question
-            )
-            setIsWeak(!isWeak)
-          }}
+          onClick={() => onWeak()}
         >
-          <span className="px-8">弱点</span>
-        </button>
-        <button
-          type="button"
-          className={
-            `flex-shrink-0 border-t border-r border-b p-1` +
-            ` ${strongText} ${isMandatory && ` bg-green-600`}`
-          }
-          onClick={() => {
-            question.is_mandatory = !isMandatory
-            putQuestion(
-              {
-                quest_id: question.quest_id,
-                is_mandatory: question.is_mandatory,
-              },
-              question
-            )
-            setIsMandatory(!isMandatory)
-          }}
-        >
-          <span className="px-8">必須</span>
+          <span className="px-4">弱点</span>
         </button>
         <button
           type="button"
@@ -120,19 +133,49 @@ export const QLeaningProfiles: FC = memo(() => {
             `flex-shrink-0 border-t border-r border-b p-1` +
             ` ${strongText} ${isIndefinite && ` bg-yellow-500`}`
           }
-          onClick={() => {
-            question.is_indefinite = !isIndefinite
-            putQuestion(
-              {
-                quest_id: question.quest_id,
-                is_indefinite: question.is_indefinite,
-              },
-              question
-            )
-            setIsIndefinite(!isIndefinite)
-          }}
+          onClick={() => onIndefinite()}
         >
-          <span className="px-8">不定</span>
+          <span className="px-4">不定</span>
+        </button>
+        <button
+          type="button"
+          className={
+            `flex-shrink-0 border-t border-r border-b p-1` +
+            ` ${strongText} ${priority == 0 && ` bg-green-600`}`
+          }
+          onClick={() => onPriority(0)}
+        >
+          <span className="px-3">捨て問</span>
+        </button>
+        <button
+          type="button"
+          className={
+            `flex-shrink-0 border-t border-r border-b p-1` +
+            ` ${strongText} ${priority == 1 && ` bg-green-600`}`
+          }
+          onClick={() => onPriority(1)}
+        >
+          <span className="px-3">後回し</span>
+        </button>
+        <button
+          type="button"
+          className={
+            `flex-shrink-0 border-t border-r border-b p-1` +
+            ` ${strongText} ${priority == 2 && ` bg-green-600`}`
+          }
+          onClick={() => onPriority(2)}
+        >
+          <span className="px-4">普通</span>
+        </button>
+        <button
+          type="button"
+          className={
+            `flex-shrink-0 border-t border-r border-b p-1` +
+            ` ${strongText} ${priority == 3 && ` bg-green-600`}`
+          }
+          onClick={() => onPriority(3)}
+        >
+          <span className="px-4">必須</span>
         </button>
         <PencilAltIcon
           className={`h-5 w-5 ml-8 ${iconBase}`}
