@@ -18,7 +18,7 @@ export const QListQuery: FC = memo(() => {
     correct_times: [],
     no_of_questions: -1,
     other_options: [],
-    maturities: [],
+    priorities: [],
     exclusives: [],
     scorings: [],
     target_days_agos: [],
