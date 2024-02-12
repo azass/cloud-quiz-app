@@ -136,6 +136,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('エラー メッセージ', 'エラーメッセージ')
     str = str?.replaceAll('ソース コード', 'ソースコード')
     str = str?.replaceAll('オープン ソース', 'オープンソース')
+    str = str?.replaceAll('イベント ソース', 'イベントソース')
     str = str?.replaceAll('VM', ' VM ')
     str = str?.replaceAll('ETL', ' ETL ')
     str = str?.replaceAll('Hadoop', ' Hadoop ')

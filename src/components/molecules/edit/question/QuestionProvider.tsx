@@ -1,5 +1,5 @@
 import { useState, memo, useContext, createContext, ReactNode, FC } from 'react'
-import { Question, voidTag } from '../../../../types/types'
+import { Question } from '../../../../types/types'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../../../hooks/useQueryQuestion'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
