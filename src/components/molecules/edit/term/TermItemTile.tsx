@@ -24,22 +24,28 @@ export const TermItemTile: FC<Props> = memo(
         hasSelectLevel={true}
       >
         <div className="flex" title="TermItemTile">
-          {editting && (
-            <div className="relative">
-              <input
-                type="checkbox"
-                checked={
-                  editItem.quest_ids?.includes(editContext.quest_id) || false
-                }
-                onChange={(e) => changeCheck(index)}
-                className={
-                  `absolute left-0 w-4 h-4 -ml-3` +
-                  ` ${index === 0 ? 'top-10' : 'top-1'}`
-                }
-              />
-            </div>
-          )}
-          <div className="w-full">
+          {/* {editting && ( */}
+          <div className="relative">
+            <input
+              type="checkbox"
+              checked={
+                editItem.quest_ids?.includes(editContext.quest_id) || false
+              }
+              onChange={(e) => changeCheck(index)}
+              className={
+                `absolute left-0 w-4 h-4 -ml-1` +
+                ` ${
+                  editting && index === 0
+                    ? 'top-10'
+                    : editting
+                    ? 'top-1'
+                    : 'top-2'
+                }`
+              }
+            />
+          </div>
+          {/* )} */}
+          <div className="w-full pl-4">
             <NoteItemTile />
           </div>
         </div>
