@@ -37,7 +37,7 @@ export const QList: FC = memo(() => {
     }
   }
   return (
-    <nav className="overflow-y-auto text-xs h-screen">
+    <nav className="overflow-y-auto text-xs h-full">
       {list().map((question) => (
         <>
           {show(question, filterWord) && (

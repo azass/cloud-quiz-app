@@ -30,7 +30,7 @@ export const QSelectPanel: FC = memo(() => {
                 <QListFilter />
               </div>
             </div>
-            <div className="px-6 pb-80">
+            <div className="px-6 pb-60 h-screen">
               <QList />
             </div>
           </div>

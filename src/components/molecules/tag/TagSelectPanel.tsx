@@ -50,8 +50,8 @@ export const TagSelectPanel: FC<Props> = memo(
         <div className="flex justify-end pb-4">
           <TagFilter filterWord={searchWord} setSearchWord={setSearchWord} />
         </div>
-        <div id="navWrapper" className={Colors.baseBg}>
-          <nav className="px-6 overflow-y-auto text-base h-screen pb-60">
+        <div id="navWrapper" className={`${Colors.baseBg} h-screen pb-96`}>
+          <nav className="px-6 overflow-y-auto text-base h-full">
             <div className="grid grid-cols-3 gap-1 pb-32">
               {tags
                 .filter((tag) => {

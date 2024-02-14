@@ -18,7 +18,7 @@ export const QSearchPanel: FC = memo(() => {
   // }
   return (
     <SearchProvider>
-      <div className="overflow-y-auto h-screen">
+      <div className="h-screen">
         <div className="px-6">
           <QSearchParamButtons />
         </div>

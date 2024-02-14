@@ -16,8 +16,8 @@ export const TermsEditor: FC = () => {
       <div className="pb-4 h-12 w-full">
         <TermsHeader />
       </div>
-      <div id="navWrapper" className={Colors.baseBg}>
-        <nav id="nav" className="pr-2 overflow-y-auto text-base h-screen pb-60">
+      <div id="navWrapper" className={`${Colors.baseBg} h-screen pb-40`}>
+        <nav id="nav" className="pr-2 overflow-y-auto text-base h-full">
           {draggable ? (
             <>
               {terms.length === 0 ? <TermAddButton index={0} /> : <TermTree />}

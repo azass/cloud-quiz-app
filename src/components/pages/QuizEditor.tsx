@@ -74,9 +74,11 @@ export const QuizEditor: FC = memo(() => {
             <TermNoteTab />
           </div>
           {nowTab === tabs[3] && (
-            <nav className="overflow-y-auto text-xs h-screen w-full px-4 pb-60">
-              <EditorTab />
-            </nav>
+            <div className="h-screen pb-24">
+              <nav className="overflow-y-auto text-xs h-full w-full px-4">
+                <EditorTab />
+              </nav>
+            </div>
           )}
         </div>
         {open && (
