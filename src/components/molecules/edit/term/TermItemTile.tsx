@@ -33,7 +33,7 @@ export const TermItemTile: FC<Props> = memo(
               }
               onChange={(e) => changeCheck(index)}
               className={
-                `absolute left-0 w-4 h-4 -ml-1` +
+                `absolute left-0 w-3 h-3 -ml-1` +
                 ` ${
                   editting && index === 0
                     ? 'top-10'

@@ -1,6 +1,5 @@
 import { FC, memo, useState } from 'react'
 import { NoteItem, Term } from '../../../../types/types'
-import { SaveButton } from '../../../atoms/SaveButton'
 import { NoteItemAdds } from '../NoteItemAdds'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { selectUpdateTerm, setUpdateTerm } from '../../../../slices/editSlice'
@@ -26,7 +25,7 @@ export const TermNoteBlock: FC = memo(() => {
   const { fire } = useFireContext()
   const { star } = useStarContext()
   const { draggable, editable, validate, save } = useNoteItemsContext()
-  const { showSaveBtn, setShowSaveBtn } = useShowSaveBtnContext()
+  const { setShowSaveBtn } = useShowSaveBtnContext()
   const { editting, setEditting } = useEdittingContext()
   const { updateCacheTerm } = useEditTermContext()
   const { editItems, setEditItems } = useEditItemsContext()
@@ -60,15 +59,15 @@ export const TermNoteBlock: FC = memo(() => {
   return (
     <div className={`flex items-stretch w-full`}>
       {editable && (
-        <div className="-mt-7 -ml-1 pr-2">
+        <div className="-mt-7 pr-2">
           {editting ? (
             <CheckCircleIcon
-              className={`h-5 w-5 ${iconShine}`}
+              className={`h-4 w-4 ${iconShine}`}
               onClick={() => setEditting(!editting)}
             />
           ) : (
             <PencilAltIcon
-              className={`h-4 w-5 ${iconBase}`}
+              className={`h-4 w-4 ${iconBase}`}
               onClick={() => setEditting(!editting)}
             />
           )}
@@ -93,11 +92,11 @@ export const TermNoteBlock: FC = memo(() => {
             </>
           ))
         )}
-        <div className="flex justify-center mx-auto">
+        {/* <div className="flex justify-center mx-auto">
           {showSaveBtn && editting && (
             <SaveButton onClick={() => saveTermNote(editItems)} />
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   )

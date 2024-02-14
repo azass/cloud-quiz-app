@@ -30,7 +30,7 @@ export const TermTreeButton: FC = memo(() => {
     setFold(isFold)
   }
   return (
-    <div className="flex-none mt-2 pt-1 w-6">
+    <div className="flex-none mt-2 ml-2 pt-1 w-4">
       {fold ? (
         <ChevronRightIcon
           className={`w-4 h-4 ${iconAccent}`}
