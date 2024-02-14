@@ -75,7 +75,7 @@ export const TermsProvider: FC<Props> = ({ children }) => {
     }
   }
   return (
-    <div className="mx-6 my-6" title="TermsProvider">
+    <div className="mx-4 my-6" title="TermsProvider">
       <DraggableContext.Provider value={{ draggable, setDraggable }}>
         <FireContext.Provider value={{ fire, setFire }}>
           <StarContext.Provider value={{ star, setStar }}>
