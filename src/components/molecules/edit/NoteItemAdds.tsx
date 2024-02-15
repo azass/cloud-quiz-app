@@ -26,8 +26,14 @@ export const NoteItemAdds: FC<Props> = memo(({ index }) => {
   const dispatch = useAppDispatch()
   const updateTem = useAppSelector(selectUpdateTerm)
   const { add } = useNoteItemsContext()
-  const { hasAddTextarea, hasAddLink, hasAddImage, isOptions, save } =
-    useNoteItemsContext()
+  const {
+    draggable,
+    hasAddTextarea,
+    hasAddLink,
+    hasAddImage,
+    isOptions,
+    save,
+  } = useNoteItemsContext()
   const style = `h-5 w-5 mx-2 ${iconHover}`
   const { showSaveBtn, setShowSaveBtn } = useShowSaveBtnContext()
   const { editting } = useEdittingContext()
@@ -69,7 +75,7 @@ export const NoteItemAdds: FC<Props> = memo(({ index }) => {
             onClick={() => add(index, 'image')}
           />
         )}
-        {showSaveBtn && editting && (
+        {draggable && showSaveBtn && editting && (
           <button
             type="button"
             className={`flex-shrink-0 px-1 mx-4 my-0.5 text-xs text-white bg-green-400`}
