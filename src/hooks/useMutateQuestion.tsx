@@ -2,7 +2,12 @@ import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import { Question, voidTag } from '../types/types'
 import Prop from '../consts/props'
-import { selectIdToken, selectQuestions, setEditContext, setQuestions } from '../slices/editSlice'
+import {
+  selectIdToken,
+  selectQuestions,
+  setEditContext,
+  setQuestions,
+} from '../slices/editSlice'
 import { useAppDispatch, useAppSelector } from '../app/hooks'
 
 export const useMutateQuestion = () => {
@@ -60,6 +65,39 @@ export const useMutateQuestion = () => {
       )
       .then((response) => {
         queryClient.setQueryData<Question>(question.quest_id, question)
+        dispatch(
+          setQuestions(
+            questions.map((quest) =>
+              quest.quest_id === requestData.quest_id
+                ? {
+                    ...quest,
+                    keywords: question.keywords,
+                    labels: question.labels,
+                  }
+                : quest
+            )
+          )
+        )
+        if (question.exam_id) {
+          const previousQuestions = queryClient.getQueryData<Question[]>(
+            'Questions' + question.exam_id
+          )
+          if (previousQuestions) {
+            const newQuestions = [...previousQuestions, question]
+            queryClient.setQueryData<Question[]>(
+              'Questions' + question.exam_id,
+              newQuestions
+            )
+          }
+          dispatch(
+            setEditContext({
+              quest_id: question.quest_id,
+              keywordsJson: question.keywords || '',
+              chosenTag: voidTag,
+              forQuestion: true,
+            })
+          )
+        }
         if (post) post({ ...question })
       })
       .catch((error) => console.log(error))

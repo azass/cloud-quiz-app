@@ -39,10 +39,10 @@ export const QLabel: FC<Props> = memo(({ index, label }) => {
     save()
   }
   const remove = (index: number) => {
-    question.labels?.splice(index, 1)
     const newLabels = [...labels]
     newLabels.splice(index, 1)
     setLabels(newLabels)
+    question.labels = newLabels
     save()
   }
   if (!editting && value !== label) {

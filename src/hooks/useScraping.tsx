@@ -50,12 +50,16 @@ export const useScraping = (question: Question, setQuestion: any) => {
 
   const onClick2 = (retry: boolean) => {
     setIsLoading(true)
+    const startTime = performance.now()
     axios
       .get(
         `${process.env.REACT_APP_REST_URL}/scraping?quest_id=${question.quest_id}&url=${question.original_url}`,
         Prop.config
       )
       .then((response) => {
+        const endTime = performance.now()
+        console.log((endTime - startTime) / 1000)
+        const startTime2 = performance.now()
         let result = response.data
         console.log(result)
         result['keywords'] = []
@@ -96,6 +100,8 @@ export const useScraping = (question: Question, setQuestion: any) => {
         //   result['source']
         // )
         setQuestion(newQuest)
+        const endTime2 = performance.now()
+        console.log((endTime2 - startTime2) / 1000)
         setIsLoading(false)
       })
       .catch((error) => {
