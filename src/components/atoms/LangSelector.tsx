@@ -9,7 +9,7 @@ export const LangSelector: FC<Props> = memo(({ w, text_size }) => {
   const nowLang = lang
   const bgcolor = (lang: number) => {
     if (nowLang === 0 || nowLang === lang) {
-      return 'bg-orange-500'
+      return lang === 1 ? 'bg-orange-500' : 'bg-yellow-500'
     } else {
       return ''
     }

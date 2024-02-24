@@ -33,75 +33,61 @@ export const useScraping = (question: Question, setQuestion: any) => {
           question_items: result['question_items'],
           options: result['options'],
         }
-        // if (questId === 'new') {
         updateQuestion(newQuestion)
-        // putComments(
-        //   question.quest_id,
-        //   result['comments'],
-        //   result['answers'],
-        //   result['title'],
-        //   result['source']
-        // )
         setQuestion(newQuestion)
-        // }
       })
       .catch((error) => console.log(error))
   }
 
-  const onClick2 = (retry: boolean) => {
+  const onClick2 = (retry: boolean, scan: String) => {
     setIsLoading(true)
     const startTime = performance.now()
     axios
       .get(
-        `${process.env.REACT_APP_REST_URL}/scraping?quest_id=${question.quest_id}&url=${question.original_url}`,
+        `${process.env.REACT_APP_REST_URL}/scraping?quest_id=${question.quest_id}&url=${question.original_url}&scan=${scan}`,
         Prop.config
       )
       .then((response) => {
         const endTime = performance.now()
         console.log((endTime - startTime) / 1000)
-        const startTime2 = performance.now()
-        let result = response.data
-        console.log(result)
-        result['keywords'] = []
-        const questionItems = (result['question_items'] as NoteItem[])?.map(
-          (editElem) => {
+        if (scan === 'all') {
+          const startTime2 = performance.now()
+          let result = response.data
+          console.log(result)
+          result['keywords'] = []
+          const questionItems = (result['question_items'] as NoteItem[])?.map(
+            (editElem) => {
+              editElem.text = sub(editElem.text)
+              return editElem
+            }
+          )
+          const options = (result['options'] as NoteItem[])?.map((editElem) => {
             editElem.text = sub(editElem.text)
+            editElem.correct = editElem.text?.includes('最も投票された')
+            editElem.text = editElem.text?.replace('\n最も投票された', '')
             return editElem
+          })
+          const correct_answer: string[] = []
+          options.forEach((option) => {
+            if (option.correct) correct_answer.push(option.mark || '')
+          })
+          const newQuest: Question = {
+            ...question,
+            quest_no: parseInt(question.quest_id.slice(-4)),
+            question_items: questionItems,
+            options: options,
+            correct_answer: correct_answer,
           }
-        )
-        const options = (result['options'] as NoteItem[])?.map((editElem) => {
-          editElem.text = sub(editElem.text)
-          editElem.correct = editElem.text?.includes('最も投票された')
-          editElem.text = editElem.text?.replace('\n最も投票された', '')
-          return editElem
-        })
-        const correct_answer: string[] = []
-        options.forEach((option) => {
-          if (option.correct) correct_answer.push(option.mark || '')
-        })
-        const newQuest: Question = {
-          ...question,
-          quest_no: parseInt(question.quest_id.slice(-4)),
-          question_items: questionItems,
-          options: options,
-          correct_answer: correct_answer,
+          if (
+            question.question_items === undefined &&
+            question.options === undefined
+          ) {
+            updateQuestion(newQuest)
+          }
+          setQuestion(newQuest)
+          const endTime2 = performance.now()
+          console.log((endTime2 - startTime2) / 1000)
         }
-        if (
-          question.question_items === undefined &&
-          question.options === undefined
-        ) {
-          updateQuestion(newQuest)
-        }
-        // putComments(
-        //   question.quest_id,
-        //   result['comments'],
-        //   result['answers'],
-        //   result['title'],
-        //   result['source']
-        // )
-        setQuestion(newQuest)
-        const endTime2 = performance.now()
-        console.log((endTime2 - startTime2) / 1000)
         setIsLoading(false)
       })
       .catch((error) => {
@@ -109,7 +95,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
         log.debug(error.message)
         log.debug(typeof error)
         if (error.message === 'Network Error' && retry) {
-          onClick2(false)
+          onClick2(false, scan)
         } else {
           alert(error)
         }

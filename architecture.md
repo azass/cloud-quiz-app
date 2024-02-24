@@ -219,3 +219,15 @@ useTerm
   updateCacheTerm
 
 
+        dispatch(
+          setQuestions(
+            questions.map((quest) =>
+              quest.quest_id === requestData.quest_id
+                ? {
+                    ...quest,
+                    keywords: requestData.quest_keywords,
+                  }
+                : quest
+            )
+          )
+        )

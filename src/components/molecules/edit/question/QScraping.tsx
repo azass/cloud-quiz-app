@@ -23,6 +23,7 @@ export const QScraping: FC = memo(() => {
   const { updateQuestion } = useMutateQuestion()
   const [editFlg, setEditFlg] = useState(false)
   const [showComment, setShowComment] = useState(false)
+  const [scan, setScan] = useState('all')
 
   const onChangeText = (text: string) => {
     const newQuestion = { ...question, original_url: text }
@@ -92,8 +93,15 @@ export const QScraping: FC = memo(() => {
               className={`h-4 w-4 ml-4 ${iconBase}`}
               fill="none"
               stroke="currentColor"
-              onClick={() => onClick2(true)}
+              onClick={() => onClick2(true, scan)}
             />
+            <button
+              type="button"
+              className={`rounded-full flex-shrink-0 border px-2 py-0 ${strongText} text-[9px] mx-2`}
+              onClick={() => setScan(scan === 'all' ? 'comments' : 'all')}
+            >
+              <span>{scan === 'all' ? 'すべて' : 'コメント'}</span>
+            </button>
             <ChatIcon
               className={`h-4 w-4 ml-4 ${iconBase}`}
               stroke="currentColor"
@@ -113,7 +121,7 @@ export const QScraping: FC = memo(() => {
               stroke="currentColor"
               onClick={() => {
                 onClickCheck()
-                onClick2(true)
+                onClick2(true, 'all')
               }}
             />
           </>
