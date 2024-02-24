@@ -99,7 +99,7 @@ export const TermEditKeyword: FC = () => {
           <div
             key={term.term_id}
             className={
-              `px-1 py-1 text-left text-sm font-black ` +
+              `px-1 text-left text-sm font-black ` +
               `${term.selected ? 'text-white' : 'text-white'} ` +
               `${editContext.forQuestion && 'cursor-pointer'}`
             }
@@ -109,7 +109,7 @@ export const TermEditKeyword: FC = () => {
           {explain && (
             <div
               className={
-                `px-1 pb-0 mt-0 ml-2 text-left text-[11px] ` +
+                `px-1 ml-1 text-left text-[11px] ` +
                 `${term.selected ? 'text-white' : 'text-gray-100'} ` +
                 `${editContext.forQuestion && 'cursor-pointer'}`
               }

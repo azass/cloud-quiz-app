@@ -21,7 +21,7 @@ export const TermTag: FC<Props> = memo(({ term, withSub }) => {
       <div title="TermTag">{term.word}</div>
       {withSub && term.explain && (
         <div
-          className={`px-1 pb-0 mt-0 ml-2 text-left ${
+          className={`px-1 ml-1 text-left ${
             term.selected ? 'text-white' : 'text-gray-100'
           } text-[10px] `}
         >
