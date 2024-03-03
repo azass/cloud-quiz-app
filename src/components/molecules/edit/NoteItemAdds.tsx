@@ -78,7 +78,7 @@ export const NoteItemAdds: FC<Props> = memo(({ index }) => {
         {draggable && showSaveBtn && editting && (
           <button
             type="button"
-            className={`flex-shrink-0 px-1 mx-4 my-0.5 text-xs text-white bg-green-400`}
+            className={`rounded-full flex-shrink-0 px-1 mx-4 my-0.5 text-xs text-white bg-green-400`}
             onClick={() => saveTermNote(editItems)}
           >
             <span>save</span>
