@@ -119,7 +119,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('展開', 'デプロイ')
     str = str?.replaceAll('デプロイメント', 'デプロイ')
     str = str?.replaceAll('地域', 'リージョン')
-    str = str?.replaceAll('オンプレミス', ' オンプレミス ')
+    // str = str?.replaceAll('オンプレミス', ' オンプレミス ')
     str = str?.replaceAll('メトリック', 'メトリクス')
     str = str?.replaceAll('クラスター', 'クラスタ')
     str = str?.replaceAll('コンテナー', 'コンテナ')
@@ -128,6 +128,11 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('エラー メッセージ', 'エラーメッセージ')
     str = str?.replaceAll('ソース コード', 'ソースコード')
     str = str?.replaceAll('オープン ソース', 'オープンソース')
+    str = str?.replaceAll('ファイル サーバー', 'ファイルサーバー')
+    str = str?.replaceAll(
+      'アプリケーション サーバー',
+      'アプリケーションサーバー'
+    )
     str = str?.replaceAll('イベント ソース', 'イベントソース')
     str = str?.replaceAll('VM', ' VM ')
     str = str?.replaceAll('ETL', ' ETL ')
@@ -138,6 +143,11 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll(' Git Hub', 'GitHub')
     str = str?.replaceAll('メイビン', 'Maven')
     str = str?.replaceAll('竹', 'Bamboo')
+    str = str?.replaceAll(
+      'ソリューション アーキテクト',
+      'ソリューションアーキテクト'
+    )
+    str = str?.replaceAll('グローバル テーブル', 'グローバルテーブル')
     str = str?.replaceAll('GCP', ' GCP ')
     str = str?.replaceAll('クラウドストレージ', ' Cloud Storage ')
     str = str?.replaceAll(
