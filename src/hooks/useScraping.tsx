@@ -64,7 +64,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
           const options = (result['options'] as NoteItem[])?.map((editElem) => {
             editElem.text = sub(editElem.text)
             editElem.correct = editElem.text?.includes('最も投票された')
-            editElem.text = editElem.text?.replace('\n最も投票された', '')
+            editElem.text = editElem.text?.replace('\n\n最も投票された', '').trim()
             return editElem
           })
           const correct_answer: string[] = []
@@ -128,6 +128,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('エラー メッセージ', 'エラーメッセージ')
     str = str?.replaceAll('ソース コード', 'ソースコード')
     str = str?.replaceAll('オープン ソース', 'オープンソース')
+    str = str?.replaceAll('ロード バランサー', 'ロードバランサー')
     str = str?.replaceAll('ファイル サーバー', 'ファイルサーバー')
     str = str?.replaceAll(
       'アプリケーション サーバー',
@@ -147,6 +148,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
       'ソリューション アーキテクト',
       'ソリューションアーキテクト'
     )
+    str = str?.replaceAll('セキュリティ グループ', 'セキュリティグループ')
     str = str?.replaceAll('グローバル テーブル', 'グローバルテーブル')
     str = str?.replaceAll('GCP', ' GCP ')
     str = str?.replaceAll('クラウドストレージ', ' Cloud Storage ')
