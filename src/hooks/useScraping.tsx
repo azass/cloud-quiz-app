@@ -62,7 +62,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
             }
           )
           const options = (result['options'] as NoteItem[])?.map((editElem) => {
-            editElem.text = sub(editElem.text)
+            editElem.text = sub(editElem.text)?.trim()
             editElem.correct = editElem.text?.includes('最も投票された')
             editElem.text = editElem.text
               ?.replace('\n\n最も投票された', '')
