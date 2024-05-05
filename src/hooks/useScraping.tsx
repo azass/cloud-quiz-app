@@ -151,6 +151,8 @@ export const useScraping = (question: Question, setQuestion: any) => {
       'ソリューションアーキテクト'
     )
     str = str?.replaceAll('セキュリティ グループ', 'セキュリティグループ')
+    str = str?.replaceAll('バケット ポリシー', 'バケットポリシー')
+    str = str?.replaceAll('キー ポリシー', 'キーポリシー')
     str = str?.replaceAll('グローバル テーブル', 'グローバルテーブル')
     str = str?.replaceAll('GCP', ' GCP ')
     str = str?.replaceAll('クラウドストレージ', ' Cloud Storage ')
