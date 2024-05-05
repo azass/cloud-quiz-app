@@ -131,6 +131,10 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('ソース コード', 'ソースコード')
     str = str?.replaceAll('オープン ソース', 'オープンソース')
     str = str?.replaceAll('ロード バランサー', 'ロードバランサー')
+    str = str?.replaceAll(
+      'ネットワーク ロード バランサー',
+      'Network Load Balancer'
+    )
     str = str?.replaceAll('ファイル サーバー', 'ファイルサーバー')
     str = str?.replaceAll(
       'アプリケーション サーバー',
@@ -151,9 +155,11 @@ export const useScraping = (question: Question, setQuestion: any) => {
       'ソリューションアーキテクト'
     )
     str = str?.replaceAll('セキュリティ グループ', 'セキュリティグループ')
+    str = str?.replaceAll('ターゲット グループ', 'ターゲットグループ')
     str = str?.replaceAll('バケット ポリシー', 'バケットポリシー')
     str = str?.replaceAll('キー ポリシー', 'キーポリシー')
     str = str?.replaceAll('グローバル テーブル', 'グローバルテーブル')
+    str = str?.replaceAll('エンドポイント サービス', 'エンドポイントサービス')
     str = str?.replaceAll('GCP', ' GCP ')
     str = str?.replaceAll('クラウドストレージ', ' Cloud Storage ')
     str = str?.replaceAll(
