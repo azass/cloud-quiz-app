@@ -130,11 +130,11 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('エラー メッセージ', 'エラーメッセージ')
     str = str?.replaceAll('ソース コード', 'ソースコード')
     str = str?.replaceAll('オープン ソース', 'オープンソース')
-    str = str?.replaceAll('ロード バランサー', 'ロードバランサー')
     str = str?.replaceAll(
       'ネットワーク ロード バランサー',
       'Network Load Balancer'
     )
+    str = str?.replaceAll('ロード バランサー', 'ロードバランサー')
     str = str?.replaceAll('ファイル サーバー', 'ファイルサーバー')
     str = str?.replaceAll(
       'アプリケーション サーバー',
