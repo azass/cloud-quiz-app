@@ -130,6 +130,7 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('エラー メッセージ', 'エラーメッセージ')
     str = str?.replaceAll('ソース コード', 'ソースコード')
     str = str?.replaceAll('オープン ソース', 'オープンソース')
+    str = str?.replaceAll('データ サイエンティスト', 'データサイエンティスト')
     str = str?.replaceAll(
       'ネットワーク ロード バランサー',
       'Network Load Balancer'
