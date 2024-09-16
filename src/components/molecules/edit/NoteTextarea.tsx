@@ -41,7 +41,7 @@ export const NoteTextarea: FC = memo(() => {
                 ></TextareaAutosize>
               </div>
             ) : (
-              <div className="font-body">
+              <div className="font-body text-xs">
                 <ReactMarkdown
                   className={
                     `text-base w-full ${textColor(questIds)}` +
@@ -64,7 +64,7 @@ export const NoteTextarea: FC = memo(() => {
         </div>
       )}
       {(lang === 0 || lang === 2) && (
-        <div className="px-4 py-3 mt-1 font-body">
+        <div className="px-4 py-3 mt-1 font-body text-xs">
           {editting ? (
             <TextareaAutosize
               value={noteItem.text_en || ''}

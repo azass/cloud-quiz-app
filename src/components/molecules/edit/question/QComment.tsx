@@ -13,7 +13,7 @@ export const QComment: FC<Props> = ({ comment }) => {
         <div className={`-mt-5 ${Colors.strong}`}>
           {comment.date && <div>{comment.date}</div>}
           {comment.badge && <div>{comment.badge}</div>}
-          <div className="text-base w-full text-white whitespace-pre-wrap font-body">
+          <div className="text-xs w-full text-white whitespace-pre-wrap font-body">
             <p>{comment.comment_jp}</p>
           </div>
         </div>
