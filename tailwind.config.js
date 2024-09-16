@@ -4,7 +4,13 @@ module.exports = {
   ],
   theme: {
     extend: {},
-  },
+    fontFamily: {
+      body: [
+        'メイリオ',
+        'Meiryo',
+      ],
+    }
+ },
   plugins: [],
   corePlugins: {
     // fontFamily: false,

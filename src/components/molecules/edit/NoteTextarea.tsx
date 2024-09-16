@@ -30,7 +30,7 @@ export const NoteTextarea: FC = memo(() => {
   return (
     <div title="NoteTextarea">
       {lang !== 2 && (
-        <div className="flex w-full">
+        <div className="flex w-full font-body">
           <div className={`px-4 mt-1 ${docStyle} w-full`}>
             {editting ? (
               <div>
@@ -41,7 +41,7 @@ export const NoteTextarea: FC = memo(() => {
                 ></TextareaAutosize>
               </div>
             ) : (
-              <div>
+              <div className="font-body">
                 <ReactMarkdown
                   className={
                     `text-base w-full ${textColor(questIds)}` +
@@ -64,7 +64,7 @@ export const NoteTextarea: FC = memo(() => {
         </div>
       )}
       {(lang === 0 || lang === 2) && (
-        <div className="px-4 py-3 mt-1">
+        <div className="px-4 py-3 mt-1 font-body">
           {editting ? (
             <TextareaAutosize
               value={noteItem.text_en || ''}
