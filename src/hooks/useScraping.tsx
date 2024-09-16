@@ -133,11 +133,17 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('データ ソース', 'データソース')
     str = str?.replaceAll('データ ストリーム', 'データストリーム')
     str = str?.replaceAll('データ サイエンティスト', 'データサイエンティスト')
+    str = str?.replaceAll('データ センター', 'データセンター')
     str = str?.replaceAll(
       'ネットワーク ロード バランサー',
       'Network Load Balancer'
     )
     str = str?.replaceAll('ロード バランサー', 'ロードバランサー')
+    str = str?.replaceAll(
+      'プライベート ホスト ゾーン',
+      'プライベートホストゾーン'
+    )
+    str = str?.replaceAll('ホスト ゾーン', 'ホストゾーン')
     str = str?.replaceAll('ファイル サーバー', 'ファイルサーバー')
     str = str?.replaceAll(
       'アプリケーション サーバー',
@@ -157,9 +163,17 @@ export const useScraping = (question: Question, setQuestion: any) => {
       'ソリューション アーキテクト',
       'ソリューションアーキテクト'
     )
+    str = str?.replaceAll('ネットワーク エンジニア', 'ネットワークエンジニア')
     str = str?.replaceAll('ルート テーブル', 'ルートテーブル')
+    str = str?.replaceAll(
+      'トランジット ゲートウェイ',
+      'トランジットゲートウェイ'
+    )
+    str = str?.replaceAll('アベイラビリティーゾーン', 'アベイラビリティゾーン')
     str = str?.replaceAll('セキュリティ グループ', 'セキュリティグループ')
+    str = str?.replaceAll('プライベート サブネット', 'プライベートサブネット')
     str = str?.replaceAll('ターゲット グループ', 'ターゲットグループ')
+    str = str?.replaceAll('ヘルス チェック', 'ヘルスチェック')
     str = str?.replaceAll('バケット ポリシー', 'バケットポリシー')
     str = str?.replaceAll('キー ポリシー', 'キーポリシー')
     str = str?.replaceAll('グローバル テーブル', 'グローバルテーブル')
