@@ -47,7 +47,7 @@ export const TagSelectPanel: FC<Props> = memo(
     }
     return (
       <div className="mx-0" title="TagSelectPanel">
-        <div className="flex justify-end pb-4">
+        <div className="flex justify-end pt-2 pb-4">
           <TagFilter filterWord={searchWord} setSearchWord={setSearchWord} />
         </div>
         <div
