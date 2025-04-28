@@ -175,6 +175,11 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('ターゲット グループ', 'ターゲットグループ')
     str = str?.replaceAll('ヘルス チェック', 'ヘルスチェック')
     str = str?.replaceAll('バケット ポリシー', 'バケットポリシー')
+    str = str?.replaceAll('直接接続', 'Direct Connect ')
+    str = str?.replaceAll(
+      'サイトからサイトへのVPN接続',
+      'Site-to-Site VPN 接続'
+    )
     str = str?.replaceAll('顧客ゲートウェイ', 'カスタマーゲートウェイ')
     str = str?.replaceAll(
       '仮想プライベート ゲートウェイ',
