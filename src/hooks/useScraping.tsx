@@ -176,6 +176,10 @@ export const useScraping = (question: Question, setQuestion: any) => {
     str = str?.replaceAll('ヘルス チェック', 'ヘルスチェック')
     str = str?.replaceAll('バケット ポリシー', 'バケットポリシー')
     str = str?.replaceAll('顧客ゲートウェイ', 'カスタマーゲートウェイ')
+    str = str?.replaceAll(
+      '仮想プライベート ゲートウェイ',
+      '仮想プライベートゲートウェイ'
+    )
     str = str?.replaceAll('キー ポリシー', 'キーポリシー')
     str = str?.replaceAll('グローバル テーブル', 'グローバルテーブル')
     str = str?.replaceAll('エンドポイント サービス', 'エンドポイントサービス')
