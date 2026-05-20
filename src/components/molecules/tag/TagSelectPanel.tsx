@@ -19,7 +19,6 @@ export const TagSelectPanel: FC<Props> = memo(
     let _tags = useAppSelector(
       useExamTags ? selectExamTags : selectProviderTags
     )
-
     const tags = [..._tags].sort((a, b) => a.sort - b.sort)
     const [searchWord, setSearchWord] = useState('')
     const filter = (tag: Tag) => {
