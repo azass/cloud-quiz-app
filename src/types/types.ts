@@ -101,6 +101,7 @@ export interface Tag {
   tag_name: string
   provider: string
   count?: number
+  sort: number
 }
 
 export interface Term {
@@ -152,5 +153,6 @@ export interface Comments {
 export const voidTag: Tag = {
   tag_no: 0,
   tag_name: '',
-  provider: ''
+  provider: '',
+  sort: 0,
 }

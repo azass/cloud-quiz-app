@@ -16,9 +16,11 @@ interface Props {
 export const TagSelectPanel: FC<Props> = memo(
   ({ useExamTags, selectTags, onClickTag }) => {
     log.setLevel('info')
-    const tags = useAppSelector(
+    let _tags = useAppSelector(
       useExamTags ? selectExamTags : selectProviderTags
     )
+
+    const tags = [..._tags].sort((a, b) => a.sort - b.sort)
     const [searchWord, setSearchWord] = useState('')
     const filter = (tag: Tag) => {
       if ('tag_no' in tag) {

@@ -7,6 +7,7 @@ import { QListQuery } from '../molecules/list/QListQuery'
 export const QSelectInitTab: FC = memo(() => {
   const dispatch = useAppDispatch()
   const exam = useAppSelector(selectExam)
+  console.log(exam)
   const { status, data } = useQueryExamTags(exam)
   if (status === 'loading')
     return <div className="pl-8 pt-8">{'Loading...'}</div>
