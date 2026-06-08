@@ -1,7 +1,15 @@
-import { FC, ReactNode, createContext, useContext, useState } from 'react'
+import {
+  FC,
+  ReactNode,
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from 'react'
 import { NoteItem } from '../../../types/types'
 import { useFireContext, useStarContext } from './term/TermsProvider'
 import { useEditItems } from '../../../hooks/useEditItems'
+import { useQuestionContext } from './question/QuestionProvider'
 
 interface Props {
   name: string
@@ -78,6 +86,10 @@ export const NoteItemsProvider: FC<Props> = ({
   const [editItems, setEditItems] = useState<NoteItem[]>(noteItems)
   const [editting, setEditting] = useState(false)
   const [showSaveBtn, setShowSaveBtn] = useState(false)
+  const { question } = useQuestionContext()
+  const questId = question.quest_id
+  const [questIdState, setQuestIdState] = useState(questId)
+  console.log(`先頭 questId=${questId} questIdState=${questIdState}`)
   const {
     addItem,
     delItem,
@@ -88,6 +100,24 @@ export const NoteItemsProvider: FC<Props> = ({
     validate,
     save,
   } = useEditItems(editItems)
+
+  useEffect(() => {
+    console.log('useEffect', questId, questIdState)
+    if (editItems !== noteItems && questIdState === questId) {
+      if (editable) {
+        console.log('changed', noteItems)
+        setEditting(true)
+        setShowSaveBtn(true)
+      }
+    }
+    setEditItems(noteItems)
+    if (questIdState !== questId) {
+      console.log(`questId changed ${questIdState}=> ${questId}`)
+      setQuestIdState(questId)
+      setEditting(false)
+      setShowSaveBtn(false)
+    }
+  }, [noteItems]) // 依存配列に noteItems を指定
 
   const add = (index: number, type: string) => {
     if (!star && !fire) {
@@ -126,6 +156,7 @@ export const NoteItemsProvider: FC<Props> = ({
     setEditItems(newEditItems)
     setShowSaveBtn(validate(newEditItems))
   }
+
   return (
     <ShowSaveBtnContext.Provider value={{ showSaveBtn, setShowSaveBtn }}>
       <EditItemsContext.Provider value={{ editItems, setEditItems }}>

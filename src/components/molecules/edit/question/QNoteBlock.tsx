@@ -59,7 +59,7 @@ export const QNoteBlock: FC<Props> = ({ title }) => {
                 noteItem={editItem}
                 index={index}
                 hasSelectCheck={name === 'case_items'}
-                hasSelectLevel={'explanation' && name !== 'options'}
+                hasSelectLevel={name !== 'explanation' && name !== 'options'}
                 hasPutOptionImage={name === 'options'}
               >
                 <NoteItemTile />

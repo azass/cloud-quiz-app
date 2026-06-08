@@ -61,9 +61,13 @@ export const useScraping = (question: Question, setQuestion: any) => {
               return editElem
             }
           )
+          
           const options = (result['options'] as NoteItem[])?.map((editElem) => {
             editElem.text = sub(editElem.text)?.trim()
-            editElem.correct = editElem.text?.includes('最も投票された')
+            editElem.correct =
+              'correct_answers' in result
+                ? result['correct_answers'].includes(editElem.mark || '')
+                : editElem.text?.includes('最も投票された')
             editElem.text = editElem.text
               ?.replace('\n\n最も投票された', '')
               .trim()
@@ -78,7 +82,16 @@ export const useScraping = (question: Question, setQuestion: any) => {
             quest_no: parseInt(question.quest_id.slice(-4)),
             question_items: questionItems,
             options: options,
-            correct_answer: correct_answer,
+            correct_answer:
+              'correct_answers' in result
+                ? result['correct_answers']
+                : correct_answer,
+            explanation:
+              'explanation' in result
+                ? [...(question.explanation || [])].concat(
+                    result['explanation']
+                  )
+                : [...(question.explanation || [])],
           }
           if (
             question.question_items === undefined &&
