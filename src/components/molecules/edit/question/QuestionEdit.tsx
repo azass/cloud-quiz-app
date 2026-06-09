@@ -1,4 +1,5 @@
-import { FC, memo } from 'react'
+import { FC, memo, useState } from 'react'
+import { ChatIcon } from '@heroicons/react/solid'
 import { QNoteBlock } from './QNoteBlock'
 import { QScraping } from './QScraping'
 import { QBug } from './QBug'
@@ -6,13 +7,14 @@ import { QTermDescriptions } from './QTermDescriptions'
 import { QLeaningProfiles } from './QLeaningProfiles'
 import { QLabels } from './QLabels'
 import { QuestionCaseEdit } from './QuestionCaseEdit'
+import { QComments } from './QComments'
 import {
   useIsNewContext,
   useQuestionContext,
   useShowCheckboxContext,
 } from './QuestionProvider'
 import { NoteItemsProvider } from '../NoteItemsProvider'
-import { strongText } from '../../../../styles/util'
+import { iconBase, strongText } from '../../../../styles/util'
 import { QKeywords } from '../../QKeywords'
 
 export const QuestionEdit: FC = memo(() => {
@@ -22,6 +24,8 @@ export const QuestionEdit: FC = memo(() => {
   const clickEye = () => {
     setShowCheckbox(!showCheckbox)
   }
+  const [showComment, setShowComment] = useState(false)
+
   return (
     <>
       {!isNew && question && (
@@ -46,6 +50,17 @@ export const QuestionEdit: FC = memo(() => {
           >
             <QNoteBlock title={'選択肢'} />
           </NoteItemsProvider>
+          <ChatIcon
+            className={`h-4 w-4 ${iconBase}`}
+            fill="currentColor"
+            onClick={() => setShowComment(!showComment)}
+          />
+          {showComment && (
+            <div>
+              <div className="py-4">コメント</div>
+              <QComments />
+            </div>
+          )}
           <QScraping />
           {'is_bug' in question && question.is_bug && question.bug_points && (
             <QBug />
@@ -66,7 +81,7 @@ export const QuestionEdit: FC = memo(() => {
               hasAddLink={true}
               hasAddImage={true}
             >
-              <QNoteBlock title={'メモ'} />
+              <QNoteBlock title={'解説'} />
             </NoteItemsProvider>
             <div className={`flex gap-2 mt-12 mb-4 ${strongText}`}>
               学習プロファイル

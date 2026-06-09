@@ -87,7 +87,7 @@ export const NoteItemsProvider: FC<Props> = ({
   const [editting, setEditting] = useState(false)
   const [showSaveBtn, setShowSaveBtn] = useState(false)
   const { question } = useQuestionContext()
-  const questId = question.quest_id
+  const questId = !draggable && question ? question.quest_id : ''
   const [questIdState, setQuestIdState] = useState(questId)
   console.log(`先頭 questId=${questId} questIdState=${questIdState}`)
   const {
@@ -102,12 +102,15 @@ export const NoteItemsProvider: FC<Props> = ({
   } = useEditItems(editItems)
 
   useEffect(() => {
+    if (draggable) return
     console.log('useEffect', questId, questIdState)
     if (editItems !== noteItems && questIdState === questId) {
       if (editable) {
         console.log('changed', noteItems)
-        setEditting(true)
-        setShowSaveBtn(true)
+        if (noteItems.length) {
+          setEditting(true)
+          setShowSaveBtn(true)
+        }
       }
     }
     setEditItems(noteItems)

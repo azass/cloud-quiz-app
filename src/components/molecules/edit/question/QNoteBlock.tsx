@@ -1,7 +1,6 @@
 import log from 'loglevel'
 import { useState, FC } from 'react'
 import { NoteItemTile } from '../NoteItemTile'
-import { SaveButton } from '../../../atoms/SaveButton'
 import { NoteItemAdds } from '../NoteItemAdds'
 import { NoteBlockHeader } from '../NoteBlockHeader'
 import { useQuestionContext } from './QuestionProvider'
@@ -24,8 +23,8 @@ export const QNoteBlock: FC<Props> = ({ title }) => {
   const { question } = useQuestionContext()
   const { editItems, setEditItems } = useEditItemsContext()
   const { editting } = useEdittingContext()
-  const { showSaveBtn, setShowSaveBtn } = useShowSaveBtnContext()
-  const { isShow, saveNote } = useQuestion()
+  const { setShowSaveBtn } = useShowSaveBtnContext()
+  const { isShow } = useQuestion()
   const questId = question.quest_id
   const [questIdState, setQuestIdState] = useState(questId)
   if (questIdState !== questId) {
@@ -68,9 +67,6 @@ export const QNoteBlock: FC<Props> = ({ title }) => {
           </>
         ))
       )}
-      <div className="flex justify-center mx-auto">
-        {showSaveBtn && <SaveButton onClick={() => saveNote()} />}
-      </div>
     </div>
   )
 }

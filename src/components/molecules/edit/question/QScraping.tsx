@@ -6,12 +6,10 @@ import {
   ChevronDoubleUpIcon,
   PencilIcon,
   CheckIcon,
-  ChatIcon,
 } from '@heroicons/react/solid'
 import { AcademicCapIcon } from '@heroicons/react/outline'
 import { Question } from '../../../../types/types'
 import { useMutateQuestion } from '../../../../hooks/useMutateQuestion'
-import { QComments } from './QComments'
 import { useQuestionContext } from './QuestionProvider'
 import { iconBase, iconShine, strongText } from '../../../../styles/util'
 import Colors from '../../../../consts/colors'
@@ -29,7 +27,6 @@ export const QScraping: FC = memo(() => {
   } = useScraping(question, setQuestion)
   const { updateQuestion } = useMutateQuestion()
   const [editFlg, setEditFlg] = useState(false)
-  const [showComment, setShowComment] = useState(false)
   const [scan, setScan] = useState<ScanType>('all')
 
   const onChangeText = (text: string) => {
@@ -109,11 +106,6 @@ export const QScraping: FC = memo(() => {
             >
               <span>{scan === 'all' ? 'すべて' : 'コメント'}</span>
             </button>
-            <ChatIcon
-              className={`h-4 w-4 ml-4 ${iconBase}`}
-              stroke="currentColor"
-              onClick={() => setShowComment(!showComment)}
-            />
           </>
         ) : (
           <>
@@ -156,12 +148,6 @@ export const QScraping: FC = memo(() => {
           {question.original_url}
         </a>
       </div>
-      {showComment && (
-        <div>
-          <div className="py-4">コメント</div>
-          <QComments />
-        </div>
-      )}
     </div>
   )
 })

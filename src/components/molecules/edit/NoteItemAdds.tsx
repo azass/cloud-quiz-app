@@ -18,6 +18,7 @@ import { NoteItem, Term } from '../../../types/types'
 import { useEditTermContext, useTermContext } from './term/TermProvider'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUpdateTerm, setUpdateTerm } from '../../../slices/editSlice'
+import { useQuestion } from '../../../hooks/useQuestion'
 
 interface Props {
   index: number
@@ -40,6 +41,7 @@ export const NoteItemAdds: FC<Props> = memo(({ index }) => {
   const { editItems } = useEditItemsContext()
   const { term } = useTermContext()
   const { updateCacheTerm } = useEditTermContext()
+  const { saveNote } = useQuestion()
 
   const postSave = (requestData: Term) => {
     setShowSaveBtn(false)
@@ -75,11 +77,11 @@ export const NoteItemAdds: FC<Props> = memo(({ index }) => {
             onClick={() => add(index, 'image')}
           />
         )}
-        {draggable && showSaveBtn && editting && (
+        {showSaveBtn && editting && (
           <button
             type="button"
             className={`rounded-full flex-shrink-0 px-1 mx-4 my-0.5 text-xs text-white bg-green-400`}
-            onClick={() => saveTermNote(editItems)}
+            onClick={() => (draggable ? saveTermNote(editItems) : saveNote())}
           >
             <span>save</span>
           </button>
