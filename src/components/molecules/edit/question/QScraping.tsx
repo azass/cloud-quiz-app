@@ -1,6 +1,6 @@
 import { FC, memo, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { useScraping } from '../../../../hooks/useScraping'
+import { useScraping } from '../../../../features/scraping/useScraping'
 import {
   ChevronDoubleDownIcon,
   ChevronDoubleUpIcon,
@@ -15,15 +15,22 @@ import { QComments } from './QComments'
 import { useQuestionContext } from './QuestionProvider'
 import { iconBase, iconShine, strongText } from '../../../../styles/util'
 import Colors from '../../../../consts/colors'
+import { ScanType } from '../../../../features/scraping/scraping.types'
 
 export const QScraping: FC = memo(() => {
   const { question, setQuestion } = useQuestionContext()
-  const { showFlg, setShowFlg, isLoading, onChange, onClick, onClick2 } =
-    useScraping(question, setQuestion)
+  const {
+    showFlag,
+    setShowFlag,
+    isLoading,
+    onChange,
+    handleManualScrape,
+    handleAutoScrape,
+  } = useScraping(question, setQuestion)
   const { updateQuestion } = useMutateQuestion()
   const [editFlg, setEditFlg] = useState(false)
   const [showComment, setShowComment] = useState(false)
-  const [scan, setScan] = useState('all')
+  const [scan, setScan] = useState<ScanType>('all')
 
   const onChangeText = (text: string) => {
     const newQuestion = { ...question, original_url: text }
@@ -46,13 +53,13 @@ export const QScraping: FC = memo(() => {
       className="w-full border-blue-500 border-opacity-100"
       title="QScraping"
     >
-      {showFlg ? (
+      {showFlag ? (
         <>
           <div className="flex flex-row-reverse">
             <ChevronDoubleDownIcon
               className={`h-3 w-3 ${iconShine}`}
               fill="currentColor"
-              onClick={() => setShowFlg(false)}
+              onClick={() => setShowFlag(false)}
             />
           </div>
           <textarea
@@ -66,7 +73,7 @@ export const QScraping: FC = memo(() => {
               `flex justify-center mx-auto px-4 py-2 mt-4` +
               ` rounded-lg bg-blue-500 ${strongText}`
             }
-            onClick={() => onClick(question.quest_id)}
+            onClick={() => handleManualScrape(question.quest_id)}
           >
             取り込み
           </button>
@@ -76,7 +83,7 @@ export const QScraping: FC = memo(() => {
           <ChevronDoubleUpIcon
             className={`flex flex-row-reverse h-3 w-3 ${iconShine}`}
             fill="currentColor"
-            onClick={() => setShowFlg(true)}
+            onClick={() => setShowFlag(true)}
           />
         </div>
       )}
@@ -93,7 +100,7 @@ export const QScraping: FC = memo(() => {
               className={`h-4 w-4 ml-4 ${iconBase}`}
               fill="none"
               stroke="currentColor"
-              onClick={() => onClick2(true, scan)}
+              onClick={() => handleAutoScrape(true, scan)}
             />
             <button
               type="button"
@@ -121,7 +128,7 @@ export const QScraping: FC = memo(() => {
               stroke="currentColor"
               onClick={() => {
                 onClickCheck()
-                onClick2(true, 'all')
+                handleAutoScrape(true, 'all')
               }}
             />
           </>
