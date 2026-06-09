@@ -32,6 +32,9 @@ export const QNoteBlock: FC<Props> = ({ title }) => {
     setEditItems(noteItems)
     setShowSaveBtn(false)
   }
+  console.log(
+    `QNoteBlock render: title=${title} questIdState=${questIdState} editItems=${typeof editItems}`
+  )
   /**
    * for scraping
    * if no content; set new content

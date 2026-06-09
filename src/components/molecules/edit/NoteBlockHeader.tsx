@@ -10,15 +10,25 @@ import {
   iconShine,
   strongText,
 } from '../../../styles/util'
+import { QAnswer } from './question/QAnswer'
+import { useQuestionContext } from './question/QuestionProvider'
+
 interface Props {
   title: string
 }
+
+const AI_OPTIONS = [
+  { value: 'bedrock', label: 'Bedrock' },
+  { value: 'openai', label: 'OpenAI' },
+  { value: 'gemini', label: 'Gemini' },
+]
 export const NoteBlockHeader: FC<Props> = memo(({ title }) => {
   const { name } = useNoteItemsContext()
   const { editting, setEditting } = useEdittingContext()
   const { showCheckbox, setShowCheckbox } = useShowCheckboxContext()
   const { showAllQuestionCase, setShowAllQuestionCase } =
     useShowAllQuestionCaseContext()
+  const { setExplanation } = useQuestionContext()
   const clickEye = () => {
     if (name === 'options') {
       setShowCheckbox(!showCheckbox)
@@ -48,6 +58,17 @@ export const NoteBlockHeader: FC<Props> = memo(({ title }) => {
           />
         )}
       </div>
+      {name === 'explanation' && (
+        <div className="pl-12" title="AIに説明を生成させる機能">
+          <QAnswer
+            options={AI_OPTIONS}
+            buttonLabel="実行"
+            onSuccess={(explanation, selected) => {
+              setExplanation(explanation ?? [])
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 })
