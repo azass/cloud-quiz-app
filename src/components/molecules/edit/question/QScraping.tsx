@@ -24,7 +24,7 @@ export const QScraping: FC = memo(() => {
     onChange,
     handleManualScrape,
     handleAutoScrape,
-  } = useScraping(question, setQuestion)
+  } = useScraping()
   const { updateQuestion } = useMutateQuestion()
   const [editFlg, setEditFlg] = useState(false)
   const [scan, setScan] = useState<ScanType>('all')

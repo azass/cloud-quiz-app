@@ -1,5 +1,5 @@
 import { useState, memo, useContext, createContext, ReactNode, FC } from 'react'
-import { Question } from '../../../../types/types'
+import { Question, NoteItem } from '../../../../types/types'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useQueryQuestion } from '../../../../hooks/useQueryQuestion'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
@@ -14,6 +14,8 @@ const QuestionContext = createContext(
   {} as {
     question: Question
     setQuestion: any
+    explanation: NoteItem[]
+    setExplanation: any
   }
 )
 const IsNewContext = createContext(
@@ -42,6 +44,7 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
   const quest_id = params.quest_id || ''
   const [questId, setQuestId] = useState(quest_id)
   const [question, setQuestion] = useState<Question>()
+  const [explanation, setExplanation] = useState<NoteItem[]>([])
   const [isNew, setIsNew] = useState(false)
   const isCheckOn = (question?.question_items || []).some((x) => x.correct)
   const [showCheckbox, setShowCheckbox] = useState(!isCheckOn)
@@ -59,6 +62,7 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
     if (data) {
       setIsNew(false)
       setQuestion(data)
+      setExplanation(data.explanation || [])
       if (data.quest_id !== editContext.quest_id) {
         const tag_no = searchParams.get('fromTermEditor')
         dispatch(
@@ -84,7 +88,9 @@ export const QuestionProvider: FC<Props> = memo(({ children }) => {
   return (
     <>
       {question && (
-        <QuestionContext.Provider value={{ question, setQuestion }}>
+        <QuestionContext.Provider
+          value={{ question, setQuestion, explanation, setExplanation }}
+        >
           <IsNewContext.Provider value={{ isNew, setIsNew }}>
             <ShowCheckboxContext.Provider
               value={{ showCheckbox, setShowCheckbox }}

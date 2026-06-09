@@ -46,7 +46,7 @@ const buildExplanation = (
   const updated = existing.map((item) => {
     if (
       item.type === 'textarea' &&
-      (item.text ?? '').startsWith('【解説】')
+      (item.text ?? '').startsWith('[解説]')
     ) {
       exist = true
       return { ...item, text: markdown.text }

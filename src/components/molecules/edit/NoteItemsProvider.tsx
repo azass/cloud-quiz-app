@@ -20,8 +20,6 @@ interface Props {
   hasAddTextarea?: boolean
   hasAddLink?: boolean
   hasAddImage?: boolean
-  isOptions?: boolean
-  clickEye?: any
   children: ReactNode
 }
 const EditItemsContext = createContext(
@@ -59,8 +57,6 @@ const NoteItemsContext = createContext(
     hasAddTextarea?: boolean
     hasAddLink?: boolean
     hasAddImage?: boolean
-    isOptions?: boolean
-    clickEye?: any
   }
 )
 export const useEditItemsContext = () => useContext(EditItemsContext)
@@ -77,8 +73,6 @@ export const NoteItemsProvider: FC<Props> = ({
   hasAddTextarea,
   hasAddLink,
   hasAddImage,
-  isOptions,
-  clickEye,
   children,
 }) => {
   const { fire } = useFireContext()
@@ -181,8 +175,6 @@ export const NoteItemsProvider: FC<Props> = ({
               hasAddTextarea,
               hasAddLink,
               hasAddImage,
-              isOptions,
-              clickEye,
             }}
           >
             {children}

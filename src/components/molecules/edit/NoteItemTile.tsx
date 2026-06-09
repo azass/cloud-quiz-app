@@ -10,7 +10,7 @@ import Prop from '../../../consts/props'
 
 export const NoteItemTile: FC = memo(() => {
   log.setLevel('debug')
-  const { name, editable, isOptions } = useNoteItemsContext()
+  const { name, editable } = useNoteItemsContext()
   const { editting, setEditting } = useEdittingContext()
   const { noteItem, index } = useNoteItemContext()
   const shouldEdit = () => {
@@ -25,7 +25,7 @@ export const NoteItemTile: FC = memo(() => {
   }
   const id = name + '_' + index
   if (!noteItem.type || noteItem.type === '') {
-    if (isOptions) {
+    if (name === 'options') {
       noteItem.type = Prop.NoteItemType.OPTION
     } else if ('text' in noteItem) {
       noteItem.type = Prop.NoteItemType.TEXTAREA

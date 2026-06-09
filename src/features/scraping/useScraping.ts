@@ -15,6 +15,7 @@ import type {
   RawScrapingResult,
   ScanType,
 } from './scraping.types'
+import { useQuestionContext } from '../../components/molecules/edit/question/QuestionProvider'
 
 // ── フックの戻り値の型 ────────────────────────────────────────────────────────
 interface UseScrapingReturn {
@@ -29,10 +30,8 @@ interface UseScrapingReturn {
 }
 
 // ── フック本体 ────────────────────────────────────────────────────────────────
-export const useScraping = (
-  question: Question,
-  setQuestion: React.Dispatch<React.SetStateAction<Question>>
-): UseScrapingReturn => {
+export const useScraping = (): UseScrapingReturn => {
+  const { question, setQuestion, setExplanation } = useQuestionContext()
   const { updateQuestion } = useMutateQuestion()
 
   const [showFlag, setShowFlag] = useState(false)
@@ -104,6 +103,7 @@ export const useScraping = (
           }
 
           setQuestion(newQuestion)
+          setExplanation(newQuestion.explanation ?? []) // explanation は QuestionProvider で管理しているため、個別に更新する
         }
       })
       .catch((err: AxiosError) => {

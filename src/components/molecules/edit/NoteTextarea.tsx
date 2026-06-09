@@ -31,7 +31,7 @@ export const NoteTextarea: FC = memo(() => {
     <div title="NoteTextarea">
       {lang !== 2 && (
         <div className="flex w-full font-body">
-          <div className={`px-4 mt-1 ${docStyle} w-full`}>
+          <div className={`px-4 mt-0 ${docStyle} w-full`}>
             {editting ? (
               <div>
                 <TextareaAutosize

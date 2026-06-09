@@ -3,7 +3,6 @@ import { QNoteBlock } from './QNoteBlock'
 import {
   useChangeCaseNoContext,
   useEditCaseNoContext,
-  useShowAllQuestionCaseContext,
 } from './QuestionCaseProvider'
 import { useQuestionContext } from './QuestionProvider'
 import { NoteItemsProvider } from '../NoteItemsProvider'
@@ -12,8 +11,6 @@ export const QuestionCaseEdit: FC = memo(() => {
   const { question } = useQuestionContext()
   const { editCaseNo } = useEditCaseNoContext()
   const { setChangeCaseNo } = useChangeCaseNoContext()
-  const { showAllQuestionCase, setShowAllQuestionCase } =
-    useShowAllQuestionCaseContext()
   const [caseNo, setCaseNo] = useState(
     question.case_id && question.exam_id
       ? question.case_id.slice(question.exam_id.length + 1)
@@ -28,9 +25,6 @@ export const QuestionCaseEdit: FC = memo(() => {
       question.case_id = question.exam_id + '-' + _caseNo
       setChangeCaseNo(true)
     }
-  }
-  const clickEye = () => {
-    setShowAllQuestionCase(!showAllQuestionCase)
   }
   return (
     <>
@@ -58,7 +52,6 @@ export const QuestionCaseEdit: FC = memo(() => {
             editable={true}
             hasAddTextarea={true}
             hasAddImage={true}
-            clickEye={clickEye}
           >
             <QNoteBlock title={'与件'} />
           </NoteItemsProvider>

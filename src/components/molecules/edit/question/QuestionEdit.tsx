@@ -8,22 +8,14 @@ import { QLeaningProfiles } from './QLeaningProfiles'
 import { QLabels } from './QLabels'
 import { QuestionCaseEdit } from './QuestionCaseEdit'
 import { QComments } from './QComments'
-import {
-  useIsNewContext,
-  useQuestionContext,
-  useShowCheckboxContext,
-} from './QuestionProvider'
+import { useIsNewContext, useQuestionContext } from './QuestionProvider'
 import { NoteItemsProvider } from '../NoteItemsProvider'
 import { iconBase, strongText } from '../../../../styles/util'
 import { QKeywords } from '../../QKeywords'
 
 export const QuestionEdit: FC = memo(() => {
-  const { question } = useQuestionContext()
+  const { question, explanation } = useQuestionContext()
   const { isNew } = useIsNewContext()
-  const { showCheckbox, setShowCheckbox } = useShowCheckboxContext()
-  const clickEye = () => {
-    setShowCheckbox(!showCheckbox)
-  }
   const [showComment, setShowComment] = useState(false)
 
   return (
@@ -45,8 +37,6 @@ export const QuestionEdit: FC = memo(() => {
             name="options"
             noteItems={question.options || []}
             editable={true}
-            isOptions={true}
-            clickEye={clickEye}
           >
             <QNoteBlock title={'選択肢'} />
           </NoteItemsProvider>
@@ -75,7 +65,7 @@ export const QuestionEdit: FC = memo(() => {
             </div>
             <NoteItemsProvider
               name="explanation"
-              noteItems={question.explanation || []}
+              noteItems={explanation || []}
               editable={true}
               hasAddTextarea={true}
               hasAddLink={true}
